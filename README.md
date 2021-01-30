@@ -8,14 +8,17 @@ Code for muh website-- www.pranabekka.com
 
 - Margins don't resize properly for webkit mobile
     - Text squeezed into narrow column
+- Secondary buttons become very small in webkit
 - Everything scales down very small in Firefox mobile
     - Works fine in landscape mode
 - Logo stretches out in webkit mobile landscape mode
 - Button width/padding too small/big in Qutebrowser
+- Top margin/padding not working in Qutebrowser
+    - Project title hidden under top bar
 
 ### Speed
 
-- Images take long to load
+- No image optimisation
 
 ## Possible Solutions
 
@@ -24,10 +27,14 @@ Code for muh website-- www.pranabekka.com
 - Nuke and pave!
     - Learn a bit more about making responsive sites
     - Rewrite html and css from scratch
-- Debug
-    - yuck
+    - Keep touch simulation enabled while testing
+- Debug (yuck)
+    - Remove margins with media query
+    - Reduce min value for font-size (to 10pt?)
+    - Use clamp to set min value
+    - Test CSS on Ff responsive mode, with touch simulation enabled
+    - Create Qutebrowser branch and test issues
 
 ### Speed
 
-- Image optimisation
-    - Multiple image resolutions, paired with srcset
+- Multiple image resolutions, paired with srcset
