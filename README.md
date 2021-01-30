@@ -29,10 +29,11 @@ Code for muh website-- www.pranabekka.com
     - Rewrite html and css from scratch
     - Keep touch simulation enabled while testing
 - Debug (yuck)
-    - Remove margins with media query
+    - Remove/resize margins with media query
     - Reduce min value for font-size (to 10pt?)
-    - Use clamp to set min value
+    - Adjust min size for buttons
     - Test CSS on Ff responsive mode, with touch simulation enabled
+    - Export logo as svg, or use html+fonts to recreate logo
     - Create Qutebrowser branch and test issues
 
 ### Speed
