@@ -1,2 +1,2 @@
 # pranabekka.github.io
-Muh website-- www.pranabekka.com
+Code for muh website-- www.pranabekka.com
