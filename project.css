@@ -7,9 +7,9 @@ main {
     padding-top: max(7vh + 1em, 50px + 1em);
     display: grid;
     grid-template-columns:
-        minmax(.2rem, 1fr)
+        minmax(4vw, 1fr)
         minmax(auto, 40ch)
-        minmax(.2rem, 1fr);
+        minmax(4vw, 1fr);
     grid-gap: .5rem;
 }
 
