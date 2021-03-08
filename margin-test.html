@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pranab Ekka</title>
+    <style type="text/css" media="screen, print">
+        @font-face {
+          font-family: "Helmet Neue";
+          src: url("assets/fonts/HelmetNeue-Regular.woff2") format("woff2");
+        }
+        *{
+        	box-sizing: border-box;
+        	padding: .25rem;
+        	font-size: 1.02rem;
+        }
+        body {
+            background-color: black;
+        	font-family: "Helmet Neue", sans-serif;
+        }
+        .grid-container{
+            display: grid;
+            grid-template-columns: 1fr min(90vw,75ch) 1fr;
+        }
+        .grid-element{
+        	grid-column: 2 / 3;
+        }
+        .red-box{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-element red-box">
+            This is a grid element
+        </div>
+    </div>
+</body>
+</html>

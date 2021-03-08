@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pranab Ekka</title>
+    <style type="text/css" media="screen, print">
+        @font-face {
+          font-family: "Helmet Neue";
+          src: url("assets/fonts/HelmetNeue-Regular.woff2") format("woff2");
+        }
+        *{
+        	margin: 0;
+        	padding: .25rem;
+        	box-sizing: border-box;
+        }
+        body {
+            background-color: black;
+        	font-family: "Helmet Neue", sans-serif;
+        	display: flex;
+        	flex-direction: column;
+        }
+        .box-primary {
+        	font-size: 8vw;
+        	color: white;
+        	align-self: center;
+        }
+        .box-text {
+        	width: min(75ch,90vw);
+        	font-size: 1.5rem;
+        	align-self: center;
+    	}
+    	.box-image {
+    		width: 70vw;
+        	font-size: 1.2rem;
+        	align-self: center;
+    	}
+        .red-box{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box-primary">This is a primary box</div>
+    <div class="box-text red-box">This is a text box</div>
+    <div class="box-image red-box">This is an image box</div>
+</body>
+</html>
