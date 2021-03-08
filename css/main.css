@@ -68,9 +68,9 @@ body {
 
 @keyframes spotting {
     from {
-        transform: translateX(-100vw);
+        transform: translate(-100vw);
     }
     to {
-        transform: translateX(100vw);
+        transform: translate(100vw);
     }
 }
