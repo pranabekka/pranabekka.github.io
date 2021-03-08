@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Helmet Neue";
+  src: url("assets/fonts/HelmetNeue-Regular.woff2") format("woff2");
+}
+
+* {
+    margin: 0;
+    padding: .2rem;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "Hemlet Neue", sans-serif;
+}
