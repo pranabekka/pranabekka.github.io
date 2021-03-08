@@ -1,15 +1,74 @@
-@font-face {
-  font-family: "Helmet Neue";
-  src: url("assets/fonts/HelmetNeue-Regular.woff2") format("woff2");
-}
+/*@font-face {*/
+  /*font-family: "Helmet Neue";*/
+  /*src: url("./assets/fonts/HelmetNeue-Regular.woff2") format("woff2");*/
+/*}*/
 
 * {
+    box-sizing: border-box;
     margin: 0;
-    padding: .2rem;
+    padding: 0;
+    font-size: 1.02rem;
 }
 
 body {
     background-color: black;
     color: white;
-    font-family: "Hemlet Neue", sans-serif;
+    font-family: "Helmet Neue", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-primary {
+}
+
+.container-text {
+    font-size: 1.5rem;
+    width: min(75ch,90vw);
+}
+
+/* HEADER SECTION */
+
+#cover {
+    height: 80vh;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    padding: 0 5vw;
+    justify-content: center;
+}
+
+#cover-heading * {
+    font-size: 10rem;
+    color: black;
+}
+
+#cover-heading-part1 {
+}
+
+#cover-heading-part2 {
+    text-align: center;
+}
+
+#cover-heading-part3 {
+    text-align: right;
+}
+
+#spotlight {
+    position: absolute;
+    background-color: #fa8334;
+    width: 35rem;
+    height: 35rem;
+    border-radius: 50%;
+    z-index: -1;
+    animation: 3s spotting infinite ease-in-out;
+}
+
+@keyframes spotting {
+    from {
+        transform: translateX(-100vw);
+    }
+    to {
+        transform: translateX(100vw);
+    }
 }
