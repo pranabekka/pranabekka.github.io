@@ -37,7 +37,7 @@ body {
     flex-direction: column;
     padding: 0 5vw;
     justify-content: center;
-    overflow: hidden;
+    overflow: clip;
     width: 100vw;
 }
 
@@ -59,21 +59,9 @@ body {
 
 #spotlight {
     position: absolute;
-    background-color: #fa8334;
-    width: 35rem;
-    height: 35rem;
-    border-radius: 50%;
+    height: 40rem;
+    width: 100vw;
+    /*Why is this necessary at all?!There's no padding in the entire document*/
+    margin-left: -5%;
     z-index: -1;
-    animation: 3s spotting infinite ease-in-out;
-}
-
-@keyframes spotting {
-    from {
-        transform: translate(-40rem);
-        -moz-transform: translate(-40rem, 0px);
-    }
-    to {
-        transform: translate(-40rem);
-        -moz-transform: translate(100vw, 0px);
-    }
 }
