@@ -36,6 +36,8 @@ body {
     flex-direction: column;
     padding: 0 5vw;
     justify-content: center;
+    overflow: hidden;
+    width: 100vw;
 }
 
 #cover-heading * {
