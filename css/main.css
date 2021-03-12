@@ -23,9 +23,15 @@ body {
 }
 
 .container-text {
-    font-size: 1.5rem;
+    font-size: 1rem;
     width: 75ch;
     width: min(75ch,90vw);
+}
+
+@media (min-width: 800px) {
+    .container-text {
+        font-size: 1.5rem;
+    }
 }
 
 .container-image {
@@ -80,7 +86,7 @@ nav {
     background-color: white;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 800px) {
     nav {
         top: 0;
         bottom: auto;
@@ -108,7 +114,7 @@ nav {
     color: black;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 800px) {
     #cover-heading * {
         font-size: 12rem;
     }
@@ -135,7 +141,7 @@ nav {
     margin-right: 1rem;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 800px) {
     #cover-heading-part1::before {
         content: "";
         margin-left: 8rem;
@@ -156,7 +162,7 @@ nav {
     padding-top: 5rem;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 800px) {
     #cover-subtitle {
         padding-top: 1rem;
     }
@@ -179,7 +185,7 @@ nav {
     height: 3rem;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 800px) {
     #nav-clear * {
         display: none;
     }
