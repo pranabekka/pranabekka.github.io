@@ -34,12 +34,28 @@ body {
 }
 
 .container-image img {
-	width: 70%;
+    width: 75ch;
+    width: min(75ch,90vw);
 }
 
 .caption {
     font-size: .9rem;
     color: #c5c5c5;
+}
+
+.button-download {
+    all: unset;
+    display: inline-block;
+    background-color: #fa8332;
+    border-radius: 5px;
+    padding: .2rem .4rem;
+    margin: .5rem;
+    cursor: pointer;
+    border: 2px solid #fa8332;
+}
+
+.button-download:hover {
+    background-color: black;
 }
 
 /* NAV */
@@ -144,6 +160,12 @@ nav {
     #cover-subtitle {
         padding-top: 1rem;
     }
+}
+
+#prototype-announcement {
+    text-align: center;
+    margin: 1rem 0;
+}
 
 #spotlight {
     position: absolute;
