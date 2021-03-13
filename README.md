@@ -4,6 +4,10 @@ Code for muh website-- www.pranabekka.com
 
 # TODO
 
-- Site breaks in landscape mode
-    . Test with new 800px query
 . Integrate formspree
+. Study css for repetition
+	. Use atomic css where necessary
+. Clean up unused fonts
+. Migrate to HTTPS
+	. See https://www.freecodecamp.org/news/free-https-c051ca570324/
+. Add css for medium screens as well?
