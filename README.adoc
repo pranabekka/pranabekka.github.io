@@ -2,16 +2,30 @@
 
 Code for muh website-- www.pranabekka.com
 
+== The Peaceful Web
+
+* Seeking to be part of the peaceful web,
+where information is meant to be shared,
+but not pushed into your brains.
+It simply waits for when you are ready--peacefully.
+** For simplicity, even the index page will have
+the same structure as any other article on the site.
+
 == TODO
 
+* [ ] Review site structure and purpose
 * [ ] Consider build script/make file to build site
+** Should include header/nav content at the top of each page
 * [ ] Review directory structure for source files vs served files
+* [ ] Add favicon
+** 256*256px?
+
+=== Someday/Maybe
+
 * [ ] Create basic form
 ** [ ] Integrate formspree
 * [ ] Migrate to HTTPS
 ** [ ] See https://www.freecodecamp.org/news/free-https-c051ca570324/
-* [ ] Add favicon
-** [ ] 256*256px?
 * [ ] Adjust caption tracking for improved readability
 * [ ] Adjust button hover action to be subtler
 ** [ ] Try changing colour to orange, with background same
