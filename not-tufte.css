@@ -160,6 +160,10 @@ code, pre > code {
 }
 
 @media (max-width: 760px) {
+    body {
+        width: 90%;
+    }
+    
     figure {
         max-width: 90%;
     }
