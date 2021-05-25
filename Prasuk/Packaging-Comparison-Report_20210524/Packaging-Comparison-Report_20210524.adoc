@@ -1,0 +1,46 @@
+= Packaging Comparison Report
+Pranab Dasgupta, 20210524
+
+The key problem with dispensing fruits and vegetables
+is the damage from the products falling.
+
+== Summary
+
+There are several solutions to this:
+
+. Use a sturdy material such as cardboard for the packaging.
+See https://www.abc.net.au/news/2014-08-09/family-behind-fruit-vending-machines-inundated-with-requests/5659320
+. Add padding to the collection bin of the vending machine.
+See https://www.qsrweb.com/blogs/fresh-fruit-vending-systems-food-innovation/
+. Add an angle to the side walls of the vending machine.
+See https://www.qsrweb.com/blogs/fresh-fruit-vending-systems-food-innovation/
+
+There are other solutions which are not viable for us:
+
+. Use a vending machine with a movable tray.
+This is especially useful for delicate items such as medicines and groceries.
+See https://www.youtube.com/watch?v=xKfW3zkb4sU
+
+Bananas should be stored at a higher temperature than other produce
+--see https://www.wsj.com/articles/SB10001424052702303550904575562480804057778
+and https://www.qsrweb.com/blogs/fresh-fruit-vending-systems-food-innovation/ .
+Most fruits and vegetables are stored at 34°F, while bananas are stored at 57°F.
+
+== Suggestions
+
+Try cardboard trays inside vacuum sealed corn starch bags.
+See https://www.abc.net.au/news/2014-08-09/family-behind-fruit-vending-machines-inundated-with-requests/5659320 .
+Branding would be on the corn starch bags themselves.
+The cardboard material should contribute greatly to strength.
+Furthermore, the tray would allow for
+more products to be packaged in the same size tray.
+If corn starch bags are not viable,
+it is also possible to use LDPE,
+which is used in newer brands of cling film,
+and is recyclable material.
+See https://www.ulmapackaging.com/en/packaging-solutions/produce#packedproduct=.fresh-vegetables-in-trays&productline=&sustainable=
+for a variety of tray based solutions.
+
+However, the above solution does not protect the top of the produce.
+In that case we might want to consider (a) deeper trays or
+(b) fully enclosed cardboard boxes, similar to what we use currently.
