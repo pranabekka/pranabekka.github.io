@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ page.title }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ page.title }}</h1>
+
+<p class="sub">
+  Created: {{ page.date | date(format="%Y-%m-%d") }}
+  {%- if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") -%}
+    ; Updated: {{ page.updated | date(format="%Y-%m-%d") }}
+  {%- endif -%}
+</p>
+
+{% if page.toc %}
+  <!-- <h2>List of Contents</h2> -->
+  <div class="contents"
+    <p>Contents:</p>
+    <ol>
+    {% for h1 in page.toc %}
+      <li>
+        <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+        {% if h1.children %}
+          <ol>
+            {% for h2 in h1.children %}
+              <li>
+                <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+              </li>
+            {% endfor %}
+          </ol>
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ol>
+  </div>
+  <hr>
+{% endif %}
+
+{{ page.content | safe }}
+
+{% if page.backlinks | length == 1
+   and page.backlinks.0.permalink == config.base_url ~ "/" | as_str %}
+  {# if only one link, and that's index, do nothing #}
+{% elif page.backlinks %}
+  {# else render all links, except index #}
+  <h2>Back References</h2>
+  <p>Material that refers to this page.</p>
+  <ul>
+  {% for backlink in page.backlinks %}
+    {% if backlink.permalink != config.base_url ~ "/" | as_str %}
+      <li>
+        <a href="{{ backlink.permalink }}">{{ backlink.title }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+{% endif %}
+
+{% endblock content %}

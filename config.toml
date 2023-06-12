@@ -1,0 +1,12 @@
+base_url = "https://pranabekka.github.io"
+
+title = "Pranab Ekka's Site"
+
+compile_sass = true
+
+build_search_index = false
+
+[markdown]
+smart_punctuation = true
+
+[extra]

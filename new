@@ -1,0 +1,31 @@
+#!/usr/bin/env fish
+
+#####################################################################
+## Creates a new post using argv[1] by copying templates/post.md
+##
+## Checks that $argv[1] does not already exist in content.md
+## Ensures that .md extension is not duplicated in file name
+#####################################################################
+
+test -z $argv ; and echo "need file-name for new post" ; and exit 1
+
+if test (string sub --start -3 $argv[1]) = \.md
+  set target content/$argv[1]
+else
+  set target content/$argv[1].md
+end
+
+test -e $target ; and echo "file already exists" ; and exit 1
+
+set title (basename $target | string sub --end -3)
+set title (string replace --all '-' ' ' $title)
+set date (date +'%F %H:%M:%S')
+
+cp -n templates/page.md $target
+sed --in-place "s/{{title}}/$title/" $target
+# sed "s/{{title}}/test-post/" $target
+sed --in-place "s/{{date}}/$date/" $target
+# kak -f 's^date<ret><a-l>l! date +"%F %H:%M:%S"<ret>hd' $target
+# kak -f 's^updated<ret><a-l>l! date +"%F %H:%M:%S"<ret>hd' $target
+kak -f 'ggf"lt"S<space><ret><a-;>;~' $target
+kak -e 'execute-keys f"lt"' $target

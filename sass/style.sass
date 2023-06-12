@@ -1,0 +1,225 @@
+//////////// general settings
+
+$max-width: 40rem // just under 70(root)ch
+$fg: #fffff8
+$fg-dim: #b3b3b3
+$bg: #18171b
+$bg-bright: #333039
+$bg-semi-bright: #28252c
+
+*
+  box-sizing: border-box
+
+:root
+  background: $bg
+  color: $fg
+
+  font-family: Work Sans, sans-serif
+  font-size: 14pt
+  line-height: 1.4em
+
+////////// basic elements
+
+body
+  margin: 0 auto
+  padding: 0
+  max-width: $max-width
+
+header
+  max-width: 100%
+  padding: 1rem 1rem
+
+  border-bottom: 1px solid white
+
+nav
+  display: flex
+  flex-wrap: wrap
+  gap: 1rem
+
+main
+  padding: 0 .8rem
+  margin: 0 auto
+
+h1, h2, h3, h4, h5, h6
+  font-weight: 600
+  margin-bottom: 0
+  line-height: 1em
+  overflow-wrap: break-word
+
+h1
+  font-size: 48pt
+
+h2
+  font-size: 32pt
+
+h3
+  font-size: 24pt
+
+h4
+  font-size: 18pt
+
+.smalltitle
+  font-size: 1em
+
+.sub
+  margin-top: 0.2em
+  color: $fg-dim
+
+.contents
+  margin-top: 0.8em
+
+.contents > *
+  margin-top: 0.2em
+
+p
+  margin: .5rem 0
+
+.sitetitle
+  font-size: 1.5rem
+  font-weight: 600
+
+a
+  // padding: .2rem .4rem
+  color: $bg
+  color: $fg
+
+a:hover
+  color: $bg
+  background: $fg
+
+pre, code
+  font-family: Anonymous Pro, monospace
+  // background: $bg-bright
+
+p code
+  background: $bg-bright
+  // color: $fg-dim
+
+  border-radius: 8px
+  padding: .2rem .4rem
+
+pre
+  background: $bg-semi-bright
+  // border: 2px solid $fg
+  border-radius: 8px
+  padding: 1rem
+  overflow-x: scroll
+
+ol, ul
+  padding-left: 1.5rem // works only with single digit numbers
+                       // double digits will require `2rem`
+
+.tablewrapper
+  overflow-x: scroll
+  border-radius: 8px
+  border: 2px solid $fg
+
+table
+  border-spacing: 2rem 1rem
+  text-align: left
+
+.footnote-definition
+  display: flex
+  gap: .5em
+
+footer
+  margin: 0 auto
+  margin-top: 6rem // match upper margin between title and header
+
+  border-top: 1px solid white
+
+//////////// layout
+// added later to override generic styles
+
+main > *
+  margin-top: 1.5em
+
+footer > *
+  margin: .8rem auto
+  padding: 0 .8rem // only horizontal, to keep alignment, since footer manages vertical
+
+//////////// special: heading numbers
+
+body
+  counter-reset: h2-counter
+
+main
+  > h2
+    counter-reset: h3-counter
+
+  > h2:before
+    content: counter(h2-counter) ". "
+    counter-increment: h2-counter
+    color: $fg-dim
+
+  > h3:before
+    content: counter(h2-counter) "." counter(h3-counter) ". "
+    counter-increment: h3-counter
+    color: $fg-dim
+
+//////////// special: card
+// used in index, resume
+ 
+.cards
+  list-style-position: inside
+  padding: 0
+  list-style: none
+
+.cards > *
+  margin-top: 2em
+
+/////////// special: clickable cards
+// used in index
+
+// https://stackoverflow.com/questions/796087/make-a-div-into-a-link
+.clickable
+  position: relative
+  cursor: pointer
+
+.clickable:hover a
+  // color: scale-color($highlight, $alpha: -20%)
+  // color: $highlight-dark
+  color: $bg
+  background-color: $fg
+  text-decoration: none
+
+// https://stackoverflow.com/questions/796087/make-a-div-into-a-link
+.cardlink > span
+  position: absolute
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+  z-index: 1
+
+
+////////// special: pips, icons
+// used in: resume
+
+// remember to set "color" in the svg file itself
+.icon
+  display: inline-block
+  width: 1em
+  height: 1em
+  position: relative
+  top: .1em
+  margin: 0 .2em
+
+.pipgrid
+  display: grid
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr))
+  gap: 1.5em
+  align-items: end
+
+.pip-display
+  line-height: 1em
+
+.pip
+  display: inline-block
+  width: 1.5em
+  height: .2em
+  border-radius: .1em
+  background: #555555
+
+.pip.full
+  background: white
