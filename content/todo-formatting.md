@@ -1,6 +1,5 @@
 +++
 title = "Todo Formatting"
-draft = true
 date = 2023-05-21 00:03:47
 updated = 2023-05-21 00:03:47
 +++

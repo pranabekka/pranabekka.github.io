@@ -1,6 +1,5 @@
 +++
 title = "Minecraft Activate the Monument"
-draft = true
 date = 2023-05-21 20:07:42
 updated = 2023-05-21 20:07:42
 +++

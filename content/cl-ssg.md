@@ -1,6 +1,5 @@
 +++
 title = "CL SSG (Common Lisp Static Site Generator)"
-draft = true
 date = 2023-05-18 23:03:39
 updated = 2023-05-18 23:03:39
 +++

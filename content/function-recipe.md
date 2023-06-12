@@ -1,6 +1,5 @@
 +++
 title = "Function Design Recipe"
-draft = true
 date = 2023-05-11 12:36:29
 updated = 2023-05-11 12:36:29
 +++

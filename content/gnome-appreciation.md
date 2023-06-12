@@ -1,6 +1,5 @@
 +++
 title = "GNOME Appreciation"
-draft = true
 date = 2023-05-11 16:34:15
 updated = 2023-05-11 16:34:15
 +++

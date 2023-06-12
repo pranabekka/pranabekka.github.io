@@ -1,6 +1,5 @@
 +++
 title = "Scripting (SSG Edition)"
-draft = true
 date = 2023-05-17 20:16:04
 updated = 2023-05-18 12:11:46
 +++

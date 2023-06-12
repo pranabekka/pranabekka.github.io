@@ -1,6 +1,5 @@
 +++
 title = "More Ideas on CL SSG"
-draft = true
 date = 2023-05-31 21:50:57
 updated = 2023-05-31 21:50:57
 +++

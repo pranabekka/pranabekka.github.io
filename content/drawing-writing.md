@@ -1,6 +1,5 @@
 +++
 title = "Drawing and Writing"
-draft = true
 date = 2023-05-15 04:56:14
 updated = 2023-05-15 04:56:14
 +++
