@@ -82,7 +82,7 @@ As an example:
 </ul>
 ```
 
-NOTE: I'm not 100% sure about Starlark syntax and features,
+**NOTE:** I'm not 100% sure about Starlark syntax and features,
 and I'm not really a Python user either,
 so this might not be correct.
 Although, you could probably add additional features

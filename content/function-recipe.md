@@ -28,7 +28,7 @@ The preface is a good place to start.
 
 ## The Recipe
 
-NOTE: This is not strictly the recipe.
+**NOTE:** This is not strictly the recipe.
 I've borrowed basic ideas from it,
 and managed to use it quite successfully.
 

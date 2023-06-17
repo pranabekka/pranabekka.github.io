@@ -23,7 +23,7 @@ HTML and CSS, text editors, and the terminal.
 Also, follow the Zola [installation instructions][install]
 so that you can follow along with the examples.
 
-NOTE: Please don't write the files as presented in this post
+**NOTE:** Please don't write the files as presented in this post
 for an actual blog/website for others.
 One reason is that I'm only putting partial HTML
 (it works, but it's a good way to make a terrible site),

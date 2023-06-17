@@ -26,7 +26,7 @@ similar to the accessibility options of games like
 [Celeste (Celeste Wiki)][access-celeste] and
 [Rusted Moss (Article on Flying)][access-rusted-moss][^1].
 
-NOTE: A lot of this is trust based,
+**NOTE:** A lot of this is trust based,
 and might not scale so well.
 It works best with friends and acquaintances.
 
@@ -80,7 +80,7 @@ You can't accumulate enough materials from your farms:
 
 ## Bonus Rule: Additional Accessibility
 
-NOTE: I'm using "accessibility" in a looser sense of the word,
+**NOTE:** I'm using "accessibility" in a looser sense of the word,
 not in the sense of a11y [^2].
 
 This rule derives from my own frustrations with lag,
@@ -103,7 +103,7 @@ Other disadvantages include lag and rubberbanding.
   The rule need not apply at all times.
   For example, network effects can be temporary.
 
-NOTE: The other rules are also about accessibility ---
+**NOTE:** The other rules are also about accessibility ---
 they're about making certain parts of the game
 more accessible to everyday players
 who might not have enough time

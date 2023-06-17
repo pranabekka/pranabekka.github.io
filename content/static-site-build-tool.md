@@ -13,7 +13,7 @@ task runners/commands,
 and access to all sorts of (cli) tools
 (including your own scripts and binaries).
 
-NOTE: Some of this might require
+**NOTE:** Some of this might require
 a more advanced understanding of static site generators,
 or at least an understanding of my understanding of them ;p \
 See [my article](@/how-ssgs-work.md) on how they work to know more
@@ -74,7 +74,7 @@ There's even [overlord][overlord] for a (common) lisp build system,
 or [buck2][buck2] if you want somethind industrial grade<sup>TM</sup>
 (that's a joke).
 
-NOTE: If you're using make,
+**NOTE:** If you're using make,
 the `.ONESHELL` directive runs the steps in a command
 in the same shell instance,
 otherwise make runs each one in a separate shell.
