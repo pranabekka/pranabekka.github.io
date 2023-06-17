@@ -39,5 +39,5 @@ But it is a clone on a (Github) remote.
 So 'Remote Clone'.
 
 I wonder what the process is for (remote) git interfaces like
-Sourcehut, Gogs (and descendants {{sn(c="Gitea, Forgejo")}}),
+Sourcehut, Gogs (and descendants like Gitea and Forgejo),
 and any other interactive ones.
