@@ -4,14 +4,13 @@ date = 2023-05-31 21:50:57
 updated = 2023-05-31 21:50:57
 +++
 
-So Coleslaw didn't really work out (more below).
+Following up on my initial post
+([CL SSG --- Common Lisp Static Site Generator](@/cl-ssg.md)),
+Coleslaw didn't really work out (more below).
 Instead, I'm imagining a static site generator based on
 a build system,
 a typst-inspired language,
 and a simple server.
-
-[Here's](@/cl-ssg.md)
-my initial post on a Common Lisp Static Site Generator.
 
 Regarding Coleslaw,
 I had some bugs that I didn't feel like going through,
@@ -21,6 +20,9 @@ and I didn't feel like learning all about it.
 Even the preview didn't work properly.
 So I just let it be.
 Zola gives me most of what I need anyway.
+I might give Coleslaw a try again later.
+
+I did look up some Common Lisp libraries, however.
 
 Overlord seems to be a good build system.
 It should get me incrememental and parallel builds.
