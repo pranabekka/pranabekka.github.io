@@ -7,7 +7,7 @@ updated = 2023-06-18 20:29:28
 This is a wild one,
 which stems from my education as a visual designer,
 as well as a regular terminal user.
-The gist my idea is that there are many ways
+The gist of my idea is that there are many ways
 of representing data in plain text for easy use.
 This is especially useful in a terminal based workflow,
 but even basic users can adopt some of this in
