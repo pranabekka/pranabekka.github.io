@@ -11,7 +11,7 @@
       {% set path = page_name ~ ".md" %}
       {% set page = get_page(path=path) %}
       <a href="{{ page.permalink }}">
-        <img src="{{ page.extra.thumb }}">
+        <img src="{{ config.base_url }}/{{ page.extra.thumb }}">
         {{ page.title }}
       </a>
     {% endfor %}
