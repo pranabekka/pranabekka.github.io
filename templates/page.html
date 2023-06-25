@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block content %}
+
 <h1>{{ page.title }}</h1>
 
 <p class="sub">
   Created: {{ page.date | date(format="%Y-%m-%d") }}
   {%- if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") -%}
-    ; Updated: {{ page.updated | date(format="%Y-%m-%d") }}
+    <br>
+    Last Updated: {{ page.updated | date(format="%Y-%m-%d") }}
   {%- endif -%}
 </p>
 
@@ -39,6 +41,9 @@
 {% endif %}
 
 {{ page.content | safe }}
+
+{% block portfolio %}
+{% endblock portfolio %}
 
 {% if page.backlinks | length == 1
    and page.backlinks.0.permalink == config.base_url ~ "/" | as_str %}

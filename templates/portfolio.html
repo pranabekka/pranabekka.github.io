@@ -1,0 +1,19 @@
+{% extends "page.html" %}
+
+{% block portfolio %}
+  <h2>Online Projects</h2>
+  <p>Projects that I've published on the site.
+  Currently (as of June 2023),
+  most projects are in <a href="{{config.base_url}}/pranabekka-portfolio-2023-06-23-public.pdf">the PDF</a>.</p>
+
+  <div class="folio-grid">
+    {% for page_name in page.extra.pages %}
+      {% set path = page_name ~ ".md" %}
+      {% set page = get_page(path=path) %}
+      <a href="{{ page.permalink }}">
+        <img src="{{ page.extra.thumb }}">
+        {{ page.title }}
+      </a>
+    {% endfor %}
+  </div>
+{% endblock portfolio %}
