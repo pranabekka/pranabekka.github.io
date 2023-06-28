@@ -9,7 +9,7 @@ Hi! I'm Pranab.
 I'm a designer by trade,
 but also a hobbyist programmer,
 in the sense of making computers do things for me.
-This site is for me to share about my ideas and adventures.
+This site is for me to share my ideas and adventures.
 
 ## Recommended
 
