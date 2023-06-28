@@ -1,7 +1,8 @@
 +++
 title = "{{title}}"
 draft = true
-date = {{date}}
+## remember to change date on publishing
+date = {{date}} # draft date
 updated = {{date}}
 +++
 
