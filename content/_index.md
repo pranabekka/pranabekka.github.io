@@ -5,11 +5,11 @@ updated = 2023-04-18 15:42:28
 sort_by = "date"
 +++
 
-Hi!
-Welcome to my little corner of the internet,
-where I overshare about my faffing around.
-Topics include Linux, programming, and design;
-amongst other things.
+Hi! I'm Pranab.
+I'm a designer by trade,
+but also a hobbyist programmer,
+in the sense of making computers do things for me.
+This site is for me to share about my ideas and adventures.
 
 ## Recommended
 
