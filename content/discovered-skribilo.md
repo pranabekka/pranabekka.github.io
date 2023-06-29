@@ -38,7 +38,7 @@ with very similar semantics to what I was envisioning in
 
 At this stage, I think all it needs
 is a way to define syntax sugar (like `# title` or `- list item`),
-and it would be on roughly on par with typst.
+and it would be roughly on par with typst.
 
 [skribilo]: https://www.nongnu.org/skribilo/
 [paper]: https://people.cs.aau.dk/~normark/laml/papers/laml-retrospective-paper.pdf
