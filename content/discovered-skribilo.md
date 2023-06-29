@@ -12,12 +12,12 @@ in [Lispy Templates](@/lispy-templates.md):
 2. It uses square brackets ('[...]')for content blocks instead of quotes.
 
 Skribilo actually supports multiple types of syntax,
-and it's actually a framework for defining your own.
-The syntax it uses is the Skribe syntax,
+since it's more of a framework for defining your own syntax.
+The syntax it uses by default is the Skribe syntax,
 which has its origins in LAML roughly as far back as 1999,
 as per [this paper][paper] by Kurt Nørmark.
 
-The Skribilo page also mentions a lot of prior art
+The [Skribilo page][skribilo] also mentions a lot of prior art
 and similar projects at the bottom,
 which might be interesting to look at.
 
