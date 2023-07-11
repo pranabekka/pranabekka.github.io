@@ -298,7 +298,7 @@ Only Lisp syntax is simpler and more consistent.
 
 ## Conclusion
 
-We have a language with (even more!) significant whitespace,
+We have a syntax with (even more!) significant whitespace,
 consistent rules, infix syntax and easy inline syntax,
 that should be more palatable to users of other languages,
 and easy for existing Lispers to learn and share.
