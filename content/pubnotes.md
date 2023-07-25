@@ -17,13 +17,21 @@ to implement a social media.
 It can be used to author and share stories.
 
 Here's how it works:
-At a very basic level, notes have some text
+at a very basic level, notes have some text
 and a unique ID/URL.
 You might even remove the URL and IDs
 in order to make notes harder to target.
 The example below includes
 a simple title, tagline and call to action
 for a made-up site.
+
+> It's sort of like a paper note or letter:
+> in its simplest form
+> you just write "Left food in microwave" on a sticky note
+> and put it on the fridge,
+> or you could take it a bit further
+> by writing your name at the end,
+> or even other details like a deadline.
 
 ![image of anonymous notes](/pubnotes-anonymous.png)
 
@@ -32,11 +40,12 @@ like the time at which the note was published,
 or the name/ID of the person who created it.
 
 It's sort of like a paper note or letter:
-at the most basic level
-you can write "Left food in microwave" on a sticky note
+in its simplest form
+you just write "Left food in microwave" on a sticky note
 and put it on the fridge,
 or you could take it a bit further
-by writing your name at the end.
+by writing your name at the end,
+or even other details like a deadline.
 
 <!-- ![image of sticky note with various degrees of content]() -->
 
