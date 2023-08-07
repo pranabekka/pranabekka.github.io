@@ -50,7 +50,7 @@ main > ul, main > ol
 h1, h2, h3, h4, h5, h6
   font-weight: 600
   margin-bottom: 0
-  line-height: 1em
+  line-height: 1.1em
   overflow-wrap: break-word
 
 main > h1, main > h2, main > h3, main > h4, main > h5, main > h6
@@ -186,34 +186,6 @@ main
   list-style-position: inside
   padding: 0 .8rem
   list-style: none
-
-.cards > *
-  margin-top: 2em
-
-/////////// special: clickable cards
-// used in index
-
-// https://stackoverflow.com/questions/796087/make-a-div-into-a-link
-.clickable
-  position: relative
-  cursor: pointer
-
-.clickable:hover a
-  // color: scale-color($highlight, $alpha: -20%)
-  // color: $highlight-dark
-  color: $bg
-  background-color: $fg
-  text-decoration: none
-
-// https://stackoverflow.com/questions/796087/make-a-div-into-a-link
-.cardlink > span
-  position: absolute
-  width: 100%
-  height: 100%
-  top: 0
-  left: 0
-  z-index: 1
-
 
 ////////// special: pips, icons
 // used in: resume

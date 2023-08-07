@@ -14,14 +14,16 @@
 <ul class="cards">
   {% for page in section.pages %}
     {% if not page.extra.hidden %}
-      <li class="card clickable">
-        <a class="cardlink" href="{{ page.permalink }}"><span></span></a>
-        <h3 class="cardtitle">{{ page.title }}</h3>
+      <li>
+        <h3>
+          <a href="{{ page.permalink }}">
+            {{ page.title }}
+          </a>
+        </h3>
         <p class="sub">
           {{ page.date | date(format="%Y-%m-%d") }}
         </p>
         <p>{{ page.content | split(pat="</p>") | first | trim_start_matches(pat="<p>") | striptags }}</p>
-      <p><a href="{{ page.permalink }}">Open Page</a></p>
       </li>
     {% endif %}
   {% endfor %}
