@@ -11,7 +11,10 @@
 
 <body>
   <header>
-    <p class="sitetitle">{{ config.title }}</p>
+    <p class="sitetitle">
+      <img src="/favicon.svg" id="icon">
+      {{ config.title }}
+    </p>
     <nav>
       <a href="{{ config.base_url }}">Index</a>
       <a href="{{ config.base_url }}/contact">Contact</a>
