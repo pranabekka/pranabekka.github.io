@@ -46,15 +46,18 @@
 {% endblock portfolio %}
 
 {% if page.backlinks | length == 1
-   and page.backlinks.0.permalink == config.base_url ~ "/" | as_str %}
-  {# if only one link, and that's index, do nothing #}
+      and page.backlinks.0.permalink == config.base_url ~ "/" | as_str
+   or page.backlinks | length == 1
+      and page.backlinks.0.permalink == page.permalink %}
+  {# do nothing if only one link, and that's index or same page #}
 {% elif page.backlinks %}
-  {# else render all links, except index #}
+  {# else render all links, except index or self #}
   <h2>Back References</h2>
   <p>Material that refers to this page.</p>
   <ul>
   {% for backlink in page.backlinks %}
-    {% if backlink.permalink != config.base_url ~ "/" | as_str %}
+    {% if backlink.permalink != config.base_url ~ "/" | as_str
+       and backlink.permalink != page.permalink %}
       <li>
         <a href="{{ backlink.permalink }}">{{ backlink.title }}</a>
       </li>
