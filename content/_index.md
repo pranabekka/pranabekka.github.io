@@ -14,7 +14,7 @@ a (bad) hobbyist programmer and software enthusiast.
 This site is for me to share my ideas, adventures,
 and (mis)information.
 
-## Recommended
+## Re&shy;commended
 
 - [Lispy Templates](@/lispy-templates.md):\
   An idea for using s-expressions inside plain text files
