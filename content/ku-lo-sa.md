@@ -12,11 +12,12 @@ KU LO SA by Oxlade and Camila Cabello
 I've been into whatever this genre is lately:
 Nigerian hip hop, I guess.
 
-It started with Wetin by yarden,
-followed by KOLO by Ice Prince and Oxlade (amongs others),
-though I've liked Jamaican Patois English for a while,
+It started with Wetin by Yarden,
+followed by KOLO by Ice Prince and Oxlade (amongst others),
+though I've liked Jamaican Patois for a while,
 and I've been listening to African-origin rappers
 from the US and UK for even longer.
+I even enjoyed the Patois bits from Top Boy a lot.
 
 My favourite bit is the chorus at the end.
 Makes me just play the song again.
