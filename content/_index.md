@@ -1,19 +1,20 @@
 +++
-title = "Index"
+title = "Pranab’s Site"
 date = 2023-04-18 15:42:28
 updated = 2023-04-18 15:42:28
 sort_by = "date"
 +++
 
-Hi! I'm Pranab :)
+Where I share my thoughts, ideas, projects,
+and (mis)information.
 
+<!--
 I'm a designer by trade, but also
 a (bad) hobbyist programmer and software enthusiast.
 (CLI and keyboard driven, especially.)
+-->
 
-This site is for me to share my ideas, adventures,
-and (mis)information.
-
+<!--
 ## Re&shy;commend&shy;ed
 
 - [Lispy Templates](@/lispy-templates.md): 
@@ -24,3 +25,4 @@ and (mis)information.
   for people who don't have much time.
 - [DIY (Fish) Shell Templating](@/shell-templating.md):
   How to create templates using the Fish shell.
+-->

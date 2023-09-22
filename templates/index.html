@@ -10,7 +10,9 @@
   {{ section.title }}
 </h1>
 {{ section.content | safe }}
+<!--
 <h2>All Pages</h2>
+-->
 <ul class="cards">
   {% for page in section.pages %}
     {% if not page.extra.hidden %}
