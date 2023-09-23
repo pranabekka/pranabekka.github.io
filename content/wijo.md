@@ -1,5 +1,5 @@
 +++
-title = "Wijo (Game Idea)"
+title = "Noon-Flower (Game Idea)"
 date = 2023-06-22 11:23:16
 updated = 2023-06-22 11:23:16
 +++
@@ -9,6 +9,8 @@ were 2D --- and top-down,
 instead of sidescrolling (Terraria, Starbound).
 Something like [CrossCode](http://cross-code.com/en/home),
 but with building and more emergent gameplay.
+
+(Noon-Flower was previously called Wijo)
 
 There are two core ideas behind this:
 It must be compelling, and it must be tractable.

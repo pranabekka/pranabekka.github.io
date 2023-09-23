@@ -1,12 +1,14 @@
 +++
-title = "More on Wijo (Game Idea)"
+title = "More on Noon-Flower (Game Idea)"
 date = 2023-06-22 12:03:17
 updated = 2023-06-23 21:32:14
 +++
 
 Just a summary of my motivations, inspiration,
 and the origin of the name (it's random).
-See [my first post on Wijo](@/wijo.md) for an introduction.
+See [my first post on Noon-Flower](@/noon-flower.md) for an introduction.
+
+(Noon-Flower was previously called Wijo)
 
 ## Motivations
 
@@ -63,8 +65,17 @@ Their movement and parkour system is really cool,
 and I find the overall combat system quite good as well,
 even if I select upgrades pseudo-randomly.
 
-## Why Wijo?
+## Why Noon-Flower?
 
-I just randomly generated the name.
-It doesn't have any special meaning.
-Pronounced "Wee-ho," by the way.
+It's simple to pronounce and remember,
+and doesn't have any specific meaning,
+which means I'm not bound to anything specific.
+Like, Minecraft is so much more than mining or crafting
+--- it's more building or auto-farming than mining
+for lots of people.
+
+While it's supposed to be random and meaningless,
+I did imagine the game and it's (potential) community
+developing a random obsession with some item called the Noon Flower.
+I was picturing bases, custom maps, maybe some magic,
+lore, art, and stories about some mythical/magical item.
