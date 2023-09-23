@@ -8,7 +8,7 @@
 
 <h1>{{ page.title }}</h1>
 
-<p class="sub">
+<p class="subtitle">
   Created: {{ page.date | date(format="%Y-%m-%d") }}
   {%- if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") -%}
     <br>

@@ -22,7 +22,7 @@
             {{ page.title }}
           </a>
         </h3>
-        <p class="sub">
+        <p class="subtitle">
           {{ page.date | date(format="%Y-%m-%d") }}
         </p>
         <p>{{ page.content | split(pat="</p>") | first | trim_start_matches(pat="<p>") | striptags }}</p>
