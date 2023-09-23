@@ -23,3 +23,11 @@ My favourite bit is the chorus at the end.
 Makes me just play the song again.
 It's simply so upbeat and makes me want to dance
 even while I'm walking along in front of other people.
+
+If you liked KU LO SA,
+you can also check out these songs:
+
+- Wetin by Yarden
+- Toast by Koffee
+- soso by Omah Lay
+- KOLO by Ice Prince and Oxlade
