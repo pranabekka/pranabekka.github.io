@@ -7,6 +7,7 @@ updated = 2023-09-18 20:42:10
 Designers should be directly exposed to users
 (as opposed to only relying on reports
 from a dedicated user research team).
+Notes on article by Center Centre.
 
 Original article:
 [Fast Path to a Great UX – Increased Exposure Hours](https://articles.centercentre.com/user_exposure_hours)
