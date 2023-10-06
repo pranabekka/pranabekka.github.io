@@ -14,7 +14,7 @@ software teams.
 
 {{icon(i="image")}}Portfolio: [pranabekka.github.io/portfolio](/portfolio)
 
-{{icon(i="envelope")}}Email: <a href="mailto:pranabekka@gmail.com">pranabekka@gmail.com</a>
+{{icon(i="envelope")}}Email: pranabekka &lt;at&gt; gmail &lt;dot&gt; com
 
 {{icon(i="download")}}Download: [Resumé (PDF)](/resume-pranab-dasgupta-2023-06-01-public.pdf)
 

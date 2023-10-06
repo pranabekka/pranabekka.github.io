@@ -13,7 +13,7 @@ I'll be including some of them on the website over time.
 
 {{icon(i="download")}}Download: [Portfolio (PDF)](/pranabekka-portfolio-2023-06-23-public.pdf)
 
-{{icon(i="envelope")}}Email: <a href="mailto:pranabekka@gmail.com">pranabekka@gmail.com</a>
+{{icon(i="envelope")}}Email: pranabekka &lt;at&gt; gmail &lt;dot&gt; com
 
 {{icon(i="document")}}Resumé: [pranabekka.github.io/resume](/resume)
 
