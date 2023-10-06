@@ -7,6 +7,7 @@ updated = 2023-10-06 11:44:15
 A collection of links on various things,
 with brief descriptions about what they are
 and why they're of interest.
+Basically bookmarks.
 
 [Web Sustainability Guidelines](https://w3c.github.io/sustyweb#table-of-contents):
 Multi-faceted and comprehensive guide
