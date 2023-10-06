@@ -1,8 +1,6 @@
 +++
 title = "About"
-draft = true
-## remember to change date on publishing
-date = 2023-09-26 14:46:13 # draft date
+date = 2023-09-26 14:46:13
 updated = 2023-09-26 14:46:13
 +++
 
