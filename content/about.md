@@ -11,6 +11,8 @@ including tips on how to use it (the site, not me ;).
 
 Where me = "Pranab".
 
+[Contact](@/contact.md)
+
 I have a formal education in design,
 with my current focus on UI/UX design,
 but I've also had an interest in computers since school,
