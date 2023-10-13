@@ -18,8 +18,8 @@
 
 {% if page.toc %}
   <!-- <h2>List of Contents</h2> -->
-  <div class="contents"
-    <p>Contents:</p>
+  <details class="contents">
+    <summary>Show/Hide Contents</summary>
     <ol>
     {% for h1 in page.toc %}
       <li>
@@ -36,7 +36,7 @@
       </li>
     {% endfor %}
     </ol>
-  </div>
+  </details>
   <hr>
 {% endif %}
 
