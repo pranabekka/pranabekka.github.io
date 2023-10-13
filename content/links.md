@@ -16,6 +16,13 @@ to making sustainable web sites/products,
 with links to research and examples.
 Working through it right now.
 
+## [Godot Engine Docs (Getting Started)](https://docs.godotengine.org/en/stable/getting_started/introduction/index.html)
+
+Explanations of basic godot concepts,
+as well as more detailed walkthroughs
+and a full reference for nodes, functions, variables,
+best practices, and general topics.
+
 ## [lobste.rs](https://lobste.rs)
 
 Tech forum that doesn't devolve into madness.
