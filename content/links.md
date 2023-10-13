@@ -23,6 +23,14 @@ as well as more detailed walkthroughs
 and a full reference for nodes, functions, variables,
 best practices, and general topics.
 
+## [NixOS & Flakes Book](https://nixos-and-flakes.thiscute.world/)
+
+An (unofficial) introduction to Nix,
+which includes flakes (unlike official docs),
+and seems more beginner friendly and comprehensive
+than the official docs.
+Aims to include everything you might need.
+
 ## [lobste.rs](https://lobste.rs)
 
 Tech forum that doesn't devolve into madness.
