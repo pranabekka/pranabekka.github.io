@@ -4,7 +4,8 @@ date = 2023-06-01 21:17:40
 updated = 2023-06-26 01:24:47
 template = "portfolio.html"
 [extra]
-pages = ["pubnotes"]
+pages = ["pubnotes",
+         "dymes"]
 +++
 
 Hi! My portfolio is currently available as a PDF.
