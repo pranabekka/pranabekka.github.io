@@ -1,8 +1,8 @@
+outline:
+
+- *Update Date*
 - Wrap tables in a .tablewrapper div
-- Update Date
 - `## Footnotes` heading
-- NO `sn()` macro for internal links
-- add in `extra.toc = true` for long posts
 
 ## Wrap tables in a .tablewrapper div
 
@@ -30,16 +30,11 @@ when you update a post.
 
 ## `## Footnotes` heading
 
-before putting in the footnotes
+Add above footnote references,
+at the end of the page.
 
-
-## NO `sn()` macro for internal links
-
-because the internally linked page is unable to
-detect that it has been linked to
-thus not showing it in backlinks.
-
-
-## add in `extra.toc = true` for long posts
-
-currently managed automatically
+Another option is to detect in template,
+but I've been avoiding them,
+so it's wasted effort.
+Reason: asides should be closer to the marker.
+In the paper age, it meant on the same page.
