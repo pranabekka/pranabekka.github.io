@@ -1,7 +1,5 @@
 +++
 title = "Dyme’s"
-draft = true
-## remember to change date on publishing
 date = 2023-10-15 09:43:48 # draft date
 updated = 2023-10-15 09:43:48
 [extra]
