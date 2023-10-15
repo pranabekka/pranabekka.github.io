@@ -1,19 +1,31 @@
-{% extends "page.html" %}
+{% extends "base.html" %}
 
-{% block portfolio %}
-  <h2>Online Projects</h2>
-  <p>Projects that I've published on the site.
-  Currently (as of June 2023),
-  most projects are in <a href="{{config.base_url}}/pranabekka-portfolio-2023-06-23-public.pdf">the PDF</a>.</p>
+{% block title %}
+{{ page.title }} - {{ config.title }}
+{% endblock %}
 
-  <div class="folio-grid">
-    {% for page_name in page.extra.pages %}
-      {% set path = page_name ~ ".md" %}
-      {% set page = get_page(path=path) %}
-      <a href="{{ page.permalink }}">
-        <img src="{{ config.base_url }}/{{ page.extra.thumb }}">
-        {{ page.title }}
-      </a>
-    {% endfor %}
-  </div>
-{% endblock portfolio %}
+{% block content %}
+
+<h1>{{ page.title }}</h1>
+
+<p class="subtitle">
+  Created: {{ page.date | date(format="%Y-%m-%d") }}
+  {%- if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") -%}
+    <br>
+    Last Updated: {{ page.updated | date(format="%Y-%m-%d") }}
+  {%- endif -%}
+</p>
+
+<div class="folio-grid">
+{% for backlink in page.backlinks %}
+  {% set basename = backlink.permalink | split(pat="/") | nth(n=3) %}
+  {% set name = basename ~ ".md" %}
+  {% set backlink_page = get_page(path=name) %}
+  <a href="{{ backlink.permalink }}">
+    <img src="{{ config.base_url }}/{{ backlink_page.extra.thumb }}">
+    {{ backlink.title }}
+  </a>
+{% endfor %}
+</div>
+
+{% endblock content %}

@@ -30,3 +30,7 @@ things are operated by email,
 and I put a lot of thought into the overall system,
 such as the number of seats and the waitlist.
 I'll probably write about it in more detail in a separate post.
+
+***
+
+[More Projects (Portfolio)](@/portfolio.md)
