@@ -17,15 +17,25 @@
 </p>
 
 <div class="folio-grid">
-{% for backlink in page.backlinks %}
-  {% set basename = backlink.permalink | split(pat="/") | nth(n=3) %}
-  {% set name = basename ~ ".md" %}
-  {% set backlink_page = get_page(path=name) %}
-  <a href="{{ backlink.permalink }}">
-    <img src="{{ config.base_url }}/{{ backlink_page.extra.thumb }}">
-    {{ backlink.title }}
-  </a>
-{% endfor %}
+
+  {% set dated_backlinks = [] %}
+  {% for backlink in page.backlinks %}
+    {% set basename = backlink.permalink | split(pat="/") | nth(n=3) %}
+    {% set name = basename ~ ".md" %}
+    {% set backlink_page = get_page(path=name) %}
+    {% set_global dated_backlinks =
+      dated_backlinks | concat(with=backlink_page.date ~ "/" ~ name) %}
+  {% endfor %}
+
+  {% for backlink in dated_backlinks | sort %}
+    {% set name = backlink | split(pat="/") | last %}
+    {% set backlink_page = get_page(path=name) %}
+    <a href="{{ backlink_page.permalink }}">
+      <img src="{{ config.base_url }}/{{ backlink_page.extra.thumb }}">
+      {{ backlink_page.title }}
+    </a>
+  {% endfor %}
+
 </div>
 
 {% endblock content %}
