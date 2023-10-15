@@ -1,7 +1,7 @@
 +++
 title = "Portfolio"
 date = 2023-06-01 21:17:40
-updated = 2023-06-26 01:24:47
+updated = 2023-10-15 16:03:33
 template = "portfolio.html"
 [extra]
 pages = ["pubnotes",
