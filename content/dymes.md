@@ -12,8 +12,10 @@ I've eaten from in Ranchi and Khunti
 So I thought that her food should be shared with people,
 and this website design is a result of that idea.
 
-I even made an actual [webpage](/dymes.html)
-that you should check out :D 
+I even made an actual webpage
+that you should check out :D
+
+[See Live Concept](/dymes.html)
 
 ![Website screen mockup](/dymes.png)
 
