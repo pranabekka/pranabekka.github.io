@@ -1,6 +1,6 @@
 outline:
 
-- *Update Date*
+- **Update Date**
 - Wrap tables in a .tablewrapper div
 - Footnotes heading
 
