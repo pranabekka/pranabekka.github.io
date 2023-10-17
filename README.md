@@ -4,6 +4,11 @@ outline:
 - Wrap tables in a .tablewrapper div
 - Footnotes heading
 
+## Update Date
+
+Remember to update the "updated" date in the frontmatter,
+when you update a post.
+
 ## Wrap tables in a .tablewrapper div
 
 ```
@@ -20,13 +25,6 @@ Remember to add the spacing before and after the table syntax.
 
 This is important to make them overflow properly,
 otherwise tables mess up the size of the page and other elements.
-
-
-## Update Date
-
-Remember to update the "updated" date in the frontmatter,
-when you update a post.
-
 
 ## Footnotes heading
 
