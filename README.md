@@ -2,7 +2,7 @@ outline:
 
 - *Update Date*
 - Wrap tables in a .tablewrapper div
-- `## Footnotes` heading
+- Footnotes heading
 
 ## Wrap tables in a .tablewrapper div
 
@@ -28,9 +28,9 @@ Remember to update the "updated" date in the frontmatter,
 when you update a post.
 
 
-## `## Footnotes` heading
+## Footnotes heading
 
-Add above footnote references,
+Add `## Footnotes` above footnote references,
 at the end of the page.
 
 Another option is to detect in template,
