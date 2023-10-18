@@ -35,7 +35,7 @@ Most of the projects are still in the PDF (as of Oct 2023).</p>
       dated_backlinks | concat(with=backlink_page.date ~ "/" ~ name) %}
   {% endfor %}
 
-  {% for backlink in dated_backlinks | sort %}
+  {% for backlink in dated_backlinks | sort | reverse %}
     {% set name = backlink | split(pat="/") | last %}
     {% set backlink_page = get_page(path=name) %}
     <a href="{{ backlink_page.permalink }}">
