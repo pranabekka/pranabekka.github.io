@@ -69,6 +69,8 @@ See choices below.
 - avoid full black/white to reduce glare effect (halation).
   not sure what other issues it might cause
 
+[Site Source](https://github.com/pranabekka/pranabekka.github.io)
+
 ### Usage Tips
 
 - search using `site:pranabekka.github.io <search term>`
