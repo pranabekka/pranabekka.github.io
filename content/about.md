@@ -68,14 +68,19 @@ See choices below.
   - might make a light theme eventually
 - avoid full black/white to reduce glare effect (halation).
   not sure what other issues it might cause
+- show all posts in single page to make basic search easy
+- three heading levels
+  - inspired by edward tufte
+  - not a hard rule, but easy to stick to
+- number headings to match contents list ("table of contents")
 
 [Site Source](https://github.com/pranabekka/pranabekka.github.io)
 
 ### Usage Tips
 
+- index is a good place to search the site
+  - it shows *all* posts, though only title and description
 - search using `site:pranabekka.github.io <search term>`
   (works with major search providers)
-- index shows *all* posts based on created/published date,
-  from most recent to oldest
-- some related articles are linked at the bottom,
-  if they refer to the current one
+- references to current page appear at the bottom
+  - other related pages appear in the body
