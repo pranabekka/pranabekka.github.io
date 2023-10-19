@@ -163,7 +163,7 @@ for different types of monsters or weight classes.
 
 I'll add more ideas as I come up with them
 or find them in my notes.
-Feel free to [share](@/contact.md) your own ideas as well!
+Feel free to [share](@/about.md#contact) your own ideas as well!
 
 ***
 

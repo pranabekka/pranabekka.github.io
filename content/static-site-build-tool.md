@@ -272,7 +272,7 @@ Maybe link to good shell scripting practices as well.
 
 ## Feedback
 
-Do [let me know](@/contact.md) if there are any
+Do [let me know](@/about.md#contact) if there are any
 interesting tools for these things.
 
 ## Footnotes

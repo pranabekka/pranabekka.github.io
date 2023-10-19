@@ -1,7 +1,7 @@
 +++
 title = "About"
 date = 2023-09-26 14:46:13
-updated = 2023-09-26 14:46:13
+updated = 2023-10-19 07:17:48
 +++
 
 A brief introduction to me and the site,
@@ -10,8 +10,6 @@ including tips on how to use it (the site, not me ;).
 ## About Me
 
 Where me = "Pranab".
-
-[Contact](@/contact.md)
 
 I have a formal education in design,
 with my current focus on UI/UX design,
@@ -42,6 +40,12 @@ Some of my interests include:
   even if I don't know the language,
   but I haven't written or maintained
   a decently sized codebase.
+
+### Contact
+
+Email: pranabekka &lt;at&gt; gmail &lt;dot&gt; com
+
+Mastodon: [@pranabekka@mastodon.social](https://mastodon.social/@pranabekka)
 
 ## About the Site
 
