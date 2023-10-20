@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ section.title }}
+{{ section.title | markdown | striptags}}
 {% endblock %}
 
 {% block content %}
 
 <h1>
-  {{ section.title }}
+  {{ section.title | markdown | safe }}
 </h1>
 {{ section.content | safe }}
 <!--
@@ -19,7 +19,7 @@
       <li>
         <h3>
           <a href="{{ page.permalink }}">
-            {{ page.title }}
+            {{ page.title | markdown | striptags }}
           </a>
         </h3>
         <p class="subtitle">

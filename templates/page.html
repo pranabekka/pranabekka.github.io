@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ page.title }} - {{ config.title }}
+{{ page.title | markdown | striptags }} - {{ config.title | markdown | striptags }}
 {% endblock %}
 
 {% block content %}
 
-<h1>{{ page.title }}</h1>
+<h1>{{ page.title | markdown | striptags }}</h1>
 
 <p class="subtitle">
   Created: {{ page.date | date(format="%Y-%m-%d") }}

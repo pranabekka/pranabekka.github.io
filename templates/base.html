@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{ config.base_url }}/style.css">
   <link rel="icon" href="{{ config.base_url }}/favicon.svg">
   <link rel="me" href="https://mastodon.social/@pranabekka">
-  <title>{% block title %}{{ config.title }}{% endblock %}</title>
+  <title>{% block title %}{{ config.title | markdown | striptags }}{% endblock %}</title>
 </head>
 
 <body>

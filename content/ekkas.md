@@ -1,5 +1,5 @@
 +++
-title = "Ekkas’"
+title = "Ekkas'"
 date = 2023-10-17 21:38:26 # draft date
 updated = 2023-10-17 21:38:26
 [extra]
