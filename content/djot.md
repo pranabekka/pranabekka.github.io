@@ -26,8 +26,7 @@ and no other mention.
 
 I think all three allow for creating an ast,
 so it should be easy to work them in with other tools,
-but it's still a fair bit of work
-(for me [^1])
+but it's still a fair bit of work (for me)
 to set up a static site or generate other documents from it.
 
 Maybe it's a good reason to really get into Javascript
