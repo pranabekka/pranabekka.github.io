@@ -290,11 +290,6 @@ and how they work?
 That might be the place for such documentation.
 Maybe link to good shell scripting practices as well.
 
-## Feedback
-
-Do [let me know](@/about.md#contact) if there are any
-interesting tools for these things.
-
 [mkws]: https://mkws.sh
 [sss]: https://github.com/kmaasrud/sss
 [pp]: https://adi.onl/pp.html
