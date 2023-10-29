@@ -150,6 +150,14 @@ used by miniserve [^mini-ip] or your preferred dev server
 in order to preview the links locally,
 otherwise it would take you to your production site.
 
+[^mini-ip]: miniserve displays a list of ips,
+but you could also find out by running
+`ifconfig | grep 192`.
+If you use `ifconfig` use the second ip
+starting with `192.168` and add `:8080` at the end.
+miniserve tends to use 8080,
+but you might need to change it if it says something else.
+
 You could even use [caddy][caddy]
 or some other server thing.
 There's actually plenty of them —
@@ -235,6 +243,9 @@ Additionally, a github user called dbohdan maintains a list of
 [structured text tools](https://github.com/dbohdan/structured-text-tools#xml-html),
 which includes some xml tools that could be useful.
 
+[^xml2]: See xml2 in the Ubuntu package repositories.
+Website available on [archive.org](web.archive.org/web/20160719191401/http://ofb.net/~egnor/xml2).
+
 You could also use a mardown converter
 that lets you hook into it's HTML generator
 and create custom HTML output.
@@ -258,6 +269,15 @@ common issues,
 a public forum or chat (like Zulip [^zulip]),
 and more.
 
+[^zulip]: Zulip allows you to make some chats
+visible to everyone on the internet,
+regardless of whether they're signed up
+and part of your organisation or not.
+I believe this is a very important step for
+reducing friction for new users.
+See the [oilshell/oils-for-unix](https://oilshell.org) project
+for an example.
+
 A good documentation project around this system
 should allow anyone to easily create their own site builder
 in a programming language of their choice
@@ -274,28 +294,6 @@ Maybe link to good shell scripting practices as well.
 
 Do [let me know](@/about.md#contact) if there are any
 interesting tools for these things.
-
-## Footnotes
-
-[^mini-ip]: miniserve displays a list of ips,
-but you could also find out by running
-`ifconfig | grep 192`.
-If you use `ifconfig` use the second ip
-starting with `192.168` and add `:8080` at the end.
-miniserve tends to use 8080,
-but you might need to change it if it says something else.
-
-[^xml2]: See xml2 in the Ubuntu package repositories.
-Website available on [archive.org](web.archive.org/web/20160719191401/http://ofb.net/~egnor/xml2).
-
-[^zulip]: Zulip allows you to make some chats
-visible to everyone on the internet,
-regardless of whether they're signed up
-and part of your organisation or not.
-I believe this is a very important step for
-reducing friction for new users.
-See the [oilshell/oils-for-unix](https://oilshell.org) project
-for an example.
 
 [mkws]: https://mkws.sh
 [sss]: https://github.com/kmaasrud/sss

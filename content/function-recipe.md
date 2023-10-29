@@ -21,10 +21,24 @@ This [video (YouTube)](https://www.youtube.com/watch?v=1SlGgCxJa3w)
 presents a story of why it is useful
 in a broader example.[^1]
 
+[^1]: The idea is to take things step by step.
+At the level of the team in the video
+the steps are on a grander scale,
+but at the level of beginners
+it's very useful to follow the steps
+of the Function Design Recipe.
+
 You can find it at [htdp.org](https://htdp.org/2023-3-6/Book/part_preface.html) [^2].
 I recommend you go through the book if you're
 a new or intermediate programmer.
 The preface is a good place to start.
+
+[^2]: The book seems to be updated with some frequency.
+If you see the URL, you'll see `2023-3-6`,
+which suggests it was updated on 6th March 2023.
+I recommend starting at [htdp.org](https://htdp.org)
+and clicking the book title to open the index,
+so that you have the latest edition.
 
 ## The Recipe
 
@@ -81,15 +95,6 @@ this is my loose interpretation of the steps,
 meant to provide a gist of how it works.
 Please reference the [book](https://htdp.org) if you're interested
 --- click on the book title to open the index. [^2]
-
-## Footnotes
-
-[^1]: The idea is to take things step by step.
-At the level of the team in the video
-the steps are on a grander scale,
-but at the level of beginners
-it's very useful to follow the steps
-of the Function Design Recipe.
 
 [^2]: The book seems to be updated with some frequency.
 If you see the URL, you'll see `2023-3-6`,

@@ -26,6 +26,9 @@ similar to the accessibility options of games like
 [Celeste (Celeste Wiki)][access-celeste] and
 [Rusted Moss (Article on Flying)][access-rusted-moss][^1].
 
+[^1]: You can see the other options in the screenshots.
+The basic instructions apply to those as well.
+
 **NOTE:** A lot of this is trust based,
 and might not scale so well.
 It works best with friends and acquaintances.
@@ -81,7 +84,9 @@ You can't accumulate enough materials from your farms:
 ## Bonus Rule: Additional Accessibility
 
 **NOTE:** I'm using "accessibility" in a looser sense of the word,
-not in the sense of a11y [^2].
+not in the sense of a11y [^2]. 
+
+[^2]: https://en.wikipedia.org/wiki/Computer_accessibility
 
 This rule derives from my own frustrations with lag,
 but they apply to any player
@@ -196,10 +201,3 @@ to create a fun environment for everyone.
 [access-celeste]: https://celeste.ink/wiki/Assist_Mode
 
 [access-rusted-moss]: https://araisegamer.com/rusted-moss-how-to-fly/
-
-## Footnotes
-
-[^1]: You can see the other options in the screenshots.
-The basic instructions apply to those as well.
-
-[^2]: https://en.wikipedia.org/wiki/Computer_accessibility
