@@ -9,10 +9,9 @@ Where I share my thoughts, ideas, projects,
 and (mis)information.
 
 <nav>
-  <a href="{{ config.base_url }}">Home</a>
-  <a href="{{ config.base_url }}/portfolio">Portfolio</a>
-  <a href="{{ config.base_url }}/about">About</a>
-  <a href="{{ config.base_url }}/links">Links</a>
+  <a href="/portfolio">Portfolio</a>
+  <a href="/about">About</a>
+  <a href="/links">Links</a>
 </nav>
 
 <!--
