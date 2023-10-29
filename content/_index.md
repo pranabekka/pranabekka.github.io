@@ -8,6 +8,13 @@ sort_by = "date"
 Where I share my thoughts, ideas, projects,
 and (mis)information.
 
+<nav>
+  <a href="{{ config.base_url }}">Home</a>
+  <a href="{{ config.base_url }}/portfolio">Portfolio</a>
+  <a href="{{ config.base_url }}/about">About</a>
+  <a href="{{ config.base_url }}/links">Links</a>
+</nav>
+
 <!--
 I'm a designer by trade, but also
 a (bad) hobbyist programmer and software enthusiast.
