@@ -1,7 +1,7 @@
 +++
 title = "Static Site Build Tool"
 date = 2023-04-20 23:34:47
-updated = 2023-05-11 20:08:03
+updated = 2023-10-29 14:54:00
 +++
 
 I've just been thinking of what it would be like
@@ -12,6 +12,12 @@ parallelisation,
 task runners/commands,
 and access to all sorts of (cli) tools
 (including your own scripts and binaries).
+
+**EDIT:** [soupault.app](https://soupault.app)
+might be the way to go.
+It lets you run any cli tool
+and use it in your site building,
+as well as a few other cool things.
 
 ## Prior Art
 
