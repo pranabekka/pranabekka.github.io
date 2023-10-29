@@ -13,14 +13,6 @@ task runners/commands,
 and access to all sorts of (cli) tools
 (including your own scripts and binaries).
 
-**NOTE:** Some of this might require
-a more advanced understanding of static site generators,
-or at least an understanding of my understanding of them ;p \
-See [my article](@/how-ssgs-work.md) on how they work to know more
-(It's a bit long and quite exhaustive,
-so feel free to skip it unless you're really confused).
-Also, the article won't describe build systems.
-
 ## Prior Art
 
 Some similar tools already exist
