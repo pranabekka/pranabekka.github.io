@@ -2,7 +2,7 @@ outline:
 
 - **Update Date**
 - Wrap tables in a .tablewrapper div
-- Footnotes heading
+- Footnotes near reference
 
 ## Update Date
 
@@ -26,13 +26,7 @@ Remember to add the spacing before and after the table syntax.
 This is important to make them overflow properly,
 otherwise tables mess up the size of the page and other elements.
 
-## Footnotes heading
+## Footnotes near reference
 
-Add `## Footnotes` above footnote references,
-at the end of the page.
-
-Another option is to detect in template,
-but I've been avoiding them,
-so it's wasted effort.
-Reason: asides should be closer to the marker.
-In the paper age, it meant on the same page.
+Add in the footnotes right after
+the paragraph where they're referenced.
