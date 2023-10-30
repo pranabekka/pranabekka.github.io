@@ -14,7 +14,6 @@ Basically bookmarks.
 Multi-faceted and comprehensive guide
 to making sustainable web sites/products,
 with links to research and examples.
-Working through it right now.
 
 ## [Godot Engine Docs (Getting Started)](https://docs.godotengine.org/en/stable/getting_started/introduction/index.html)
 
@@ -31,9 +30,19 @@ and seems more beginner friendly and comprehensive
 than the official docs.
 Aims to include everything you might need.
 
+## [Soatok/Dhole Moments](https://soatok.blog)
+
+Great writing on security,
+but also posts on general things,
+and a good series on getting jobs
+(in tech; called "Furward Momentum").
+The about page has a list of "top posts".
+[Filippo Valsorda](filippo.io)
+is also a good resource for cryptography and security.
+
 ## [lobste.rs](https://lobste.rs)
 
-Tech forum that doesn't devolve into madness.
+Well-moderated tech forum.
 
 ## [Marginalia Search](https://search.marginalia.nu)
 
