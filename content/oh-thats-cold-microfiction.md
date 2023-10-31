@@ -1,8 +1,12 @@
 +++
-title = "Oh! That's cold! (Microfiction)"
+title = "Oh! That's cold!"
 date = 2023-10-30 20:53:19
-updated = 2023-10-30 20:53:19
+updated = 2023-10-31 14:34:35
 +++
+
+Low sci-fi speculative micro-fiction
+
+***
 
 Oh! That's cold!
 
@@ -25,3 +29,10 @@ Everything does --- a bit.
 I don't think I could do this again.
 
 I love you.
+
+***
+
+The basic concept is a society
+where headgear is a thing,
+and people live completely
+in virtual/augmented space.
