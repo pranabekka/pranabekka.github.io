@@ -4,10 +4,8 @@ date = 2023-10-06 11:44:15
 updated = 2023-10-06 11:44:15
 +++
 
-A collection of links on various things,
-with brief descriptions about what they are
-and why they're of interest.
-Basically bookmarks.
+There are a lot of cool things on the web.
+Here's a few, and why I think they're great.
 
 ## [Web Sustainability Guidelines](https://w3c.github.io/sustyweb#table-of-contents)
 
