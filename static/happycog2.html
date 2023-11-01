@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Not Happy Cog</title>
+  <style>
+    :root {
+      font-size: 16pt;
+      font-family: Atkinson Hyperlegible;
+      --display-font: DM Serif Display;
+      line-height: 1.4;
+      --light-grey: #f5f5f5;
+      --dark-grey: #1a1a1a;
+      --foreground: var(--dark-grey);
+      --background: var(--light-grey);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --foreground: var(--light-grey);
+        --background: var(--dark-grey);
+      }
+    }
+    * {
+      margin-top: 1em;
+    }
+    body {
+      max-width: 35rem;
+      margin: auto;
+      padding: 20px;
+      color: var(--foreground);
+      background: var(--background);
+    }
+    h1,h2,h3,h4 {
+      font-family: var(--display-font);
+      line-height: 1;
+    }
+    h1 {
+      font-size: 32pt;
+    }
+    h2 {
+      font-size: 24pt;
+    }
+    h3 {
+      font-size: 16pt;
+    }
+    a {
+      color: var(--foreground);
+      background: var(--background);
+      filter: brightness(0.85);
+      padding: .5em 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Not Happy Cog.</h1>
+
+  <p>This site is, in fact, only <em>inspired</em>
+  by Happy Cog's design —
+  black on white text, with a bold serif for titles,
+  and a helvetica-ish sans-serif for body text.</p>
+  <p>This version uses a darker grey,
+  which I think looks better for the background.</p>
+  <p><a href="happycog.html">See lighter version</a></p>
+
+  <h2>Dark theme</h2>
+  <p>I've put in a dark theme
+  that triggers automatically if the browser
+  detects you're using a dark theme,
+  so you might not actually see the black on white.</p>
+
+  <h2>Font selection</h2>
+  <p>I decided to forgo the helvetica-ish font,
+  since it's not that great for a lot of reading,
+  and I instead chose Atkinson Hyperlegible,
+  which I've paired with DM Serif Display for the headings.</p>
+  <p>The cool thing about Atkinson Hyperlegible,
+  is that it's designed for low-vision people,
+  in collaboration with the Braille Institute.</p>
+  <p>DM Serif is just there to look nice.</p>
+
+  <h3>An arbitrary sub-heading</h3>
+  <p>Hi! This is an arbitrary sub-heading!</p>
+</body>
+</html>
