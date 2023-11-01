@@ -1,12 +1,12 @@
 ﻿@font-face {
   font-family: EB Garamond;
-  src: url("EBGaramond-Regular.ttf");
+  src: url("EBGaramond-Regular.woff2");
   font-weight: 400;
 }
 
 @font-face {
   font-family: EB Garamond;
-  src: url("EBGaramond-SemiBold.ttf");
+  src: url("EBGaramond-SemiBold.woff2");
   font-weight: 700;
 }
 
