@@ -135,6 +135,13 @@
       font-size: var(--font-size-list-marker);
       font-weight: bold;
     }
+    li {
+      margin-top: .5em;
+    }
+    li > * {
+      margin: 0;
+      margin-top: .5em;
+    }
     img {
       max-width: 100%;
       max-height: 80vh;
@@ -371,7 +378,18 @@
     <li>images</li>
     <li>video</li>
     <li>audio</li>
-    <li>bold italic body font</li>
+    <li><p>details list</p>
+      <p>i haven't used one for years</p>
+    </li>
+    <li>bold italic body font
+      <p>actually, you shouldn't have to mix bold and italics.</p>
+      <p>also, avoid using bold (<code>&lt;strong&gt;</code>)
+      text in normal prose.
+      instead, rely on emphasis for making text stand out,
+      and let bold text be for specific elements,
+      like table headers.</p>
+      <pre><code>test nested code block</code></pre>
+    </li>
   </ul>
 
 </body>
