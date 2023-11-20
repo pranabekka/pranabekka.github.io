@@ -1,6 +1,7 @@
 outline:
 
 - **Update Date**
+- TODO
 - Wrap tables in a .tablewrapper div
 - Footnotes near reference
 
@@ -8,6 +9,11 @@ outline:
 
 Remember to update the "updated" date in the frontmatter,
 when you update a post.
+
+## TODO
+
+- [] replace sass vars with css vars
+  makes built css clearer
 
 ## Wrap tables in a .tablewrapper div
 
