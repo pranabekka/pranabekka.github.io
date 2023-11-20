@@ -13,8 +13,10 @@ $orange: #ca8711
 $red: #b83830
 $blue-faded: #616181
 $blue-faded-text: #6161b1
+$blue-faded-stale: #414171
 $highlight: $blue-faded
 $highlight-text: $blue-faded-text
+$highlight-stale: $blue-faded-stale
 
 *
   box-sizing: border-box
@@ -92,6 +94,9 @@ summary
   text-decoration: underline
   text-decoration-color: $highlight-text
 
+summary:hover
+  background: $highlight
+
 .contents
   margin-top: 0.5em
   padding: 0 .5rem
@@ -108,6 +113,10 @@ a
 
 a:hover
   background: $highlight
+  text-decoration: none
+
+a:visited
+  text-decoration-color: $highlight-stale
 
 pre, code
   font-family: IntelOne Mono, monospace
