@@ -1,22 +1,23 @@
 //////////// general settings
 
 $max-width: 40rem // just under 70(root)ch
-$fg: #fffff8
+$fg: #d5d5d5
 $fg-dim: #b3b3b3
-$bg: #18171b
-$bg-bright: #333039
+$fg-bright: #efefef
+$bg: #000000
+$bg-bright: #18171b
 $bg-semi-bright: #28252c
 $green: #10402a
 $blue: #2707b4
 $yellow: #f0df20
 $orange: #ca8711
 $red: #b83830
-$blue-faded: #616181
-$blue-faded-text: #6161b1
-$blue-faded-stale: #414171
+$blue-faded: #414161
+$blue-faded-bright: #6161b1
 $highlight: $blue-faded
-$highlight-text: $blue-faded-text
-$highlight-stale: $blue-faded-stale
+$highlight-text: $blue-faded-bright
+$highlight-stale: $blue-faded
+$highlighted-text: $fg-bright // only for page title
 
 *
   box-sizing: border-box
@@ -68,6 +69,7 @@ h1
   font-size: 2rem
   background: $highlight
   padding: 2rem .5rem .5rem
+  color: $highlighted-text
 
 main > h1
   margin-top: 0
