@@ -12,7 +12,9 @@ $yellow: #f0df20
 $orange: #ca8711
 $red: #b83830
 $blue-faded: #616181
-$highlight: $blue-faded // used for page title and subtitle bg
+$blue-faded-text: #6161b1
+$highlight: $blue-faded
+$highlight-text: $blue-faded-text
 
 *
   box-sizing: border-box
@@ -88,6 +90,7 @@ h1 + .subtitle
 
 summary
   text-decoration: underline
+  text-decoration-color: $highlight-text
 
 .contents
   margin-top: 0.5em
@@ -101,10 +104,10 @@ p
 
 a
   color: inherit
+  text-decoration-color: $highlight-text
 
 a:hover
-  color: $bg
-  background: $fg
+  background: $highlight
 
 pre, code
   font-family: IntelOne Mono, monospace
