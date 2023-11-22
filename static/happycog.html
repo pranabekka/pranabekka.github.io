@@ -106,7 +106,7 @@
     }
     a.block {
       display: inline-block;
-      background: var(--container);
+      border: 1px solid var(--foreground);
       padding: .5em 1em;
     }
     pre {
@@ -114,11 +114,12 @@
     }
     pre code {
       padding: .25em .5em;
+      border: 2px solid var(--foreground);
       display: inline-block;
       background: none;
     }
     code {
-      border: 2px solid var(--foreground);
+      border: 1px solid var(--foreground);
       font-family: var(--font-monospace);
       padding: 0 .5em;
       overflow-wrap: break-word;
