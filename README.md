@@ -14,6 +14,7 @@ when you update a post.
 
 - [] replace sass vars with css vars
   makes built css clearer
+- [] use black and white from main.sass in happycog.html
 
 ## Wrap tables in a .tablewrapper div
 
