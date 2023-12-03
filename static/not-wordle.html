@@ -52,6 +52,12 @@
       width: 10rem;
       /* text-align: center; */
     }
+    input.valid {
+      border: 1px solid #53bd4e;
+    }
+    input.invalid {
+      border: 1px solid #ff6666;
+    }
     .row {
       display: flex;
       gap: 4px;
@@ -91,7 +97,7 @@
   <div id="display">
 
   </div>
-  <input placeholder='Type guess here' type=text minlength=6 maxlength=6></input>
+  <input placeholder='Guess (6 letters)' type=text minlength=6 maxlength=6></input>
   <p class=help-text>Press 'Enter' to guess</p>
 
   <script>
@@ -114,7 +120,18 @@
       }
     }
     input.addEventListener('keydown', (e) => {
-      if (e.key == "Enter" && input.checkValidity()) {
+      if (input.value.length > 4) {
+        // input.value = input.value.slice(5);
+        input.value = input.value.slice(0, 6);
+      }
+    });
+    input.addEventListener('keyup', (e) => {
+      if (input.value.length == 6 && input.value.match('\\D{6}')) {
+        input.className = 'valid';
+      } else {
+        input.className = 'invalid';
+      }
+      if (e.key == "Enter" && input.value.match('\\D{6}')) {
         let characters = input.value.split('');
         for (charIdx in characters) {
           let cell = document.querySelector(`.cellId-${guesses}-${charIdx}`);
