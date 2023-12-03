@@ -1,0 +1,137 @@
+<!-- pls forgiv for absolutely horrible markup, styling and code -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Not Wordle</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    :root {
+      font-size: 16pt;
+    }
+    @media (min-width: 400px) {
+      :root {
+        font-size: 18pt;
+      }
+    }
+    body {
+      padding: 1rem;
+      margin: auto;
+      background: black;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont,
+        avenir next, avenir, segoe ui, Cantarell,
+        helvetica neue, helvetica, Ubuntu, roboto,
+        noto, arial, sans-serif;
+    }
+    b, i {
+      color: darkgrey;
+    }
+    .warning {
+      color: #ff6666;
+      font-weight: 600;
+    }
+    #display {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 1rem 0;
+    }
+    input {
+      font-size: 1rem;
+      font-family: inherit;
+      padding: .25rem;
+      border: 1px solid white;
+      background: inherit;
+      color: inherit;
+      width: 10rem;
+      /* text-align: center; */
+    }
+    .row {
+      display: flex;
+      gap: 4px;
+    }
+    .cell {
+      height: 2rem;
+      width: 2rem;
+      text-align: center;
+      line-height: 44px;
+      border: 1px solid #505050;
+    }
+    .cell.correct {
+      background: #437d3e;
+      border: none;
+    }
+    .cell.partial {
+      background: #b59f3b;
+      border: none;
+    }
+    .cell.incorrect {
+      background: #303030;
+      border: none;
+    }
+    .help-text {
+      font-size: .8rem;
+      color: grey;
+      margin-top: .3rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Not Wordle</h1>
+  <p class=warning>Warning: Rude word.</p>
+  <p class=help-text>Type guesses below</p>
+  <p class=help-text><b>NOTE:</b> There is <i>only one of each letter</i>.
+  (If yellow guesses repeat, they're incorrect)</p>
+  <div id="display">
+
+  </div>
+  <input placeholder='Type guess here' type=text minlength=6 maxlength=6></input>
+  <p class=help-text>Press 'Enter' to guess</p>
+
+  <script>
+    let input = document.querySelector('input');
+    let display = document.querySelector('#display');
+    let guesses = 0;
+    let answer = [ 'f', 'u', 'c', 'k', 'e', 'r' ];
+    let rows = Array(6).fill(' ');
+    let columns = Array(6).fill(' ');
+    //// construct grid
+    for (rowIdx in rows) {
+      let row = document.createElement('div');
+      row.className = `row row-${rowIdx}`;
+      display.appendChild(row);
+      for (columnIdx in columns) {
+        let cell = document.createElement('div');
+        cell.className = `cell cellId-${rowIdx}-${columnIdx}`;
+        row.appendChild(cell);
+        cell.append(' ');
+      }
+    }
+    input.addEventListener('keydown', (e) => {
+      if (e.key == "Enter" && input.checkValidity()) {
+        let characters = input.value.split('');
+        for (charIdx in characters) {
+          let cell = document.querySelector(`.cellId-${guesses}-${charIdx}`);
+          cell.append(`${characters[charIdx]}`);
+          if (characters[charIdx] == answer[charIdx]) {
+            cell.className = 'cell correct';
+          } else if (answer.includes(characters[charIdx])) {
+            cell.className = 'cell partial';
+          } else {
+            cell.className = 'cell incorrect';
+          }
+        }
+        guesses++;
+        input.value = '';
+        // display.insertAdjacentHTML('beforeend', input.value + '<br>');
+      }
+    });
+  </script>
+</body>
+</html>
