@@ -132,6 +132,7 @@
         input.className = 'invalid';
       }
       if (e.key == "Enter" && input.value.match('\\D{6}')) {
+        input.value = input.value.toLowerCase();
         let characters = input.value.split('');
         for (charIdx in characters) {
           let cell = document.querySelector(`.cellId-${guesses}-${charIdx}`);
