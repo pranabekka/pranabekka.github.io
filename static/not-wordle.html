@@ -46,17 +46,18 @@
       font-size: 1rem;
       font-family: inherit;
       padding: .25rem;
-      border: 1px solid white;
+      border: 1px solid #505050;
+      border-bottom: 2px solid white;
       background: inherit;
       color: inherit;
       width: 10rem;
-      /* text-align: center; */
     }
     input.valid {
-      border: 1px solid #53bd4e;
+      border: 1px solid #505050;
+      border-bottom: 2px solid #53bd4e;
     }
     input.invalid {
-      border: 1px solid #ff6666;
+      border-bottom: 2px solid #ff6666;
     }
     .row {
       display: flex;
@@ -121,7 +122,6 @@
     }
     input.addEventListener('keyup', (e) => {
       if (input.value.length > 4) {
-        // input.value = input.value.slice(5);
         input.value = input.value.slice(0, 6);
       }
     });
@@ -147,7 +147,6 @@
         }
         guesses++;
         input.value = '';
-        // display.insertAdjacentHTML('beforeend', input.value + '<br>');
       }
     });
   </script>
