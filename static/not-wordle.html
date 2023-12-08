@@ -112,9 +112,10 @@
     let inputHint = document.querySelector('#input-hint');
     let display = document.querySelector('#display');
     let guesses = 0;
-    let answer = [ 'f', 'u', 'c', 'k', 'e', 'r' ];
-    let rows = Array(6).fill(' ');
-    let columns = Array(6).fill(' ');
+    let word = 'fucker';
+    let answer = word.split('');
+    let rows = Array(word.length).fill(' ');
+    let columns = Array(word.length).fill(' ');
     //// construct grid
     for ( rowIdx in rows ) {
       let row = document.createElement('div');
@@ -127,17 +128,17 @@
         cell.append(' ');
       }
     }
-    if ( input.value.length == 6 && input.value.match('\\D{6}') ) {
+    if ( input.value.length == 6 && input.value.match(`[A-Za-z]{${word.length}}`) ) {
       input.className = 'valid';
       inputHint.textContent = "Press 'Enter' to guess";
     }
     input.addEventListener('keyup', (e) => {
-      if (input.value.length > 6) {
-        input.value = input.value.slice(0, 6);
+      if (input.value.length > word.length) {
+        input.value = input.value.slice(0, word.length);
       }
     });
     input.addEventListener('keyup', (e) => {
-      if ( e.key == "Enter" && input.value.match('\\D{6}') ) {
+      if ( e.key == "Enter" && input.value.match(`[A-Za-z]{${word.length}}`) ) {
         input.value = input.value.toLowerCase();
         let characters = input.value.split('');
         for ( charIdx in characters ) {
@@ -154,12 +155,12 @@
         guesses++;
         input.value = '';
       }
-      if ( input.value.length == 6 && input.value.match('\\D{6}') ) {
+      if ( input.value.length == 6 && input.value.match(`[A-Za-z]{${word.length}}`) ) {
         input.className = 'valid';
         inputHint.textContent = "Press 'Enter' to guess";
       } else {
         input.className = '';
-        let remainingChars = 6 - input.value.length;
+        let remainingChars = word.length - input.value.length;
         if ( remainingChars == 1 ) {
           inputHint.textContent = `Type 1 letter`;
         } else {
@@ -176,7 +177,7 @@
       if ( input.classList.contains('valid') ) {
         inputHint.textContent = "Press 'Enter' to guess";
       } else {
-        let remainingChars = 6 - input.value.length;
+        let remainingChars = word.length - input.value.length;
         if ( remainingChars == 1 ) {
           inputHint.textContent = `Type 1 letter`;
         } else {
