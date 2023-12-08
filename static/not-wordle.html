@@ -39,29 +39,31 @@
     #display {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       margin: 1rem 0;
     }
     input {
       font-size: 1rem;
       font-family: inherit;
       padding: .25rem;
-      border: 1px solid #505050;
+      border: 1px solid white;
       border-bottom: 2px solid white;
+      border-radius: 8px;
       background: inherit;
       color: inherit;
       width: 10rem;
     }
     input.valid {
-      border: 1px solid #505050;
-      border-bottom: 2px solid #53bd4e;
-    }
-    input.invalid {
-      border-bottom: 2px solid #ff6666;
+      border-color: #53bd4e;
     }
     .row {
       display: flex;
-      gap: 4px;
+    }
+    .cell:nth-last-child(1) {
+      border-radius: 0px 8px 8px 0px;
+    }
+    .cell:nth-child(1) {
+      border-radius: 8px 0px 0px 8px;
     }
     .cell {
       height: 2rem;
@@ -69,6 +71,9 @@
       text-align: center;
       line-height: 44px;
       border: 1px solid #505050;
+    }
+    .cell + .cell {
+      border-left: 0;
     }
     .cell.correct {
       background: #437d3e;
@@ -98,43 +103,44 @@
   <div id="display">
 
   </div>
-  <input placeholder='Guess (6 letters)' type=text minlength=6 maxlength=8></input>
-  <p class=help-text>Press 'Enter' to guess</p>
+  <input placeholder='Guess Here' type=text minlength=6 maxlength=8
+         autocapitalize=off autocomplete=off></input>
+  <p id="input-hint" class=help-text>Select text box above</p>
 
   <script>
     let input = document.querySelector('input');
+    let inputHint = document.querySelector('#input-hint');
     let display = document.querySelector('#display');
     let guesses = 0;
     let answer = [ 'f', 'u', 'c', 'k', 'e', 'r' ];
     let rows = Array(6).fill(' ');
     let columns = Array(6).fill(' ');
     //// construct grid
-    for (rowIdx in rows) {
+    for ( rowIdx in rows ) {
       let row = document.createElement('div');
       row.className = `row row-${rowIdx}`;
       display.appendChild(row);
-      for (columnIdx in columns) {
+      for ( columnIdx in columns ) {
         let cell = document.createElement('div');
         cell.className = `cell cellId-${rowIdx}-${columnIdx}`;
         row.appendChild(cell);
         cell.append(' ');
       }
     }
+    if ( input.value.length == 6 && input.value.match('\\D{6}') ) {
+      input.className = 'valid';
+      inputHint.textContent = "Press 'Enter' to guess";
+    }
     input.addEventListener('keyup', (e) => {
-      if (input.value.length > 4) {
+      if (input.value.length > 6) {
         input.value = input.value.slice(0, 6);
       }
     });
     input.addEventListener('keyup', (e) => {
-      if (input.value.length == 6 && input.value.match('\\D{6}')) {
-        input.className = 'valid';
-      } else {
-        input.className = 'invalid';
-      }
-      if (e.key == "Enter" && input.value.match('\\D{6}')) {
+      if ( e.key == "Enter" && input.value.match('\\D{6}') ) {
         input.value = input.value.toLowerCase();
         let characters = input.value.split('');
-        for (charIdx in characters) {
+        for ( charIdx in characters ) {
           let cell = document.querySelector(`.cellId-${guesses}-${charIdx}`);
           cell.append(`${characters[charIdx]}`);
           if (characters[charIdx] == answer[charIdx]) {
@@ -147,6 +153,35 @@
         }
         guesses++;
         input.value = '';
+      }
+      if ( input.value.length == 6 && input.value.match('\\D{6}') ) {
+        input.className = 'valid';
+        inputHint.textContent = "Press 'Enter' to guess";
+      } else {
+        input.className = '';
+        let remainingChars = 6 - input.value.length;
+        if ( remainingChars == 1 ) {
+          inputHint.textContent = `Type 1 letter`;
+        } else {
+          inputHint.textContent = `Type ${remainingChars} letters`;
+        }
+      }
+    });
+    input.addEventListener('focusout', (e) => {
+      if ( input.classList.contains('valid') ) {
+        inputHint.textContent = "Select text box to continue";
+      }
+    });
+    input.addEventListener('focusin', (e) => {
+      if ( input.classList.contains('valid') ) {
+        inputHint.textContent = "Press 'Enter' to guess";
+      } else {
+        let remainingChars = 6 - input.value.length;
+        if ( remainingChars == 1 ) {
+          inputHint.textContent = `Type 1 letter`;
+        } else {
+          inputHint.textContent = `Type ${remainingChars} letters`;
+        }
       }
     });
   </script>
