@@ -96,7 +96,9 @@
 </head>
 <body>
   <h1>Not Wordle</h1>
+  <!--
   <p class=warning>Warning: Rude word.</p>
+  -->
   <p class=help-text>Type guesses below</p>
   <p class=help-text><b>NOTE:</b> There is <i>only one of each letter</i>.
   (If yellow guesses repeat, they're incorrect)</p>
@@ -112,7 +114,7 @@
     let inputHint = document.querySelector('#input-hint');
     let display = document.querySelector('#display');
     let guesses = 0;
-    let word = 'fucker';
+    let word = 'stolen';
     let answer = word.split('');
     let rows = Array(word.length).fill(' ');
     let columns = Array(word.length).fill(' ');
