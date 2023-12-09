@@ -14,6 +14,11 @@
       --clr-correct: #437d3e;
       --clr-partial: #b59f3b;
     }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont,
         avenir next, avenir, segoe ui, Cantarell,
@@ -108,7 +113,7 @@
     const rows = Array(MAX_GUESSES).fill(' ');
     const columns = Array(answerLength).fill(' ');
 
-    input.style.width = `${answerLength * 1.8}rem`;
+    input.style.width = `${answerLength * 2.15 - .15}rem`;
     input.setAttribute('minlength', answerLength);
     input.setAttribute('maxlength', answerLength);
 
