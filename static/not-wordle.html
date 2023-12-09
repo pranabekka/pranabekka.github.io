@@ -26,21 +26,21 @@
         noto, arial, sans-serif;
       background-color: var(--clr-bg);
       color: var(--clr-fg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      max-width: 20rem;
+      padding: 0 .5rem;
+      margin: auto;
     }
     h1 {
       margin-bottom: .5rem;
       margin-top: .5rem;
+      text-align: center;
     }
     #display {
-      display: flex;
-      flex-direction: column;
-      gap: .3rem;
+      margin: auto;
       margin-bottom: .5rem;
     }
     .row {
+      margin-bottom: .3rem;
       display: flex;
       gap: .15rem;
     }
@@ -64,12 +64,14 @@
       border-color: var(--clr-incorrect);
     }
     input {
+      display: block;
       background: inherit;
       color: inherit;
       font-size: inherit;
       border: .05rem solid var(--clr-fg);
       height: 2rem;
       padding: 0 .5rem;
+      margin: auto;
     }
     #instruction {
       color: var(--clr-fg-dim);
@@ -77,24 +79,22 @@
     p {
       margin-top: .25rem;
       margin-bottom: 0;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Not wordle</h1>
+  <h1>Not wordle</h1>
 
-    <div id=display></div>
+  <div id=display></div>
 
-    <input id='input'
-      placeholder='Guess Here'
-      type=text
-      autocapitalize=off
-      autocomplete=off>
-    </input>
-    <p id=instruction></p>
-  </main>
-
+  <input id='input'
+    placeholder='Guess Here'
+    type=text
+    autocapitalize=off
+    autocomplete=off>
+  </input>
+  <p id=instruction></p>
 
   <script>
     'use strict';
@@ -104,7 +104,7 @@
     // and avoid word shorter than 4 characters
     // since that reduces width of text input
     // and cuts off placeholder text
-    const WORD = 'word';
+    const WORD = 'stupor';
     const MAX_GUESSES = 6;
     const VALID_CHARS = '[A-Z]';
 
@@ -118,6 +118,7 @@
     const rows = Array(MAX_GUESSES).fill(' ');
     const columns = Array(answerLength).fill(' ');
 
+    display.style.width = `${answerLength * 2.15 - .15}rem`;
     input.style.width = `${answerLength * 2.15 - .15}rem`;
     input.setAttribute('minlength', answerLength);
     input.setAttribute('maxlength', answerLength);
@@ -241,13 +242,11 @@
         guesses++;
         displayGuess(guess, validatedGuess, rowIdx);
         if (guess == answer) {
-          input.outerHTML = `<p style="width: ${answerLength * 1.8}rem">
-            You got it in ${guesses}!<p>`;
+          input.outerHTML = `<p>You got it in ${guesses}!<p>`;
           instruction.outerHTML = '';
         }
         if (guesses == MAX_GUESSES) {
-          input.outerHTML = `<p style="width: ${answerLength * 2}rem">
-            Awww... The answer was '${answer}'.<p>`;
+          input.outerHTML = `<p>Awww... The answer was '${answer}'.<p>`;
           instruction.outerHTML = '';
         }
       }
