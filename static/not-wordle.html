@@ -99,7 +99,12 @@
   <script>
     'use strict';
 
-    const WORD = 'greet';
+    // avoid word longer than 6 characters,
+    // since it might not fit on a mobile screen
+    // and avoid word shorter than 4 characters
+    // since that reduces width of text input
+    // and cuts off placeholder text
+    const WORD = 'word';
     const MAX_GUESSES = 6;
     const VALID_CHARS = '[A-Z]';
 
