@@ -1,4 +1,3 @@
-<!-- pls forgiv for absolutely horrible markup, styling and code -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,184 +5,240 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Not Wordle</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
     :root {
       font-size: 16pt;
-    }
-    @media (min-width: 400px) {
-      :root {
-        font-size: 18pt;
-      }
+      --clr-bg: #141414;
+      --clr-fg: #f0f0f0;
+      --clr-fg-dim: #606060;
+      --clr-incorrect: #303030;
+      --clr-correct: #437d3e;
+      --clr-partial: #b59f3b;
     }
     body {
-      padding: 1rem;
-      margin: auto;
-      background: black;
-      color: white;
       font-family: -apple-system, BlinkMacSystemFont,
         avenir next, avenir, segoe ui, Cantarell,
         helvetica neue, helvetica, Ubuntu, roboto,
         noto, arial, sans-serif;
+      background-color: var(--clr-bg);
+      color: var(--clr-fg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    b, i {
-      color: darkgrey;
-    }
-    .warning {
-      color: #ff6666;
-      font-weight: 600;
+    h1 {
+      margin-bottom: .5rem;
+      margin-top: .5rem;
     }
     #display {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      margin: 1rem 0;
-    }
-    input {
-      font-size: 1rem;
-      font-family: inherit;
-      padding: .25rem;
-      border: 1px solid white;
-      border-bottom: 2px solid white;
-      border-radius: 8px;
-      background: inherit;
-      color: inherit;
-      width: 10rem;
-    }
-    input.valid {
-      border-color: #53bd4e;
+      gap: .3rem;
+      margin-bottom: .5rem;
     }
     .row {
       display: flex;
-    }
-    .cell:nth-last-child(1) {
-      border-radius: 0px 8px 8px 0px;
-    }
-    .cell:nth-child(1) {
-      border-radius: 8px 0px 0px 8px;
+      gap: .15rem;
     }
     .cell {
+      border: .05rem solid var(--clr-fg-dim);
       height: 2rem;
       width: 2rem;
       text-align: center;
-      line-height: 44px;
-      border: 1px solid #505050;
+      line-height: 2rem;
     }
-    .cell + .cell {
-      border-left: 0;
+    .correct {
+      background: var(--clr-correct);
+      border-color: var(--clr-correct);
     }
-    .cell.correct {
-      background: #437d3e;
-      border: none;
+    .partial {
+      background: var(--clr-partial);
+      border-color: var(--clr-partial);
     }
-    .cell.partial {
-      background: #b59f3b;
-      border: none;
+    .incorrect {
+      background: var(--clr-incorrect);
+      border-color: var(--clr-incorrect);
     }
-    .cell.incorrect {
-      background: #303030;
-      border: none;
+    input {
+      background: inherit;
+      color: inherit;
+      font-size: inherit;
+      border: .05rem solid var(--clr-fg);
+      height: 2rem;
+      padding: 0 .5rem;
     }
-    .help-text {
-      font-size: .8rem;
-      color: grey;
-      margin-top: .3rem;
+    #instruction {
+      color: var(--clr-fg-dim);
+    }
+    p {
+      margin-top: .25rem;
+      margin-bottom: 0;
     }
   </style>
 </head>
 <body>
-  <h1>Not Wordle</h1>
-  <!--
-  <p class=warning>Warning: Rude word.</p>
-  -->
-  <p class=help-text>Type guesses below</p>
-  <p class=help-text><b>NOTE:</b> There is <i>only one of each letter</i>.
-  (If yellow guesses repeat, they're incorrect)</p>
-  <div id="display">
+  <main>
+    <h1>Not wordle</h1>
 
-  </div>
-  <input placeholder='Guess Here' type=text minlength=6 maxlength=8
-         autocapitalize=off autocomplete=off></input>
-  <p id="input-hint" class=help-text>Select text box above</p>
+    <div id=display></div>
+
+    <input id='input'
+      placeholder='Guess Here'
+      type=text
+      autocapitalize=off
+      autocomplete=off>
+    </input>
+    <p id=instruction></p>
+  </main>
+
 
   <script>
-    let input = document.querySelector('input');
-    let inputHint = document.querySelector('#input-hint');
-    let display = document.querySelector('#display');
+    'use strict';
+
+    const WORD = 'greet';
+    const MAX_GUESSES = 6;
+    const VALID_CHARS = '[A-Z]';
+
+    const display = document.getElementById('display');
+    const input = document.getElementById('input');
+    const instruction = document.getElementById('instruction');
+
+    const answer = WORD.toUpperCase();
+    const answerLength = answer.length;
+
+    const rows = Array(MAX_GUESSES).fill(' ');
+    const columns = Array(answerLength).fill(' ');
+
+    input.style.width = `${answerLength * 1.8}rem`;
+    input.setAttribute('minlength', answerLength);
+    input.setAttribute('maxlength', answerLength);
+
+    instruction.innerText = `Type ${answerLength} letters`;
+
     let guesses = 0;
-    let word = 'stolen';
-    let answer = word.split('');
-    let rows = Array(word.length).fill(' ');
-    let columns = Array(word.length).fill(' ');
-    //// construct grid
-    for ( rowIdx in rows ) {
+
+    //// Count letters
+    //// for tracking yellow
+
+    let totalCount = {};
+    for (let letter of answer) {
+      totalCount[letter] = totalCount[letter] ? totalCount[letter] + 1 : 1;
+    }
+
+    //// Draw Grid
+
+    for ( let rowIdx in rows ) {
       let row = document.createElement('div');
-      row.className = `row row-${rowIdx}`;
+      row.className = 'row';
+      row.id = `row-${rowIdx}`;
       display.appendChild(row);
-      for ( columnIdx in columns ) {
+      for ( let columnIdx in columns ) {
         let cell = document.createElement('div');
-        cell.className = `cell cellId-${rowIdx}-${columnIdx}`;
+        cell.className = 'cell';
+        cell.id = 'cell-' + rowIdx + '-' + columnIdx;
         row.appendChild(cell);
         cell.append(' ');
       }
     }
-    if ( input.value.length == 6 && input.value.match(`[A-Za-z]{${word.length}}`) ) {
-      input.className = 'valid';
-      inputHint.textContent = "Press 'Enter' to guess";
+
+    //// Check guess
+
+    // takes guess as uppercase string
+    function checkCorrect(guess) {
+      let result = [];
+      let count = {};
+      Object.assign(count, totalCount);
+      for (let letterIdx in guess) {
+        let isMatch = guess[letterIdx] == answer[letterIdx];
+        if ( isMatch ) {
+          let letter = guess[letterIdx];
+          result.push('correct');
+          count[letter] -= 1;
+        } else {
+          result.push('');
+        }
+      }
+      return [result, count];
     }
-    input.addEventListener('keyup', (e) => {
-      if (input.value.length > word.length) {
-        input.value = input.value.slice(0, word.length);
-      }
-    });
-    input.addEventListener('keyup', (e) => {
-      if ( e.key == "Enter" && input.value.match(`[A-Za-z]{${word.length}}`) ) {
-        input.value = input.value.toLowerCase();
-        let characters = input.value.split('');
-        for ( charIdx in characters ) {
-          let cell = document.querySelector(`.cellId-${guesses}-${charIdx}`);
-          cell.append(`${characters[charIdx]}`);
-          if (characters[charIdx] == answer[charIdx]) {
-            cell.className = 'cell correct';
-          } else if (answer.includes(characters[charIdx])) {
-            cell.className = 'cell partial';
-          } else {
-            cell.className = 'cell incorrect';
-          }
+
+    // takes guess as uppercase string
+    function checkPartiallyCorrect(guess, guessValidity, count) {
+      let result = guessValidity;
+      for (let letterIdx in guess) {
+        let letter = guess[letterIdx];
+        let isPresent = answer.includes(letter);
+        let isAvailable = count[letter] > 0 && result[letterIdx] == '';
+        if ( isPresent && isAvailable ) {
+          result[letterIdx] = 'partial';
         }
-        guesses++;
+      }
+      return result;
+    }
+
+    // takes guess as uppercase string
+    function displayGuess(guess, validatedGuess, rowIdx) {
+      for (let letterIdx in guess) {
+        let letter = guess[letterIdx];
+        let cellState = validatedGuess[letterIdx];
+        let columnIdx = letterIdx;
+        let cellId = 'cell-' + rowIdx + '-' + columnIdx;
+        let cell = document.getElementById(cellId);
+        cell.innerText = letter;
+        if (cellState != '') {
+          cell.classList.add(cellState);
+        } else {
+          cell.classList.add('incorrect');
+        }
+      }
+    }
+
+    //// Handle input
+
+    input.addEventListener('keyup', (e) => {
+      // remove anything that isn't a-z or A-Z
+      let validInput = '';
+      for (let letter of input.value) {
+        if ( letter.toUpperCase().match(VALID_CHARS) ) {
+          validInput += letter;
+        }
+      }
+      input.value = validInput;
+
+      const guess = input.value.toUpperCase();
+      const isValid = guess.match(`${VALID_CHARS}{${answerLength}}`);
+      const remainingChars = answerLength - guess.length;
+
+      // update instructions
+      if ( remainingChars == 0) {
+        instruction.innerText = "Press 'Enter' to guess";
+      } else if ( remainingChars == 1) {
+        instruction.innerText = `Type 1 letter`;
+      } else {
+        instruction.innerText = `Type ${remainingChars} letters`;
+      }
+
+      // truncate input because some browsers
+      // don't truncate to maxlength
+      if ( input.value.length > answerLength ) {
+        input.value = input.value.slice(0, answerLength);
+      }
+
+      // submit guess if valid
+      if ( e.key == 'Enter' && isValid ) {
         input.value = '';
-      }
-      if ( input.value.length == 6 && input.value.match(`[A-Za-z]{${word.length}}`) ) {
-        input.className = 'valid';
-        inputHint.textContent = "Press 'Enter' to guess";
-      } else {
-        input.className = '';
-        let remainingChars = word.length - input.value.length;
-        if ( remainingChars == 1 ) {
-          inputHint.textContent = `Type 1 letter`;
-        } else {
-          inputHint.textContent = `Type ${remainingChars} letters`;
+        let [correct, count] = checkCorrect(guess);
+        let validatedGuess = checkPartiallyCorrect(guess, correct, count);
+        let rowIdx = guesses;
+        guesses++;
+        displayGuess(guess, validatedGuess, rowIdx);
+        if (guess == answer) {
+          input.outerHTML = `<p style="width: ${answerLength * 1.8}rem">
+            You got it in ${guesses}!<p>`;
+          instruction.outerHTML = '';
         }
-      }
-    });
-    input.addEventListener('focusout', (e) => {
-      if ( input.classList.contains('valid') ) {
-        inputHint.textContent = "Select text box to continue";
-      }
-    });
-    input.addEventListener('focusin', (e) => {
-      if ( input.classList.contains('valid') ) {
-        inputHint.textContent = "Press 'Enter' to guess";
-      } else {
-        let remainingChars = word.length - input.value.length;
-        if ( remainingChars == 1 ) {
-          inputHint.textContent = `Type 1 letter`;
-        } else {
-          inputHint.textContent = `Type ${remainingChars} letters`;
+        if (guesses == MAX_GUESSES) {
+          input.outerHTML = `<p style="width: ${answerLength * 2}rem">
+            Awww... The answer was '${answer}'.<p>`;
+          instruction.outerHTML = '';
         }
       }
     });
