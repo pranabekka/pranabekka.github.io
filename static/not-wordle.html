@@ -42,26 +42,55 @@
     .row {
       margin-bottom: .3rem;
       display: flex;
-      gap: .15rem;
     }
     .cell {
-      border: .05rem solid var(--clr-fg-dim);
+      border-top: .05rem solid var(--clr-fg-dim);
+      border-bottom: .05rem solid var(--clr-fg-dim);
       height: 2rem;
       width: 2rem;
       text-align: center;
       line-height: 2rem;
     }
+    .cell:nth-child(1) {
+      border-radius: 8px 0 0 8px;
+      border-left: 1px solid var(--clr-fg-dim);
+    }
+    .cell:nth-last-child(1) {
+      border-radius: 0 8px 8px 0;
+      border-right: 1px solid var(--clr-fg-dim);
+    }
+    .cell + .cell {
+      border-left: 1px solid var(--clr-fg-dim);
+    }
     .correct {
       background: var(--clr-correct);
-      border-color: var(--clr-correct);
+      border-color: var(--clr-bg);
+    }
+    .cell + .correct {
+      border-color: var(--clr-bg);
+    }
+    .correct:nth-child(1) {
+      border-color: var(--clr-bg);
     }
     .partial {
       background: var(--clr-partial);
-      border-color: var(--clr-partial);
+      border-color: var(--clr-bg);
+    }
+    .cell + .partial {
+      border-color: var(--clr-bg);
+    }
+    .partial:nth-child(1) {
+      border-color: var(--clr-bg);
     }
     .incorrect {
       background: var(--clr-incorrect);
-      border-color: var(--clr-incorrect);
+      border-color: var(--clr-bg);
+    }
+    .cell + .incorrect {
+      border-color: var(--clr-bg);
+    }
+    .incorrect:nth-child(1) {
+      border-color: var(--clr-bg);
     }
     input {
       display: block;
@@ -69,6 +98,8 @@
       color: inherit;
       font-size: inherit;
       border: .05rem solid var(--clr-fg);
+      border-radius: 8px;
+      border-bottom: .1rem solid var(--clr-fg);
       height: 2rem;
       padding: 0 .5rem;
       margin: auto;
@@ -118,8 +149,8 @@
     const rows = Array(MAX_GUESSES).fill(' ');
     const columns = Array(answerLength).fill(' ');
 
-    display.style.width = `${answerLength * 2.15 - .15}rem`;
-    input.style.width = `${answerLength * 2.15 - .15}rem`;
+    display.style.width = `${answerLength * 2}rem`;
+    input.style.width = `${answerLength * 2}rem`;
     input.setAttribute('minlength', answerLength);
     input.setAttribute('maxlength', answerLength);
 
