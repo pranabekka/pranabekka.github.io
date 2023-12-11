@@ -211,6 +211,7 @@
         let isAvailable = count[letter] > 0 && result[letterIdx] == '';
         if ( isPresent && isAvailable ) {
           result[letterIdx] = 'partial';
+          count[letter] -= 1;
         }
       }
       return result;
