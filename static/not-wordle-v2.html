@@ -66,6 +66,19 @@
       margin: .25em 0;
       color: #c0c0c0;
     }
+    .lazy-helper {
+      font-size: .8rem;
+    }
+    button {
+      text-align: left;
+      display: inline;
+      text-decoration: underline;
+      border: none;
+      background-color: inherit;
+      color: #c0c0c0;
+      font-size: inherit;
+      margin-top: .25rem;
+    }
   </style>
 </head>
 <body>
@@ -289,6 +302,22 @@
 
     drawBoard();
     addInputHooks( document.querySelectorAll('input') );
+
+    // start button at bottom
+    // for those who don't want to reach up (me)
+    const lazyHelper = document.createElement('p');
+    lazyHelper.textContent = 'for those who don\'t want to reach up';
+    lazyHelper.className = 'lazy-helper';
+    const startButton = document.createElement('button');
+    startButton.textContent = '[Start]';
+    lazyHelper.insertAdjacentElement('afterbegin', startButton);
+    const body = document.getElementsByTagName('body')[0];
+    body.appendChild(lazyHelper);
+    startButton.addEventListener('click', (e) => {
+      const cellId = `row-${currentGuessId}-cell-0`;
+      const cell = document.getElementById(cellId);
+      cell.focus();
+    });
   </script>
 </body>
 </html>
