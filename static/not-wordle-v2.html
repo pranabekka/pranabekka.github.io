@@ -73,11 +73,12 @@
       text-align: left;
       display: inline;
       text-decoration: underline;
-      border: none;
+      border: .05rem solid white;
       background-color: inherit;
-      color: #c0c0c0;
+      color: white;
       font-size: inherit;
       margin-top: .25rem;
+      padding: 0 .4rem;
     }
   </style>
 </head>
@@ -306,10 +307,10 @@
     // start button at bottom
     // for those who don't want to reach up (me)
     const lazyHelper = document.createElement('p');
-    lazyHelper.textContent = 'for those who don\'t want to reach up';
+    lazyHelper.textContent = ' for those who don\'t want to reach up';
     lazyHelper.className = 'lazy-helper';
     const startButton = document.createElement('button');
-    startButton.textContent = '[Start]';
+    startButton.textContent = 'Start';
     lazyHelper.insertAdjacentElement('afterbegin', startButton);
     const body = document.getElementsByTagName('body')[0];
     body.appendChild(lazyHelper);
