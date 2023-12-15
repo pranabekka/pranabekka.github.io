@@ -268,12 +268,10 @@
           }
 
           // focus next cell
-          if (cellNum < cellCount - 1 && inputCell.value.length == 1 ) {
+          if ( inputCell.value != '' && cellNum < cellCount - 1 && inputCell.value.length == 1 ) {
             const nextCellId = `row-${rowNum}-cell-${cellNum + 1}`;
             const nextCell = document.getElementById(nextCellId);
-            if (inputCell.value != '' && nextCell != null) {
-              nextCell.focus();
-            }
+            nextCell.focus();
           }
 
           inputCell.value = normalise(inputCell.value);
