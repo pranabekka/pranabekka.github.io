@@ -267,6 +267,14 @@
             updateBoard(guess);
           }
 
+          // delete previous
+          if ( key == 'Backspace' && inputCell.value == '' && cellNum > 0) {
+            const prevCellId = `row-${rowNum}-cell-${cellNum - 1}`;
+            const prevCell = document.getElementById(prevCellId);
+            prevCell.value = '';
+            prevCell.focus();
+          }
+
           // focus next cell
           if ( inputCell.value != '' && cellNum < cellCount - 1 && inputCell.value.length == 1 ) {
             const nextCellId = `row-${rowNum}-cell-${cellNum + 1}`;
