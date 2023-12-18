@@ -17,13 +17,13 @@
       <li>
         <h3>
           <a href="{{ page.permalink }}">
-            {{ page.title | markdown | striptags }}
+            {{ page.title | markdown | striptags | safe }}
           </a>
         </h3>
         <p class="subtitle">
           {{ page.date | date(format="%Y-%m-%d") }}
         </p>
-        <p>{{ page.content | split(pat="</p>") | first | trim_start_matches(pat="<p>") | striptags }}</p>
+        <p>{{ page.content | split(pat="</p>") | first | trim_start_matches(pat="<p>") | striptags | safe }}</p>
       </li>
     {% endif %}
   {% endfor %}
