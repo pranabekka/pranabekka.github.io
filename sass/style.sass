@@ -9,15 +9,15 @@ $bg-bright: #2b2b2f
 $bg-semi-bright: #18181f
 $green: #10402a
 $blue: #2707b4
-$yellow: #f0df20
+$yellow: #f0df60
+$yellow-faded: #808f40
 $orange: #ca8711
 $red: #b83830
 $blue-faded: #414161
 $blue-faded-bright: #6161b1
-$highlight: $blue-faded
-$highlight-text: $blue-faded-bright
-$highlight-stale: $blue-faded
-$highlighted-text: $fg-bright // only for page title
+$highlight: $yellow
+$highlight-text: $highlight
+$highlight-stale: $yellow-faded
 
 *
   box-sizing: border-box
@@ -67,9 +67,8 @@ main > h2, main > h3, main > h4, main > h5, main > h6
 
 h1
   font-size: 2rem
-  background: $highlight
   padding: 2rem .5rem .5rem
-  color: $highlighted-text
+  color: $highlight
 
 main > h1
   margin-top: 0
@@ -87,10 +86,6 @@ h3
   padding: 0 .5rem .5rem
   color: $fg-dim
   margin: 0 // override 'main > *'
-
-h1 + .subtitle
-  background-color: $highlight
-  color: $fg
 
 summary
   text-decoration: underline
@@ -116,6 +111,7 @@ a
 a:hover
   background: $highlight
   text-decoration: none
+  color: $bg
 
 a:visited
   text-decoration-color: $highlight-stale
