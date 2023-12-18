@@ -58,12 +58,6 @@
       background-color: #303030;
       border-color: #303030;
     }
-    kbd {
-      padding: 0.1rem .3rem;
-      border-radius: .5rem;
-      border: .05rem solid #c0c0c0;
-      font-family: sans-serif;
-    }
     p {
       margin: .25em 0;
       color: #c0c0c0;
@@ -90,14 +84,7 @@
   <div id=game-board></div>
 
   <p>Tap <em>any</em> white box to start.</p>
-  <p><kbd>↩</kbd>, <kbd>⇥</kbd>, <kbd>Enter</kbd>: submit guess.</p>
-
-  <!--
-  the biggest feature is being able to fill in a letter anywhere
-  it's possible to do that with just one input at the bottom
-  and a separate submit button might be nice
-  for mobile users, or show the 'enter' icon
-  -->
+  <p>‘↩’ / ‘⇥’ / ‘Enter’: submit guess.</p>
 
   <script>
     'use strict';
@@ -188,10 +175,6 @@
           }
 
           row.appendChild(cell);
-
-          // if (rowIndex == 0 && cellIndex == 0) {
-          //   cell.focus();
-          // }
         }
       }
     }
@@ -209,9 +192,6 @@
         cell.outerHTML = `<div class="cell ${highlight}">${letter}</div>`
       }
 
-      // if currentGuessId != MAX_GUESSES
-      //    && guess != answer
-      // console.log(currentGuessId + '/' + MAX_GUESSES);
       if ( currentGuessId != MAX_GUESSES - 1 && guess != answer ) {
         const nextRowId = currentGuessId + 1;
         for (let cellIndex = 0; cellIndex < cellCount; cellIndex++) {
