@@ -219,24 +219,23 @@ footer > hr
 
 //////////// special: heading numbers
 
-body
+main
   counter-reset: h2-counter
 
-main
   > h2
     counter-reset: h3-counter
+
+  > h2:before, > h3:before
+    color: $fg-dim
+    font-weight: 300
 
   > h2:before
     content: counter(h2-counter) ". "
     counter-increment: h2-counter
-    color: $fg-dim
-    font-weight: 300
 
   > h3:before
     content: counter(h2-counter) "." counter(h3-counter) ". "
     counter-increment: h3-counter
-    color: $fg-dim
-    font-weight: 300
 
 //////////// special: card
 // used in index, resume
