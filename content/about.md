@@ -72,14 +72,19 @@ See choices below.
 - three heading levels
   - inspired by edward tufte
   - not a hard rule, but easy to stick to
-- number headings to match contents list ("table of contents")
+- number headings to match list of contents ("table of contents")
+- rounded inline code to show start and end,
+  especially when spanning multiple lines (on mobile)
+- higher contrast for smaller areas
+  - highlight colour is brighter when used in underlines,
+    than the colour used in the title
 
-[Site Source](https://github.com/pranabekka/pranabekka.github.io)
+[Site source](https://github.com/pranabekka/pranabekka.github.io)
 
 ### Usage Tips
 
 - index is a good place to search the site
-  - it shows *all* posts, though only title and description
+  - it shows *all* posts, though only title and first paragraph
 - search using `site:pranabekka.github.io <search term>`
   (works with major search providers)
 - references to current page appear at the bottom
