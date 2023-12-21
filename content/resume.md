@@ -12,11 +12,11 @@ Paired with my knowledge of software engineering,
 this makes me an ideal candidate for working with
 software teams.
 
-{{icon(i="image")}}Portfolio: [pranabekka.github.io/portfolio](/portfolio)
+{{iconImage()}}Portfolio: [pranabekka.github.io/portfolio](/portfolio)
 
-{{icon(i="envelope")}}Email: pranabekka &lt;at&gt; gmail &lt;dot&gt; com
+{{iconEnvelope()}}Email: pranabekka &lt;at&gt; gmail &lt;dot&gt; com
 
-{{icon(i="download")}}Download: [Resumé (PDF)](/resume-pranab-dasgupta-2023-06-01-public.pdf)
+{{iconDownload()}}Download: [Resumé (PDF)](/resume-pranab-dasgupta-2023-06-01-public.pdf)
 
 ## Skills
 
