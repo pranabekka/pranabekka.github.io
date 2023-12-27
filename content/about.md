@@ -43,7 +43,7 @@ Some of my interests include:
 
 ### Contact
 
-Email: pranabekka &lt;at&gt; gmail &lt;dot&gt; com
+Email: [pranabekka@gmail.com](mailto:pranabekka@gmail.com)
 
 Mastodon: [@pranabekka@mastodon.social](https://mastodon.social/@pranabekka)
 

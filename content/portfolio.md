@@ -14,7 +14,7 @@ I'll be including some of them on the website over time.
 
 {{iconDownload()}}Download: [Portfolio (PDF)](/pranabekka-portfolio-2023-06-23-public.pdf)
 
-{{iconEnvelope()}}Email: pranabekka &lt;at&gt; gmail &lt;dot&gt; com
+{{iconEnvelope()}}Email: [pranabekka@gmail.com](mailto:pranabekka@gmail.com)
 
 {{iconDocument()}}Resumé: [pranabekka.github.io/resume](/resume)
 
