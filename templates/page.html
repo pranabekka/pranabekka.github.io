@@ -16,6 +16,11 @@
   {%- endif -%}
 </p>
 
+{% if page.path | split(pat="/") | nth(n=1) == 'drafts' %}
+  <p id="draft-warning"><strong>NOTE:</strong> This is a <em>draft</em> post.
+  See <a href="../">draft posts here</a>.</p>
+{% endif %}
+
 {% if page.toc %}
   <details class="contents">
     <summary>Show/Hide Contents</summary>
@@ -36,8 +41,8 @@
     {% endfor %}
     </ol>
   </details>
-  <hr>
 {% endif %}
+<hr>
 
 {{ page.content | safe }}
 
