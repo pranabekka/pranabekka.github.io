@@ -11,6 +11,7 @@
 </h1>
 {{ section.content | safe }}
 
+{% if section.pages %}
 <ul class="cards">
   {% for page in section.pages %}
     {% if not page.extra.hidden %}
@@ -28,6 +29,9 @@
     {% endif %}
   {% endfor %}
 </ul>
+{% else %}
+<p><strong>No posts here.</strong></p>
+{% endif %}
 
 {# section.pages.1.content | split(pat="</p>") | first | trim_start_matches(pat="<p>") #}
 
