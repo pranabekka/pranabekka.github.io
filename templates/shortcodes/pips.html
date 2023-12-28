@@ -1,6 +1,6 @@
 <div class="pip-display">
   {{ title }}
-  <div class="pips">
+  <div class="pips" aria-description="{{n}} filled pills out of 5 ({{n}}/5 skill)">
     {% for pip in [1,2,3,4,5] %}
       {% if pip <= n %}
         <div class="pip full"></div>
