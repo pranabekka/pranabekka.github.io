@@ -33,6 +33,10 @@ Remember to add the spacing before and after the table syntax.
 This is important to make them overflow properly,
 otherwise tables mess up the size of the page and other elements.
 
+**NOTE:** Zola (0.17.2) doesn't actually allow Markdown inside HTML.
+(Create and) use a shortcode that takes in Markdown content,
+and renders it inside a tablewrapper div.
+
 ## Footnotes near reference
 
 Add in the footnotes right after
