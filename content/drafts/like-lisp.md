@@ -1,9 +1,7 @@
 +++
 title = "I Like Lisp(s). You Might Too"
-draft = true
-## remember to change date on publishing
-date = 2023-07-01 21:29:12 # draft date
-updated = 2023-07-01 21:29:12
+date = 2023-12-29 10:36:58
+updated = 2023-12-29 10:36:58
 +++
 
 Here's my take on why Lisps are cool
