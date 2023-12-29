@@ -1,9 +1,7 @@
 +++
 title = "Software I Use"
-draft = true
-## remember to change date on publishing
-date = 2023-10-02 11:06:12 # draft date
-updated = 2023-10-02 11:06:12
+date = 2023-12-29 10:38:35
+updated = 2023-12-29 10:38:35
 +++
 
 It's all FOSS,

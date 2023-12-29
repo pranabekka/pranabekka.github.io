@@ -1,9 +1,7 @@
 +++
 title = "Ceci n'est pas Wordle devlog part 2"
-draft = true
-## remember to change date on publishing
-date = 2023-12-18 14:11:54 # draft date
-updated = 2023-12-18 14:11:54
+date = 2023-12-29 10:38:16
+updated = 2023-12-29 10:38:16
 +++
 
 So I lied.

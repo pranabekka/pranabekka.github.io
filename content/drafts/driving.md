@@ -1,9 +1,7 @@
 +++
 title = "Driving (in India)"
-draft = true
-## remember to change date on publishing
-date = 2023-08-16 13:38:54 # draft date
-updated = 2023-08-16 13:38:54
+date = 2023-12-29 10:38:24
+updated = 2023-12-29 10:38:24
 +++
 
 My notes on getting a license and driving cars,
