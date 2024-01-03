@@ -9,17 +9,16 @@
 <h1>{{ page.title | markdown | striptags }}</h1>
 
 <p class="subtitle">
-  Created: {{ page.date | date(format="%Y-%m-%d") }}
-  {%- if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") -%}
-    <br>
-    Last Updated: {{ page.updated | date(format="%Y-%m-%d") }}
-  {%- endif -%}
+  {% if page.path | split(pat="/") | nth(n=1) == 'drafts' %}
+    <strong>DRAFT</strong> (needs work or removal)
+  {% else %}
+    {{ page.date | date(format="%Y-%m-%d") }}
+    {% if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") %}
+      → {{ page.updated | date(format="%Y-%m-%d") }}
+    {%- endif -%}
+  {% endif %}
 </p>
 
-{% if page.path | split(pat="/") | nth(n=1) == 'drafts' %}
-  <p id="draft-warning"><strong>NOTE:</strong> This is a <em>draft</em> post.
-  See <a href="../">draft posts here</a>.</p>
-{% endif %}
 
 {% if page.toc %}
   <details class="contents">
