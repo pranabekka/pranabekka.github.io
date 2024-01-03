@@ -9,10 +9,9 @@
 <h1>{{ page.title }}</h1>
 
 <p class="subtitle">
-  Created: {{ page.date | date(format="%Y-%m-%d") }}
-  {%- if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") -%}
-    <br>
-    Last Updated: {{ page.updated | date(format="%Y-%m-%d") }}
+  {{ page.date | date(format="%Y-%m-%d") }}
+  {% if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") %}
+    → {{ page.updated | date(format="%Y-%m-%d") }}
   {%- endif -%}
 </p>
 
