@@ -87,7 +87,16 @@ See choices below.
 
 - index is a good place to search the site
   - it shows *all* posts, though only title and first paragraph
-- search using `site:pranabekka.github.io <search term>`
-  (works with major search providers)
+
+- search using the following snippet in your search provider
+  (remember to replace `<search term>`
+  with what you're looking for).
+
+  ```
+  site:pranabekka.github.io <search term>
+  ```
+
+  This works with all major search providers.
+
 - references to current page appear at the bottom
   - other related pages appear in the body
