@@ -135,7 +135,7 @@ Give [Ceci n'est pas Wordle](/not-wordle-v2.html) a try!
 
 ## Make your own
 
-You can just copy the HTML, change the `WORD` variable*,
+You can just copy the HTML, change the `WORD` variable [^1],
 and then share it with someone!
 
 <a href="/not-wordle-v2.html" download>Download Wordle clone</a>
@@ -143,4 +143,4 @@ and then share it with someone!
 Remember to pick a 5 letter word or less,
 unless you're there to give hints.
 
-*look for `const WORD = '<a-word>'`
+[^1]: look for `const WORD = '<a-word>'`
