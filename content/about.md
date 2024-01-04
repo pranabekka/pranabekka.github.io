@@ -1,7 +1,7 @@
 +++
 title = "About"
 date = 2023-09-26 14:46:13
-updated = 2023-10-19 07:17:48
+updated = 2024-01-04 18:46:51
 +++
 
 A brief introduction to me and the site,
@@ -78,6 +78,8 @@ See choices below.
 - higher contrast for smaller areas
   - highlight colour is brighter when used in underlines,
     than the colour used in the title
+- "logo" in header and tab title to make pages from site apparent
+- no custom fonts (imports) to save on page size and loading time
 
 [Site source](https://github.com/pranabekka/pranabekka.github.io)
 
