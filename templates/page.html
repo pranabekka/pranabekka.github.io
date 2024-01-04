@@ -14,7 +14,13 @@
   {% else %}
     {{ page.date | date(format="%Y-%m-%d") }}
     {% if page.updated | date(format="%Y-%m-%d") != page.date | date(format="%Y-%m-%d") %}
-      → {{ page.updated | date(format="%Y-%m-%d") }}
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      {{ page.updated | date(format="%Y-%m-%d") }}
     {%- endif -%}
   {% endif %}
 </p>
