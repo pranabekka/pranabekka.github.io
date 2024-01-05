@@ -31,19 +31,20 @@ Most of the projects are still in the PDF (as of Oct 2023).</p>
 
 <div class="folio-grid">
 
-  {# sort and filter backlinks #}
-  {% set sorted_backlinks = [] %}
+  {# filter backlinks #}
+  {# don't show draft posts #}
+  {% set filtered_backlinks = [] %}
   {% for backlink in page.backlinks %}
     {% set basename = backlink.permalink | split(pat="/") | nth(n=3) %}
     {% if basename != "drafts" %}
       {% set name = basename ~ ".md" %}
       {% set backlink_page = get_page(path=name) %}
-      {% set_global sorted_backlinks =
-        sorted_backlinks | concat(with=backlink_page.date ~ "/" ~ name) %}
+      {% set_global filtered_backlinks =
+        filtered_backlinks | concat(with=backlink_page.date ~ "/" ~ name) %}
     {% endif %}
   {% endfor %}
 
-  {% for backlink in sorted_backlinks | sort | reverse %}
+  {% for backlink in filtered_backlinks | sort | reverse %}
     {% set name = backlink | split(pat="/") | last %}
     {% set backlink_page = get_page(path=name) %}
     <a href="{{ backlink_page.permalink }}">
