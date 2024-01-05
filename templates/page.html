@@ -51,23 +51,30 @@
 
 {{ page.content | safe }}
 
-{% if page.backlinks | length == 1
-      and page.backlinks.0.permalink == config.base_url ~ "/" | as_str
-   or page.backlinks | length == 1
-      and page.backlinks.0.permalink == page.permalink %}
-  {# do nothing if only one link, and that's index or same page #}
-{% elif page.backlinks %}
-  {# else render all links, except index or self #}
-  <h2>Back References</h2>
+{# filter backlinks #}
+{# don't want backlinks to same post, index, or drafts #}
+{% set filtered_backlinks = [] %}
+{% for backlink in page.backlinks %}
+  {% set basename = backlink.permalink | split(pat="/") | nth(n=3) %}
+  {% if basename != "drafts" and backlink.permalink != page.permalink %}
+    {% set name = basename ~ ".md" %}
+    {% set backlink_page = get_page(path=name) %}
+    {% set_global filtered_backlinks =
+      filtered_backlinks | concat(with=backlink_page.date ~ "/" ~ name) %}
+  {% endif %}
+{% endfor %}
+
+{# render backlinks #}
+{% if filtered_backlinks %}
+  <h2>Back Refs</h2>
   <p>Material that refers to this page.</p>
   <ul>
-  {% for backlink in page.backlinks %}
-    {% if backlink.permalink != config.base_url ~ "/" | as_str
-       and backlink.permalink != page.permalink %}
-      <li>
-        <a href="{{ backlink.permalink }}">{{ backlink.title }}</a>
-      </li>
-    {% endif %}
+  {% for backlink in filtered_backlinks | sort | reverse %}
+    {% set name = backlink | split(pat="/") | last %}
+    {% set backlink_page = get_page(path=name) %}
+    <li>
+      <a href="{{ backlink_page.permalink }}">{{ backlink_page.title }}</a>
+    </li>
   {% endfor %}
   </ul>
 {% endif %}
