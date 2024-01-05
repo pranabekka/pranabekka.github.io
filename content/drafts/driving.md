@@ -79,9 +79,21 @@ or even moving up a bit,
 switch your right foot from the break
 to the accelerator.
 
+Take-off checklist:
+
+1. Adjust mirrors
+  1. Side-view mirrors should show a third or less of the car,
+    and mostly the road
+2. Wear seat belt
+3. Hold break pedal
+4. Release hand break
+  1. Press the button and lower it
+5. Slowly release clutch (till the very end)
+  and gently press accelerator (only a bit)
+
 ### Stopping
 
-Put the gear in neutral before leaving the clutch.
-
-Basically, the gears should not be engaged
+Put the gear in neutral before leaving the clutch
+and turning off the car.
+The gears should not be engaged
 unless you're holding down the clutch and/or accelerator.
