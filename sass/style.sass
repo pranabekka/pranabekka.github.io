@@ -198,13 +198,30 @@ blockquote
   margin-left: 0
   font-size: 120%
 
-.footnote-definition
-  display: flex
-  gap: .5em
-  color: $fg-dim
+.footnote-reference > a , .footnote-definition-label
+  display: inline-block
+  line-height: 1em
+  border: 1px solid $fg-dim
+  padding: .25em
+  height: 1.5em
+  width: 1.5em
+  text-align: center
+  border-radius: 50%
+
+.footnote-reference > a
+  border-color: $highlight
+  text-decoration: none
 
 .footnote-definition-label
   font-weight: 600
+  color: $fg-dim
+  border-color: $fg-dim
+
+.footnote-definition > p
+  display: inline
+  // display: flex
+  // gap: .5em
+  color: $fg-dim
 
 footer
   margin: 0 auto
