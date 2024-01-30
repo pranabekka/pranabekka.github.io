@@ -4,7 +4,7 @@ date = 2024-01-29 20:55:13
 updated = 2024-01-29 20:55:13
 +++
 
-Low network speeds and limited availabality
+Low network speeds and limited availability
 are a fact of life for me.
 I update my devices every 7 days,
 and the size of a *single* Flatpak package
