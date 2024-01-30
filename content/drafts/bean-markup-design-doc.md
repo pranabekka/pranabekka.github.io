@@ -25,11 +25,12 @@ such as emphasis, lists, and tables.
   level 4 and below can use generic block syntax
 - metadata
 - footnotes
-- custom elements and extension \
+- custom elements/components and extension \
   implementation dependent to start with \
   although i'd prefer a scheme or newer/custom lisp \
   use something like jsx components
-- disable elements
+- disable elements with config \
+  implementation dependent
 - namespaces/modules/imports/something
 
 ## Prior art
@@ -45,3 +46,22 @@ djot, AsciiDoc, and MDX.
 [AsciiDoc](https://asciidoc.org/)
 
 [MDX](https://mdxjs.com/)
+
+Markdown suffers from being
+an ad-hoc specification with many issues.
+The author of CommonMark and djot
+has already explained these issues
+in 'Beyond Markdown'.
+
+While I was initially enamoured by AsciiDoc,
+I eventually realised that it has a lot of complex markup,
+and even more complex rules of its own,
+which makes it hard to implement and use.
+However, it does have some clever syntax decisions.
+
+Djot is the format I find the most appealing,
+though it has made some choices
+that I believe could be done better.
+
+The biggest power of MDX is its components system,
+which has a slightly different equivalent in Bean.
