@@ -2,7 +2,7 @@ outline:
 
 - **Update Date**
 - TODO
-- Wrap tables in a .tablewrapper div
+- Wrap tables in a table() shortcode
 - Footnotes near reference
 
 ## Update Date
@@ -16,26 +16,21 @@ when you update a post.
   makes built css clearer
 - [ ] use black and white from main.sass in happycog.html
 
-## Wrap tables in a .tablewrapper div
+## Wrap tables in a table() shortcode
 
 ```
-<div class="tablewrapper">
-
-| table | table |
-| ----- | ----- |
-| item  | item  |
-
-</div>
+{% table() %}
+| header | header |
+| ------ | ------ |
+| item   | item   |
+{% end %}
 ```
 
-Remember to add the spacing before and after the table syntax.
+This is required to make them overflow properly,
+otherwise tables mess up the size of the page and other elements
+when they are wider than the viewport.
 
-This is important to make them overflow properly,
-otherwise tables mess up the size of the page and other elements.
-
-**NOTE:** Zola (0.17.2) doesn't actually allow Markdown inside HTML.
-(Create and) use a shortcode that takes in Markdown content,
-and renders it inside a tablewrapper div.
+The shortcode wraps the table inside a tablewrapper div.
 
 ## Footnotes near reference
 
