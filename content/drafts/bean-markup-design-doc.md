@@ -15,7 +15,18 @@ such as emphasis, lists, and tables.
 - element attributes
 - nesting rules
 - blocks \
-  newline and backtick delimited
+  newline and backtick delimited \
+  default backticks to containers --- anonymous divs/spans
+- reserved tag attribute characters \
+  . for classname \
+  \# for id \
+  this will even turn paragraphs into generic divs/spans \
+  if an element isn't specified like `[.class]` \
+  something for a key attribute? \
+  that automatically selects valid tag? \
+  `[:lang thing]` might make it code? \
+  although that might mean human language \
+  so forget about that
 - inline delimiters \
   backticks, asterisks \
   allow inline tag before delimiters as well?

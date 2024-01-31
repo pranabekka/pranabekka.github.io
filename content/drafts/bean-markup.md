@@ -142,6 +142,9 @@ This is a second block within the block element.
 ``
 ```
 
+**TODO**: make fenced blocks generic divs by default,
+to avoid making it programming/dev focussed
+
 A fenced block defaults to a code block,
 unless there's a tag specifying otherwise.
 
@@ -216,6 +219,9 @@ A single backtick or more is used to do so.
 ```
 A paragraph with an `inline` element.
 ```
+
+**TODO**: make fenced blocks generic spans by default,
+to avoid making it programming/dev focussed
 
 Inline elements default to code,
 as seen in fenced blocks.
