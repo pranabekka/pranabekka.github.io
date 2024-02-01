@@ -5,12 +5,24 @@ Page Not Found - {{ config.title | markdown | striptags }}
 {% endblock %}
 
 {% block content %}
-<h1>Page Not Found</h1>
-<p class="subtitle">HTTP Code: 404</p>
+<h1>Page not found</h1>
+<p class="subtitle">This is not the page you're looking for</p>
 <p>
-<a href="javascript:window.history.back();">Back to Previous Page</a>
+It's likely you have the wrong link,
+or that the page hasn't been created yet.
 </p>
 <p>
-<a href="{{ config.base_url }}">Home Page</a>
+While I try not to break links,
+it's also possible that the page
+has been moved or removed.
+</p>
+<p>
+<a href="javascript:window.history.back();">Back to previous page</a>
+</p>
+<p>
+<a href="{{ config.base_url }}">Home page</a>
+</p>
+<p>
+<a href="{{ config.base_url }}/about#usage-tips">How to search</a>
 </p>
 {% endblock %}
