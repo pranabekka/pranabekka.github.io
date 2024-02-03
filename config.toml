@@ -2,9 +2,14 @@ base_url = "https://pranabekka.github.io"
 
 title = "Pranab's Site"
 
+description = "Where I share my thoughts, ideas, projects, and (mis)information."
+
 compile_sass = true
 
 build_search_index = false
+
+generate_feed = true
+author = "Pranab" # used in feed
 
 [markdown]
 smart_punctuation = true
