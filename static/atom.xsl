@@ -13,7 +13,7 @@
 </head>
 <body>
   <main>
-    <h1><xsl:value-of select="/atom:feed/atom:title"/> Feed</h1>
+    <h1><xsl:value-of select="/atom:feed/atom:title"/> (feed)</h1>
 
     <!--
     <p><xsl:value-of select="/atom:feed/atom:subtitle"/></p>
