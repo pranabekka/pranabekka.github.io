@@ -9,6 +9,9 @@
 <h1>
   {{ section.title | markdown | safe }}
 </h1>
+
+<p>{{ config.description }}</p>
+
 {{ section.content | safe }}
 
 {% if section.pages %}
