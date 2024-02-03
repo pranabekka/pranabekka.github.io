@@ -50,6 +50,9 @@ but it's still a lot of work (as a non-programmer) to replicate
 everything that static site generators and other tools
 can do for you.
 
+*Again, sorry for that.
+Please check out the post with [some actual content](@/djot-1.md).*
+
 [mklad]: https://matklad.github.io
 [mklad-markup]: https://matklad.github.io/2022/10/28/elements-of-a-great-markup-language.html
 [djot]: https://djot.net
