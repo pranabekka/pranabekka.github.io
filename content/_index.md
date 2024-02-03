@@ -1,5 +1,5 @@
 +++
-title = "Pranab's Site"
+title = "Pranab's site"
 date = 2023-04-18 15:42:28
 updated = 2023-04-18 15:42:28
 sort_by = "date"
