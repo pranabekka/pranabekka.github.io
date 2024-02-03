@@ -20,7 +20,11 @@
       {% block content %} {% endblock %}
   </main>
   <footer>
-    <p><a href="#">Go To Top ↑</a></p>
+    <nav>
+      <a href="{{ config.base_url}}">Home</a>
+      <a href="#">Go To Top ↑</a>
+      <a href="{{ config.base_url }}/atom.xml">&ldquo;RSS&rdquo; Feed</a>
+    </nav>
     <hr>
     <p>Please feel free to
       <a href="{{ config.base_url }}/about#contact">contact</a> me
