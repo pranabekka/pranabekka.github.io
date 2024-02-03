@@ -1,15 +1,14 @@
 +++
-title = "Djot"
-## remember to change date on publishing
-date = 2024-02-01 11:14:54 # draft date
-updated = 2024-02-01 11:14:54
+title = "Try djot instead of markdown"
+date = 2024-02-03 19:34:38
+updated = 2024-02-03 19:34:38
 +++
 
 Djot is a pretty cool markup format
 that contains the lessons learnt by the author
 of the CommonMark spec and implementation.
 
-I've mentioned it here an there,
+I've mentioned it here and there,
 and thought I might as well write about it.
 
 ## Semantic output
@@ -134,6 +133,15 @@ The inline version of the same is:
 Some `<my-tag-soup />`{=html} inline
 ```
 
-## open close quotes
+## Try it out
 
-openers, closers, and quotes
+Overall it's a really cool format,
+and you can try it out now in the live sandbox!
+
+[Live sandbox](https://djot.net/playground/)
+
+If you like it, you can see
+if one of the implementations listed in the home page
+might suit your purposes.
+
+[Djot home page](https://djot.net)
