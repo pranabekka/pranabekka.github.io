@@ -6,6 +6,8 @@ updated = 2023-04-23 15:35:14
 
 EDIT: *Whew, inane mind dump!*
 Just check out the [post on why I like djot](@/djot-1.md).
+I'm keeping this link for something to at least laugh at,
+and to build a habit of not breaking links.
 
 I was reading an article by [matklad][mklad]
 and I realised the formatting looked a lot like
