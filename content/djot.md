@@ -4,6 +4,9 @@ date = 2023-04-23 15:35:14
 updated = 2023-04-23 15:35:14
 +++
 
+EDIT: *Whew, inane mind dump!*
+Just check out the [post on why I like djot](@/djot-1.md).
+
 I was reading an article by [matklad][mklad]
 and I realised the formatting looked a lot like
 the default Asciidoctor output,
