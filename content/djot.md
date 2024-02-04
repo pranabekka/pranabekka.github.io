@@ -1,10 +1,10 @@
 +++
 title = "djot"
 date = 2023-04-23 15:35:14
-updated = 2023-04-23 15:35:14
+updated = 2024-02-04 09:28:09
 +++
 
-EDIT: *Whew, inane mind dump!*
+EDIT: *Whoa! Inane mind dump ahead!*
 Just check out the [post on why I like djot](@/djot-1.md).
 I'm keeping this link for something to at least laugh at,
 and to build a habit of not breaking links.
