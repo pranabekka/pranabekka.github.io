@@ -13,19 +13,28 @@
 </head>
 <body>
   <main>
-    <h1><xsl:value-of select="/atom:feed/atom:title"/> (feed)</h1>
+    <h1><xsl:value-of select="/atom:feed/atom:title"/> (web feed)</h1>
 
     <!--
     <p><xsl:value-of select="/atom:feed/atom:subtitle"/></p>
     -->
 
     <p>
-      This is the news feed for my website.
-      It is meant for feed reader applications, not humans.
+      This is the web feed for my site.
+      You are meant to copy the feed URL, shown below,
+      into a feed reader application.
     </p>
 
+    <pre>
+      <code id="feedurl">
+        <xsl:value-of select="/atom:feed/atom:link[@rel='self']/@href"/>
+      </code>
+    </pre>
+
     <p>
-      <a href="https://aboutfeeds.com/">Learn more about feeds</a>
+      <!-- TODO: insert href from atom.xml into anchor tag href -->
+      <!-- <xsl:value-of select="/atom:feed/atom:link[@rel='alternate']/@href"/> -->
+      <a href="https://pranabekka.github.io/feed-atom.xml">Learn more about feeds</a>
     </p>
 
     <p>
@@ -37,12 +46,6 @@
     </p>
 
     <p>Feed URL:</p>
-
-    <pre>
-      <code id="feedurl">
-        <xsl:value-of select="/atom:feed/atom:link[@rel='self']/@href"/>
-      </code>
-    </pre>
 
     <h2>Pages</h2>
 
