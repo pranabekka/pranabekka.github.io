@@ -45,8 +45,6 @@
       <a href="javascript:window.history.back();">Back to previous page</a>
     </p>
 
-    <p>Feed URL:</p>
-
     <h2>Pages</h2>
 
     <ul class="cards">
