@@ -34,7 +34,7 @@
     <p>
       <!-- TODO: insert href from atom.xml into anchor tag href -->
       <!-- <xsl:value-of select="/atom:feed/atom:link[@rel='alternate']/@href"/> -->
-      <a href="https://pranabekka.github.io/feed-atom.xml">Learn more about feeds</a>
+      <a href="https://pranabekka.github.io/feed-atom/">Learn more about feeds</a>
     </p>
 
     <p>
