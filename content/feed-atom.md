@@ -1,14 +1,14 @@
 +++
-title = "Web feed (\"RSS\")"
+title = "Web feed now live!"
 date = 2024-02-09 12:26:56
 updated = 2024-02-09 12:26:56
 +++
 
-Web feed is now live!
-
 AKA "RSS" feed, or Atom feed.
 
 [Link to feed](/atom.xml)
+
+***
 
 For the uninitiated,
 web feeds are a mechanism for sharing updates,
