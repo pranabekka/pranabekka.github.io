@@ -22,47 +22,53 @@ yet is more obviously influenced by djot and AsciiDoc.
 **NOTE:** Bean doesn't have an implementation.
 This is just an idea in my head right now.
 
+<!--
 ## Audience
 
 People already familiar with Markdown,
 and maybe even other markup languages,
 who are interested in plain text markup formats.
+-->
 
 ## The other formats
 
-Markdown suffers from being
-an ad-hoc specification with many issues.
+Markdown suffers from being a mix of plain-text email conventions
+instead of a fully considered specification,
+and thus has many complexities,
+inconsistencies, and surprises.
 The author of CommonMark and djot
 has already explained these issues
 in 'Beyond Markdown'.
 
 [Beyond Markdown](https://johnmacfarlane.net/beyond-markdown.html)
 
-While I was initially enamoured by AsciiDoc,
-I eventually realised that it has a lot of complex markup,
-and even more complex rules of its own,
-which makes it hard to implement and use.
+While I was initially enamoured by AsciiDoc and all its features,
+I eventually realised that it has a lot of complex syntax,
+which makes it hard to learn and use,
+and even harder to port.
 
 Djot is the format I find the most appealing,
 though it has made some choices
 that I believe could be done better.
+Djot's syntax isn't _completely_ fixed yet,
+but I obviously can't resist dreaming up my own format.
 
 Typst is another format that I quite like,
-although it is currently made for PDF output,
-and is a lot more complex.
+although it's currently made for PDF output,
+and includes a whole new scripting language.
 
 [Typst](https://typst.app)
 
 MDX is another format that I like,
-for the components system,
-but it's still a Markdown dialect in many ways.
+but just for the component system,
+because it's still a Markdown dialect.
 
 [MDX](https://mdxjs.com/)
 
 ## Rationale
 
 The first factor that led me to devise another format
-was my desire to create and use custom elements
+was my desire to create and use custom markup elements
 that conform to my preferences.
 
 Bean includes 
@@ -81,17 +87,15 @@ due to my familiarity with it.
 
 - **Element:**
   An abstract 'part' of the document,
-  delimited from other parts
-  with tags and delimiters.
+  identified with tags and delimiters.
 
 - **Tag:**
   A declaration, within the document,
   of an element, its type,
-  and some of its options.
+  and optional or required attributes.
 
 - **Delimiter:**
-  Markers for the beginning and end
-  of an element's contents. 
+  Marker for where an element begins or ends.
 
 - **Block (Element):**
   A 'block' level element,
@@ -100,7 +104,7 @@ due to my familiarity with it.
 
 - **Inline (Element):**
   An element that usually occurs within a line of text,
-  such as links and emphasised text.
+  such as a link or emphasised text.
 
 ## Begin
 
@@ -298,6 +302,12 @@ would get tedious very quickly.
 ```
 * List item
 * Another list item
+
+1. First item
+2. Second item
+
+. First item
+. Second item
 ```
 
 While they appear the same as Markdown at a first glance,
@@ -316,6 +326,13 @@ as the first list item.
 * Second top-level list item
   * with running text (this is not a list item)
 * Third list item
+
+[hr]
+
+1. First item
+1.1. Part 1 of first item
+1. 2. Second item (automatically numbered 2)
+3. Third item
 ```
 
 Output:
@@ -326,6 +343,13 @@ Output:
 - Second top-level list item * with running text
   (this is not a list item)
 - Third list item
+
+---
+
+1. First item
+    1. Part 1 of first item
+1. <span>2</span>. Second item <!-- It creates an inline nested list, otherwise -->
+3. Third item
 {% end %}
 
 Notice how the bullet mark doesn't create a new list item
@@ -487,45 +511,6 @@ to be used in listings and previews,
 but not when displaying the document directly.
 ```
 
-## Waffle
-
-**NOTE:**
-These are random unorganised bits and incomplete ideas.
-
-### Tag syntax
-
-I'm not a 100% sure about the tag property syntax.
-These are the three main options I considered:
-
-```
-[tag option1=value1 option2 option3=value3]
-
-[tag :option1 value1 option2 :option3 value3]
-
-[tag option1 value1 option2 true option3 value3]
-```
-
-The last is the easiest to type,
-but I don't feel like the difference is that big,
-plus having an indicator like the colon or equal sign
-can be quite helpful, and thus worth the extra character.
-I guess the second has the benefit
-that you won't need to escape equal signs?
-
-### Classes and IDs
-
-```
-[.big .red]
-Big red paragraph (has "big" and "red" classes)
-
-[#warning]
-This paragraph has the "warning" ID
-```
-
-This is another concept that djot has.
-I'm not quite sure it's necessary or even desired,
-and it injects a bit of HTML in some ways.
-
 ### Conditional passthrough
 
 Djot has passthrough blocks that take a format specifier,
@@ -561,6 +546,45 @@ Regular indentation/spacing.
 </ul>
 {% end %}
 
+## Waffle
+
+**NOTE:**
+These are random unorganised and/or incomplete bits.
+
+### Tag syntax
+
+I'm not a 100% sure about the tag property syntax.
+These are the three main options I considered:
+
+```
+[tag option1=value1 option2 option3=value3]
+
+[tag :option1 value1 option2 :option3 value3]
+
+[tag option1 value1 option2 true option3 value3]
+```
+
+The last is the easiest to type,
+but I don't feel like the difference is that big,
+plus having an indicator like the colon or equal sign
+can be quite helpful, and thus worth the extra character.
+I guess the second has the benefit
+that you won't need to escape equal signs?
+
+### Classes and IDs
+
+```
+[.big .red]
+Big red paragraph (has "big" and "red" classes)
+
+[#warning]
+This paragraph has the "warning" ID
+```
+
+This is another concept that djot has.
+I'm not quite sure it's necessary or even desired,
+and it injects a bit of HTML in some ways.
+
 ### Custom elements/tags
 
 Roughly the same as custom components in MDX,
@@ -570,6 +594,10 @@ I guess it would be implementation dependent,
 so there's no real point of examples here,
 though if I were to require an extension language,
 I'd pick an S-expression language.
+
+I was imagining the API would be something simple like
+defining a function that takes in the tag contents
+and outputs HTML by manipulating child tags and text content.
 
 ### Bean as an extensible markup format
 
@@ -615,4 +643,46 @@ to avoid specialising too much for writing about programming.
 - Default config file for all Bean files within folder.
 - Comments --- probably using the djot method.
   Better than adding extra syntax sugar.
-  A comment "tag" could also be useful?
+  Maybe a comment "tag" and/or attribute?
+
+### Table wrappers
+
+I really dislike how tables break layouts
+if they stretch past the page width,
+so I'd like Bean to automatically insert
+a `div.tablewrapper` around them,
+either by over-riding the default component,
+or creating a custom component.
+
+### Details component
+
+```
+[details]
+[summary]This is the summary of this block
+Insert any ol' content over here,
+which will be displayed when the details element is opened.
+```
+
+{% sampleBlock() %}
+<br>
+<details>
+<summary>This is the summary of this block</summary>
+Insert any ol' content over here,
+which will be displayed when the details element is opened.
+</details>
+<br>
+{% end %}
+
+Another option is to use fences,
+and make the first block the summary.
+
+```
+[details]
+``
+This block is the summary
+
+Any other blocks are part of the hidden content.
+``
+```
+
+Trying them out will give the answers.
