@@ -1,12 +1,11 @@
 +++
 title = "Bean markup"
-## remember to change date on publishing
-date = 2024-01-30 10:33:12 # draft date
-updated = 2024-01-30 10:33:12
+date = 2024-03-13 23:56:12
+updated = 2024-03-13 23:56:12
 +++
 
 Bean is an extensible markup language,
-with constructs for delimiting and marking up text,
+with generic constructs for delimiting and marking up text,
 as well as syntax sugar for commonly used markup,
 such as emphasis, lists, and tables.
 
