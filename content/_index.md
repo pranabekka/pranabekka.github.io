@@ -9,6 +9,9 @@ sort_by = "date"
 Using html doesn't register these as backlinks,
 so if I change this, remember to filter index from backlinks
 -->
+
+Pronouns: he/him
+
 <nav>
   <a href="/portfolio">Portfolio</a>
   <a href="/about">About</a>

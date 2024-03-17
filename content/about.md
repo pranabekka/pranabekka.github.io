@@ -9,7 +9,7 @@ including tips on how to use it (the site, not me ;).
 
 ## About Me
 
-Where me = "Pranab".
+Where me = "Pranab" (he/him).
 
 I have a formal education in design,
 with my current focus on UI/UX design,
