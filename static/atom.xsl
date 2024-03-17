@@ -9,7 +9,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
-  <title><xsl:value-of select="/atom:feed/atom:title"/></title>
+  <title><xsl:value-of select="/atom:feed/atom:title"/> (web feed)</title>
 </head>
 <body>
   <main>
