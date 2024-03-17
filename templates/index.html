@@ -10,7 +10,11 @@
   {{ section.title | markdown | safe }}
 </h1>
 
+{% set this_url = section.permalink | as_str %}
+{% set base_url = config.base_url ~ "/" %} {# '~' op converts to string #}
+{% if this_url == base_url %}
 <p>{{ config.description }}</p>
+{% endif %}
 
 {{ section.content | safe }}
 
