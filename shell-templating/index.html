@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+DIY (Fish) Shell Templating
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <header>
+    <img src="/favicon.svg" id="icon">
+    <span>Pranab&#x27;s site — <a href="/">Home</a></span>
+  </header>
+  <main>
+      
+
+<h1>DIY (Fish) Shell Templating
+</h1>
+
+<p class="subtitle">
+  
+    2023-05-07
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      2023-05-11
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide Contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/shell-templating/#how-it-works">How it Works</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/shell-templating/#future-work">Future Work</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/shell-templating/#code">Code</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>If you’ve seen my note on creating a
+<a href="https://pranabekka.github.io/static-site-build-tool/">Static Site Build Tool</a>,
+you might’ve seen the link to <a href="https://adi.onl/pp.html">pp</a>,
+and that I lament the syntax and the fact that it uses ash/dash.
+Turns out it’s quite easy to implement in fish,
+along with a syntax I prefer!</p>
+<p>It started with me just going about my day,
+when I remembered the <code>eval</code> command
+and I started thinking of the pieces I might need
+to create a parser/state machine of sorts in fish.
+I tinkered a bit with some of the commands
+I was thinking of,
+and I managed to get it working quite well!</p>
+<p>I haven’t made a way of putting in variables
+or reading and writing from a file,
+and I haven’t thought of too many edge cases,
+but the basic functionality is there.</p>
+<p>If I run <code>./parser.fish &quot;the date is {{ date -I }}&quot;</code>
+it will give me the output <code>the date is 2023-05-07</code></p>
+<p>I’ve pasted in the whole thing,
+as it currently is,
+at the end,
+if you’re curious.</p>
+<h2 id="how-it-works">How it Works</h2>
+<p>The basic way it works,
+is it uses a variable to figure out
+if it’s reading normal text or command text.
+If it’s reading normal text,
+it simply passes it along to stdout,
+and if it’s reading command text,
+it gathers that into a string,
+then runs <code>eval</code> on it,
+which spits out its output to stdout.</p>
+<h2 id="future-work">Future Work</h2>
+<p>I want to be able to parse files
+instead of just strings.
+The answer might be somewhere in <code>string join \n $fileContents</code>.</p>
+<p>When parsing files,
+it would be useful to provide variables for substitution.
+Perhaps it could be done by specifying environment variables
+in the same line as the command.
+Something like <code>VAR=val fish-template str &quot;{{ echo $VAR }}</code>.
+Another way would be a syntax for keys and values.
+Perhaps <code>--variables &quot;key1: val1; key2: val2&quot;</code>.</p>
+<p>A short syntax for variable expansion might also be nice.
+Something like <code>{{ $var }}</code> or <code>{$ var $}</code></p>
+<p>It would be cool to have a way to limit its scope,
+depending on where it’s being called from.
+Include a list to allow certain commands,
+as well as one to block some.
+If the first the command isn’t in the allow list,
+or is present in the block list,
+then raise an error instead of evaluating it.</p>
+<p>In a similar vein, providing additional commands would be great.
+A simple way is to create commands in a <code>bin/</code> directory
+and then run them with <code>{{ ./bin/my-command }}</code>,
+but a shorter syntax would be quite useful.
+Perhaps use the <code>bin/</code> directory
+with a syntax like <code>{{ @my-command }}</code>?
+Or simply <code>{{ my-command }}</code>,
+such that if <code>my-command</code> is not installed,
+it would look in the bin directory.</p>
+<p>It is ideal that the template evaluation
+takes place from a specific directory.
+Especially if relying on file operations
+or something like a <code>./bin/</code> directory.
+When calling the command on a template file,
+ensure the current working directory
+is the same as the file’s parent directory,
+unless specified otherwise.
+Changing directories in the script
+sounds like a potential footgun,
+since it’s implicit behaviour that people will not be aware of.
+An easy flag, then,
+to execute in the context of the template file’s folder.
+So <code>--dir &lt; current | file-dir | &lt;path&gt; &gt;</code>,
+where <path> is relative (starting with <code>./</code>) or absolute.</p>
+<p>It would also be great to have all commands in the file/template
+evaluate in the same context.
+This way a variable declared at the top
+could be used in a command further down.
+Currently, it spawns subshells using the <code>eval</code> command.
+Maybe it could use <code>source</code> or a flag in <code>eval</code>?
+Another approach might be to gather content
+as an <code>echo $content</code> command
+along with the other commands in the given sequence,
+then calling all the echo and other commands
+using a single <code>eval</code> command at the end.
+Use <code>string escape</code> to prevent unwanted expansions.</p>
+<h2 id="code">Code</h2>
+<pre data-lang="fish" class="language-fish "><code class="language-fish" data-lang="fish">set parserMode normal
+set command &#x27;&#x27;
+
+echo $argv[1] | while read -n 1 char
+  switch &quot;$parserMode $char&quot;
+
+    case &#x27;normal {&#x27;
+      set parserMode open-brace
+
+    case &#x27;open-brace {&#x27;
+      set parserMode command-mode
+      set command &#x27;&#x27;
+
+    case &#x27;open-brace *&#x27;
+      set parserMode normal
+      printf &#x27;{%s&#x27; $char
+
+    case &#x27;command-mode }&#x27;
+      set parserMode close-brace
+
+    case &#x27;close-brace }&#x27;
+      set parserMode normal
+      # echo \&#x27;$command\&#x27;
+      eval $command
+
+    case &#x27;close-brace *&#x27;
+      set parserMode command
+      set command &quot;$command\}$char&quot;
+
+    case &#x27;command-mode &#x27;
+      # newline creates &#x27;&#x27; when read
+      set command &quot;$command ; &quot;
+
+    case &#x27;command-mode #&#x27;
+      set parserMode comment
+
+    case &#x27;comment &#x27;
+      # newline creates &#x27;&#x27; when read
+      set parserMode command-mode
+      set command &quot;$command ; &quot;
+
+    case &#x27;command-mode *&#x27;
+      set command &quot;$command$char&quot;
+
+    case &#x27;normal &#x27;
+      # newline creates &#x27;&#x27; when read
+      printf \n
+
+    case &#x27;normal *&#x27;
+      printf %s $char
+  end
+end
+</code></pre>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <h2>Back Refs</h2>
+  <p>Material that refers to this page.</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;static-site-build-tool&#x2F;">Static Site Build Tool</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml">Web feed</a>
+    </nav>
+    <hr>
+    <p>Please feel free to
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">contact</a> me
+      if you have any feedback,
+      from opinions to minor grammar or styling issues.
+    </p>
+    <hr>
+    <p><a href="https://github.com/pranabekka/pranabekka.github.io">Site source</a>
+  </footer>
+</body>
+
+</html>
