@@ -5,11 +5,13 @@ date = 2024-03-12 02:43:12 # draft date
 updated = 2024-03-12 02:43:12
 +++
 
-S-expressions are a data format similar to JSON, YAML or XML,
-with a history that predates XML all the way back to C.
-Their syntax is incredibly simple and powerful,
-based on two simple rules: (1) separate things with spaces,
-and (2) group them with parentheses.
+S-expression syntax has just two rules:
+(1) group things with parentheses,
+and (2) separate them with spaces.
+
+They're a data format
+with power comparable to HTML, XML, JSON, etc.,
+yet with the simplest syntax.
 
 ```
 (draw-cards 10)
@@ -19,17 +21,16 @@ and (2) group them with parentheses.
 (call-cab (location? "Pranab"))
 ```
 
-Notice how non-strings (quoted text) can now use any characters,
-such as question marks and hyphens,
-that aren't spaces or parentheses? [^1]
-
-[^1]: You can actually escape spaces and parentheses with a backslash,
-or using another form of quoting for symbols: `|a (quoted) symbol)|`
+Notice how identifiers, such as `draw-cards` and `location?`,
+can now use any characters,
+such as question marks and hyphens ---
+because spaces and parentheses are the only syntax!
 
 ## A note on idiomatic S-expressions
 
-You should avoid writing S-expressions in the same way as other formats,
-which I'll show in the example below:
+Most formats try to put parentheses on individual lines,
+and try to match their indentation, like the next example.
+You should avoid that.
 
 ```
 (
@@ -43,8 +44,11 @@ which I'll show in the example below:
 )
 ```
 
-You have to learn to ignore most of the parentheses while reading,
-and let your editor handle them while writing.
+Instead of the above,
+you have to learn to ignore most of the parentheses
+while reading S-expressions,
+and let your editor handle parentheses
+while writing S-expressions.
 
 Here's an idiomatic representation of the previous example:
 
@@ -54,8 +58,10 @@ Here's an idiomatic representation of the previous example:
   (item "Second item"))
 ```
 
-Simply ignore the parentheses,
-and this is already incredibly compact and much more readable.
+The indentation and spaces communicate
+the relationship between all the parts,
+making everything a lot more compact
+and easy to read through.
 
 ## Writing HTML
 
@@ -151,7 +157,7 @@ using two simple ideas:
 
 Now, you only need to remember the above two rules,
 and the two S-expressions rules:
-(1) separate items with spaces, and (2) group them with parentheses.
+(1) group items with parentheses, and (2) separate them with spaces.
 Instead of learning the syntax of the language,
 you can now immediately start working with it!
 
@@ -208,6 +214,8 @@ Common Lisp, Clojure, Fennel, and Janet.
 
 ## Fewer parentheses with whitespace expressions
 
+<!-- or "Fewer parentheses, more significant whitespace" -->
+
 Now, seeing the above examples, some of you might have thought
 "Well, that looks tedious", or "Looks about the same to me".
 
@@ -238,4 +246,14 @@ ul : id "data-formats"
   li () "S-expressions"
 ```
 
-[Significant whitespace S-expressions]
+[Significant whitespace S-expressions](@/drafts/significant-whitespace.md)
+
+## Using
+
+libs for go, python, c, zig, rust, ocaml, more
+
+scheme, common lisp, janet
+
+fennel, hy, clojure
+if you're already familiar with the lang
+and want to code in your fav lang
