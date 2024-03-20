@@ -251,6 +251,11 @@ html (head (title "My HTML document")) (body (h1 "Hello, world!") (img :src "cat
 config (font-family IntelOne Mono) (font-size 13) (colour-scheme vivendi) (plugins smart-quotes markdown-preview wiki snippets emmet live-server easymotion autosave dates) (vi-mode true) (keys (fuzzy-find Ctrl-f) (dates:insert-date Alt-d))
 ```
 
+So, with a little more extra scaffolding we could take on XML,
+the JSON format is quite ad-hoc in general,
+YAML has a few issues that hurt adoption,
+and wisp has less syntax and confusion than all of them.
+
 <!--
 hmm... should there be a syntax for creating a same-level list inline?
 a semicolon could do that: `list1 ; list2 : list2.1 ; list3 ; list4`
