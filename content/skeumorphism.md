@@ -1,5 +1,5 @@
 +++
-title = "Skeu&shy;morphism" # Skeumorphism (soft hyphen for mobile)
+title = "Skeu&shy;morphism" # Skeumorphism
 date = 2023-04-28 17:31:56
   # change updated when updated
 updated = 2023-04-28 17:31:56
