@@ -8,15 +8,44 @@ AKA "RSS" feed, or Atom feed.
 
 [Link to feed](/atom.xml)
 
-***
+## Why use a feed?
 
-For the uninitiated,
-web feeds are a mechanism for sharing updates,
-because websites don't really have a specific structure.
-It's a special link (mine is above)
-that goes into a feed reader application,
-of which there are several.
-Here's a few:
+Say you follow a few interesting websites,
+and they don't post a flood of content,
+not too often, and not even on any schedule.
+
+If you regularly find yourself
+checking these sites only to find nothing,
+consider using web feeds.
+
+Web feeds allow you to see updates
+to your favourite sites in one place,
+with the option to view it in the same place,
+and even notify you of updates.
+
+## How does it work?
+
+A feed is a simple link that you
+put in a feed reader app,
+usually by copying it.
+
+Feed readers have varying degrees of functionality.
+At a base level, they should be able to list posts
+from all the people that you follow,
+with a link to the post on their website.
+
+Additional features include
+viewing the post in the app,
+which is fairly common,
+searching all feeds and posts,
+grouping them into categories,
+receiving notifications on updates,
+and more.
+
+## What reader should I use?
+
+Here's a short list of readers to get started with.
+Feel free to research and find your own.
 
 - [RSS is Awesome](https://rssisawesome.com)
 
@@ -26,9 +55,9 @@ Here's a few:
 
 - [Feed Reader](https://feedreader.com/online)
 
-  This is similar to the above service,
-  but with a required account
-  for syncing across multiple devices.
+  Sign up to sync across devices,
+  so that you can check your feed anywhere,
+  without ads of any kind.
 
 - [Feedly](https://feedly.com)
 
