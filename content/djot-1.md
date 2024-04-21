@@ -1,7 +1,7 @@
 +++
 title = "Try djot instead of markdown"
 date = 2024-02-03 19:34:38
-updated = 2024-02-03 19:34:38
+updated = 2024-04-13 19:38:19
 +++
 
 Djot is a pretty cool markup format
