@@ -4,20 +4,19 @@
   xmlns:atom="http://www.w3.org/2005/Atom">
 <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 <xsl:template match="/">
+<xsl:param name="feedurl" select="/atom:feed/atom:link[@rel='self']/@href" />
+<xsl:param name="baseurl" select="substring-before($feedurl, 'atom')" />
 <html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.svg" />
   <title><xsl:value-of select="/atom:feed/atom:title"/> (web feed)</title>
 </head>
 <body>
   <main>
     <h1><xsl:value-of select="/atom:feed/atom:title"/> (web feed)</h1>
-
-    <!--
-    <p><xsl:value-of select="/atom:feed/atom:subtitle"/></p>
-    -->
 
     <p>
       This is the web feed for my site.
@@ -27,18 +26,26 @@
 
     <pre>
       <code id="feedurl">
-        <xsl:value-of select="/atom:feed/atom:link[@rel='self']/@href"/>
+        <xsl:value-of select="$feedurl"/>
       </code>
     </pre>
 
     <p>
-      <!-- TODO: insert href from atom.xml into anchor tag href -->
-      <!-- <xsl:value-of select="/atom:feed/atom:link[@rel='alternate']/@href"/> -->
-      <a href="https://pranabekka.github.io/feed-atom/">Learn more about feeds</a>
+      <a href="/feed-atom/">
+        <xsl:attribute name="href">
+          <xsl:value-of select="concat($baseurl, 'feed-atom/')" />
+        </xsl:attribute>
+        Learn more about feeds
+      </a>
     </p>
 
     <p>
-      <a href="https://pranabekka.github.io/">My site</a>
+      <a href="/">
+        <xsl:attribute name="href">
+          <xsl:value-of select="$baseurl" />
+        </xsl:attribute>
+        My site
+      </a>
     </p>
 
     <p>
