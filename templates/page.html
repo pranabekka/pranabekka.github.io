@@ -67,8 +67,8 @@
 
 {# render backlinks #}
 {% if filtered_backlinks %}
-  <h2>Back Refs</h2>
-  <p>Material that refers to this page.</p>
+  <hr>
+  <p>References to this page:</p>
   <ul>
   {% for backlink in filtered_backlinks | sort | reverse %}
     {% set name = backlink | split(pat="/") | last %}
