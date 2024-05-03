@@ -1,5 +1,5 @@
 +++
-title = "Realistic alien military sci-fi"
+title = "Detailed military sci-fi book"
 date = 2024-05-03 19:20:40
 updated = 2024-05-03 19:20:40
 +++
