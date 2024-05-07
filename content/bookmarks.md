@@ -61,11 +61,6 @@ cookbook and community.
 
 Short and curated list of personal and indie blogs.
 
-## [boredreading.com](https://boredreading.com)
-
-A list of blog *posts* from across the web,
-with additional features to make blogging great again.
-
 ## [Sourcehut](https://sr.ht)
 
 Indie (ish?) and FOSS source forge
