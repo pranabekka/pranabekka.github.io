@@ -5,7 +5,7 @@ updated = 2024-05-09 11:58:53
 +++
 
 For the last few months,
-I open a tab at least two days in a week,
+I open a tab at least two days a week,
 and I refresh it every few minutes or hours,
 in the hope that a new release is made,
 and I rejoice for every chapter released.
