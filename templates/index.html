@@ -19,6 +19,7 @@
 {{ section.content | safe }}
 
 {% if section.pages %}
+<p>All dates are in IST (Indian Standard Time).</p>
 <ul class="cards">
   {% for page in section.pages %}
     {% if not page.extra.hidden %}
@@ -39,7 +40,6 @@
             </svg>
             {{ page.updated | date(format="%b %d, %Y") }}
           {%- endif %}
-          (IST)
         </p>
         <p>{{ page.content | split(pat="</p>") | first | trim_start_matches(pat="<p>") | striptags | safe }}</p>
       </li>
