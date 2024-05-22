@@ -27,5 +27,6 @@ sed --in-place "s/{{title}}/$title/" $target
 sed --in-place "s/{{date}}/$date/" $target
 # kak -f 's^date<ret><a-l>l! date +"%F %H:%M:%S"<ret>hd' $target
 # kak -f 's^updated<ret><a-l>l! date +"%F %H:%M:%S"<ret>hd' $target
-kak -f 'ggf"lt"S<space><ret><a-;>;~' $target
+# kak -f 'ggf"lt"S<space><ret><a-;>;~' $target
+kak -f 'ggf"l~' $target
 kak -e 'execute-keys f"lt"' $target
