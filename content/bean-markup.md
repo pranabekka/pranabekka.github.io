@@ -638,6 +638,7 @@ to avoid specialising too much for writing about programming.
 - Namespaces to avoid custom tag collisions.
 - `import <package> as <nickname>` statements
   to avoid namespace collisions?
+  Maybe in the meta tag.
 - Some sort of package registry and manager?
 - Default config file for all Bean files within folder.
 - Comments --- probably using the djot method.
@@ -685,3 +686,53 @@ Any other blocks are part of the hidden content.
 ```
 
 Trying them out will give the answers.
+
+### Inline tag nesting
+
+Later tags should be nested inside earlier tags
+when they're prefixed.
+
+```
+[parent-inline-tag][child-inline-tag]content
+```
+
+But what about suffixed inline tags?
+Just reverse the order?
+
+```
+content[child-inline-tag?][parent-inline-tag?]
+```
+
+### Inline vs block elements/tags
+
+Would it be okay to mark a heading or other block
+with a lone inline tag?
+
+```
+[h4]My heading
+```
+
+The h2 component would know this is a block,
+but how does the surrounding context know this?
+How do I prevent it from wrapping it in a paragraph?
+
+What about a suffixed inline tag?
+
+```
+`My heading`[h1]
+```
+
+Perhaps the wrapper checks its contents
+before deciding to be a paragraph, a div,
+or whatever the inline tag specifies as a block element.
+Or maybe it just errors out?
+Like, a paragraph cannot take a block element,
+but things like lists can.
+So the inline/block nature of the tagged element doesn't quite matter,
+but it does matter in the case of a parent element
+that disallows block elements inside it.
+
+Perhaps, if there is only one child block element,
+it swallows the parent element?
+That seems like a bad idea.
+Simply erroring out is probably best.
