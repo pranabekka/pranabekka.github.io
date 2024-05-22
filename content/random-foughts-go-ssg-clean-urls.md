@@ -1,5 +1,5 @@
 +++
-title = "Two Random Foughts"
+title = "Two random foughts"
 date = 2024-05-21 18:01:10
 updated = 2024-05-21 18:01:10
 +++
