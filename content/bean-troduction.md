@@ -40,8 +40,8 @@ the more marks it has ---
 in order to maintain visual hierarchy.
 
 Bean supports additional heading levels,
-but that's through the generic block tag syntax.
-If you find yourselves requiring those levels,
+but that's through the generic tag syntax.
+If you find yourself requiring those levels,
 you might be better served by a list.
 (Well, I'm just buying into what Edward Tufte says.)
 
@@ -121,7 +121,7 @@ If you want to do anything beyond
 the syntax sugar provided by Markdown,
 you must rely on HTML.
 
-Bean provides a generic block syntax
+Bean provides a generic tag syntax
 that can be directly translated to HTML or XML,
 which you've already seen
 in the form of the `code` block.
@@ -134,9 +134,9 @@ when the details block is expanded.
 ```
 
 Notice how the backticks don't specify code,
-but instead mark the boundaries of the tagged (summary) block.
+but instead mark the boundaries of the tagged (summary) content.
 
-Bean also has some syntax sugar for blocks.
+Bean also has some syntax sugar for tags.
 To create a div with a specific class,
 you can simply use `[.class-name]`.
 The same goes for IDs.
