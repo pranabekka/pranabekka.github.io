@@ -111,6 +111,10 @@ Bean defaults to tables with comma-separated values,
 but it also allows you to specify your own separator.
 
 ```
+[table]
+comma  , separated , values
+can be , used for  , tables
+
 [table :sep |]
 cell 1 | cell 2 | cell 3
 ```
