@@ -736,3 +736,35 @@ Perhaps, if there is only one child block element,
 it swallows the parent element?
 That seems like a bad idea.
 Simply erroring out is probably best.
+
+### Block link syntax
+
+Similar to that in gemtext:
+
+```
+=> https://example.com my link text
+```
+
+[Gemtext](https://gemini.flounder.online/docs/gemtext.gmi)
+
+Block links can be increased in size
+to improve the experience of tapping or clicking them,
+without disrupting any surrounding text.
+
+A dedicated syntax should encourage that.
+
+A details and/or aside element
+can be used to move large lists of links
+out of the way.
+
+### Unknown blocks
+
+Unknown blocks can be rendered with a label at the top,
+and the verbatim contents of the block.
+It could include a warning inside a prominent box
+to say (in the HTML) that it's unknown.
+
+Probably emit an error and cancel building
+if the build is for production,
+though allow configuration to disable that.
+And log a warning for dev builds.
