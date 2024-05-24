@@ -1,5 +1,5 @@
 +++
-title = "Significant whitespace"
+title = "Significant whitespace (wisp)"
 ## remember to change date on publishing
 date = 2024-03-17 10:32:16 # draft date
 updated = 2024-03-17 10:32:16
@@ -22,9 +22,9 @@ an alternative syntax for Scheme,
 which is applicable wherever S-expressions are applicable.
 This post assumes no prior knowledge of these.
 
-[Wisp](draketo.de link)
+[Wisp](https://www.draketo.de/software/wisp)
 
-[Scheme](the christine lemmer-webber guide on spritely)
+[Scheme](https://spritely.institute/static/papers/scheme-primer.html)
 
 [S-expressions](@/drafts/s-expressions.md)
 
@@ -233,8 +233,8 @@ Notice how compact yet readable everything is.
 The only (visible) syntax elements
 across all three examples
 are 7 dots for a list continuation,
-a colon for the `:src` dictionary value,
-and two comments explaining key-binding choices.
+a colon for the `insert-date` import,
+and two comments explaining key bindings.
 
 And there's a simple in-line format as well,
 for simple and easy serialisation.
@@ -346,8 +346,8 @@ you could look into S-expressions instead.
 It has more parentheses,
 but an even simpler and more consistent syntax.
 
-[Wisp Guile implementation]
+[Wisp Guile implementation](https://www.draketo.de/software/wisp)
 
-[Wisp specification]
+[Wisp specification](https://srfi.schemers.org/srfi-119/srfi-119.html)
 
 [S-expressions](@/drafts/s-expressions.md)
