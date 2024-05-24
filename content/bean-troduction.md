@@ -107,8 +107,8 @@ Rendered HTML output:
 
 ## Tables
 
-Bean provides can create tables from comma-separated values,
-but it also allows you to specify your own.
+Bean defaults to tables with comma-separated values,
+but it also allows you to specify your own separator.
 
 ```
 [table :sep |]
