@@ -14,7 +14,7 @@ Pronouns: he/him.
 
 <nav>
   <a href="/portfolio">Portfolio</a>
-  <a href="/about">About</a>
+  <a href="/about">About/Contact</a>
   <a href="/bookmarks">Bookmarks</a>
   <a href="/atom.xml">Web Feed</a>
 </nav>
