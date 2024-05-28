@@ -43,9 +43,15 @@ Some of my interests include:
 
 ### Contact
 
+You can reach me via email or Mastodon[^1].
+
 Email: [pranabekka@gmail.com](mailto:pranabekka@gmail.com)
 
 Mastodon: [@pranabekka@mastodon.social](https://mastodon.social/@pranabekka)
+
+[^1]: Mastodon is a twitter-like social media,
+except anyone can create a copy of it for their community,
+and all copies can talk to each other.
 
 ## About the Site
 
