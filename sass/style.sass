@@ -212,29 +212,26 @@ blockquote
   font-size: 120%
 
 sup.footnote-reference , sup.footnote-definition-label
-  vertical-align: middle
-
-.footnote-reference > a , .footnote-definition-label
-  display: inline-block
-  line-height: 1em
-  border: 1px solid $fg-dim
-  padding: .25em
-  height: 1.5em
-  width: 1.5em
+  vertical-align: bottom
+  font-size: 1rem
   text-align: center
-  border-radius: 50%
   color: $fg-dim
-  font-size: .7rem
 
-.footnote-reference > a
-  border-color: $highlight
-  text-decoration: none
+.footnote-reference:before,
+.footnote-reference:after
+  color: $fg-dim
 
-.footnote-reference > a:hover
-  color: $bg
+.footnote-reference:before
+  content: "("
+
+.footnote-reference:after
+  content: ")"
 
 .footnote-definition-label
   border-color: $fg-dim
+
+.footnote-definition-label:after
+  content: ")"
 
 .footnote-definition > p
   display: inline
