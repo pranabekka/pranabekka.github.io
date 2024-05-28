@@ -1,7 +1,7 @@
 +++
 title = "Resumé"
 date = 2023-04-23 16:37:40
-updated = 2023-04-23 16:37:40
+updated = 2024-05-23 13:24:29
 +++
 
 Hi! I try out (or note down) design concepts almost daily,
@@ -92,3 +92,7 @@ software teams.
 {% end %}
 
 </ul>
+
+***
+
+[Get in touch!](mailto:pranabekka@gmail.com)
