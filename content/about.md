@@ -106,3 +106,7 @@ See choices below.
 
 - references to current page appear at the bottom
   - other related pages appear in the body
+
+- page source can be used to view history.
+  if you're unfamiliar with github,
+  select the history icon near the top left.
