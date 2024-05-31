@@ -768,3 +768,40 @@ Probably emit an error and cancel building
 if the build is for production,
 though allow configuration to disable that.
 And log a warning for dev builds.
+
+### attribute accumulation
+
+djot allows accumulating attributes (for block only?).
+maybe using an & block to accumulate instead of nest?
+
+### definition lists
+
+how does asciidoc do it?
+
+djot requires loose lists for definition lists
+
+maybe this:
+
+```
+: item
+- definition?
+: item
+  continued
+- definition?
+```
+
+i don't think hyphens (at beginning of line)
+have any other significance.
+though maybe i want to keep it for hyphens.
+
+```
+: item
+= definition
+: item
+  continued
+= definition
+```
+
+that should work, i think.
+and the `=` sign carries some related meaning,
+like `item = definition`.
