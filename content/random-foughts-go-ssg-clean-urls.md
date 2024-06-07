@@ -4,14 +4,14 @@ date = 2024-05-21 18:01:10
 updated = 2024-05-21 18:01:10
 +++
 
-1\) Hugo (SSG) should've been a set of libs
+1\) Hugo (SSG) should've been a set of libraries
 that the user imported and hooked up.
 2\) Clean URLs like `site.com/hello/`
 should not be used.
 
 [Hugo](https://gohugo.io)
 
-## SSG libs for Go
+## SSG libraries for Go
 
 The basic proposal is that an SSG in Go
 should provide a simple core API [^1]
