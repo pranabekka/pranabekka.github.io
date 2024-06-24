@@ -76,7 +76,8 @@ See choices below.
 - avoid full black/white to reduce glare effect (halation).
   not sure what other issues it might cause
 - low contrast, while preserving AAA contrast compliance,
-  to accomodate users affected by high contrast.
+  to accomodate users affected by high contrast,
+  and to be dimmer for night time users (like me).
   i need to add a check and control to increase contrast.
 - show all posts in single page to make basic search easy
 - three heading levels
