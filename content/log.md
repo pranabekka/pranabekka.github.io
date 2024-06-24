@@ -29,6 +29,8 @@ and might be helpful for future implementation,
 but css from sass is also important.
 the rest are for down the line.
 
+edit: i wrote the post
+
 - write post on light theme toggle
 
   see [https://codeberg.org/pranabekka/pages](https://codeberg.org/pranabekka/pages)
