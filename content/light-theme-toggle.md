@@ -4,8 +4,8 @@ date = 2024-06-24 19:23:04
 updated = 2024-06-24 19:23:04
 +++
 
-A CSS based light/dark-mode toggle,
-with Javascript for fallbacks and additional functionality.
+A CSS based system/light/dark mode toggle,
+with Javascript for fallback and additional functionality.
 
 Big thanks to Kevin Powell for the core CSS `:has()` solution.
 I simply added some functionality for falling back to Javascript,
