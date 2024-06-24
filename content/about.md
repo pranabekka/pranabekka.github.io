@@ -67,18 +67,22 @@ See choices below.
   - backreferences
     - posts link to each other
   - flat structure
-- 8px gap between interactive elements
-  (where possible)
+- 8px gap between interactive elements (where possible)
+  to reduce chances of tapping adjacent element
 - large-ish font size for people with poor eyesight
 - no "flashbang": dark theme
+  - "flashbang" is when you suddenly load a bright page
   - might make a light theme eventually
 - avoid full black/white to reduce glare effect (halation).
   not sure what other issues it might cause
+- low contrast, while preserving AAA contrast compliance,
+  to accomodate users affected by high contrast.
+  i need to add a check and control to increase contrast.
 - show all posts in single page to make basic search easy
 - three heading levels
   - inspired by edward tufte
   - not a hard rule, but easy to stick to
-- number headings to match list of contents ("table of contents")
+- number headings to match list of contents ("table" of contents)
 - rounded inline code to show start and end,
   especially when spanning multiple lines (on mobile)
 - higher contrast for smaller areas
