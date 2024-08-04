@@ -18,6 +18,35 @@ or Sara Joy's "Weak Notes".
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
 
+## 2024-08-05 New log entry!
+
+- had this thought for a while now:
+
+  s-expressions are perfect for visual programming.
+
+  take `(o o o)`.
+
+  `()` is a node.
+
+  each `o` is an input for that node.
+
+  think of blender shader/geometry nodes.
+
+- soupault intro nearly done
+
+  just some small edits, and maybe screenshots left
+
+- should start CSS refactor by using `--var: val` in SASS
+  
+  ```
+  :root
+    --highlight: var(--yellow)
+  ```
+
+- almost have switch to soupault figured out.
+
+  should write a doc about it.
+
 ## 2024-06-24 Theming TODOs
 
 this became all about theming ¯\_(ツ)_/¯
