@@ -1,5 +1,5 @@
 +++
-title = "A better Soupault introduction"
+title = "A better Soupault introduction (old)"
 ## remember to change date on publishing
 date = 2024-06-26 12:52:04 # draft date
 updated = 2024-06-26 12:52:04
@@ -10,12 +10,6 @@ which makes it the most capable and flexible one I know,
 but the documentation can be a bit confusing.
 
 [Soupault](https://soupault.app)
-
-NOTE: While this should apply to some earlier and later versions,
-this is written with 4.10.0 in mind.
-
-<!-- test with more versions? -->
-<!-- test it with current 4.6.0 -->
 
 NOTE: If you're using Windows,
 you might want to change all paths
@@ -30,7 +24,7 @@ See the relevant section in the documentation:
 - file paths
 - TOML and/or other config files
 - HTML
-- CSS selectors
+- CSS
 - jinja style templates
 
 ## Why this is better
@@ -79,26 +73,62 @@ change the `build_dir` option.
 
 With that said, let's get started!
 
-## Page files
+## Setup
 
-First, we create the `soupault.toml` configuration file,
-and tell it what pages to read and how.
+First, we tell Soupault where our input and output will be.
+Configuration is put in the `soupault.toml` file:
 
 ```
 [settings]
 
-  # Treat files with "md" extension as "page files"
-  page_file_extensions = ["md"]
+  # Read files from here
+  site_dir = "site"
   
-# "Page files" need to be turned into HTML
-# before everything else
+  # Write files here
+  build_dir = "build"
+```
+
+## Read your markup format of choice
+
+By default, Soupault just copies files over.
+This means CSS, images and other assets
+are copied over as is,
+but then so are our Markdown files.
+
+We need to tell it which pages to treat specially,
+for which we'll choose markdown files (ending in "md"),
+and we'll tell soupault where to insert the HTML
+that is generated.
+
+```
+[settings]
+
+  # Previous config
+  site_dir = "site"
+  build_dir = "build"
+
+  # Treat files with "md" extension as "page_files"
+  page_file_extensions = [ "md" ]
+  
+  # "page_files" generate incomplete HTML.
+  # They're not full HTML pages,
+  # so we put that inside a template HTML page.
+  # By default it goes at the end of the body,
+  # which can be changed with default_content_selector
+  default_template_file = "templates/default.html"
+
+# Pre-process "page_files"
 [preprocessors]
 
-  # Markdown is converted to HTML with the `cmark` CLI.
-  # Remember to install cmark,
-  # or use a different markdown CLI.
+  # Run "md" "page_files" through a markdown processor
   md = "cmark"
 ```
+
+Remember to install cmark.
+It's available in the package manager
+for most operating systems.
+
+[Cmark](https://github.com/commonmark/cmark)
 
 See how Soupault doesn't depend on Markdown,
 or even a specific implementation of Markdown?
@@ -111,10 +141,10 @@ or an entirely different markup format like djot instead.
 
 ## Create a template file
 
-Since "page files" don't generate complete HTML documents,
+Since "page_files" don't generate complete HTML documents,
 we must insert it into a full HTML document.
 
-The default template file is `templates/main.html`,
+We've specified this as "templates/default.html",
 so that's where we'll insert the following:
 
 ```
@@ -129,21 +159,16 @@ so that's where we'll insert the following:
 </html>
 ```
 
-By default, content is added at the end of the `body` element,
-though you can change it with the `default_content_selector`
-and `default_content_action` options.
-
-[Page template options](https://soupault.app/reference-manual/#page-templates)
-
-## Your first page
+## Write a page
 
 For Soupault to actually generate a page,
 you'll need to write something.
 
 Let's create an `index.md` file in the `site` folder [^2]:
 
-[^2]: Remember, Soupault reads files from `site`,
-and we've asked it to treat `md` files as pages.
+[^2]: Remember, we've configured Soupault
+to read files from `site/`,
+and pre-process files with the `md` extension.
 
 ```
 # Index
@@ -161,30 +186,13 @@ It will automatically create a build folder,
 if there isn't one already,
 and inside it there should be an index.html file.
 
-If you have any issues, run Soupault with
-the `--debug` and/or `--verbose` flags.
-
-To serve your pages for preview, 
-you can use a simple web server,
-but if you have Python installed,
-just use the http.server module.
-
-{% details(summary="Web servers") %}
-
-[miniserve](https://github.com/svenstaro/miniserve)
-
-[Caddy](https://caddyserver.com)
-
-{% end %}
-
-Python http server:
+To serve your pages for preview, use this simple one-liner:
 
 ```
 python3 -m http.server --directory build
 ```
 
-Running the command will give you an address
-which you can open in your browser.
+It'll give you an address which you can open in your browser.
 
 To automatically rebuild the site, use watch:
 
@@ -209,15 +217,37 @@ to help you create the site you really want.
 ## Creating an index
 
 Soupault doesn't have any default content model.
-It doesn't require pages to have any specific metadata.
+It doesn't require pages to have specific metadata in a given format.
 Instead, you tell it what metadata to extract from where,
 and what to do with it.
 
+### Add a page to index
+
+It would be quite silly for an index to only list itself,
+so let's create another page (in `site/`).
+Maybe `hello.md`.
+
+Since we usually sort posts by date,
+we'll also add a date.
+Soupault will need a way to identify it,
+so we'll put it in a `div` with the id `post-date`.
+
+```
+# Hello, world
+
+<div id="post-date">
+  2077-07-07
+</div>
+
+This is a page. Wow.
+```
+
 ### Extract metadata
 
-Because we want the title to show up in the index,
-and we want to sort the posts by date,
-we'll define those as the metadata fields.
+Now we need to tell Soupault what metadata we want,
+and how to get that metadata.
+
+For the index, we'll be using the title and the date.
 
 ```
 [index.fields.title]
@@ -233,44 +263,9 @@ This is because `cmark` turns `# Index` into an `h1`,
 and Soupault runs the `preprocessors`
 before it starts working with the page.
 
-### Add a page to index
-
-Right now, there's nothing for the index to list,
-so let's create another page (in `site/`).
-Maybe `hello.md`.
-
-And since we've specified the date metadata field
-as the contents of the `div` with the `post-date` id,
-we'll also add that in.
-
-```
-# Hello, world
-
-<div id="post-date">
-  2077-07-07
-</div>
-
-This is a page. Wow.
-```
-
-### Allow HTML
-
-By default, `cmark` replaces raw HTML with a comment.
-To disable that, we need to use the `--unsafe` option.
-So change the `preprocessors` section:
-
-```
-[preprocessors]
-  md = "cmark --unsafe"
-```
-
 ### Generate an index
 
-Now that we have the metadata, 
-and a page to index,
-let's generate the index.
-
-<!-- TODO?: mix in the views section and put most config there? -->
+Now that we have the metadata, let's generate the index.
 
 ```
 [index]
@@ -326,8 +321,8 @@ which will put the index HTML
 into the element which matches that selector.
 This allows you to have multiple index views in the same page.
 Yes, we've already sorted it by date,
-but you can put those options independently for each view,
-or use different index rendering options.
+but you can use index view options
+or index rendering options.
 
 {% details(summary="Index views and options links") %}
 [Index views](https://soupault.app/reference-manual/#index-views)
@@ -338,8 +333,8 @@ or use different index rendering options.
 {% end %}
 
 In our `index.md` file,
-we're using a div with the id `main-index`,
-so we want an index view that applies to `div#main-index`.
+we're using a div with the id "main-index",
+so we want an index view that applies to "div#main-index".
 
 ```
 [index.views.main]
@@ -386,7 +381,7 @@ As an example, we'll use an `insert_html` widget
 to add in the author name:
 
 ```
-# add-author is a name *we* choose
+# add-author is a name we choose
 # to help keep track of our widgets
 [widgets.add-author]
 
@@ -404,23 +399,13 @@ to add in the author name:
 This will insert a paragraph with the text "by Pranab" after the h1.
 Remember to change "Pranab" with your name.
 
-You can use this same widget to insert a link to the home page,
-as well as a link to some CSS.
-
 Have a look at the built-in widgets as well as the Lua plugins for more.
-Plugins are as simple as putting a Lua file
-in the (configurable) plugins folder,
-and then adding them like a widget to your `soupault.toml`.
 
 [Built-in widgets](https://soupault.app/reference-manual/#built-in-widgets)
 
-[Lua plugins reference](https://soupault.app/reference-manual/#plugins)
-
-[Available plugins](https://soupault.app/plugins/)
+[Lua plugins/widgets](https://soupault.app/reference-manual/#plugins)
 
 ## Final setup
-
-This is a summary of what you should end up with.
 
 ### Folder structure
 
@@ -431,17 +416,21 @@ soupault-blog/
     index.md
     hello.md
   templates/
-    main.html
+    default.html
 ```
 
 ### `soupault.toml`
 
 ```
 [settings]
+  site_dir = "site"
+  build_dir = "build"
+  
   page_file_extensions = [ "md" ]
+  default_template_file = "templates/default.html"
 
 [preprocessors]
-  md = "cmark --unsafe"
+  md = "cmark"
 
 [index]
   index = true
@@ -497,7 +486,7 @@ Welcome to the index.
 This is a page. Wow.
 ```
 
-### `templates/main.html`
+### `templates/default.html`
 
 ```
 <!DOCTYPE html>
@@ -513,7 +502,7 @@ This is a page. Wow.
 
 ## Learn more
 
-If you want to see more options to set up your website,
+If you want to see more options to set up a blog,
 have a look at the official blog quickstart,
 as well as the reference manual.
 
