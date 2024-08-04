@@ -69,15 +69,28 @@ If you want to change which folder it searches for content,
 change the `site_dir` option.
 
 If you want to change how it defines a complete page[^1],
-change the `complete_page_selector` option.
+change the following option:
 
-[^1]: by default a page with the `<html>` element.
-  i.e., a page that isn't put into the template.
+```
+complete_page_selector = "html"
+```
+
+[^1]: a page that isn't put into the template.
 
 If you want to change where it outputs files,
 change the `build_dir` option.
 
 With that said, let's get started!
+
+## Installation
+
+Soupault is available to download as a single executable.
+
+[Soupault install](https://soupault.app/install/)
+
+Simply move the executable to a folder in
+your `PATH` environment variable,
+or add the folder it's in to the `PATH` environment variable.
 
 ## Page files
 
@@ -130,8 +143,12 @@ so that's where we'll insert the following:
 ```
 
 By default, content is added at the end of the `body` element,
-though you can change it with the `default_content_selector`
-and `default_content_action` options.
+though you can change it with the following options:
+
+```
+default_content_selector = "body"
+default_content_action = "append_child"
+```
 
 [Page template options](https://soupault.app/reference-manual/#page-templates)
 
