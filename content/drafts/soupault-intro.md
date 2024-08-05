@@ -11,18 +11,10 @@ but the documentation can be a bit confusing.
 
 [Soupault](https://soupault.app)
 
-NOTE: While this should apply to some earlier and later versions,
-this is written with 4.10.0 in mind.
+**NOTE:** This is written with Soupault 4.x in mind,
+and specifically tested in 4.6.0.
 
-<!-- test with more versions? -->
-<!-- test it with current 4.6.0 -->
-
-NOTE: If you're using Windows,
-you might want to change all paths
-to use `\` instead of `/` for path separators.
-See the relevant section in the documentation:
-
-[Using soupault on Windows](https://soupault.app/reference-manual/#using-soupault-on-windows)
+<!-- TODO: test with more versions -->
 
 ## Expected knowledge
 
@@ -170,7 +162,7 @@ Welcome to the index.
 
 Now we can start generating a site with Soupault.
 
-## Generate and preview
+## Generate
 
 To generate the site, just run `soupault`.
 
@@ -180,6 +172,13 @@ and inside it there should be an index.html file.
 
 If you have any issues, run Soupault with
 the `--debug` and/or `--verbose` flags.
+I'd recommend you run it like that at least once,
+even if you don't have any issues,
+so that you can see what Soupault does.
+
+## Preview
+
+<!-- TODO: insert screenshot of plain index.md without index -->
 
 To serve your pages for preview, 
 you can use a simple web server,
@@ -385,6 +384,8 @@ that is automatically collected by Soupault.
 Now you can reload the page in the browser
 and see your index appear!
 
+<!-- TODO: insert screenshot of index.md *with* index -->
+
 ## Widgets!
 
 Soupault's power feature is the ability to manipulate HTML.
@@ -420,6 +421,8 @@ to add in the author name:
 
 This will insert a paragraph with the text "by Pranab" after the h1.
 Remember to change "Pranab" with your name.
+
+<!-- TODO: insert image with "by Pranab" -->
 
 You can use this same widget to insert a link to the home page,
 as well as a link to some CSS.
