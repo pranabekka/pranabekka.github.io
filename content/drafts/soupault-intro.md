@@ -178,7 +178,7 @@ so that you can see what Soupault does.
 
 ## Preview
 
-<!-- TODO: insert screenshot of plain index.md without index -->
+![Home page with heading and welcome paragraph](/soupault-intro-preview-no-index.svg)
 
 To serve your pages for preview, 
 you can use a simple web server,
@@ -384,7 +384,7 @@ that is automatically collected by Soupault.
 Now you can reload the page in the browser
 and see your index appear!
 
-<!-- TODO: insert screenshot of index.md *with* index -->
+![Home page with index](/soupault-intro-preview-with-index.svg)
 
 ## Widgets!
 
@@ -420,9 +420,9 @@ to add in the author name:
 ```
 
 This will insert a paragraph with the text "by Pranab" after the h1.
-Remember to change "Pranab" with your name.
+Remember to change "Pranab" to your name.
 
-<!-- TODO: insert image with "by Pranab" -->
+![Home page with "by Pranab" text](/soupault-intro-preview-by-pranab.svg)
 
 You can use this same widget to insert a link to the home page,
 as well as a link to some CSS.
