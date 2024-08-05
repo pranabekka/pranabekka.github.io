@@ -1,7 +1,7 @@
 +++
 title = "Log"
 date = 2024-06-24 15:52:46
-updated = 2024-06-24 15:52:46
+updated = 2024-08-05 19:14:38
 +++
 
 Where I add short thoughts, TODO items, links, etc.,
@@ -17,6 +17,14 @@ or Sara Joy's "Weak Notes".
 (warning: bright white page)
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
+
+## 2024-08-05 Shower thoughts
+
+this might be my shower thoughts place
+
+- you could use hair ties or wrist bands to mark glasses
+- s-expression lists are also blocks,
+  in the mit scratch sort of way
 
 ## 2024-08-05 New log entry!
 
