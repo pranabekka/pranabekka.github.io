@@ -5,9 +5,8 @@ date = 2024-06-26 12:52:04 # draft date
 updated = 2024-06-26 12:52:04
 +++
 
-Soupault is an SSG that works by manipulating HTML,
-which makes it the most capable and flexible one I know,
-but the documentation can be a bit confusing.
+Soupault is an incredible static site generator (SSG),
+but the documentation can be a confusing.
 
 [Soupault](https://soupault.app)
 
