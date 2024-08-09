@@ -39,17 +39,18 @@ and introducing things as they're required.
 
 [Blog quickstart](https://soupault.app/tips-and-tricks/quickstart/)
 
-[Overview](https://soupault.app/reference-manual/#overview)
+[Overview in reference manual](https://soupault.app/reference-manual/#overview)
 
 ## Overview
 
 Soupault works by breaking down a template
 into an HTML element tree,
 then it goes through the `site` folder,
-turn each page into HTML,
+turns each page into HTML,
 and if it doesn't have an `<html>` element,
-it insert it into the template.
+it inserts it into the template.
 The results are then inserted into the `build` folder.
+Things like images and CSS are copied over as is.
 
 All of these things can be changed.
 
@@ -83,6 +84,11 @@ Simply move the executable to a folder in
 your `PATH` environment variable,
 or add the folder it's in to the `PATH` environment variable.
 
+**NOTE:** I've included the file structure and contents
+at the bottom of the post,
+so feel free to read through to understand Soupault
+before you install it and play around.
+
 ## Page files
 
 First, we create the `soupault.toml` configuration file,
@@ -91,11 +97,11 @@ and tell it what pages to read and how.
 ```
 [settings]
 
-  # Treat files with "md" extension as "page files"
+  # "Page files" are recognised by the extension "md".
   page_file_extensions = ["md"]
   
-# "Page files" need to be turned into HTML
-# before everything else
+# "Page files" need to be processed into HTML before everything else,
+# because Soupault works with HTML.
 [preprocessors]
 
   # Markdown is converted to HTML with the `cmark` CLI.
@@ -106,8 +112,10 @@ and tell it what pages to read and how.
 
 See how Soupault doesn't depend on Markdown,
 or even a specific implementation of Markdown?
+As long as you can convert it to HTML,
+Soupault can work with it.
 You could easily use your preferred Markdown format,
-or an entirely different markup format like djot instead.
+or an entirely different markup format like Djot instead.
 
 [Introduction to Djot](https://pranabekka.github.io/djot-1/)
 
@@ -271,8 +279,8 @@ This is a page. Wow.
 ### Allow HTML
 
 By default, `cmark` replaces raw HTML with a comment.
-To disable that, we need to use the `--unsafe` option.
-So change the `preprocessors` section:
+To allow HTML, we need to use the `--unsafe` option,
+which means changing the 'preprocessor' for markdown:
 
 ```
 [preprocessors]
