@@ -24,10 +24,14 @@ or Sara Joy's "Weak Notes".
   it's cute, simple, and easy to pose/animate.
   ![Sheep and cat 2d art](/concept-art-character-sheep-cat.jpg)
 - how did people let apple get away
-  with the notch, then the cutout
+  with the notch, then the cutout?
+  it makes the screen shape awkward,
+  and adds very little extra space.
 - when treating s-expressions as nodes,
   the top-level is a special node with variable args,
   and the main nodes in your program feed into it.
+- also two more draft posts in the works:
+  good game checklist, and spaceship security!
 
 ## 2024-08-05 Shower thoughts
 
