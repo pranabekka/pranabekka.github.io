@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+No, Soup-oh!
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <header>
+    <img src="/favicon.svg" id="icon">
+    <span>Pranab&#x27;s site — <a href="/">Home</a></span>
+  </header>
+  <main>
+      
+
+<h1>No, Soup-oh!
+</h1>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide Contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-issues/#widgets-terminology-is-confusing">“Widgets” terminology is confusing</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-issues/#confusing-widget-configuration-scheme">Confusing widget configuration scheme</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-issues/#odd-widgets-list-syntax-layout">Odd widgets list syntax&#x2F;layout</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-issues/#toml-is-awkward">TOML is awkward</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-issues/#confusing-documentation">Confusing document­ation</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-issues/#widgets-are-function-calls">Widgets are function calls</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>I quite like Soupault (SSG),
+but there’s some things I’m not too fond of.</p>
+<p><a href="https://soupault.app">Soupault</a></p>
+<h2 id="widgets-terminology-is-confusing">“Widgets” terminology is confusing</h2>
+<p>I think I only got it after my last read,
+which is not even one of my two or three deep dives
+into the Soupault website and documentation.</p>
+<p>Widgets are basically a transformer.
+They take in HTML, transform it, and output HTML.
+I think most of the time, at least.</p>
+<p>I admit I don’t know what to name it,
+but maybe it could be explained up front.</p>
+<p>Ideas: ‘thingy-doer’, ‘transformer’, ‘pipe(line)’.</p>
+<h2 id="confusing-widget-configuration-scheme">Confusing widget configuration scheme</h2>
+<p>Part of the widget confusion is their configuration scheme.</p>
+<p>Take the following example:</p>
+<pre><code>[widgets.add-toc]
+  widget = &quot;toc&quot;
+  selector = &quot;#generated-toc&quot;
+</code></pre>
+<p>Is it an “add-toc” widget or a “toc” widget?</p>
+<p>The name (<code>add-toc</code>) is the main key for the widget,
+and then there’s a <code>widget</code> key inside that,
+which is essentially the <em>type</em> of the widget.
+The ‘name’, however, is essentially a comment,
+for the user to track what it’s doing.
+It’s only other significance might be for error logging.</p>
+<h2 id="odd-widgets-list-syntax-layout">Odd widgets list syntax/layout</h2>
+<p>The list of widgets could’ve used
+the TOML syntax for arrays of tables.</p>
+<p>It’s not obvious, but it’s there.</p>
+<pre><code>[[widgets]]
+  name = &quot;add table of contents&quot;
+  type = &quot;toc&quot;
+  selector = &quot;#generated-toc&quot;
+
+[[widgets]]
+  name = &quot;scream h1&quot;
+  type = &quot;insert_html&quot;
+  selector = &quot;h1&quot;
+  html = &quot;!!!!!&quot;
+</code></pre>
+<p>This will add two elements to the <code>widgets</code> list,
+with the values set as described.</p>
+<h2 id="toml-is-awkward">TOML is awkward</h2>
+<p>With a large enough configuration,
+you’ll find yourself typing the same thing repeatedly.
+Alternatives include a stricter subset of YAML,
+a version of JSON with comments,
+or the KDL document language!</p>
+<p><a href="https://kdl.dev">KDL document language</a></p>
+<p>TOML:</p>
+<pre><code>[widgets.add-toc]
+  widget = &quot;toc&quot;
+  selector = &quot;#generated-toc&quot;
+
+[widgets.scream-h1]
+  widget = &quot;insert_html&quot;
+  selector = &quot;h1&quot;
+  html = &quot;!!!!!&quot;
+</code></pre>
+<p>KDL:</p>
+<pre><code>widgets {
+  add-toc { widget &quot;toc&quot; ; selector &quot;generated-toc&quot; }
+  scream-h1 {
+    widget &quot;insert_html&quot;
+    selector &quot;h1&quot;
+    html &quot;!!!!!&quot;
+  }
+}
+</code></pre>
+<p>YAML, JSON, and KDL support simple nesting,
+where you don’t have to repeat the parent key.</p>
+<p>KDL is especially uniform and simple, compared to YAML or TOML,
+and the syntax is less verbose than JSON,
+with pretty nice commenting.</p>
+<h2 id="confusing-documentation">Confusing document­ation</h2>
+<p>It took me multiple visits to the site,
+and a few deep dives to properly understand everything.</p>
+<p>Part of it is that Soupault is so different,
+that it’s so capable and flexible,
+and that it’s maintained by a single person.</p>
+<p>I think the guides could add things more gradually.
+For example, the debug and log options
+in the blog quickstart
+could be moved lower down in the page.</p>
+<h2 id="widgets-are-function-calls">Widgets are function calls</h2>
+<p>But with an awkward syntax.
+Maybe the configuration could’ve been also been Lua?</p>
+<p>This isn’t really a big deal,
+but the configuration could’ve just been in Lua.
+Maybe basic configuration could go into a table?
+This would also allow you to
+break apart your config into modules.</p>
+<p>Consider the following:</p>
+<pre><code>[widgets.scream-h1]
+  widget = &quot;insert_html&quot;
+  selector = &quot;h1&quot;
+  html = &quot;!!!!!&quot;
+</code></pre>
+<p><code>insert_html</code> is basically a function name,
+with <code>selector</code> and <code>html</code> as arguments.</p>
+<pre><code># scream h1
+insert_html(selector = &quot;h1&quot;, html = &quot;!!!!!&quot;)
+</code></pre>
+<p>The TOML is like some form of contorted LISP.
+I wouldn’t mind s-expressions for config ;)</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml">Web feed</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;soupault-issues.md">
+  Page source
+</a>
+
+      <a href="https://github.com/pranabekka/pranabekka.github.io">Site source</a>
+    </nav>
+    <hr>
+    <p>Please feel free to
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">contact</a> me
+      if you have any feedback,
+      from opinions to minor grammar or styling issues.
+    </p>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+A better Soupault introduction
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <header>
+    <img src="/favicon.svg" id="icon">
+    <span>Pranab&#x27;s site — <a href="/">Home</a></span>
+  </header>
+  <main>
+      
+
+<h1>A better Soupault introduction
+</h1>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide Contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#expected-knowledge">Expected knowledge</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#why-this-is-better">Why this is better</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#overview">Overview</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#installation">Installation</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#page-files">Page files</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#create-a-template-file">Create a template file</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#your-first-page">Your first page</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#generate">Generate</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#preview">Preview</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#creating-an-index">Creating an index</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#extract-metadata">Extract metadata</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#add-a-page-to-index">Add a page to index</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#allow-html">Allow HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#generate-an-index">Generate an index</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#make-space-for-index-html">Make space for index HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#insert-index-html">Insert index HTML</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#widgets">Widgets!</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#final-setup">Final setup</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#folder-structure">Folder structure</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#soupault-toml">soupault.toml</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#site-index-md">site&#x2F;index.md</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#site-hello-md">site&#x2F;hello.md</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro/#templates-main-html">templates&#x2F;main.html</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro/#learn-more">Learn more</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Soupault is an incredible static site generator (SSG),
+but the documentation can be a confusing.</p>
+<p><a href="https://soupault.app">Soupault</a></p>
+<p><strong>NOTE:</strong> This is written with Soupault 4.x in mind,
+and specifically tested in 4.6.0.</p>
+<!-- TODO: test with more versions -->
+<h2 id="expected-knowledge">Expected knowledge</h2>
+<ul>
+<li>the CLI</li>
+<li>file paths</li>
+<li>TOML and/or other config files</li>
+<li>HTML</li>
+<li>CSS selectors</li>
+<li>jinja style templates</li>
+</ul>
+<h2 id="why-this-is-better">Why this is better</h2>
+<p>The official blog quickstart introduction is a bit front-loaded,
+instead of gradually introducing concepts,
+and the reference manual has a decent introduction
+in the “Overview” section,
+but it comes after extensive build and install instructions,
+and is followed by another hefty config example.</p>
+<p>This guide is meant to ramp up slowly,
+starting with the absolute basics,
+and introducing things as they’re required.</p>
+<p><a href="https://soupault.app/tips-and-tricks/quickstart/">Blog quickstart</a></p>
+<p><a href="https://soupault.app/reference-manual/#overview">Overview in reference manual</a></p>
+<h2 id="overview">Overview</h2>
+<p>Soupault works by breaking down a template
+into an HTML element tree,
+then it goes through the <code>site</code> folder,
+turns each page into HTML,
+and if it doesn’t have an <code>&lt;html&gt;</code> element,
+it inserts it into the template.
+The results are then inserted into the <code>build</code> folder.
+Things like images and CSS are copied over as is.</p>
+<p>All of these things can be changed.</p>
+<p>If you don’t want it to do templates,
+then set <code>generator_mode</code> to <code>false</code>.</p>
+<p>If you want to change which folder it searches for content,
+change the <code>site_dir</code> option.</p>
+<p>If you want to change how it defines a complete page<sup class="footnote-reference"><a href="#1">1</a></sup>,
+change the following option:</p>
+<pre><code>complete_page_selector = &quot;html&quot;
+</code></pre>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>a page that isn’t put into the template.</p>
+</div>
+<p>If you want to change where it outputs files,
+change the <code>build_dir</code> option.</p>
+<p>With that said, let’s get started!</p>
+<h2 id="installation">Installation</h2>
+<p>Soupault is available to download as a single executable.</p>
+<p><a href="https://soupault.app/install/">Soupault install</a></p>
+<p>Simply move the executable to a folder in
+your <code>PATH</code> environment variable,
+or add the folder it’s in to the <code>PATH</code> environment variable.</p>
+<p><strong>NOTE:</strong> I’ve included the file structure and contents
+at the bottom of the post,
+so feel free to read through to understand Soupault
+before you install it and play around.</p>
+<h2 id="page-files">Page files</h2>
+<p>First, we create the <code>soupault.toml</code> configuration file,
+and tell it what pages to read and how.</p>
+<pre><code>[settings]
+
+  # &quot;Page files&quot; are recognised by the extension &quot;md&quot;.
+  page_file_extensions = [&quot;md&quot;]
+  
+# &quot;Page files&quot; need to be processed into HTML before everything else,
+# because Soupault works with HTML.
+[preprocessors]
+
+  # Markdown is converted to HTML with the `cmark` CLI.
+  # Remember to install cmark,
+  # or use a different markdown CLI.
+  md = &quot;cmark&quot;
+</code></pre>
+<p>See how Soupault doesn’t depend on Markdown,
+or even a specific implementation of Markdown?
+As long as you can convert it to HTML,
+Soupault can work with it.
+You could easily use your preferred Markdown format,
+or an entirely different markup format like Djot instead.</p>
+<p><a href="https://pranabekka.github.io/djot-1/">Introduction to Djot</a></p>
+<p><a href="https://djot.net">Djot home page</a></p>
+<h2 id="create-a-template-file">Create a template file</h2>
+<p>Since “page files” don’t generate complete HTML documents,
+we must insert it into a full HTML document.</p>
+<p>The default template file is <code>templates/main.html</code>,
+so that’s where we’ll insert the following:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Generated with Soupault&lt;&#x2F;title&gt;
+  &lt;&#x2F;head&gt;
+  &lt;body&gt;
+    &lt;!-- content will go here --&gt;
+  &lt;&#x2F;body&gt;
+&lt;&#x2F;html&gt;
+</code></pre>
+<p>By default, content is added at the end of the <code>body</code> element,
+though you can change it with the following options:</p>
+<pre><code>default_content_selector = &quot;body&quot;
+default_content_action = &quot;append_child&quot;
+</code></pre>
+<p><a href="https://soupault.app/reference-manual/#page-templates">Page template options</a></p>
+<h2 id="your-first-page">Your first page</h2>
+<p>For Soupault to actually generate a page,
+you’ll need to write something.</p>
+<p>Let’s create an <code>index.md</code> file in the <code>site</code> folder <sup class="footnote-reference"><a href="#2">2</a></sup>:</p>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>Remember, Soupault reads files from <code>site</code>,
+and we’ve asked it to treat <code>md</code> files as pages.</p>
+</div>
+<pre><code># Index
+
+Welcome to the index.
+</code></pre>
+<p>Now we can start generating a site with Soupault.</p>
+<h2 id="generate">Generate</h2>
+<p>To generate the site, just run <code>soupault</code>.</p>
+<p>It will automatically create a build folder,
+if there isn’t one already,
+and inside it there should be an index.html file.</p>
+<p>If you have any issues, run Soupault with
+the <code>--debug</code> and/or <code>--verbose</code> flags.
+I’d recommend you run it like that at least once,
+even if you don’t have any issues,
+so that you can see what Soupault does.</p>
+<h2 id="preview">Preview</h2>
+<p><img src="/soupault-intro-preview-no-index.svg" alt="Home page with heading and welcome paragraph" /></p>
+<p>To serve your pages for preview, 
+you can use a simple web server,
+but if you have Python installed,
+just use the http.server module.</p>
+<details><summary>Web servers</summary>
+  <p><a href="https://github.com/svenstaro/miniserve">miniserve</a></p>
+<p><a href="https://caddyserver.com">Caddy</a></p>
+
+</details>
+<p>Python http server:</p>
+<pre><code>python3 -m http.server --directory build
+</code></pre>
+<p>Running the command will give you an address
+which you can open in your browser.</p>
+<p>To automatically rebuild the site, use watch:</p>
+<pre><code>watch --interval 1 &#x27;soupault&#x27;
+</code></pre>
+<p>If you’re using Windows instead, just use an infinite loop:</p>
+<pre><code>while (1) {soupault; sleep 1}
+</code></pre>
+<p>This will run <code>soupault</code> every second,
+and you only need to reload the page to see your changes.</p>
+<p>And that’s it!
+You have a basic site up and running!
+But Soupault has more powerful features
+to help you create the site you really want.</p>
+<h2 id="creating-an-index">Creating an index</h2>
+<p>Soupault doesn’t have any default content model.
+It doesn’t require pages to have any specific metadata.
+Instead, you tell it what metadata to extract from where,
+and what to do with it.</p>
+<h3 id="extract-metadata">Extract metadata</h3>
+<p>Because we want the title to show up in the index,
+and we want to sort the posts by date,
+we’ll define those as the metadata fields.</p>
+<pre><code>[index.fields.title]
+  selector = [&quot;h1&quot;]
+  
+[index.fields.date]
+  selector = [&quot;div#post-date&quot;]
+  fallback_to_content = true # get the date from the contents, not attribute
+</code></pre>
+<p>Note how we’re using the “h1” selector for the title.
+This is because <code>cmark</code> turns <code># Index</code> into an <code>h1</code>,
+and Soupault runs the <code>preprocessors</code>
+before it starts working with the page.</p>
+<h3 id="add-a-page-to-index">Add a page to index</h3>
+<p>Right now, there’s nothing for the index to list,
+so let’s create another page (in <code>site/</code>).
+Maybe <code>hello.md</code>.</p>
+<p>And since we’ve specified the date metadata field
+as the contents of the <code>div</code> with the <code>post-date</code> id,
+we’ll also add that in.</p>
+<pre><code># Hello, world
+
+&lt;div id=&quot;post-date&quot;&gt;
+  2077-07-07
+&lt;&#x2F;div&gt;
+
+This is a page. Wow.
+</code></pre>
+<h3 id="allow-html">Allow HTML</h3>
+<p>By default, <code>cmark</code> replaces raw HTML with a comment.
+To allow HTML, we need to use the <code>--unsafe</code> option,
+which means changing the ‘preprocessor’ for markdown:</p>
+<pre><code>[preprocessors]
+  md = &quot;cmark --unsafe&quot;
+</code></pre>
+<h3 id="generate-an-index">Generate an index</h3>
+<p>Now that we have the metadata, 
+and a page to index,
+let’s generate the index.</p>
+<!-- TODO?: mix in the views section and put most config there? -->
+<pre><code>[index]
+  index = true
+  
+  # We specified date as one of the index fields
+  # in [index.fields.date]
+  sort_by = &quot;date&quot;
+  
+  # Treat values as dates
+  sort_type = &quot;calendar&quot;
+  
+  # Use the YYYY-MM-DD format for dates
+  date_formats = [&quot;%F&quot;]
+  
+  # Ensure all dates are valid
+  strict_sort = true
+</code></pre>
+<p>This is only the index data though.
+We need a place to put this before we turn it into HTML.</p>
+<h3 id="make-space-for-index-html">Make space for index HTML</h3>
+<p>Soupault will need to know where to put the index.
+We’ll just add a <code>div</code> with the <code>index</code> id
+to the index.md file.
+It should look like this:</p>
+<pre><code># Index
+
+Welcome to the index.
+
+&lt;div id=&quot;main-index&quot;&gt;&lt;&#x2F;div&gt;
+</code></pre>
+<p>We’ll tell Soupault to put the index in <code>div#main-index</code>.</p>
+<h3 id="insert-index-html">Insert index HTML</h3>
+<p>Now that we have the index data,
+and a place to put the index,
+we can render it into html.</p>
+<p>Before we do that, we must understand views.</p>
+<p>Since you might want to have different ways to index data,
+such as grouping posts by author or tag,
+Soupault lets you define “views”.
+Views have an “index_selector” property,
+which will put the index HTML
+into the element which matches that selector.
+This allows you to have multiple index views in the same page.
+Yes, we’ve already sorted it by date,
+but you can put those options independently for each view,
+or use different index rendering options.</p>
+<details><summary>Index views and options links</summary>
+  <p><a href="https://soupault.app/reference-manual/#index-views">Index views</a></p>
+<p><a href="https://soupault.app/reference-manual/#index-view-options">Index view options</a></p>
+<p><a href="https://soupault.app/reference-manual/#ways-to-control-index-rendering">Index rendering options</a></p>
+
+</details>
+<p>In our <code>index.md</code> file,
+we’re using a div with the id <code>main-index</code>,
+so we want an index view that applies to <code>div#main-index</code>.</p>
+<pre><code>[index.views.main]
+  # Use the main view for divs with the &quot;main-index&quot; id
+  index_selector = &quot;div#main-index&quot;
+  
+  # The html to generate for each item
+  index_item_template = &quot;&quot;&quot;
+    &lt;h2&gt;
+      &lt;a href=&quot;{{url}}&quot;&gt;
+        {{title}}
+      &lt;&#x2F;a&gt;
+    &lt;&#x2F;h2&gt;
+    &lt;p&gt;Date: {{date}}&lt;&#x2F;p&gt;
+  &quot;&quot;&quot;
+</code></pre>
+<p><code>{{url}}</code>, <code>{{title}}</code>, and <code>{{date}}</code> tell Soupault
+to replace them with the related metadata fields.
+The title and date are fields that we defined in <code>[index.fields]</code>,
+and the url is a built-in field
+that is automatically collected by Soupault.</p>
+<p><a href="https://soupault.app/reference-manual/#built-in-index-fields">Built-in index fields</a></p>
+<p>Now you can reload the page in the browser
+and see your index appear!</p>
+<p><img src="/soupault-intro-preview-with-index.svg" alt="Home page with index" /></p>
+<h2 id="widgets">Widgets!</h2>
+<p>Soupault’s power feature is the ability to manipulate HTML.</p>
+<p>For this, it uses an extensive set of “widgets”,
+though it provides a Lua scripting interface as well,
+where you can create your own widgets.</p>
+<p><a href="https://soupault.app/reference-manual/#widgets">Widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#built-in-widgets">Built-in widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#plugins">Lua plugins/widgets</a></p>
+<p>As an example, we’ll use an <code>insert_html</code> widget
+to add in the author name:</p>
+<pre><code># add-author is a name *we* choose
+# to help keep track of our widgets
+[widgets.add-author]
+
+  # Widget type
+  widget = &quot;insert_html&quot;
+  
+  # Replace &quot;Pranab&quot; with your name
+  html = &quot;&lt;p&gt;by Pranab&lt;&#x2F;p&gt;&quot;
+  
+  # Insert the HTML after the title
+  selector = &quot;h1&quot;
+  action = &quot;insert_after&quot;
+</code></pre>
+<p>This will insert a paragraph with the text “by Pranab” after the h1.
+Remember to change “Pranab” to your name.</p>
+<p><img src="/soupault-intro-preview-by-pranab.svg" alt="Home page with “by Pranab” text" /></p>
+<p>You can use this same widget to insert a link to the home page,
+as well as a link to some CSS.</p>
+<p>Have a look at the built-in widgets as well as the Lua plugins for more.
+Plugins are as simple as putting a Lua file
+in the (configurable) plugins folder,
+and then adding them like a widget to your <code>soupault.toml</code>.</p>
+<p><a href="https://soupault.app/reference-manual/#built-in-widgets">Built-in widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#plugins">Lua plugins reference</a></p>
+<p><a href="https://soupault.app/plugins/">Available plugins</a></p>
+<h2 id="final-setup">Final setup</h2>
+<p>This is a summary of what you should end up with.</p>
+<h3 id="folder-structure">Folder structure</h3>
+<pre><code>soupault-blog&#x2F;
+  soupault.toml
+  site&#x2F;
+    index.md
+    hello.md
+  templates&#x2F;
+    main.html
+</code></pre>
+<h3 id="soupault-toml"><code>soupault.toml</code></h3>
+<pre><code>[settings]
+  page_file_extensions = [ &quot;md&quot; ]
+
+[preprocessors]
+  md = &quot;cmark --unsafe&quot;
+
+[index]
+  index = true
+  sort_by = &quot;date&quot;
+  sort_type = &quot;calendar&quot;
+  date_formats = [&quot;%F&quot;]
+  strict_sort = true
+
+[index.fields.title]
+  selector = [&quot;h1&quot;]
+  
+[index.fields.date]
+  selector = [&quot;div#post-date&quot;]
+  fallback_to_content = true
+
+[index.views.main]
+  index_selector = &quot;div#main-index&quot;
+  index_item_template = &quot;&quot;&quot;
+    &lt;h2&gt;
+      &lt;a href=&quot;{{url}}&quot;&gt;
+        {{title}}
+      &lt;&#x2F;a&gt;
+    &lt;&#x2F;h2&gt;
+    &lt;p&gt;Date: {{date}}&lt;&#x2F;p&gt;
+  &quot;&quot;&quot;
+
+[widgets.add-author]
+  widget = &quot;insert_html&quot;
+  html = &quot;&lt;p&gt;by Pranab&lt;&#x2F;p&gt;&quot;
+  selector = &quot;h1&quot;
+  action = &quot;insert_after&quot;
+</code></pre>
+<h3 id="site-index-md"><code>site/index.md</code></h3>
+<pre><code># Index
+
+Welcome to the index.
+
+&lt;div id=&quot;main-index&quot;&gt;&lt;&#x2F;div&gt;
+</code></pre>
+<h3 id="site-hello-md"><code>site/hello.md</code></h3>
+<pre><code># Hello, world
+
+&lt;div id=&quot;post-date&quot;&gt;
+  2077-07-07
+&lt;&#x2F;div&gt;
+
+This is a page. Wow.
+</code></pre>
+<h3 id="templates-main-html"><code>templates/main.html</code></h3>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Generated with Soupault&lt;&#x2F;title&gt;
+  &lt;&#x2F;head&gt;
+  &lt;body&gt;
+    &lt;!-- content will go here --&gt;
+  &lt;&#x2F;body&gt;
+&lt;&#x2F;html&gt;
+</code></pre>
+<h2 id="learn-more">Learn more</h2>
+<p>If you want to see more options to set up your website,
+have a look at the official blog quickstart,
+as well as the reference manual.</p>
+<p><a href="https://soupault.app/tips-and-tricks/quickstart">Blog quickstart</a></p>
+<p><a href="https://soupault.app/reference-manual/">Reference manual</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml">Web feed</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;soupault-intro.md">
+  Page source
+</a>
+
+      <a href="https://github.com/pranabekka/pranabekka.github.io">Site source</a>
+    </nav>
+    <hr>
+    <p>Please feel free to
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">contact</a> me
+      if you have any feedback,
+      from opinions to minor grammar or styling issues.
+    </p>
+  </footer>
+</body>
+
+</html>
