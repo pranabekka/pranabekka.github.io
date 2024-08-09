@@ -18,6 +18,17 @@ or Sara Joy's "Weak Notes".
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
 
+## 2024-08-09
+
+- i made some character concept art!
+  it's cute, simple, and easy to pose/animate.
+  ![Sheep and cat 2d art](/concept-art-character-sheep-cat.jpg)
+- how did people let apple get away
+  with the notch, then the cutout
+- when treating s-expressions as nodes,
+  the top-level is a special node with variable args,
+  and the main nodes in your program feed into it.
+
 ## 2024-08-05 Shower thoughts
 
 this might be my shower thoughts place
