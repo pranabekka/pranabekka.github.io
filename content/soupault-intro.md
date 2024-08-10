@@ -8,6 +8,14 @@ updated = 2024-08-10 23:26:36
 Soupault is an incredible static site generator (SSG),
 but the documentation can be a confusing.
 
+What makes Soupault interesting
+is that it turns all your markup to HTML,
+unless it's already HTML,
+then it works with that HTML as elements (not text).
+For example, it uses CSS selectors to
+extract metadata from the created HTML,
+and even allows you to add and remove elements.
+
 [Soupault](https://soupault.app)
 
 **NOTE:** This is written with Soupault 4.x in mind,
