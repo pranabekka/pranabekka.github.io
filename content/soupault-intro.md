@@ -71,7 +71,7 @@ change the `site_dir` option.
 If you want to change how it defines a complete page[^1],
 change the following option:
 
-```
+``` toml
 complete_page_selector = "html"
 ```
 
@@ -102,7 +102,7 @@ before you install it and play around.
 First, we create the `soupault.toml` configuration file,
 and tell it what pages to read and how.
 
-```
+``` toml
 [settings]
 
   # "Page files" are recognised by the extension "md".
@@ -137,7 +137,7 @@ we must insert it into a full HTML document.
 The default template file is `templates/main.html`,
 so that's where we'll insert the following:
 
-```
+``` html
 <!DOCTYPE html>
 <html>
   <head>
@@ -152,7 +152,7 @@ so that's where we'll insert the following:
 By default, content is added at the end of the `body` element,
 though you can change it with the following options:
 
-```
+``` toml
 default_content_selector = "body"
 default_content_action = "append_child"
 ```
@@ -169,7 +169,7 @@ Let's create an `index.md` file in the `site` folder [^2]:
 [^2]: Remember, Soupault reads files from `site`,
 and we've asked it to treat `md` files as pages.
 
-```
+``` markdown
 # Index
 
 Welcome to the index.
@@ -210,7 +210,7 @@ just use the http.server module.
 
 Python http server:
 
-```
+``` sh
 python3 -m http.server --directory build
 ```
 
@@ -219,13 +219,13 @@ which you can open in your browser.
 
 To automatically rebuild the site, use watch:
 
-```
+``` sh
 watch --interval 1 'soupault'
 ```
 
 If you're using Windows instead, just use an infinite loop:
 
-```
+``` sh
 while (1) {soupault; sleep 1}
 ```
 
@@ -250,7 +250,7 @@ Because we want the title to show up in the index,
 and we want to sort the posts by date,
 we'll define those as the metadata fields.
 
-```
+``` toml
 [index.fields.title]
   selector = ["h1"]
   
@@ -274,7 +274,7 @@ And since we've specified the date metadata field
 as the contents of the `div` with the `post-date` id,
 we'll also add that in.
 
-```
+``` markdown
 # Hello, world
 
 <div id="post-date">
@@ -290,7 +290,7 @@ By default, `cmark` replaces raw HTML with a comment.
 To allow HTML, we need to use the `--unsafe` option,
 which means changing the 'preprocessor' for markdown:
 
-```
+``` toml
 [preprocessors]
   md = "cmark --unsafe"
 ```
@@ -303,7 +303,7 @@ let's generate the index.
 
 <!-- TODO?: mix in the views section and put most config there? -->
 
-```
+``` toml
 [index]
   index = true
   
@@ -331,7 +331,7 @@ We'll just add a `div` with the `index` id
 to the index.md file.
 It should look like this:
 
-```
+``` markdown
 # Index
 
 Welcome to the index.
@@ -372,7 +372,7 @@ In our `index.md` file,
 we're using a div with the id `main-index`,
 so we want an index view that applies to `div#main-index`.
 
-```
+``` toml
 [index.views.main]
   # Use the main view for divs with the "main-index" id
   index_selector = "div#main-index"
@@ -418,7 +418,7 @@ where you can create your own widgets.
 As an example, we'll use an `insert_html` widget
 to add in the author name:
 
-```
+``` toml
 # add-author is a name *we* choose
 # to help keep track of our widgets
 [widgets.add-author]
@@ -471,7 +471,7 @@ soupault-blog/
 
 ### `soupault.toml`
 
-```
+``` toml
 [settings]
   page_file_extensions = [ "md" ]
 
@@ -512,7 +512,7 @@ soupault-blog/
 
 ### `site/index.md`
 
-```
+``` markdown
 # Index
 
 Welcome to the index.
@@ -522,7 +522,7 @@ Welcome to the index.
 
 ### `site/hello.md`
 
-```
+``` markdown
 # Hello, world
 
 <div id="post-date">
@@ -534,7 +534,7 @@ This is a page. Wow.
 
 ### `templates/main.html`
 
-```
+``` html
 <!DOCTYPE html>
 <html>
   <head>
