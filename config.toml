@@ -14,5 +14,7 @@ author = "Pranab" # used in feed
 
 [markdown]
 smart_punctuation = true
+highlight_code = true
+highlight_theme = "css"
 
 [extra]
