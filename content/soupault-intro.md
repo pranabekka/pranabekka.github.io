@@ -6,7 +6,7 @@ updated = 2024-08-10 23:26:36
 +++
 
 Soupault is an incredible static site generator (SSG),
-but the documentation can be a confusing.
+but the documentation can be confusing.
 
 What makes Soupault interesting
 is that it turns all your markup to HTML,
