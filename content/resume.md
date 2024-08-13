@@ -21,14 +21,14 @@ software teams.
 ## Skills
 
 <div class="pipgrid">
-  {{ pips(title="Figma, Adobe XD, Penpot"n=5) }}
-  {{ pips(title="Illustrator, Inkscape"n=5) }}
-  {{ pips(title="Wireframing, Sketching"n=4) }}
-  {{ pips(title="Photoshop, GIMP"n=3) }}
-  {{ pips(title="Premiere Pro"n=3) }}
-  {{ pips(title="Blender"n=3) }}
-  {{ pips(title="HTML, CSS"n=3) }}
-  {{ pips(title="Javascript"n=1) }}
+  {{ pips(title="Figma, Adobe XD, Penpot", n=5) }}
+  {{ pips(title="Illustrator, Inkscape", n=5) }}
+  {{ pips(title="Wireframing, Sketching", n=4) }}
+  {{ pips(title="Photoshop, GIMP", n=3) }}
+  {{ pips(title="Premiere Pro", n=3) }}
+  {{ pips(title="Blender", n=3) }}
+  {{ pips(title="HTML, CSS", n=3) }}
+  {{ pips(title="Javascript", n=1) }}
 </div>
 
 ## Work Experience
