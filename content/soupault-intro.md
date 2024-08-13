@@ -2,7 +2,7 @@
 title = "A better Soupault introduction"
 ## remember to change date on publishing
 date = 2024-08-10 23:26:36
-updated = 2024-08-10 23:26:36
+updated = 2024-08-13 13:39:04
 +++
 
 Soupault is an incredible static site generator (SSG),
