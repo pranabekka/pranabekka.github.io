@@ -42,7 +42,15 @@ the paragraph where they're referenced.
   just need to hook it up
 - [ ] replace sass vars with css vars.
   makes built css clearer
+- [ ] hash css and append as query string to `<link>`
+  to invalidate stale cached css in some browsers
+  ```
+  {% set hash = get_hash(path="path/to/css", sha_type=256, base64=true) %}
+  <link rel="stylesheet" href="path/to/css?{{hash}}">
+  ```
+  - [ ] move css to static folder to enable hashing
 - [ ] link checker
+- [ ] use margin instead of padding for items in main
 - [ ] grammar checker.
   i tend to miss things as i edit a post.
   lots of cli tools for languagetool, even offline.
