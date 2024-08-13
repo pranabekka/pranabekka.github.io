@@ -35,8 +35,6 @@ the paragraph where they're referenced.
 
 ### site changes
 
-- [ ] consider page source next to site source, at bottom.
-  use a block in the base template.
 - [ ] image compression.
   site currently serves pretty large images.
   pair with multiple alternative sources in html.
@@ -53,7 +51,3 @@ the paragraph where they're referenced.
   prolly don't need it at this scale.
   most of the html is auto-generated.
 - [ ] feed validation
-
-### others
-
-- [ ] use black and white from main.sass in happycog.html
