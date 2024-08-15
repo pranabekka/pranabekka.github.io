@@ -16,7 +16,7 @@ To know more about the design, see the About page.
 
 [About (site design)](@/about.md#about-the-site)
 
-## Summary/description
+## Summary/<wbr/>description
 
 The first paragraph of a post is taken as the summary,
 and displayed in the index.
@@ -105,6 +105,10 @@ some_<wbr/>oddly_<wbr/>punctuated_<wbr/>text
 
 Each of the `&shy;` and `<wbr/>` instances
 represents an *opportunity* for a word break.
+
+In some browsers, it doesn't break after a slash (`/`),
+which might be used in inline code for paths,
+or for alternative words, like this-word/<wbr/>that-word.
 
 ## Punctuation
 
@@ -207,6 +211,12 @@ Features:
 
   keeps as much space as possible to display content
 
+- simple syntax highlighting
+
+  i don't want the multi-coloured stuff
+  because it won't fit in with the rest of the site,
+  and will draw attention to itself.
+
 ```
 a pre-formatted code block that's attempting to exceed the width of the container
 ```
@@ -217,9 +227,87 @@ get cut off with overflow text, if there's any.
 This will make the reader absolutely certain
 that there's more to see.
 
-A title for a blockquote would be nice.
+A title for a block would be nice.
 Mainly to include the file name.
 Or even just the language.
+
+### Syntax highlighting
+
+My main languages for now will be
+HTML, CSS, Javascript, Lisp/Scheme,
+and config formats like YAML, TOML, and JSON.
+
+```html
+<body>
+  <h1>A table!</h1>
+  <div class="tablewrapper">
+    <table>
+      <!-- table markup -->
+    </table>
+  </div>
+</body>
+```
+
+```css
+/* setting some base variables */
+:root {
+  --font-family: sans-serif;
+  --black-white-100: #ffffff;
+  --black-white-60: #b3b3b3;
+  --black-white-30: #323232;
+  --black-white-0: #000000;
+}
+```
+
+```javascript
+let my = { ting: "hello world" };
+
+// it do a thingy with x
+/* what a surprise! */
+function doThingy(x) {
+  console.log(`I did a thingy with ${x}!`);
+}
+
+doThingy(my);
+```
+
+```lisp
+; it do a thingy with x
+(defvar thingy-doer
+  (fn (x)
+    (format t "I did a thingy with ~a" x)))
+```
+
+```toml
+# a comment
+[key]
+inner_key = "val"
+
+[[key2]]
+index = 1
+
+[[key2]]
+index = 2
+```
+
+```yaml
+# a comment
+key:
+  inner_key: val
+key2:
+  - index: 1
+  - index: 2
+```
+
+```json
+{
+  "key": "val",
+  "key2": [
+    { "index": 1 },
+    { "index": 2 }
+  ]
+}
+```
 
 ### No background
 
