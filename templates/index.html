@@ -24,11 +24,11 @@
   {% for page in section.pages %}
     {% if not page.extra.hidden %}
       <li>
-        <h3>
+        <h2>
           <a href="{{ page.permalink }}">
             {{ page.title | markdown | striptags | safe }}
           </a>
-        </h3>
+        </h2>
         <p class="subtitle">
           {{ page.date | date(format="%b %d, %Y") }}
           {% if page.updated | date(format="%b %d, %Y") != page.date | date(format="%b %d, %Y") %}
