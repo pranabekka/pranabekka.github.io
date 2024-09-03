@@ -13,7 +13,7 @@ though the reasoning makes sense to me.
 
 The reward for these is obvious:
 clean URLs that are just words separated by slashes.
-However, the are several (somewhat conceptual) costs.
+However, there are several (somewhat conceptual) costs.
 
 - Abuse of the index page.
 
