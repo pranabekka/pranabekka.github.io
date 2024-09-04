@@ -52,6 +52,11 @@
       <a href="javascript:window.history.back();">Back to previous page</a>
     </p>
 
+    <hr>
+
+    <p>For each post, this feed also contains
+    the introduction, full post contents, and last updated date.</p>
+
     <h2>Pages</h2>
 
     <ul class="cards">
