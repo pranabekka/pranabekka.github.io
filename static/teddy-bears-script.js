@@ -7,7 +7,7 @@ const sizes = [small, medium, large];
 
 const animations = ['anim1', 'anim2', 'anim3'];
 
-// size manually copied from teddy.svg metadata
+// size manually copied from teddy-bears-teddy.svg metadata
 const baseWidth = 255;
 const baseHeight = 313;
 const ratio = baseWidth / baseHeight;
@@ -29,7 +29,7 @@ function makeBear(centreX, centreY) {
   const startY = centreY - (height / 2) + jitter();
 
   const bearInstance = document.createElement('img');
-  bearInstance.src = 'teddy.svg';
+  bearInstance.src = 'teddy-bears-teddy.svg';
 
   let zIndex = 0;
   if (height === small) {
@@ -74,7 +74,7 @@ for (
 
 document.addEventListener('click', (e) => {
   if (e.target.nodeName === 'IMG') {
-    e.target.src = 'teddy-dead.svg';
+    e.target.src = 'teddy-bears-teddy-dead.svg';
     e.target.dataset.animation = 'dead';
     setTimeout(() => {
       e.target.remove()
