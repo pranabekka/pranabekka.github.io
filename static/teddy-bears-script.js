@@ -99,6 +99,6 @@ function drawMessage() {
 };
 
 // can sometimes see flash of text.
-// maybe draws over or before bears
-// while browser figures it all out?
-setTimeout(drawMessage, 120);
+// probably draws over or before bears
+// while browser figures it all out
+setTimeout(drawMessage, 2000);
