@@ -75,6 +75,7 @@ for (
 document.addEventListener('click', (e) => {
   if (e.target.nodeName === 'IMG') {
     e.target.src = 'teddy-bears-teddy-dead.svg';
+    e.target.style.pointerEvents = 'none';
     e.target.dataset.animation = 'dead';
     setTimeout(() => {
       e.target.remove()
