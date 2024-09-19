@@ -4,27 +4,22 @@ date = 2024-06-24 14:41:56 # draft date
 updated = 2024-06-24 14:41:56
 +++
 
-Markdown has syntax for titles
-that is suitable for the format,
-yet SSGs always shun it.
+Alternatives to putting the markdown title in TOML/YAML.
 
-Most metadata formats essentially override the syntax,
-which breaks Markdown in some ways.
-
-Markdown is designed as a visual plain text format ---
-visual in the sense that list syntax "looks like" a list,
-headings have extra marks to make them stand out,
-and different blocks are visually distinct.
-Metadata formats override this, and obscure the title.
+Because frontmatter breaks Markdown syntax
+and puts the title at the same importance as
+other metadata like the date and thumbnail.
 
 The title is a primary piece of data for the document,
-and it is not on the same level of importance as the date,
-which metadata formats place the title with.
+and it is not on the same level of importance as the date.
 
-Also, this breaks Markdown syntax,
-because now your Markdown (not metadata) document
+With frontmatter, your Markdown (not metadata) document
 starts with a level 2 heading and no level 1 heading,
 or it has multiple level 1 headings (titles).
+
+Instead, put the document heading at the top
+using Markdown syntax,
+and add metadata like the date below that.
 
 ## Solution 1: metadata tag
 
@@ -61,6 +56,9 @@ while Zola might call it `zola-metadata`.
 />
 ```
 
+It should be easy to use HTML if the tool already uses it,
+although XML/HTML can be verbose for some people.
+
 ## Solution 2: metadata "code" block
 
 Another solution is to author metadata in YAML, TOML,
@@ -88,3 +86,7 @@ update = 2024-06-24
 
 Specifiers like `metadata/toml` are also used in
 HTTP responses as well as HTML `link` elements.
+
+Most markup formats include code blocks,
+and setting the language should be easy.
+Plus people tend to like YAML/TOML over XML/HTML.
