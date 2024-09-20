@@ -26,6 +26,7 @@ $highlight-stale: $yellow-faded
 :root
   background: $bg
   color: $fg
+  color-scheme: dark
 
   font-family: Work Sans, sans-serif
   font-size: 16pt
@@ -74,6 +75,12 @@ h1, h2, h3, h4, h5, h6
   margin-bottom: 0
   line-height: 1.1em
   overflow-wrap: break-word
+
+.zola-anchor
+  font-weight: 300
+  font-size: 1.25rem
+  line-height: 1.1em
+  padding-right: 0.3em
 
 main > h2, main > h3, main > h4, main > h5, main > h6
   padding: 0 .5rem
@@ -218,6 +225,9 @@ blockquote
   padding-left: .5rem
   margin: 0 .5rem 0 0
   font-size: 120%
+
+.aside
+  color: $fg-dim
 
 sup.footnote-reference , sup.footnote-definition-label
   vertical-align: bottom
