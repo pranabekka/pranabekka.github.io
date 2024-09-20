@@ -1,7 +1,7 @@
 +++
 title = "Metadata in Markdown"
 date = 2024-06-24 14:41:56 # draft date
-updated = 2024-06-24 14:41:56
+updated = 2024-09-20 18:01:53
 +++
 
 Alternatives to putting the markdown title in TOML/YAML.
