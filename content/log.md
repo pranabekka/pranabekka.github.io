@@ -1,7 +1,7 @@
 +++
 title = "Log"
 date = 2024-06-24 15:52:46
-updated = 2024-08-05 19:14:38
+updated = 2024-09-21 09:35:22
 +++
 
 Where I add short thoughts, TODO items, links, etc.,
@@ -17,6 +17,26 @@ or Sara Joy's "Weak Notes".
 (warning: bright white page)
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
+
+## 2024-09-21
+
+- Beware the NodeList (and use the console/repl often)
+
+  Had an issue where I got a list from `getElementsByClassName`
+  to copy their contents and delete them from the DOM.
+  For some reason, it would only delete every other node,
+  and leave half the nodes untouched.
+  Turns out it was because a NodeList can update live
+  to reflect the current contents of the DOM.
+  Still note sure why it was every other.
+
+  It's not an array, see the [MDN docs on NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)
+
+- I should really get Soupault set up.
+  (Which means turning my SASS to CSS.)
+
+  Had to use JS to do extra stuff
+  that Zola should've let me do at build time.
 
 ## 2024-08-09
 
