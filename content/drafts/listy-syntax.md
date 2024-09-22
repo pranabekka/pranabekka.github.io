@@ -1,5 +1,5 @@
 +++
-title = "Wispy syntax"
+title = "Listy syntax"
 ## remember to change date on publishing
 date = 2024-09-20 00:19:46 # draft date
 updated = 2024-09-20 00:19:46
@@ -264,7 +264,11 @@ hence "lispy"
 wanted `;` for breaking inline lists
 because some formats don't support multiple lines
 
-"wispy" is bad for search results
-**TODO:** use "listy"
-sounds fun, syntax is about lists,
-inspired by s-exps in lisp (list processing)
+"Listy" is easily searchable[^search], sounds fun,
+has syntax about lists,
+and is inspired by s-exps in lisp
+(which also stands for list processing)
+
+[^search]: main result is a lists app
+for things like movies, music, and books,
+with another lists app with the same name.
