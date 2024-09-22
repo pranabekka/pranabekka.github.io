@@ -52,10 +52,18 @@
       <a href="javascript:window.history.back();">Back to previous page</a>
     </p>
 
-    <hr/>
+    <h2>Feed info</h2>
 
-    <p>For each post, this feed also contains
-    the introduction, full post contents, and last updated date.</p>
+    <ul>
+      <li>Feed title</li>
+      <li>Feed description</li>
+      <li>Feed last update date</li>
+      <li>Post summary</li>
+      <li>Post contents (usually in full)</li>
+      <li>Post publish date</li>
+      <li>Post last update date</li>
+      <li>Post author</li>
+    </ul>
 
     <h2>Pages</h2>
 
