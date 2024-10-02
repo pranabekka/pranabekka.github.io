@@ -1,5 +1,5 @@
 +++
-title = "Computer class"
+title = "Computer training notes"
 ## remember to change date on publishing
 date = 2024-09-28 13:05:41 # draft date
 updated = 2024-09-28 13:05:41
@@ -7,7 +7,62 @@ updated = 2024-09-28 13:05:41
 
 notes on computer class; things to do.
 
-## setup
+make document with images, names, shortcuts
+
+## remaining terms
+
+keyboard, keys, trackpad/touchpad, apps,
+click, double click, right click,
+scroll, swipe, pinch, title bar,
+title bar buttons (close, max, min),
+quick settings, settings, task view
+
+## day 2
+
+spent on terms:
+mouse, cursor, desktop, files, folders,
+app window, app windows, windows app, windows key,
+
+demonstrated files and folders with phones as well.
+showed desktop folder.
+
+## day 3
+
+### setup
+
+- get large board
+- draw review images with space for names:
+	mouse, window, windows, cursor, file, folder,
+	windows key, desktop, on/off (i didn't cover; is it even visible?)
+- draw touchpad, start menu, taskbar
+
+### pre-class hangout
+
+sit down at a laptop and ask what they want to do.
+
+get feedback:
+- did they want to do something else?
+- was it hard to follow?
+- anything they're still uncertain about
+
+### review
+
+ask name for each image
+
+re: Windows, they should see it on startup
+
+### continue
+
+- ask what they'd like to do.
+- first, we'll cover three new terms:
+	touchpad, start menu, taskbar
+- then i'll spend some time with everyone
+	doing what they'd like,
+	and helping do things better.
+	advanced people should sit together.
+	divide 40 minutes by number of groups.
+
+## remaining setup
 
 - location off
 
