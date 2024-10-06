@@ -16,11 +16,15 @@ study carefully and try again the next day.
 *New terms will be added soon.*
 
 
+***
+
 ![laptop display](/computer-term-display-context-laptop.svg)
 {% details(summary="Show answer") %}
 "Display" ("डिस्प्ले") or "screen" ("स्क्रीन")
 {% end %}
 
+
+***
 
 ![file tree](/computer-term-file-tree.svg)
 {% details(summary="Show answer") %}
@@ -33,6 +37,8 @@ and files are at the end of "branches".
 ![file tree visualisation](/computer-term-file-tree-visualisation.svg)
 {% end %}
 
+
+***
 
 ![folder](/computer-term-folder.svg)
 {% details(summary="Show answer") %}
@@ -61,6 +67,8 @@ September 2024 Exams (folder)
 {% end %}
 
 
+***
+
 ![keyboard](/computer-term-keyboard-context-laptop.svg)
 {% details(summary="Show answer") %}
 "Keyboard"
@@ -68,6 +76,8 @@ September 2024 Exams (folder)
 Used for writing and shortcuts.
 {% end %}
 
+
+***
 
 ![mouse](/computer-term-mouse.svg)
 {% details(summary="Show answer") %}
@@ -80,6 +90,8 @@ but fits in hand and is moved on table.
 {% end %}
 
 
+***
+
 ![mouse left-click](/computer-term-mouse-click-left.svg)
 {% details(summary="Show answer") %}
 "Left click" or "click"
@@ -89,6 +101,8 @@ It is used for the default or main action.
 {% end %}
 
 
+***
+
 ![mouse right-click](/computer-term-mouse-click-right.svg)
 {% details(summary="Show answer") %}
 "Right click"
@@ -97,6 +111,8 @@ Right click is used for menus and extra options.
 {% end %}
 
 
+***
+
 ![power button](/computer-term-power-button-context-laptop.svg)
 {% details(summary="Show answer") %}
 "Power button"
@@ -104,6 +120,8 @@ Right click is used for menus and extra options.
 Turn laptop on and off.
 {% end %}
 
+
+***
 
 ![trackpad](/computer-term-trackpad.svg)
 {% details(summary="Show answer") %}
@@ -119,11 +137,15 @@ but is flat and doesn't move.
 {% end %}
 
 
+***
+
 ![trackpad left-click](/computer-term-trackpad-click-left.svg)
 {% details(summary="Show answer") %}
 "Click" or "left click"
 {% end %}
 
+
+***
 
 ![trackpad right-click](/computer-term-trackpad-click-right.svg)
 {% details(summary="Show answer") %}
