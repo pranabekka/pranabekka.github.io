@@ -7,20 +7,18 @@ updated = 2024-10-06 12:17:56
 
 Images and definitions for various computer terms.
 
-**NOTE:** Try to remember what the term is,
-then see the answer to check if you were right.
+**IMPORTANT:** Think of the exact answer,
+then tap "show answer" to check if you were right.
 If you're not sure about an answer,
 or your answer is wrong,
-study carefully and try again the next day.
-
-*New terms will be added soon.*
+study carefully and try again in some hours.
 
 
 ***
 
 ![laptop display](/computer-term-display-context-laptop.svg)
 {% details(summary="Show answer") %}
-"Display" ("डिस्प्ले") or "screen" ("स्क्रीन")
+"Display" or "screen"
 {% end %}
 
 
@@ -47,22 +45,35 @@ and files are at the end of "branches".
 A folder is for organising files and folders,
 so that you can find them easily.
 
+For example, if you your shirt or blouse is not in your almirah,
+you will have too look everywhere,
+and you will be late for work.
+
+![folder visualisation](/computer-term-folder-visualisation.svg)
+
 <!-- they don't seem to think finding past exams is important -->
-<!-- what if it was personal images? they don't have holiday images.
+<!-- what if it was personal images?
+but they don't have holiday images.
 something else? -->
-For example, you put the stove in the kitchen.
-So, you put exam papers for September 2024 in a folder.
+For the same reason,
+you put exam papers for September 2024 in one folder,
+to easily find it when you need it.
 
 ```
 September 2024 Exams (folder)
-	Class 1 (folder)
-		Class 1 English Exam (file)
-		Class 1 Hindi Exam (file)
-		Class 1 Math Exam (file)
-	Class 2 (folder)
-		Class 2 English Exam (file)
-		Class 2 Hindi Exam (file)
-		Class 2 Math Exam (file)
+	↳ Class 1 (folder)
+		↳ Class 1 English Exam (file)
+		↳ Class 1 Hindi Exam (file)
+		↳ Class 1 Math Exam (file)
+		↳ Class 1 Results (file)
+		↳ ...
+	↳ Class 2 (folder)
+		↳ Class 2 English Exam (file)
+		↳ Class 2 Hindi Exam (file)
+		↳ Class 2 Math Exam (file)
+		↳ Class 2 Results (file)
+		↳ ...
+	↳ ...
 ```
 {% end %}
 
@@ -150,4 +161,110 @@ but is flat and doesn't move.
 ![trackpad right-click](/computer-term-trackpad-click-right.svg)
 {% details(summary="Show answer") %}
 "Right click"
+{% end %}
+
+
+***
+
+![cursor](/computer-term-cursor.svg)
+{% details(summary="Show answer") %}
+"Cursor" or "pointer" or "mouse"
+
+This shows where left click and right click will work.
+If the cursor is on a button,
+the click will work on the button.
+
+This is also called "mouse",
+because it is moved by the mouse.
+{% end %}
+
+
+***
+
+![desktop](/computer-term-desktop.svg)
+{% details(summary="Show answer") %}
+"Desktop"
+
+Like smartphone "homescreen".
+It has apps, files, and shortcuts.
+{% end %}
+
+
+***
+
+![shortcuts](/computer-term-shortcuts.svg)
+{% details(summary="Show answer") %}
+"Shortcuts" or "Keyboard shortcuts"
+
+Ways to do things quickly from the keyboard,
+without using the mouse to click inside menus.
+{% end %}
+
+
+***
+
+![start menu](/computer-term-start-menu.svg)
+{% details(summary="Show answer") %}
+"Start menu"
+
+A menu of recent apps and files,
+account information and logout options,
+a way to search apps and files,
+and a list of all apps.
+{% end %}
+
+
+***
+
+![taskbar](/computer-term-taskbar.svg)
+{% details(summary="Show answer") %}
+"Taskbar"
+
+Has the "start menu" button,
+the "search" button,
+favourite ("pinned") apps,
+and currently open apps.
+{% end %}
+
+
+***
+
+![window](/computer-term-window.svg)
+{% details(summary="Show answer") %}
+"Window"
+
+The box inside which an app shows things.
+The box can be moved, resized and closed.
+{% end %}
+
+
+***
+
+![windows](/computer-term-windows.svg)
+{% details(summary="Show answer") %}
+"Windows"
+
+Many boxes.
+{% end %}
+
+
+***
+
+![windows os](/computer-term-windows-os.svg)
+{% details(summary="Show answer") %}
+"Windows (OS)"
+
+The main "app" inside which other apps and things open.
+
+Windows (OS) has the taskbar, desktop, window close buttons,
+start menu, settings and more.
+
+OS means operating system,
+which means the "app" inside which other apps open,
+and where files and folders exist.
+Other operating systems include Android,
+which is on your phone,
+and Linux, macOS, and iOS.
+
+<!-- TODO: android logo -->
 {% end %}
