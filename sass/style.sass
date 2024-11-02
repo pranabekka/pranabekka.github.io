@@ -1,10 +1,10 @@
 //////////// general settings
 
 $max-width: 32rem // there's no rch :(
-$fg: #a2cdb7
-$fg-dim: #969696
-$fg-dimmer: #606060
-$fg-bright: #efefef
+$fg: #fefbea
+$fg-dim: #bfbdb0
+$fg-dimmer: #403f3b
+$fg-bright: #fffdd0
 $bg: #000000
 $bg-bright: #2b2b2f
 $bg-semi-bright: #18181f
@@ -146,7 +146,7 @@ pre, code
   font-family: IntelOne Mono, monospace
   // background: $bg-bright
 
-p > code, li > code
+p > code, li > code, h1 > code, h2 > code, h3 > code
   border: 1px solid $fg-dimmer
   border-radius: 4px
   padding: 0 .3rem
@@ -348,10 +348,10 @@ main
   width: 1.5em
   height: .2em
   border-radius: .1em
-  background: #555555
+  background: $fg-dimmer
 
 .pip.full
-  background: white
+  background: $fg
 
 ///////////// special: folio grid
 // thumbnail grid view setup for portfolio
