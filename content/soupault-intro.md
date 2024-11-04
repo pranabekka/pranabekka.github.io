@@ -1,12 +1,12 @@
 +++
-title = "A better Soupault introduction"
+title = "An introduction to Soupault"
 ## remember to change date on publishing
 date = 2024-08-10 23:26:36
 updated = 2024-08-13 13:39:04
 +++
 
-Soupault is an incredible static site generator (SSG),
-but the documentation can be confusing.
+A static site generator (SSG) that works 
+on HTML from any markup language.
 
 What makes Soupault interesting
 is that it turns all your markup to HTML,
@@ -23,6 +23,12 @@ and specifically tested in 4.6.0.
 
 <!-- TODO: test with more versions -->
 
+<!--
+  TODO: include checklist of completed and remaining steps
+  at the beggining of each section, or end of each step.
+  seems like a restructure will be required.
+-->
+
 ## Expected knowledge
 
 - the CLI
@@ -32,9 +38,9 @@ and specifically tested in 4.6.0.
 - CSS selectors
 - jinja style templates
 
-## Why this is better
+## Why this introduction
 
-The official blog quickstart introduction is a bit front-loaded,
+The official "blog quickstart" introduction is a bit front-loaded,
 instead of gradually introducing concepts,
 and the reference manual has a decent introduction
 in the "Overview" section,
