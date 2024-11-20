@@ -1,12 +1,11 @@
 +++
 title = "An introduction to Soupault"
-## remember to change date on publishing
 date = 2024-08-10 23:26:36
-updated = 2024-08-13 13:39:04
+updated = 2024-11-20 19:42:33
 +++
 
-A static site generator (SSG) that works 
-on HTML from any markup language.
+A beginner's guide to making a site in Soupault,
+the SSG (static site generator).
 
 What makes Soupault interesting
 is that it turns all your markup to HTML,
@@ -17,6 +16,13 @@ extract metadata from the created HTML,
 and even allows you to add and remove elements.
 
 [Soupault](https://soupault.app)
+
+This guide is useful if you're sitting at the terminal,
+and intend to make a site right this moment.
+Otherwise, I have a higher level overview of Soupault
+that covers the core concepts:
+
+[Notes on Soupault](@/soupault-notes.md)
 
 **NOTE:** This is written with Soupault 4.x in mind,
 and specifically tested in 4.6.0.
