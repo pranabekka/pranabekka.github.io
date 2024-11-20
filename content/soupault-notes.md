@@ -1,7 +1,7 @@
 +++
 title = "Notes on Soupault"
 date = 2024-11-20 19:41:56
-updated = 2024-11-20 19:41:56
+updated = 2024-11-20 19:46:13
 +++
 
 An SSG (static site generator) that understands HTML.
@@ -10,7 +10,9 @@ An SSG (static site generator) that understands HTML.
 
 This is what "An introduction to Soupault" was going to be.
 For some reason I turned that into a full beginner's guide.
-If you have the terminal open and want to start making a website,
+Maybe because these notes might only make sense in context.
+Anyway, if you have the terminal open
+and want to start making a website,
 that's what you're looking for.
 
 [An introduction to Soupault](@/soupault-intro.md)
@@ -128,3 +130,8 @@ Just tell Soupault to use your program.
 	md = "cmark --unsafe"
 	json = "my-cli"
 ```
+
+If all this didn't make sense,
+maybe the full introduction might be for you:
+
+[An introduction to Soupault](@/soupault-intro.md)
