@@ -18,12 +18,10 @@
       const headingId = ln.getAttribute('href').substring(1)
       const heading = document.getElementById(headingId);
       heading.insertAdjacentHTML('afterend', `
-        <p class="section-link">
-          <a href="#${headingId}">Link to section</a>
-          (Right click/hold to copy/share)
+        <p class="tip-section-link">
+          Right click/hold link to section (“🔗”) to copy/share
         </p>
       `);
-      ln.remove();
     }
   </script>
 </head>
