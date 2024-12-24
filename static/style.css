@@ -27,9 +27,9 @@ GENERAL SETTINGS
 	--blue-faded: #414161;
 	--blue-faded-bright: #6161b1;
 
-	--highlight: $yellow;
-	--highlight-text: $yellow;
-	--highlight-stale: $yellow-faded;
+	--highlight: var(--yellow);
+	--highlight-text: var(--yellow);
+	--highlight-stale: var(--yellow-faded);
 
 	background: var(--bg);
 	color: var(--fg);
