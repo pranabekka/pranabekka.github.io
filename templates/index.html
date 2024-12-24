@@ -7,7 +7,8 @@
 {% block content %}
 
 <h1>
-  {{ section.title | markdown | safe }}
+  <img src="/favicon.svg" id="icon">
+  {{ section.title | markdown | striptags }}
 </h1>
 
 {% set this_url = section.permalink | as_str %}

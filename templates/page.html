@@ -8,6 +8,15 @@
 
 <h1>{{ page.title | markdown | striptags }}</h1>
 
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href={{config.base_url}}>
+    {{ config.title | markdown | striptags }}
+  </a>
+</p>
+
 <p class="subtitle">
   {% if page.path | split(pat="/") | nth(n=1) == 'drafts' %}
     <strong>DRAFT</strong> (needs work or removal)

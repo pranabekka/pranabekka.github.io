@@ -124,6 +124,19 @@ h3 {
 	font-size: 1.25rem;
 }
 
+#icon {
+	display: inline;
+	width: 1rem;
+	height: 1rem;
+	vertical-align: middle;
+}
+
+h1 > #icon {
+	width: 1.5rem;
+	height: 1.5rem;
+	vertical-align: baseline;
+}
+
 .smalltitle {
 	font-size: 1.25rem;
 }
@@ -446,9 +459,4 @@ thumbnail grid view setup for portfolio
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
 	gap: 1em;
-}
-
-#icon {
-	width: 1rem;
-	height: 1rem;
 }
