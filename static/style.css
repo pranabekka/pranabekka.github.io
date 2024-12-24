@@ -4,16 +4,15 @@ GENERAL SETTINGS
 
 * {
 	box-sizing: border-box;
-
 }
 
 :root {
 	--max-width: 32rem; /* there's no rch :( */
 
-	--fg: #b2b3a2;
-	--fg-dim: #949285;
-	--fg-dimmer: #4e4d48;
-	--fg-bright: #fefbea;
+	--fg: #b8b8b8;
+	--fg-dim: #969696;
+	--fg-dimmer: #606060;
+	--fg-bright: #efefef;
 
 	--bg: #000000;
 	--bg-bright: #2b2b2f;
