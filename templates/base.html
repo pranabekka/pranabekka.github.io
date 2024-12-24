@@ -9,21 +9,6 @@
   <link rel="me" href="https://mastodon.social/@pranabekka">
   <link type="application/atom+xml" rel="alternate" href="{{config.base_url}}/atom.xml" title="{{config.title}}">
   <title>{% block title %}{{ config.title | markdown | striptags }}{% endblock %}</title>
-  <script type="module">
-    'use strict';
-    const headingLinks = Array.from(
-      document.getElementsByClassName('zola-anchor')
-    );
-    for (const ln of headingLinks) {
-      const headingId = ln.getAttribute('href').substring(1)
-      const heading = document.getElementById(headingId);
-      heading.insertAdjacentHTML('afterend', `
-        <p class="tip-section-link">
-          Right click/hold link to section (“🔗”) to copy/share
-        </p>
-      `);
-    }
-  </script>
 </head>
 
 <body>
