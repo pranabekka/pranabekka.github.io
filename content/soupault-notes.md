@@ -76,7 +76,7 @@ The `widget` key specifies the name of the function,
 and the rest of the keys are arguments to it.
 
 The widget title is simply a description of
-what the widget does: `[widgets.<description>]`.
+what the widget does:
 
 ```toml
 [widget.<description>]
