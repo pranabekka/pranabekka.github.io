@@ -111,8 +111,10 @@ edit: i wrote the post
   with js fallback where possible.
 
   check the html template to see how stored theme is loaded.
-  refer also to https://lobste.rs/s/iefspl/notes_on_implementing_dark_mode ---
+  refer also to a lobste.rs discussion on implementing dark mode ---
   toastal suggests that the script has to be in the html for that.
+
+  [lobste.rs discussion on implementing dark mode](https://lobste.rs/s/iefspl/notes_on_implementing_dark_mode)
 
 - switch to css from sass.
 

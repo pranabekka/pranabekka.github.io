@@ -20,7 +20,7 @@ that's what you're looking for.
 If you just want a brief introduction,
 this is what you're looking for.
 
-## Understanding HTML
+## Understand&shy;ing HTML
 
 Here's what I mean when I say Soupault understands HTML:
 it uses CSS selectors to extract and add information.

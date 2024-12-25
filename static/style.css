@@ -217,6 +217,10 @@ pre code {
 	display: inline-block;
 }
 
+p code {
+	overflow-wrap: break-word
+}
+
 ul {
 	padding: 0 .5rem 0 2rem;
 	list-style-type: disc;
