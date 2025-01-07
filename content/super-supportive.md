@@ -1,8 +1,10 @@
 +++
 title = "My current favourite (web)fiction"
 date = 2024-05-09 11:58:53
-updated = 2024-05-09 11:58:53
+updated = 2025-01-07 10:17:39
 +++
+
+And also a source of great pain.
 
 For the last few months,
 I open a tab at least two days a week,
