@@ -32,8 +32,8 @@ an impressive four levels that year,
 and in 189, we find out someone else
 gets two to three levels a year "like a teenager".
 
-Before this, we knew his real levels were epic,
-but we had a vague idea even his fake levels were decent.
+Before this, we knew his real (nine) levels were epic,
+but we had a vague idea even his fake (four) levels were decent.
 When he gets back to Earth in 64,
 a woman says three levels and a star is impressive,
 though she might have cared more about the star,
