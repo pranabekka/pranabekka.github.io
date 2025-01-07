@@ -165,6 +165,10 @@ make sure to keep sounds on and don't skip anything.
 
 - Highlight self in player list.
 
+- Three letter names to fit many easily.
+  Also, old video games used to do that,
+  which is fun, plus it works well enough.
+
 ## TODO
 
 There's a few things that could be used
@@ -188,8 +192,11 @@ It's free, concise, comprehensive, and includes good exercises.
   but I find the idea of (lighthearted) cheating fun ---
   we usually don't take UNO too seriously.
 
-- Use a host/join architecture,
-  which can be used in peer-to-peer games as well.
+- Use a host/join architecture.
+  I ended up watching two tutorials on Godot networking,
+  which showed servers just being a specialised peer,
+  so that was interesting.
+  That would also make lots of things easier.
 
 - Try peer-js. They have a free server for passing messages,
   so I could play online with people.
