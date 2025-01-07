@@ -340,6 +340,18 @@ hr {
 	border-color: var(--fg-dimmer);
 }
 
+figure {
+	margin: 0 .5rem;
+}
+
+figcaption {
+	color: var(--fg-dim);
+}
+
+figcaption {
+	margin-top: .25rem;
+}
+
 /*****************************************************
 LAYOUT
 after settings and basic elements to override them
