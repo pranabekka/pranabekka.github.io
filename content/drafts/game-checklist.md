@@ -29,15 +29,12 @@ and I want to make it accessible for everyone.
 I can't expect everyone to purchase a game.
 Especially when I'm generally broke myself.
 
-### Free* and open sauce
+### Open sauce
 
 Sounds like a good way to build a community,
 in my opinion.
 Allows people to play with the internals
-and collaborate as well.
-
-\* as in freedom
-
+and make the game their own.
 
 ## Additional
 
@@ -51,8 +48,9 @@ if they're pitted against higher-skilled players.
 
 This can also be mixed in with PvP
 in the form of team-based games,
-including battle-royales.
-See the point on LAN multiplayer, though.
+including battle-royales[^royale].
+
+[^royale]: See the point on LAN multiplayer, though.
 
 ### Directional movement
 
@@ -60,6 +58,42 @@ Directly controlling a character is more immersive.
 I think it creates a link between you and the character,
 and makes you a part of the world,
 instead of ruling over it with clicks and drags.
+
+### Non-action/combat games
+
+"Action"[^action] games are unintuitive for some people,
+and can make them immediately lose interest.
+
+Combat games like shooters are also unappealing to some.
+
+Alternatives include:
+
+- Racing games
+- Card games like UNO
+- Board games like ludo
+- Puzzle games
+- Matching games like Candy Crush
+- Deck-building games like Slay the Spire
+- Word games like Crossword, boggle, and Wordle
+
+One point in favour of "action"[^action] games
+is that they provide a consistent and repeatable interface
+that can be used in a large variety of contexts.
+
+[^action]: action games in the sense of
+controlling a character directly
+and making it take actions in the world.
+
+## Playable lobby
+
+The waiting room should be a fully playable space.
+
+This way people can do something other than
+staring at a menu while they wait for each other.
+
+You can also put gameplay tips and a tutorial area there
+so that all players can brush up on the mechanics,
+and experienced players can guide beginners through.
 
 ### 2D movement
 
@@ -75,6 +109,7 @@ This contributes to being beginner friendly.
 
 We navigate in the physical world and 3D games
 using discrete floors.
+
 Additionally, movement in all directions remains consistent.
 In a platformer game, jump is much more complex
 than simply moving in a given direction
@@ -106,6 +141,10 @@ and people carry phones everywhere.
 It's the easiest way to support several devices,
 and distributing iOS apps is really tough.
 
+Could collaborate with iOS users, if they have a Mac,
+and you're working on a game that needs it,
+such as something with 3D or higher graphics.
+
 ### Storage space efficient
 
 This is a part of making games accessible to more people,
@@ -121,3 +160,47 @@ simple 2D art, or low poly 3D art.
 Aesthetics matter to people,
 and they likely won't try something if
 it doesn't at least look interesting.
+
+### Trial round
+
+If making a party game or something with lots of minigames,
+have a way to run a trial round to experience
+a round of each minigame.
+
+### In-game wiki
+
+Information about game systems
+should be available in the game.
+
+Preferably with images and animations.
+These can be made with in-game assets,
+and could even be made interactable!
+
+In a top-down 2D game,
+this could even be written on the floor,
+and the player could move around
+or use buttons in the game-world
+to change what they're viewing.
+
+### Interactive tutorial
+
+Don't force a tutorial
+where control is taken away from the player.
+
+In a 2D game, you can achieve this
+by having tutorial text and images
+on the floor or wall.
+
+You can also use "holographs"
+that depict a character or player
+taking a specific path,
+performing some actions,
+or using various controls.
+
+### Show controls
+
+Show the available controls to the player.
+
+on desktop, show the keys and mouse actions in a corner.
+
+on mobile, make the buttons have the expected icons.
