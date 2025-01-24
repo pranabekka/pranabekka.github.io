@@ -1,8 +1,8 @@
 +++
 title = "Game checklist"
 ## remember to change date on publishing
-date = 2024-08-08 23:00:33 # draft date
-updated = 2024-08-08 23:00:33
+date = 2025-01-24 19:52:47
+updated = 2025-01-24 19:52:47
 +++
 
 Things that would make an ideal game for me.
