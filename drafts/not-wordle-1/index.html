@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Ceci n’est pas Wordle devlog part 2
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Ceci n’est pas Wordle devlog part 2
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide Contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/not-wordle-1/#step-juan-the-page">Step juan: the page</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/not-wordle-1/#step-two-make-the-cells-visible">Step two: make the cells visible</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/not-wordle-1/#step-three-sprinkle-javascript">Step three: sprinkle javascript</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>So I lied.
+Welcome to devlog 2 of 1:
+how to make your own Wordle.
+(even if you’re a Javascript beginner)</p>
+<p>If you just want something that you can simply edit and share,
+then XXXXXXXXX (see devlog 1?).</p>
+<p><a href="https://pranabekka.github.io/not-wordle/">Previous devlog</a></p>
+<p>Btw, “ceci n’est pas” means “this is not”.</p>
+<p>Btw btw, this is mostly faff —
+if you really want to see how the
+(kinda ugly) broth is made,
+then have a look at the source.</p>
+<h2 id="step-juan-the-page">Step juan: the page<a class="zola-anchor" href="#step-juan-the-page" aria-label="Anchor link for: step-juan-the-page">🔗</a></h2>
+<p>Start with a display element,
+which is where all the fun stuff will happen,
+then add an input below it,
+and you’re done!
+Maybe add some basic instructions, if you want.</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;div id=display&gt;&lt;/div&gt;
+&lt;input type=text id=guess placeholder=&quot;Guess here&quot;&gt;&lt;/input&gt;
+&lt;button&gt;Submit&lt;/button&gt;
+</span></code></pre>
+<p>Oh, and a title.</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;h1&gt;Ceci n&#39;est pas Wordle&lt;/h1&gt;
+
+&lt;div id=display&gt;&lt;/div&gt;
+&lt;input id=guess&gt;&lt;/input&gt;
+</span></code></pre>
+<h2 id="step-two-make-the-cells-visible">Step two: make the cells visible<a class="zola-anchor" href="#step-two-make-the-cells-visible" aria-label="Anchor link for: step-two-make-the-cells-visible">🔗</a></h2>
+<p>Add a bit of CSS to make sure all your empty cells
+don’t just collapse into nothing —
+set a width and height for them.</p>
+<h2 id="step-three-sprinkle-javascript">Step three: sprinkle javascript<a class="zola-anchor" href="#step-three-sprinkle-javascript" aria-label="Anchor link for: step-three-sprinkle-javascript">🔗</a></h2>
+<p>Start by setting your word.
+We’ll go with ‘hello’ (duh).</p>
+<p>Then we have to draw the grid. <br />
+Select your display and make 6 rows
+(each row is a guess),
+and a cell for each letter of the word.</p>
+<pre class="z-code"><code><span class="z-text z-plain">&#39;use strict&#39;;
+
+const WORD = &#39;hello&#39;;
+
+const display = document.getElementById(&#39;display&#39;);
+
+for ( let i = 0; i &lt; 6; i++ ) {
+  const row = document.createElement(&#39;div&#39;);
+  for ( let j = 0; j &lt; WORD.length; j++ ) {
+    const cell = document.createElement(&#39;div&#39;);
+  }
+}
+</span></code></pre>
+<p>(don’t forget your ‘use strict’*)</p>
+<p>* I don’t really know what all it actually does though —
+still learning :p</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml">Web feed</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;not-wordle-1.md">
+  Page source
+</a>
+
+      <a href="https://github.com/pranabekka/pranabekka.github.io">Site source</a>
+    </nav>
+    <hr>
+    <p>Please feel free to
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">contact</a> me
+      if you have any feedback,
+      from opinions to minor grammar or styling issues.
+    </p>
+  </footer>
+</body>
+
+</html>
