@@ -110,3 +110,79 @@ So much strangeness.
 So much tingling in my bones.
 
 _I want to time travel to more chapters **so bad**._
+
+## Edit: about that meat
+
+Ending low intensity after "a year or two"
+doesn't necessarily mean the path of highest intensity,
+and even high intensity doesn't mean full intensity.
+
+There are actually possibilities
+where Alden's real profile might never be revealed.
+At least it might not be revealed to the general public.
+
+There are basically no possibilities where
+the fake profile might gradually build up to the real.
+Alden already has a backlog of levels,
+and he gets roughly twelve every year.
+To catch up to the backlog and overtake the yearly twelve,
+he has to announce over twelve levels every year,
+which is not a low intensity way of revealing his real power.
+
+The only way he could gradually turn the fake profile real
+is if he slowed down his skill development significantly
+for several years.
+I don't think Alden could do that.
+At the very least summons will make him use his power,
+and his free authority will also make him progress.
+And the whole Celena North High and University track
+will take about eight years,
+where he can't slack off.
+
+He also can't hide his power forever.
+When he first preserved Stu-art'h,
+Stu noticed the strength of his authority,
+and the Primary also analysed it at the party.
+The Primary plans to analyse Alden again
+when he's thirty years old.
+So that's the longest he could hide his real power.
+
+If Alden gains 12 levels a year,
+and 4 a year is impressive,
+then 3 must be the low intensity Alden wants,
+which is a quarter of 12.
+The Mother says Knights pay more attentions to this,
+so even if most wizards won't notice,
+a Knight will notice he's 4 times as powerful as his profile.
+
+But even if a Knight finds out,
+his profile might still be hidden for a while
+because there are some unscrupulous summoners
+who might arrange an "accident" for Alden,
+even if he has powerful connections.
+
+It likely won't be hidden for too long
+because summoners also have authority sense
+and could accidentally notice his authority as well.
+Unless Alden is blocked off from Artonan society,
+it would be better to reveal his power and status.
+Perhaps after a brief training period with the Knights,
+and managing some politics behind the scenes,
+though the Primary and Quaternary
+seem to have no interest in that.
+
+There have also been non-Artonan Knights,
+which means there is some place for Alden
+in terms of accomodations, services, processes,
+and relations with Artonans of all kinds.
+
+Even at that point, resource worlds like Earth
+might never learn about it,
+because wizards don't even discuss Knights
+with non-wizard Artonans --- forget Avowed.
+Only the most politically powerful Avowed
+might learn a bit about Alden's power,
+and it still wouldn't mention magic or Knight-hood.
+
+Alden might be The Secret Knight.
+(Not really, but it's fun to imagine.)
