@@ -19,7 +19,7 @@ special action and winning animations, and so on.
 I also mentioned Balatro because it won
 Indie Game of the Year,
 every clip I've seen of it has great animations,
-and it's built upon a well-known card game, Poker,
+and it's built upon a well-known card game, poker,
 which is likely second in popularity only to UNO.
 There's also a slew of other (indie) card games
 with incredible animations and game feel.
