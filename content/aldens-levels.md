@@ -1,7 +1,7 @@
 +++
 title = "Alden's levels"
 date = 2024-12-26 00:59:13
-updated = 2025-01-07 09:53:41
+updated = 2025-02-16 21:41:18
 +++
 
 We have some solid numbers to compare.
@@ -111,7 +111,7 @@ So much tingling in my bones.
 
 _I want to time travel to more chapters **so bad**._
 
-## Edit: about that meat
+### Edit: about that meat
 
 Ending low intensity after "a year or two"
 doesn't necessarily mean the path of highest intensity,
