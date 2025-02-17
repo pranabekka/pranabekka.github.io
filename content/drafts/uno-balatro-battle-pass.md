@@ -151,7 +151,18 @@ might reveal other options.
 
 ## It doesn't need to be UNO
 
-Someone could launch their own
+Balatro's example could be followed more directly,
+but building a multiplayer poker game instead,
+though poker has a steeper learning curve
+and negative associations ---
+since we don't want people to actually gamble,
+players would bet the coins and cards they get in-game,
+so that there's still a sense of investment in every round.
+
+But it doesn't need to be poker, either.
+It doesn't need to be any pre-existing card game.
+
+People could launch their own
 player-versus-player card game
 if they can keep up with the content demands.
 
@@ -160,12 +171,7 @@ but they could still win big,
 and I'd love that for indie devs.
 
 If you've been noodling on a cool card game design,
-the go make it!
-
-Also, it could also just be poker,
-but you trade in-game coins, cosmetics, and special cards.
-You wouldn't want players to bet real money,
-nor do you want to remove the investment mechanic.
+go make it!
 
 ## Conclusion
 
