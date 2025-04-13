@@ -264,6 +264,10 @@ main img, main video {
 	margin: auto;
 }
 
+img[data-image-type="logo"] {
+	max-width: min(100%, 15rem)
+}
+
 .tablewrapper {
 	overflow-x: scroll;
 }
