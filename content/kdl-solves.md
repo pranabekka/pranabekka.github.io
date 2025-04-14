@@ -97,6 +97,49 @@ servers {
 }
 ```
 
+Neither multi-line comments, nor node comments,
+are present in the others.
+If you wanted to comment out one item on a line,
+you'd first have to break it up into multiple lines.
+
+```
+# before
+yaml: [6, 7, 8, 9, 10]
+
+# after
+yaml:
+	- 6
+	- 7
+	- 8
+	# - 9
+	- 10
+```
+
+```
+# before
+toml = [6, 7, 8, 9, 10]
+
+# after
+toml = [
+	6,
+	7,
+	8,
+	9,
+	# 10,
+]
+```
+
+```
+// before
+kdl 6 7 8 9 10
+
+// after
+kdl 6 7 8 /-9 10
+
+// after (verbose)
+kdl 6 7 8 /*9*/ 10
+```
+
 ## Simple nesting
 
 Nesting structured entries in TOML
