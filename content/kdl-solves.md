@@ -61,38 +61,38 @@ For starters, there's comments.
 
 ```
 // bask in glory, believers
-kdl "has comments"
+kdl has comments
 
 /*
 multiline comments
 */
-kdl /*"doesn't"*/ "have comments"
+kdl has /*no*/ multi-line comments
 ```
 
 In fact, KDL also includes
 syntax for commenting out a single node.
 
 ```
-// `/-` will only comment out `"doesn't"`
-kdl /-"doesn't" "have comments"
+// `/-` will only comment out `no`
+kdl has /-no comments
 
 servers {
 	// uh-oh, banned
 	// `/-` will comment out `north-america { ... }`
 	/-north-america {
-		provider "DataCentre's R Us"
+		provider DataCentre's R Us
 		ip "123:456:789:111"
-		location "Dallas"
+		location Dallas
 	}
 	india {
-		provider "BareMetal Inc."
+		provider BareMetal Inc.
 		ip "123:456:789:111"
-		location "Tiruvanantapuram"
+		location Tiruvanantapuram
 	}
 	armenia {
-		provider "iServer"
+		provider iServer
 		ip "123:456:789:111"
-		location "Tsaghkadzor"
+		location Tsaghkadzor
 	}
 }
 ```
@@ -123,24 +123,24 @@ location = "Tsaghkadzor"
 We already showed this example in KDL,
 which doesn't repeat identifiers when nesting.
 
-{% details(summary="nesting example in KDL") %}
+{% details(summary="Nesting example in KDL.") %}
 ```
 servers {
-	north-america {
-		provider "DataCentre's R Us"
+	// uh-oh, banned
+	/-north-america {
+		provider DataCentre's R Us
 		ip "123:456:789:111"
-		location "Dallas"
+		location Dallas
 	}
 	india {
-		provider "BareMetal Inc."
+		provider BareMetal Inc.
 		ip "123:456:789:111"
-		location "Tiruvanantapuram"
+		location Tiruvanantapuram
 	}
-	// not enough users
-	/-armenia {
-		provider "iServer"
+	armenia {
+		provider iServer
 		ip "123:456:789:111"
-		location "Tsaghkadzor"
+		location Tsaghkadzor
 	}
 }
 ```
@@ -175,15 +175,15 @@ used for marking list items.
 
 ```
 users {
-- { name "Alden Thorn"
+- { name Alden Thorn
 	age 16
-	location "Anesidora" }
-- { name "Rhea Conn"
+	location Anesidora }
+- { name Rhea Conn
 	age 55
 	location Orphaberg }
-- { name "Valtteri Syva"
+- { name Valtteri Syva
 	age 21
-	location "Kelthelis" }
+	location Kelthelis }
 }
 ```
 
@@ -314,12 +314,12 @@ no commas, equal signs, colons, or quotes!
 - Anything starting with `0x`, `0o`, or `0b`
   are literals for hexadecimal, octal, and binary, respectively.
 
-- If it starts with a `#` it's a special value,
+- If it starts with a `#`, it's a special value,
   such as raw strings, `#true`, `#false`, and `#null`.
 
 - If there's quotes, it's a string.
 
-- Items needs to be quoted
+- Items need to be quoted
   if they have one of `[]{}()\/#";=` or spaces,
   or are one of `true`, `false`, `null`, `inf`, `-inf`, or `nan`.
 
@@ -372,33 +372,21 @@ string-colours {
 	blue "0000ff"
 }
 
-type-annotation-colours {
-	red (colour)"ff0000"
-	green (colour)"00ff00"
-	blue (colour)"0000ff"
+typed-colours {
+	red (colour)0xff0000
+	green (colour)0x00ff00
+	blue (colour)0x0000ff
 }
 ```
 
-<!--
-	## arbitrary keys
-
-	you can use any string as an identifier
-
-	```
-	"1e999" value=1
-	```
-
-	TODO: elaborate or remove
--->
-
 ## Try it out
 
-there's a web playground where you can type kdl
+There's a web playground where you can type KDL
 and see the syntax tree for it.
-errors are clearly highlighted,
+Errors are clearly highlighted,
 though you need a mouse to hover and see details.
 
-there's also implementations in several languages.
+There's also implementations in several languages.
 
 [KDL playground](https://kdl.dev/play)
 
