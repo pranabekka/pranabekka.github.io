@@ -327,15 +327,51 @@ Can't observe it on my laptop.
 
 Should support paragraphs, images, code blocks, and nested lists.
 
+Here's the basic styling for lists.
+
 - unordered list item 1
-  - unordered list item one point one 
+  - unordered list item 1.1
 - unordered list item 2
 - unordered list item 3
 
-1. ordered list item one
-   1. ordered list item one point one
-1. ordered list item two
-1. ordered list item three
+1. ordered list item 1
+   1. ordered list item 1.1
+1. ordered list item 2
+1. ordered list item 3
+
+While the default styling has the markers hanging,
+and the list content aligned with normal paragraphs,
+I chose to indent it for clarity and mobile screen margins.
+
+- Clarity:
+
+  If the last item of a list had multiple paragraphs,
+  followed by another paragraph,
+  then the reader would be thrown off
+  because there would be little difference between the two.
+
+- Mobile screen margins:
+
+  Mobile screens have smaller margins,
+  which would cut off the list markers ---
+  especially numbered list markers for long lists.
+
+This paragraph is here as an example
+for my point on clarity.
+If the list weren't indented,
+its paragraphs would look very similar,
+with only a small amount of vertical space
+differentiating list paragraphs from this.
+
+- > Boy howdy
+
+  As you can see, blockquotes are supported.
+
+- As are code blocks.
+
+  ```
+  not strictly code, this
+  ```
 
 ## Blockquote
 
