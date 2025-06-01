@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>bombermoji layout</title>
+</head>
+<body>
+	<div id=grid>
+	</div>
+	<script>
+		// MUST be odd number
+		const emoji = {
+			// tiles
+			rock: "🪨",
+			mushroom: "🍄",
+			wood: "🪵",
+			flag: "🏁",
+			tree: "🌳",
+			// characters
+			frog: "🐸",
+			cat: "🐱",
+			dog: "🐶",
+			pig: "🐷",
+			// misc
+			explosion: "💥",
+		}
+		const gridSize = 25
+		const gridSizeIdx = gridSize - 1
+		const grid = document.getElementById("grid")
+		grid.style.setProperty("--grid-size", gridSize)
+		for (let colIdx = 0; colIdx < gridSize; colIdx++) {
+			for (let rowIdx = 0; rowIdx < gridSize; rowIdx++) {
+				const div = document.createElement("div")
+				div.className = "cell"
+				div.dataset.colIdx = colIdx
+				div.dataset.rowIdx = rowIdx
+				if (
+					// border
+					colIdx == 0
+					|| rowIdx == 0
+					|| colIdx == gridSizeIdx
+					|| rowIdx == gridSizeIdx
+				) {
+					div.innerText = emoji.rock
+				} else if (
+					// solid blocks
+					colIdx % 2 == 0
+					&& rowIdx % 2 == 0
+				) {
+					div.innerText = emoji.rock
+				} else if (
+					// starting corners
+					// top left
+					(colIdx == 1 && rowIdx == 1)
+					|| (colIdx == 1 && rowIdx == 2)
+					|| (colIdx == 2 && rowIdx == 1)
+					// top right
+					|| (colIdx == 1 && rowIdx == gridSizeIdx - 1)
+					|| (colIdx == 1 && rowIdx == gridSizeIdx - 2)
+					|| (colIdx == 2 && rowIdx == gridSizeIdx - 1)
+					// bottom left
+					|| (colIdx == gridSizeIdx - 1 && rowIdx == 1)
+					|| (colIdx == gridSizeIdx - 1 && rowIdx == 2)
+					|| (colIdx == gridSizeIdx - 2 && rowIdx == 1)
+					// bottom right
+					|| (colIdx == gridSizeIdx - 1 && rowIdx == gridSizeIdx - 1)
+					|| (colIdx == gridSizeIdx - 1 && rowIdx == gridSizeIdx - 2)
+					|| (colIdx == gridSizeIdx - 2 && rowIdx == gridSizeIdx - 1)
+				) {
+					div.innerText = emoji.flag
+				} else {
+					// non-blocking tiles: air and explodables
+					const tileWeightedList = [
+						{ weight: 95, tile: emoji.wood },
+						{ weight: 5, tile: " " },
+						// mushroom draws too much attention
+						// and looks like bonus
+						{ weight: 0, tile: emoji.mushroom },
+					]
+					let weightTotal = 0
+					for (const tileWeighted of tileWeightedList) {
+						weightTotal += tileWeighted.weight
+					}
+					let randomNumber = Math.floor(
+						Math.random() * weightTotal
+					)
+					for (const tileWeighted of tileWeightedList) {
+						if (randomNumber < tileWeighted.weight) {
+							div.innerText = tileWeighted.tile
+							break
+						} else {
+							randomNumber -= tileWeighted.weight
+						}
+					}
+				}
+				grid.appendChild(div)
+			}
+		}
+	</script>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			margin: 0;
+			background-color: black;
+		}
+		#grid {
+			--grid-size-default: 10;
+			width: 100vmin;
+			aspect-ratio: 1;
+			display: grid;
+			font-size: calc(
+				(
+					100vmin
+					/* .cell borders (1px two sides x grid-size) */
+					- (2px * (var(--grid-size, var(--grid-size-default))))
+					/* #grid border (1px two sides) */
+					- 2px
+					/* extra space for each .cell */
+					- (
+						(100vmin / (var(--grid-size, var(--grid-size-default))))
+						* 5
+					)
+				)
+				/* divide remaining space */
+				/ (var(--grid-size, var(--grid-size-default)))
+			);
+			grid-template-columns: repeat(var(--grid-size, var(--grid-size-default)), 1fr);
+			grid-template-rows: repeat(var(--grid-size, var(--grid-size-default)), 1fr);
+			border: 1px solid grey;
+			background-color: #3f553f;
+		}
+		.cell {
+			display: flex;
+			aspect-ratio: 1;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid grey;
+		}
+	</style>
+</body>
+</html>
