@@ -298,7 +298,7 @@ Imagine a shell script in a build config:
 }
 ```
 
-This is basically why CI configs started using YAML.
+All the backslashes are why YAML is so popular.
 Here's the KDL equivalent:
 
 ```
