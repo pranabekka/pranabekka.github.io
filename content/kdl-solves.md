@@ -201,14 +201,14 @@ age = 16
 location = "Anesidora"
 
 [[users]]
-name = "Rhea Conn"
-age = 55
-location = "Orphaberg"
+name = "Ardi Egobar"
+age = 18
+location = "Metropolis"
 
 [[users]]
-name = "Valtteri Syva"
-age = 21
-location = "Kelthelis"
+name = "Livara Tär Valtteri"
+age = 30
+location = "Coral Bay"
 ```
 
 It's much simpler in KDL.
@@ -221,12 +221,12 @@ users {
 - { name Alden Thorn
 	age 16
 	location Anesidora }
-- { name Rhea Conn
+- { name Ardi Egobar
 	age 55
-	location Orphaberg }
-- { name Valtteri Syva
-	age 21
-	location Kelthelis }
+	location Metropolis }
+- { name Livara Tär Valtteri
+	age 30
+	location Coral Bay }
 }
 ```
 
