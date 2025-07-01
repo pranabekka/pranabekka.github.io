@@ -49,7 +49,7 @@ let me = find_author(authors, my_name)
 let me = post
 	.parse_metadata()
 	.get_authors()
-	.find_author(my_name)
+	.find_author("Pranab")
 ```
 
 So pass-by-value functions enforce
@@ -72,11 +72,22 @@ One benefit of piping over chaining,
 is that chaining requires methods,
 which requires objects,
 which requires mutation,
-thus laying out a path to sadness.
-Piping only needs functions.
+thus enabling empty return values.
+Piping only needs functions,
+without any mutation of `self`.
 Simple pass-by-value functions.
 And it can be used with any function
 that has the right argument type.
+
+```
+let parse_metadata(post: Post) -> Metadata { ... }
+let get_authors(metadata: Metadata) -> List(Author) { ... }
+let find_author(authors: List(Author), name: String) -> Author { ... }
+let me = post
+	|> parse_metadata()
+	|> get_authors()
+	|> find_author("Pranab")
+```
 
 By the way,
 the question about pipe interfaces,
