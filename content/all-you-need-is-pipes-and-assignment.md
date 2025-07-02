@@ -33,9 +33,22 @@ then it can be mutated in place.
 Tada! No copies, no references, no performance cost,
 and a cleaner language with one obvious way to mutate.
 
+In fact, references have also been lamented by Tony Hoare,
+of "billion-dollar mistake" fame.
+I found an article by without.boats citing this,
+titled "References are like jumps".
+What's funny is that they didn't directly say
+"References considered harmful",
+but comparing them to jump/goto heavily implies that.
+Their article is a much better advocation
+for removing references in high level languages.
+
+[References considered harmful](https://without.boats/blog/references-are-like-jumps/)
+
+Either way,
 I think all new languages should adopt this.
 If your concern is intermediate variables,
-those can also be optimised the same way,
+those can also be optimised the same way I suggested,
 although the nicer way is piping or method chaining,
 with piping as the other feature new languages should adopt.
 
