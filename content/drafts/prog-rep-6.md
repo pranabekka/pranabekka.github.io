@@ -88,6 +88,8 @@ led to tinkering with
 the design of code syntax
 and complicated user interfaces.
 
+[MIT Scratch](https://mit.scratch.edu)
+
 There are a few threads to follow here.
 
 Design, of course, threads through all of this.
@@ -101,6 +103,14 @@ that factors into this whole thing.
 I've learnt a lot about syntax and semantics
 by following articles and discourse
 on programming and its various facets.
+One perspective that's been gaining popularity
+is the idea of consistent and _automatic_ formatting.
+By using automatic formatting,
+users focus on their program
+instead of block positions,
+and the text representation
+doesn't need to store those positions,
+since they're inferred by the block formatter.
 
 Learning about the command line is another thread.
 Piping, composability, and scripting my tasks
@@ -278,3 +288,38 @@ for fruit ["orange" "banana"]
 Now we have a solid foundation
 for building a visual code editor
 that can be used directly alongside text editors.
+
+Here's some future directions to ponder,
+in no particular order of importance or cohesion,
+as I put together posts for them:
+
+* Auto-complete with fuzzy matching.
+
+* Keyboard shortcuts during editing
+  like `"` to begin or end a string block,
+  `[` to start a list,
+  or `Shift + Tab` to de-indent a line.
+
+* Vim inspired normal mode shortcuts
+  for structural editing.
+
+* MIT Scratch as a library/module.
+  LÖVE game framework in a block editor.
+
+  [LÖVE](https://love2d.org)
+
+* Widgets to edit various data types,
+  like colour pickers for colours,
+  calendars for dates,
+  and graphs for co-ordinates.
+
+* Block coding embedded in apps
+  for scripting extensions.
+
+* Package/project manager
+  interoperating with CLI tool.
+
+* REPL and interactive debugger.
+
+* In-editor documentation generated from doc comments
+  and displayed in the block selection panel.
