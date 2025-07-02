@@ -100,7 +100,7 @@ My programming obsession is another thread
 that factors into this whole thing.
 I've learnt a lot about syntax and semantics
 by following articles and discourse
-on programming and adjacent fields.
+on programming and its various facets.
 
 Learning about the command line is another thread.
 Piping, composability, and scripting my tasks
@@ -202,10 +202,10 @@ and turn the brackets into border shapes.
 
 Round brackets for function calls
 become round borders at each end,
-square brackets for lists
+curly brackets for key-value pairs
+become curly borders,
+and square brackets for lists
 become flat borders at the ends,
-and curly brackets for key-value pairs
-become curly borders.
 
 Now, here's an example with nested function calls
 using the Clojure-like text syntax:
@@ -274,3 +274,7 @@ for fruit ["orange" "banana"]
 ```
 
 ![Block representation of above code](/prog-rep-blocks-unbracketed.svg)
+
+Now we have a solid foundation
+for building a visual code editor
+that can be used directly alongside text editors.
