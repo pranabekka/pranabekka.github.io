@@ -62,8 +62,8 @@ provide first-class visual programming
 and _collaboration_ with text programmers.
 
 The rest of this post describes
-how I arrived at these two
-interconnected representations.
+how I arrived at these two interconnected representations,
+and ends with a brief list of possible enhancements.
 
 ## Motivation
 
@@ -291,7 +291,7 @@ that can be used directly alongside text editors.
 
 Here's some future directions to ponder,
 in no particular order of importance or cohesion,
-as I put together posts for them:
+as I put together posts and designs for them:
 
 * Auto-complete with fuzzy matching.
 
@@ -300,8 +300,7 @@ as I put together posts for them:
   `[` to start a list,
   or `Shift + Tab` to de-indent a line.
 
-* Vim inspired normal mode shortcuts
-  for structural editing.
+* Vim inspired normal mode shortcuts.
 
 * MIT Scratch as a library/module.
   LÖVE game framework in a block editor.
@@ -313,8 +312,9 @@ as I put together posts for them:
   calendars for dates,
   and graphs for co-ordinates.
 
-* Block coding embedded in apps
-  for scripting extensions.
+* Integration with other scripting environments,
+  like spreadsheets and interactive notebooks,
+  or browser and office suite extensions/plugins.
 
 * Package/project manager
   interoperating with CLI tool.
