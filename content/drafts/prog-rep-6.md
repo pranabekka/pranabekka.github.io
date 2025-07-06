@@ -203,6 +203,8 @@ The cool thing about this is that core language constructs,
 like variable declarations, `if` statements, and `for` loops,
 all use the same syntax rules,
 so users and visual editors can easily translate them.
+We only need to learn one syntax construct for everything,
+instead of remembering all the keywords and brackets.
 
 To turn them into blocks,
 we simply sprinkle in some icons
@@ -235,6 +237,11 @@ The cut edges look odd and complicated for other themes,
 and even though the unsightly hanging edges can be fixed
 with typical S-expression formatting,
 there's a neater solution to both with low cost.
+We could stop here,
+but S-expressions seem to turn off a lot of people,
+and I've seen beginners do horrifying things with brackets.
+Anyway, on to the low cost solution.
+
 This is what I'd like the blocks to look like:
 
 ![Block representation of above code](/prog-rep-blocks-indented.svg)
