@@ -2,7 +2,7 @@
 title = "Program representation (6)"
 ## remember to change date on publishing
 date = 2025-07-02 12:27:46 # draft date
-updated = 2025-07-02 12:27:46
+updated = 2025-07-06 12:18:35
 +++
 
 Visual programming is _so close_ to text programming.
@@ -296,9 +296,31 @@ Now we have a solid foundation
 for building a visual code editor
 that can be used directly alongside text editors.
 
-Here's some future directions to ponder,
-in no particular order of importance or cohesion,
-as I put together posts and designs for them:
+Here's some future directions to ponder
+as I put together posts and designs for them,
+in rough order of importance for beginners:
+
+* Widgets to edit various data types,
+  like colour pickers for colours,
+  calendars for dates,
+  and graphs for co-ordinates.
+
+* MIT Scratch as a library/module.
+  LÖVE, the game framework, in a block editor.
+
+  [LÖVE](https://love2d.org)
+
+* Integration with other scripting environments,
+  like spreadsheets and interactive notebooks,
+  or browser and office suite extensions/plugins.
+
+* REPL and interactive debugger.
+
+* In-editor documentation generated from doc comments
+  and displayed in the block selection panel.
+
+* Package/project manager
+  interoperating with CLI tool.
 
 * Auto-complete with fuzzy matching.
 
@@ -308,25 +330,3 @@ as I put together posts and designs for them:
   or `Shift + Tab` to de-indent a line.
 
 * Vim inspired normal mode shortcuts.
-
-* MIT Scratch as a library/module.
-  LÖVE game framework in a block editor.
-
-  [LÖVE](https://love2d.org)
-
-* Widgets to edit various data types,
-  like colour pickers for colours,
-  calendars for dates,
-  and graphs for co-ordinates.
-
-* Integration with other scripting environments,
-  like spreadsheets and interactive notebooks,
-  or browser and office suite extensions/plugins.
-
-* Package/project manager
-  interoperating with CLI tool.
-
-* REPL and interactive debugger.
-
-* In-editor documentation generated from doc comments
-  and displayed in the block selection panel.
