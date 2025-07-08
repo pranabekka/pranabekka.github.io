@@ -65,85 +65,67 @@ The rest of this post describes
 how I arrived at these two interconnected representations,
 and ends with a brief list of possible enhancements.
 
-## Motivation
+## The pieces
 
-<!--
-	TODO: is this too grand and verbose?
-	feels like i'm giving an interview or something.
-	it does explain motivation and importance
-	as well as important references/inspiration
-	but maybe it could be refined
--->
+Using the CLI was my first taste of "real programming" ---
+things of utility instead of games in Scratch
+or guided tutorials in "proper" languages.
+I was able to automate in minutes
+what might take me an hour or more of manual work.
+When I first learnt the CLI,
+I remember thinking it was the superior interface,
+but slowly accepting the world would never adopt it,
+because it does have several issues.
+Yet this idea of everyday scripting has haunted me.
 
-I used MIT Scratch a lot as a kid,
-stopping a bit after the 2.0 release,
-but I've never really had a particular
-fascination with visual programming.
-Instead, I think this is a confluence
-of my obsession with programming,
-my education and interest in design,
-and my love for lisps.
-My approach and history with these
-led to tinkering with
-the design of code syntax
-and complicated user interfaces.
+I see small opportunities for little scripts all the time,
+where I might see someone manually filtering some data
+then using an ad-ridden website to pick randomly.
+I wonder, if they had the right building blocks,
+could they write a simple script?
+What about renaming a bunch of files?
 
-[MIT Scratch](https://mit.scratch.edu)
+I see some of this potential in Scratch.
+Scratch provides structural editing,
+where users don't mess with syntax bits
+like brackets, commas, and semi-colons.
+Instead, they focus on their program.
+It's a great way to learn programming.
 
-There are a few threads to follow here.
+What finally helped start this project
+was my fascination with S-expressions.
+It's a bit like CLI syntax,
+but with more brackets and expressive names.
+Similar to what I showed in the first example,
+a `for` loop is a special type of command
+that uses the same syntax rules as functions.
+Clojure's evolved S-expressions
+to include square and curly brackets,
+adopted from C-style syntaxes for lists and maps,
+which helped make S-expressions clearer,
+as it becomes easy to see the difference
+between function calls, lists, and maps.
 
-Design, of course, threads through all of this.
-There are some principles and heuristics
-that apply almost universally,
-and study and practice often leads to them
-as you pick up specific uses and examples.
+The rise of auto-formatting is the final piece.
+For some time, I was stuck on
+"How do you encode the positions of blocks in text?"
+Do you litter it with comments of co-ordinates?
+The answer is you don't!
+If we lay the blocks out automatically,
+we focus on the structure of the program,
+similar to writing markup to represent
+the structure of our writing instead of its presentation.
+Deriving presentation from structure
+is key for implementing usable visual programming
+that seamlessly interoperates with text.
 
-My programming obsession is another thread
-that factors into this whole thing.
-I've learnt a lot about syntax and semantics
-by following articles and discourse
-on programming and its various facets.
-One perspective that's been gaining popularity
-is the idea of consistent and _automatic_ formatting.
-By using automatic formatting,
-users focus on their program
-instead of block positions,
-and the text representation
-doesn't need to store those positions,
-since they're inferred by the block formatter.
+## Assembly
 
-Learning about the command line is another thread.
-Piping, composability, and scripting my tasks
-was incredible when I learnt it all those years ago.
-I still use the terminal for any task
-that isn't inherently graphical,
-but I recognise that shells are complex
-and require significant investment
-that most people aren't willing to make.
-Despite that, this thought about scripting
-has haunted me for several years,
-spurring me on towards identifying problems
-and sketching or jotting down potential solutions.
-
-The final thread that helped bring this together
-is learning about lisps and S-expressions.
-Even though I don't use any lisps,
-the consistency of S-expressions really speaks to me,
-and I follow along with developments in the lisp world.
-
-Over the years, all these things brewed in my mind,
-and I've slowly refined my understanding
-as I went through articles and videos.
-
-## Execution
-
-The start of a syntax with easy translation
+The start of a syntax with easy translation,
+for the program drawing blocks
+and the user reading blocks, or text,
 is a syntax that is consistent.
-Clojure's evolution of S-expressions
-borrows its consistency,
-while adding distinction between
-the three structural elements
-present in most syntaxes.
+Here are the basic rules for Clojure's syntax:
 
 * Spaces separate keywords and brackets group them
 
