@@ -37,6 +37,7 @@ greet name
 The key feature is that the visual representation
 is backed by the text representation
 _stored in a plain text file_.
+
 You can version control this file,
 edit it with text code editors,
 `grep` and `cat` the file,
