@@ -5,7 +5,7 @@ date = 2025-07-31 20:01:04 # draft date
 updated = 2025-09-07 17:32:51
 +++
 
-Looping is just functions repeating themselves!
+It's just functions repeating themselves!
 
 If you're used to special statements for looping,
 it can be confusing to learn that Gleam just uses functions,
