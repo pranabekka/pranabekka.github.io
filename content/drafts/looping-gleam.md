@@ -20,21 +20,10 @@ and the language is tiny yet powerful.
 
 [Gleam website](https://gleam.run/)
 
-## Getting help
-
-If at any point you feel stuck,
-join the Gleam Discord!
-
-[Gleam Discord](https://discord.gg/Fm8Pwmy)
-
-The community can help you out
-with just about any problem you have.
-Just make sure to try and understand what has you stuck
-instead of having other people do the thinking for you.
-I've found a good way is to write down
-what I understand and what questions I have.
-
 ## Repeating things
+
+Why do we "loop"?
+When we want to repeat things.
 
 Say you were greeting the world:
 
@@ -63,24 +52,38 @@ Well, we just call the function again
 at the end of the function:
 
 ```
-fn greet_loop() {
+fn greet_repeat() {
 	io.println("Hello, World")
-	greet_loop()
+	greet_repeat()
 }
 ```
 
 It might seem absurd, but it's honestly that simple.
 Almost.
 
-## Simple "recursion"
+## On "recursion"
 
-> Recursion: To recur.
-> 
-> Recur: Re-occur. Occur again. Repeat.
+As a brief aside,
+this form of looping is called "recursion".
 
-The problem with the function just calling itself
-is that it will never stop,
-so we need to figure out when to stop.
+"Recursion" comes from "recur",
+which means "re-occur", or "repeat".
+
+We don't call it "looping"
+because that's come to mean
+things like the `for` keyword.
+
+We don't call it "repetition" because...
+it's too basic? I don't know!
+
+Anyway, let's continue!
+
+## Better repetition
+
+While repeating is good, our last function,
+`greet_repeat`, will repeat forever.
+
+We need to figure out when to stop.
 In this case, we stop after a given number of times.
 To check how many times we've repeated,
 we give the function a `count` number
@@ -120,10 +123,6 @@ Here's how it'll progress if we use `greet(4)`:
 - Repeat `greet` as `greet(1 - 1)`
 - `count < 1` is `True`
 - Stop repeating
-
-We call this recursion because
-"looping" has come to mean
-things like the `for` keyword.
 
 ## `for` loops and function loops
 
@@ -480,7 +479,7 @@ int.sum([71, 100, 43, 85, 66])
 
 ## Bonus `for` _function_
 
-There's not much use for it
+There's basically no use for it
 and it's a smidge longer,
 but you could write a `for` function
 that looks very similar to the statement.
@@ -515,21 +514,28 @@ Can you see how it's put together?
 
 I hope all that made sense.
 
-Looping is repeating a function,
-which is just calling the function again,
-with a check for when to stop repeating.
+- Looping is repeating a function,
+  which is just calling the function again,
+  with a check for when to stop repeating.
+  This is called "recursion".
 
-If you don't have questions:
+- Sometimes, we need to optimise them
+  by collecting data in a variable.
+  This takes advantage of tail-call optimisation.
 
-```
-gleam new helloworld_helloworld_helloworld_helloworld
-```
+- The standard library includes functions
+  to do your looping for you.
+  Go through them when you have a problem.
+
+If you have more questions about recursion,
+join the Gleam community on Discord or Github discussions!
+If you'd like to investigate by yourself,
+you can start at the Gleam website.
+
+Have fun!
+
+[Gleam Discord](https://discord.gg/Fm8Pwmy)
+
+[Gleam discussions on Github](https://github.com/gleam-lang/gleam/discussions)
 
 [Gleam website](https://gleam.run)
-
-Also, recursion is awesome in all functional languages.
-What's a functional language?
-It's a language that makes sure
-data stays stable and constant ("immutable").
-This includes Elixir and F# amongst the new crop,
-and Erlang and Haskell amongst the older complex ones.
