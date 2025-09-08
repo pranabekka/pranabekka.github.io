@@ -2,7 +2,7 @@
 title = "Looping in Gleam"
 ## remember to change date on publishing
 date = 2025-07-31 20:01:04 # draft date
-updated = 2025-09-07 17:32:51
+updated = 2025-09-09 00:33:34
 +++
 
 It's just functions repeating themselves!
