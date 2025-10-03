@@ -3,7 +3,9 @@ base_url = "https://pranabekka.github.io"
 title = "Pranab's site"
 
 # used in index.html template as well as feed
-description = "Where I share my thoughts, ideas, projects, and (mis)information."
+description = """
+Misinformation, misadventures, misdeeds and wild opinions.
+"""
 
 compile_sass = true
 
