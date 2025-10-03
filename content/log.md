@@ -1,7 +1,7 @@
 +++
 title = "Log"
 date = 2024-06-24 15:52:46
-updated = 2025-10-03 20:57:24
+updated = 2025-10-04 01:11:28
 +++
 
 Where I add short thoughts, TODO items, links, etc.,
@@ -57,8 +57,9 @@ but in the meantime:
   Especially if we're using ORMs,
   but also if our project is something small.
   I just don't know of a good NoSQL database.
-  Something like SQLite meets MongoDB, but not JSON.
-  Maybe a binary format, or a text format using KDL.
+  Something like SQLite meets MongoDB.
+  Maybe a binary format,
+  I don't mind a text format like KDL.
 
   Oh, CUE is a really interesting option!
   It's like JSON with less typing, adding rules,
