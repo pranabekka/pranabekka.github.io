@@ -1,7 +1,7 @@
 +++
 title = "Log"
 date = 2024-06-24 15:52:46
-updated = 2024-09-21 09:35:22
+updated = 2025-10-03 20:57:24
 +++
 
 Where I add short thoughts, TODO items, links, etc.,
@@ -17,6 +17,68 @@ or Sara Joy's "Weak Notes".
 (warning: bright white page)
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
+
+## 2025-10-03
+
+Oh, hello there.
+
+I keep thinking of this page,
+but I never get around to it.
+Part of it is because I only edit this at my laptop,
+and this is mostly a place for short or idle thoughts
+which don't seem worth the effort.
+
+I'm also working on a few big things,
+trying to get them just right,
+but in the meantime:
+
+- Objects are a bad patch over poor type systems.
+
+  Encapsulation is done by modules.
+  So they might be patching poor module systems as well.
+
+  Multiple inheritance is reviled.
+
+  Inheritance trees are just variants.
+
+  Types associate functions with data.
+  And as I said, modules to separate them.
+
+  Types are just one additional concept,
+  while objects mean classes, methods,
+  private fields, private methods, inherited methods,
+  and more.
+
+  What do you think?
+
+- Something mildly inappropriate
+
+- We don't need SQL for most projects.
+  Especially if we're using ORMs,
+  but also if our project is something small.
+  I just don't know of a good NoSQL database.
+  Something like SQLite meets MongoDB, but not JSON.
+  Maybe a binary format, or a text format using KDL.
+
+  Oh, CUE is a really interesting option!
+  It's like JSON with less typing, adding rules,
+  generating repeated parts, and more.
+
+  [KDL](https://kdl.dev)
+
+  [CUE introduction](https://cuetorials.com/introduction/)
+
+- I was thinking of having individual log posts,
+  with a page aggregating them all like this.
+
+  I wouldn't be editing the same post again and again,
+  possibly forgetting to update the data.
+
+  New updates would show up on the home page,
+  labelled something like "Log 2025-10-03"
+  to indicate the kind of post it is.
+
+Enjoy my braindump :)
 
 ## 2024-09-21
 
