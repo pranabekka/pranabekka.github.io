@@ -5,7 +5,7 @@ updated = 2024-01-04 18:46:51
 +++
 
 A brief introduction to me and the site,
-including tips on how to use it (the site, not me ;).
+including tips on how to use it (the site, not me).
 
 ## About Me
 
