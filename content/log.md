@@ -1,7 +1,7 @@
 +++
 title = "Log"
 date = 2024-06-24 15:52:46
-updated = 2025-10-04 01:11:28
+updated = 2025-10-04 20:52:26
 +++
 
 Where I add short thoughts, TODO items, links, etc.,
@@ -17,6 +17,30 @@ or Sara Joy's "Weak Notes".
 (warning: bright white page)
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
+
+## 2025-10-04 Not corrections
+
+Huh, I thought I'd put up some nonsense about the NoSQL stuff.
+I didn't. There's nothing strictly wrong there.
+
+The only thing to add is that the general requirements
+might be immediately fulfilled by
+an embedded document database (engine?).
+Maybe an embedded _graph_ database?
+
+The other option, going the plain text route,
+is to pick a "configuration and policy" language,
+like CUE, KCL, Nickel, Dhall, etc.
+
+I also realised that application code
+ideally checks the data before storing it,
+so it could use the same checks to import it,
+instead of reimplementing types in the database.
+So it makes some sense for SQLite to be "untyped".
+
+Anyway, I can't comment on a specific pick.
+I'll get around to it when I actually need it ---
+spend an innovation token.
 
 ## 2025-10-03
 
