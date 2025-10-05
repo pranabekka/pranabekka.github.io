@@ -7,17 +7,32 @@ updated = 2025-09-26 01:42:16
 
 How do we loop without `for` and `while`?
 
-**TODO**: look for sections catering towards
-people who don't know the language
-and remove them
-they can pick it up by skimming if they really want
-or they could visit the website
-
 If you're used to those statements for looping,
 it can be confusing to learn that Gleam uses functions,
 but it's honestly quite simple.
 
 [Gleam](https://gleam.run)
+
+The form of looping I'm going to describe
+is called "recursion" in Gleam
+as well as other functional languages.
+If you were expected a tutorial on recursion in Gleam,
+you're in the right place
+(assuming I explained it well).
+
+## On "recursion"
+
+"Recursion" comes from "recur",
+which means "re-occur", or "repeat".
+
+We don't call it "looping"
+because it's meaning has changed, in programming,
+to the `for` keyword.
+
+We don't call it "repetition" because...
+mathematicians and other academics, probably?
+
+Anyway, let's get into it!
 
 ## Repeating things
 
@@ -59,27 +74,17 @@ fn greet_repeat() {
 It might seem absurd, but it's honestly that simple.
 Almost.
 
-## On "recursion"
+## Limiting repetition
 
-As a brief aside,
-this form of looping is called "recursion".
+While repeating is good,
+our last function will repeat forever:
 
-"Recursion" comes from "recur",
-which means "re-occur", or "repeat".
-
-We don't call it "looping"
-because that's come to mean
-things like the `for` keyword.
-
-We don't call it "repetition" because...
-mathematicians and other academics, probably?
-
-Anyway, let's continue!
-
-## Better repetition
-
-While repeating is good, our last function,
-`greet_repeat`, will repeat forever.
+```
+fn greet_repeat() {
+	io.println("Hello, World")
+	greet_repeat()
+}
+```
 
 We need to figure out when to stop
 and what to do at that point,
@@ -87,12 +92,6 @@ which is called a "base case".
 
 In this instance, our base case is
 when we've looped a given number of times.
-To do this, we give the function a `count` variable
-and count down till 0.
-As long as the count isn't 0,
-we perform the main body of our loop,
-but if it reaches 0 or below, we stop.
-
 Here's what it looks like:
 
 ```
@@ -106,6 +105,12 @@ fn greet(count) {
 	}
 }
 ```
+
+We give the function a `count` variable to start from.
+If `count` is less than 1, it stops.
+If `count` is 1 or higher,
+it greets the world and then starts again
+with `count` reduced by 1.
 
 Here's how it'll progress if we use `greet(4)`:
 
@@ -155,7 +160,7 @@ fn greet(count) {
 }
 ```
 
-It's actually present in most languages,
+Recursion is actually present in most languages,
 but rarely used or advertised
 because it doesn't fit well in those languages.
 
@@ -234,10 +239,8 @@ the longer "recursive" functions.
   instead of learning two or more looping constructs.
   The language is smaller and easier to understand.
 
-3. The modules for various types provide
-  useful looping functions with documentation,
-  such as the `list`, `dict` and `string` modules
-  from the standard library.
+3. Common looping patterns are available as functions,
+  with documentation in the relevant library.
 
 4. When you need to write a loop manually,
   you naturally get a simple reusable function.
@@ -247,193 +250,137 @@ the longer "recursive" functions.
   `for` loops require that you declare a variable
   outside the loop and change it from inside the loop.
 
-## Advanced recursion
+## Recursion results
 
-Even though you can usually
-use an existing function for looping,
-and recursion is otherwise quite simple,
-there are some cases where a basic solution
-might slow down or even crash the program.
+<!--
+Not explaining tco at all.
+Is there any reason to get into that instead?
+Or will this explanation carry them through?
+-->
 
-Take, for example, getting somebody's total score:
+The functions I've described so far only return `Nil`.
+If you need to construct and return values,
+then these functions won't do.
+
+The best way to construct values is to use an "accumulator".
+We use it to collect results from each step
+and pass it along to the next.
+
+For example, let's take a function
+that adds up a list of scores.
+
+```
+fn total_score(scores: List(Int), current_total: Int) -> Int {
+	case scores {
+		[] -> current_total
+		[first, ..rest] -> {
+			total_score(rest, first + current_total)
+		}
+	}
+}
+```
+
+Do you understand how this works?
+
+If the list of scores is empty,
+then there are no scores left to process,
+so we return the total that we've calculated so far.
+If there are any scores left to process,
+we add the first one to the current total,
+and then call the function again
+to process the rest of the scores.
+
+Here's how using it might look like:
+
+```
+total_score(
+	[71, 100, 43, 85, 66],
+	0
+)
+```
+
+- current total is `0`
+- `scores` is not empty
+- `first` is `71`, `rest` is `[100, 43, 85, 66]`
+- recurse with `rest` and `71 + 0`
+	- current total is `71`
+	- `scores` is not empty
+	- `first` is `100`, `rest` is `[43, 85, 66]`
+	- recurse with `rest` and `100 + 71`
+		- current total is `171`
+		- `scores` is not empty
+		- `first` is `43`, `rest` is `[85, 66]`
+		- recurse with `rest` and `43 + 171`
+			- current total is `214`
+			- `scores` is not empty
+			- `first` is `85`, `rest` is `[66]`
+			- recurse with `rest` and `85 + 214`
+				- current total is `299`
+				- `scores` is not empty
+				- `first` is `66`, `rest` is `[]`
+				- recurse with `rest` and `85 + 171`
+					- current total is `365`
+					- `scores` is empty
+					- return `365`
+				- return `365`
+			- return `365`
+		- return `365`
+	- return `365`
+- return `365`
+
+## Nicer recursion results
+
+There is one issue with this.
+We need to type out 0 every time,
+even though it's the only value.
+
+```
+total_score(game_scores, 0)
+total_score(exam_scores, 0)
+total_score(football_scores, 0)
+total_score(dancing_scores, 0)
+```
+
+It's not too bad here,
+but what if someone accidentally put a 10 there?
+Computers should do this repetitive work for us.
+
+What we do instead is create a separate function
+that calls the main function with the starting value.
 
 ```
 fn total_score(scores) {
-	case scores {
-		[] -> 0
-		[score, ..rest] -> {
-			score + total_score(rest)
-		}
-	}
-}
-```
-
-If there are any scores left,
-it calls a function with the remaining input,
-and then it adds it to the current one.
-Every time it does this,
-it needs to save the current progress of the function,
-then call the next function,
-which will do the same,
-before finally getting the result
-and resuming the function.
-This is quite inefficient,
-and can cause crashes if repeating too often.
-
-Say, for example, I used it like so:
-
-```
-total_score([71, 100, 43, 85, 66])
-```
-
-Here's how it would work:
-
-1. Score is 71, rest is `[100, 43, 85, 66]`
-	1. Score is 100, rest is `[43, 85, 66]`
-		1. Score is 43, rest is `[85, 66]`
-			1. Score is 85, rest is `[66]`
-				1. Score is 66, rest is `[]`
-					1. List is empty
-					2. Return 0
-				2. Receive 0 for rest
-				3. Add score 66 to 0
-				4. Return 66
-			2. Receive 66 for rest
-			3. Add score 85 to 66
-			4. Return 151
-		2. Receive 151 for rest
-		3. Add score 43 to 151
-		4. Return 194
-	2. Receive 194 for rest
-	3. Add score 100 to 194
-	4. Return 294
-2. Receive 294 for rest
-3. Add score 71 to 294
-4. Return 365
-
-At each stage, the outer function has to wait
-for the function that was called inside it,
-and then it adds the result to another number,
-before it returns its own result.
-It doesn't have much of an impact with just 5 scores,
-but imagine several years of scores,
-or scores for a few hundred or thousand people.
-Your computer will run out of space
-and shut down your app in the best case,
-or shut down everything in the worst case.
-
-What you need to watch out for
-is that the function is doing extra work at the end.
-In this case, it needs to add things before returning.
-
-If we remove that extra work,
-then the inner function can return its result
-all the way up and skip all the functions in between.
-
-We do that by collecting the result of each call,
-and directly return the result at the end,
-instead of having to add it in each function.
-
-In this case, we collect the latest result
-in `current_total`.
-When we reach the end of the list,
-we know that the `current_total` is the final result,
-so we return it directly.
-
-```
-fn total_score_loop(scores, current_total) {
-	case scores {
-		[] -> current_total
-		[score, ..rest] -> {
-			total_score_loop(rest, score + current_total)
-		}
-	}
-}
-```
-
-Here, the function finishes everything it needs to do
-before it calls the next function to continue the work.
-
-Let's call it with the same data:
-
-```
-total_score_loop([71, 100, 43, 85, 66], 0)
-```
-
-1. Current total is 0, Score is 71, rest is `[100, 43, 85, 66]`
-2. Score of 71 + current total of 0 is equal to 71
-	1. Current total is 71, score is 100, rest is `[43, 85, 66]`
-	2. Score of 100 + current total of 71 is equal to 171
-		1. Current total is 171, score is 43, rest is `[85, 66]`
-		2. Score of 43 + current total of 171 is equal to 214
-			1. Current total is 214, score is 85, rest is `[66]`
-			2. Score of 85 + current total of 214 is equal to 299
-				1. Current total is 299, score is 66, rest is `[]`
-				2. Score of 66 + current total of 299 is equal to 365
-					1. Current total is 365
-					2. Scores is empty
-					3. Return 365
-				3. Receive 365
-				4. Return 365
-			3. Receive 365
-			4. Return 365
-		3. Receive 365
-		4. Return 365
-	3. Receive 365
-	4. Return 365
-3. Receive 365
-4. Return 365
-
-Notice how the functions receive the final result
-and just return 365 again and again?
-Gleam eliminates that in-between receiving and returning,
-and returns the final result directly:
-
-1. Current total is 0, Score is 71, rest is `[100, 43, 85, 66]`
-2. Score of 71 + current total of 0 is equal to 71
-	1. Current total is 71, score is 100, rest is `[43, 85, 66]`
-	2. Score of 100 + current total of 71 is equal to 171
-		1. Current total is 171, score is 43, rest is `[85, 66]`
-		2. Score of 43 + current total of 171 is equal to 214
-			1. Current total is 214, score is 85, rest is `[66]`
-			2. Score of 85 + current total of 214 is equal to 299
-				1. Current total is 299, score is 66, rest is `[]`
-				2. Score of 66 + current total of 299 is equal to 365
-					1. Current total is 365
-					2. Scores is empty
-					3. Return 365
-
-This is called tail-call optimisation,
-because you put the repeating function call
-at the end, or tail, of the function.
-This means there's nothing else to do,
-and it can return directly all the way up.
-
-## Nicer advanced recursion
-
-There is one issue with this.
-When we first start the loop,
-we need to pass in a useless starting value of 0.
-
-What we do instead is hide `total_score_loop` in a module,
-and call it from a nicer public function:
-
-```
-// this function is `pub` --- usable by others
-pub fn total_score(scores) {
 	total_score_loop(scores, 0)
 //                           ^ hidden starting value
 }
 ```
 
+Now we no longer need to supply a starting value
+to every accumulator function we use.
+
+**TODO**: mention accumulator a few more times
+to keep it in the reader's memory
+
+```
+total_score(game_scores)
+total_score(exam_scores)
+total_score(football_scores)
+total_score(dancing_scores)
+```
+
+## Results from `for`
+
 This is also very similar to
 another common `for` loop pattern:
 
 ```
-let current_total = 0
-//  ^ collector     ^ starting value
-for (score in scores) {
-	current_total = score + current_total
+function total_scores(scores) {
+	let current_total = 0
+	//  ^ collector     ^ starting value
+	for (score in scores) {
+		current_total = score + current_total
+	}
+	return current_total
 }
 ```
 
@@ -459,6 +406,7 @@ In the `for` loop,
 `current_total` isn't guaranteed to remain constant
 after the loop is done with it,
 because we needed to change it in the `for` loop.
+
 ## Bonus `for` _function_
 
 There's basically no use for it
@@ -495,35 +443,46 @@ Can you see how it's put together?
 The reason it has limited use
 is because it can only do things like IO,
 since Gleam doesn't allow you to mutate variables.
-It doesn't have statements or functions like
+Gleam doesn't have statements or functions like
 `my_num = my_num + 1` or `my_list[i] = i`.
 
 ## Recursion recap
 
 I hope all that made sense.
 
+- The style of looping in Gleam is called "recursion".
+
 - Looping is repeating a function,
   which is just calling the function again,
   with a check for when to stop repeating.
 
-  - This style of looping is called "recursion".
-
   - The check for when to stop and what to do then
     is called the "base case".
 
-- Sometimes, we need to optimise a recursive function
-  by collecting calculations in a variable
-  and passing it along to the repeated function.
+- To return a result from a loop,
+  we add an extra argument to collect that result.
 
-  - Such a function is "tail-call optimised"
-    because it takes advantage of tail-call optimisation.
+	- We generally refer to this extra argument
+	  as the "accumulator".
+
+	- To avoid providing an empty accumulator every time,
+	  we create an extra function that calls the main one.
 
 At this point, you should go and try out Gleam.
+
 It might be a good idea to write a few loops.
 Maybe figure out how to do the ones I showed
 without actually looking back at them.
-After that you should have a look at the standard library,
-which includes several useful looping functions.
+
+**TODO**: suggest some exercises
+
+If you have Gleam installed and in front of you:
+
+```
+gleam new looping
+```
+
+If you don't have Gleam, try the playground:
 
 [Gleam online playground](https://playground.gleam.run)
 
@@ -534,6 +493,12 @@ or read onwards for common patterns.
 [Gleam Discord](https://discord.gg/Fm8Pwmy)
 
 [Gleam discussions on Github](https://github.com/gleam-lang/gleam/discussions)
+
+Once you've tried writing a few recursive functions,
+you should have a look at the standard library,
+which includes several useful looping functions.
+I've described some of them below,
+along with a few extra patterns.
 
 ## Looping patterns
 
@@ -548,3 +513,41 @@ list.take
 
 int.sum
 from list.map over score records
+
+list update, as i need in connect 4
+manual recursion
+or actually, can this be done with fold? accumulator?
+can fold update the previous item?
+feels like an abuse of fold at that point
+if i collect anything and everything
+fn fold_body(acc: #(prev?, List(Cell)), cur: Cell) -> Row { }
+i hain't sure
+
+## Anti-pattern (sort-of)
+
+The tutorial so far has taught you
+the "correct" ways of looping,
+so you will likely never need to know more.
+
+If you think the following function makes little sense,
+then you should be safe and return to your projects.
+
+```
+```
+
+While it's not strictly an anti-pattern,
+it's bad for performance with large sets of data,
+and can even crash your program in extreme cases.
+
+If that function appeals to you,
+you should read on before you try using that pattern.
+You can also read on if you want to know more.
+Just be aware that the explanation is long.
+
+### Memory usage
+
+... explanation without mention of tco, stacks ...
+
+### Tail-Call Optimisation and Stack Frames
+
+... naming tco and stack frames, with a little explanation ...
