@@ -1,7 +1,7 @@
 +++
 title = "Log"
 date = 2024-06-24 15:52:46
-updated = 2025-10-04 20:52:26
+updated = 2025-10-05 20:35:18
 +++
 
 Where I add short thoughts, TODO items, links, etc.,
@@ -17,6 +17,26 @@ or Sara Joy's "Weak Notes".
 (warning: bright white page)
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
+
+## 2025-10-05 Accumulator functions
+
+I think we can teach functional programming
+without teaching tail-call optimisation.
+
+Functions that return nothing are optimised,
+because there's nothing to be done with the return value.
+
+Functions that need to return something
+use an accumulator for tail-call optimisation.
+
+Accumulators encourage function designs
+that are tail-call optimised,
+the same way functional languages
+encourage program designs that are
+optimised for modularity and composability.
+
+So we can teach accumulation instead
+and keep tail-call optimisation as an advanced topic.
 
 ## 2025-10-04 Not corrections
 
