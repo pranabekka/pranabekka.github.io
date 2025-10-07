@@ -5,7 +5,7 @@ date = 2025-10-04 22:10:16 # draft date
 updated = 2025-10-04 22:10:16
 +++
 
-YAML?! Say NAY!
+YAML!??? Say NAY!
 
 NAY borrows from YAML, KDL,
 and better significant whitespace design.
@@ -32,7 +32,7 @@ Full name: NAY Ain't YAML
 
 Description: "
 	A format for structured data
-	that's easy to read, write, and maintain.
+	that's easy to read, write and maintain.
 
 Comparisons:
 	*	Language: YAML
@@ -114,14 +114,16 @@ The spacing for `key2.1` is now uneven,
 which gets weirder with different tab widths,
 and the user must manually type in spaces.
 
-To make the list marker more obvious,
-we chose a symbol that takes up more space.
+The list marker is an asterisk,
+because it occupies more space in the cell
+and has more visual weight,
+which matters more when it has more space around it.
 
 ```
 -	A hyphen is less visible
 *	An asterisk is more visible,
 	which matters when the marker is stranded
-	in the middle of large empty spaces.
+	in the middle of empty space.
 ```
 
 ## That string syntax
@@ -129,15 +131,16 @@ we chose a symbol that takes up more space.
 Strings are usually unquoted.
 If you want to put a string value on a line by itself,
 maybe even on multiple lines,
-you must indicate that with the a double quote (`"`).
-Lines with more indentation are part of the string.
+you must indicate that with a double quote (`"`).
+Lines with more indentation become part of the string.
 
 ```
->	"
+*	"
 	This is a string
 a string: "
 	This is also a string,
 	although it spans multiple lines.
+same output: This is also a string, although it spans multiple lines
 ```
 
 Line-breaks are turned into spaces.
@@ -156,10 +159,15 @@ For that you must use `\"` or `#\"`,
 where the one with `#` preserves line-breaks.
 
 ```
-escapes and preserved line-breaks: #\"
-	\t\t\n\u{0F}
-	\u{1F600}
+// Same output as previous example
+backslash escapes: #\"
+	This is on the first line\nThis is on the second line
+	There will be a line break between these three
 ```
+
+Quotation marks within the content
+do not close the string.
+Only indentation less than the content closes the string.
 
 ## YAML misfeatures
 
@@ -167,24 +175,28 @@ Directives, anchors, aliases, objects, niche types,
 tags, url imports and verbose documentation.
 
 These features add a lot of complexity and ambiguity
-that give the user tools to cause catastrophes
+that give users tools to cause catastrophes
 without really helping them write their content.
 
-Such advanced features should use less ambiguous syntax,
+Such advanced features should use less ambiguous syntax
+and a more principled approach,
 such as what is provided in languages like
 CUE, KCL, Dhall, and Nickel.
 
 Perhaps NAY could include some of these
 without the ambiguity that afflicts YAML,
-but I'd be very careful about it.
+but I think that's better as an additional layer.
 
-The biggest issue is that the only user guide
+The biggest issue with YAML
+is that the only user guide on the site
 is a long and complicated specification.
 
 ## KDL solutions
 
 KDL solves a lot of YAML's ambiguities,
-although it's a bit more like XML than YAML or JSON.
+although it's a bit more like XML than YAML or JSON,
+and it requires a bit more typing,
+though less than XML and JSON.
 
 ### Clearer types
 
@@ -192,9 +204,9 @@ Some of YAML's ambiguity comes from
 randomly parsing things from strings
 and falling back to whatever is possible.
 
-KDL is very explicit about what's allowed.
+KDL and NAY are very explicit about what's allowed.
 For values like booleans and special numbers,
-it uses the octo-thorpe symbol (`#`):
+they use the octo-thorpe symbol (`#`):
 
 ```
 a null value: #null
@@ -224,6 +236,7 @@ instead of converting it to a string.
 
 ```
 this is an error: 1ff8s9
+not an error: "1ff8s9"
 ```
 
 ### Type annotations
@@ -255,3 +268,28 @@ put the type annotation above the item:
 (number)
 *	#nan
 ```
+
+## Insignificant whitespace
+
+Use `{` or `[` to start a delimited section.
+Once you're in, things need delimiters.
+
+```
+NAY: {
+Ain't:
+YAML;
+}
+```
+
+Another rule: outermost delimiter
+must end with same indentation as starting.
+
+```
+NAY:
+	Ain't: ""
+	YAML
+	""
+```
+
+YAML kinda got this, tbh,
+though NAY obviously better.
