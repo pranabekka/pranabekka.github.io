@@ -18,6 +18,41 @@ or Sara Joy's "Weak Notes".
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
 
+## 2025-10-09 A little funny, a little sigh
+
+- Functional programming languages essentially
+  allow pass around references nearly everywhere,
+  and you can mutate pretty much anything,
+  unless you hide it in a module.
+  
+  That's the funny.
+
+- Tail-call optimisation is of importance
+  when a function calls itself twice or more,
+  so you don't need an accumulator
+  if the function calls itself only once.
+  
+  So that's the other kind of loop
+  that's tail-call optimised while constructing a value
+  without requiring an accumulator.
+  
+  We could still just teach a simple function like that
+  followed by something with an accumulator.
+  Perhaps the difference can be stated as combining.
+  A function calling itself more than once
+  is for when it needs to combine results, right?
+  So the accumulator stores a part of the combination,
+  and the second part is calculated and combined
+  in the next repetition of the function.
+  
+  I'm pretty sure that's it though.
+  
+  That's the little sigh.
+  It's a bit more complicated than I though,
+  but I think we can still avoid teaching
+  stack frames and tail-call optimisation.
+  I can't believe I completely forgot that.
+
 ## 2025-10-05 Accumulator functions
 
 I think we can teach functional programming
