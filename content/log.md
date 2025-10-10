@@ -27,18 +27,17 @@ or Sara Joy's "Weak Notes".
   
   That's the funny.
 
-- Tail-call optimisation is of importance
-  when a function calls itself twice or more,
-  so you don't need an accumulator
+- You don't need an accumulator for tail-call optimisation
   if the function calls itself only once.
   
   So that's the other kind of loop
-  that's tail-call optimised while constructing a value
+  that's tail-call optimised,
+  while constructing a value,
   without requiring an accumulator.
   
   We could still just teach a simple function like that
   followed by something with an accumulator.
-  Perhaps the difference can be stated as combining.
+  Perhaps the difference can be stated as "combining".
   A function calling itself more than once
   is for when it needs to combine results, right?
   So the accumulator stores a part of the combination,
@@ -48,7 +47,7 @@ or Sara Joy's "Weak Notes".
   I'm pretty sure that's it though.
   
   That's the little sigh.
-  It's a bit more complicated than I though,
+  It's a bit more complicated than I thought,
   but I think we can still avoid teaching
   stack frames and tail-call optimisation.
   I can't believe I completely forgot that.
