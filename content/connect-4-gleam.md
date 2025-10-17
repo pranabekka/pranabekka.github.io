@@ -1,5 +1,5 @@
 +++
-title = "Connect 4 Gleam (1)"
+title = "Connect 4 Gleam"
 date = 2025-10-18 01:05:15
 updated = 2025-10-18 01:05:15
 +++
