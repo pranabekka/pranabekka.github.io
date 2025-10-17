@@ -12,20 +12,11 @@ GENERAL SETTINGS
 	--fg: #b8b8b8;
 	--fg-dim: #969696;
 	--fg-dimmer: #606060;
-	--fg-bright: #efefef;
 
 	--bg: #000000;
-	--bg-bright: #2b2b2f;
-	--bg-semi-bright: #18181f;
 
-	--green: #10402a;
-	--blue: #2707b4;
 	--yellow: #f4de90;
 	--yellow-faded: #808f40;
-	--orange: #ca8711;
-	--red: #b83830;
-	--blue-faded: #414161;
-	--blue-faded-bright: #6161b1;
 
 	--highlight: var(--yellow);
 	--highlight-text: var(--yellow);
