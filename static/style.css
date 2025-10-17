@@ -33,6 +33,25 @@ GENERAL SETTINGS
 	tab-size: 4;
 }
 
+@media (prefers-color-scheme: light) {
+	:root {
+		--fg: hsl(0 0 15);
+		--fg-dim: hsl(0 0 30);
+		--fg-dimmer: hsl(0 0 60);
+
+		--purple: hsl(260 50 50);
+		--purple-faded: hsl(260 30 65);
+
+		--highlight: var(--purple);
+		--highlight-text: var(--purple);
+		--highlight-stale: var(--purple-faded);
+
+		--bg: hsl(260 50 90);
+
+		color-scheme: light;
+	}
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -171,6 +190,12 @@ a {
 	color: inherit;
 	text-decoration-color: var(--highlight-text);
 	text-decoration-thickness: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+	a {
+		text-decoration-thickness: 3px;
+	}
 }
 
 a:hover {
@@ -459,6 +484,13 @@ used in: resume
 	height: .2em;
 	border-radius: .1em;
 	background: var(--fg-dimmer);
+}
+
+@media (prefers-color-scheme: light) {
+	.pip {
+		height: .26em;
+		border-radius: .13em;
+	}
 }
 
 .pip.full {
