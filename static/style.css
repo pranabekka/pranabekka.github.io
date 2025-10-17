@@ -9,14 +9,14 @@ GENERAL SETTINGS
 :root {
 	--max-width: 32rem; /* there's no rch :( */
 
-	--fg: #b8b8b8;
-	--fg-dim: #969696;
-	--fg-dimmer: #606060;
+	--fg: hsl(0 0 70);
+	--fg-dim: hsl(0 0 60);
+	--fg-dimmer: hsl(0 0 35);
 
-	--bg: #000000;
+	--bg: hsl(0 0 0);
 
-	--yellow: #f4de90;
-	--yellow-faded: #808f40;
+	--yellow: hsl(45 80 70);
+	--yellow-faded: hsl(45 40 40);
 
 	--highlight: var(--yellow);
 	--highlight-text: var(--yellow);
