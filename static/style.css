@@ -15,12 +15,12 @@ GENERAL SETTINGS
 
 	--bg: hsl(260 50 10);
 
-	--yellow: hsl(45 80 60);
-	--yellow-faded: hsl(45 40 40);
+	--yellow-80: hsl(45 80 60);
+	--yellow-50: hsl(45 40 40);
 
-	--highlight: var(--yellow);
-	--highlight-text: var(--yellow);
-	--highlight-stale: var(--yellow-faded);
+	--highlight: var(--yellow-80);
+	--highlight-text: var(--yellow-80);
+	--highlight-stale: var(--yellow-50);
 
 	background: var(--bg);
 	color: var(--fg);
@@ -39,12 +39,12 @@ GENERAL SETTINGS
 		--fg-dim: hsl(0 0 30);
 		--fg-dimmer: hsl(0 0 60);
 
-		--purple: hsl(260 50 50);
-		--purple-faded: hsl(260 30 65);
+		--purple-70: hsl(260 50 50);
+		--purple-40: hsl(260 30 65);
 
-		--highlight: var(--purple);
-		--highlight-text: var(--purple);
-		--highlight-stale: var(--purple-faded);
+		--highlight: var(--purple-70);
+		--highlight-text: var(--purple-70);
+		--highlight-stale: var(--purple-40);
 
 		--bg: hsl(260 50 90);
 
