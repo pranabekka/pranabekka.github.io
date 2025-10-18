@@ -90,8 +90,9 @@ type Piece {
 ```
 
 Ahhh, and pipes are so nice.
-I was already anti-objects for a while,
-but pipes convinced me of FP's superiority.
+I was already critical of objects,
+but even procedural languages
+can't do pipes like this.
 
 ```
 const height = 6
@@ -148,7 +149,7 @@ we must print the thing.
 Initially I put it all into a single function
 with lots of case statements,
 but as I was implementing it in Rust (what can I say),
-I was encourage to have a string function for each type.
+I was encouraged to have a string function for each type.
 The Rust display trait is weirdly complicated, by the way.
 Anyway, I made a string function for each type,
 delegating down the chain for each new one.
@@ -222,16 +223,6 @@ I'll get into handling lists in another post.
 type Grid = Dict(Int, Row)
 
 type Row = Dict(Int, Cell)
-
-type Cell {
-	Empty
-	Full(Piece)
-}
-
-type Piece {
-	X
-	O
-}
 
 fn grid_new() -> Grid {
 	let number_update = fn(entry: #(_, _), idx) {
