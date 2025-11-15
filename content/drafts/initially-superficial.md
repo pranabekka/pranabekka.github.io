@@ -175,6 +175,9 @@ using copies if there's no reference annotation.
 However, using the assignment syntax I proposed,
 we can reliably infer references and copies
 without any reference annotations whatsoever.
+It allows high-level languages to use references
+in a way that's performant yet much smarter
+than copying numbers and referencing data structures.
 
 We can have the safety of functional languages
 with the performance of mutable languages like Rust,
