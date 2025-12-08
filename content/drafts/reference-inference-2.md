@@ -84,7 +84,8 @@ It guarantees high-performance
 while preserving the independence of variables.
 However, it's much more low-level than Go.
 You must explicitly manage references and copies,
-but especially the lifetimes of variables
+but especially the duration of variables
+as the program is running
 in order to avoid garbage collection.
 While Rust makes you go out of your way
 to write incorrect code,
@@ -100,10 +101,30 @@ fn main() {
 }
 ```
 
+The `clone` method above is tame,
+but look at the following example with "lifetimes",
+where we're required to annotate, in angle brackets,
+how long a variable must be preserved
+while the program is running.
+
+```
+fn main() {
+	let string1 = "Greetings!";
+	let string2 = "Howdy!";
+	let longer = longest(string1, string2);
+	println!("The longer string is {result}");
+}
+
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+	if a.len() > b.len() { a } else { b }
+}
+```
+
 Rust does not include enough abstraction to make
 a good high-level language for most people,
 yet it's the only imperative language that
-guarantees safety and predictability.
+guarantees safety and predictability
+once you wrap your head around it all.
 The design of Rust suggests that
 users must annotate and manage references explicitly
 in order to achieve safety and correctness
@@ -133,7 +154,7 @@ The answer is to use a copy if the result
 goes into another variable,
 else use a reference if it goes into the same variable.
 
-In this example,
+In the following example,
 the `sort` function takes in `pets` as an argument,
 but its result is assigned to a different variable,
 so `sort` receives a _copy_ of `pets`,
@@ -142,11 +163,15 @@ which is then moved into `pets_sorted`.
 ```
 fun main()
 	let pets = ["Lancelot", "Arthur", "Merlin"]
-	let pets_sorted = list.sort(pets)
+	let pets_sorted = list.sort(pets, string.compare)
 	assert pets != pets_sorted
 ```
 
-In this example,
+In the previous example, if `pets` wasn't used again,
+then `pets_sorted` would have received a reference,
+similar to move semantics in Rust.
+
+In the next example,
 `sort` takes in `pets` as an argument,
 and then we put the result back into `pets`,
 so `sort` receives a _reference_ to `pets`.
@@ -154,13 +179,39 @@ so `sort` receives a _reference_ to `pets`.
 ```
 fun main()
 	let pets = ["Lancelot", "Arthur", "Merlin"]
-	pets = list.sort(pets)
+	pets = list.sort(pets, string.compare)
 	echo pets as "Should be Arthur, Lancelot, Merlin"
 ```
 
+If we use immutable variables,
+then we might use references more often,
+since underlying values are guaranteed not to change.
+In the following example, I use a `const` keyword,
+because I've been showing `let` for mutable variables,
+but defaulting to immutable variables would be best.
+With immutable variables,
+we can be sure that the individual pets
+in `pets` won't change,
+so we can reuse them in `pets_sorted`
+instead of copying all of them.
+This matters more with larger items.
+... this is a poor example ...
+... copying is good till it gets stupidly large ...
+
+```
+fun main()
+	const pets = [
+		{ type: "Cat", name: "Lancelot"},
+		{ type: "Dog", name: "Arthur"},
+		{ type: "Cat", name: "Merlin"},
+	]
+	const pets_sorted = sort_pets(pets)
+```
+
 With this syntax,
-we can use references for performance
-while still reducing errors.
+we can use references for high performance
+without really noticing it
+and dealing with fewer errors.
 Functions can no longer change arbitrary variables.
 Variables don't change unless you assign to them.
 A function contains everything you need to understand it.
