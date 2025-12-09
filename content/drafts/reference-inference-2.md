@@ -43,9 +43,10 @@ and Javascript tries to improve performance further
 by comparing memory addresses for object equality
 instead of bothering to check the whole object.
 I doubt anybody wants that.
-I've certainly never had a use for it.
-Java is similar to Python in terms of aliasing issues.
-Go handles this a bit better by using copies by default,
+Issues like Python's pop up in other popular languages,
+including Java, C#, Swift and Ruby.
+Go handles the aliasing issue
+a bit better by using copies by default,
 but copies are bad for performance,
 so Go has syntax for referencing and dereferencing.
 This means the user must either accept poor performance,
@@ -181,31 +182,6 @@ fun main()
 	let pets = ["Lancelot", "Arthur", "Merlin"]
 	pets = list.sort(pets, string.compare)
 	echo pets as "Should be Arthur, Lancelot, Merlin"
-```
-
-If we use immutable variables,
-then we might use references more often,
-since underlying values are guaranteed not to change.
-In the following example, I use a `const` keyword,
-because I've been showing `let` for mutable variables,
-but defaulting to immutable variables would be best.
-With immutable variables,
-we can be sure that the individual pets
-in `pets` won't change,
-so we can reuse them in `pets_sorted`
-instead of copying all of them.
-This matters more with larger items.
-... this is a poor example ...
-... copying is good till it gets stupidly large ...
-
-```
-fun main()
-	const pets = [
-		{ type: "Cat", name: "Lancelot"},
-		{ type: "Dog", name: "Arthur"},
-		{ type: "Cat", name: "Merlin"},
-	]
-	const pets_sorted = sort_pets(pets)
 ```
 
 With this syntax,
