@@ -71,7 +71,7 @@ NAY:
 Recommended tab width 3.
 Two too little.
 Four too much.
-Can adjust to preferences.
+Can adjust to preference tho.
 
 ## List
 
@@ -82,21 +82,24 @@ Can adjust to preferences.
 ```
 
 Tab after marker to align right.
+Don't mix spaces.
 
-Thout tab:
+Mixing spaces:
 
 ```
 * NAY: Ain't YAML
   NAY:
-  	Ain't YAML
+	Ain't:
+		YAML
 ```
 
-Wiv tab:
+Only tabs:
 
 ```
 *	NAY: Ain't YAML
 	NAY:
-		Ain't YAML
+		Ain't:
+			YAML
 ```
 
 ## Fix indentation hell
@@ -113,7 +116,7 @@ at: all
 ```
 
 End pairs with `;`.
-`,` used way more often.
+`,` used way more often in values.
 Use quotes for special chars in inline string.
 
 ```
@@ -272,11 +275,6 @@ Double quotes are like any other character in the string,
 unless there's three at the beginning like `key: """`.
 Triple quotes aren't part of the string.
 
-**TODO**: how's this work wit keys?
-quotes part of string in keys?
-that'd be consistent
-use `#"` or such?
-
 ## Commenting
 
 `# ` for comment.
@@ -297,85 +295,6 @@ also part of comment.
 		YAML
 ```
 
-## Streaming
-
-Use `{{{` and `}}}` to delimit document.
-Use neither or both.
-Content only within, if using them.
-
-Not valid:
-
-```
-{{{
-*	Ain't valid
-```
-
-Not valid:
-
-```
-*	Ain't valid
-}}}
-```
-
-Not valid:
-
-```
-*	Ain't valid
-{{{
-*	NAY Ain't YAML
-}}}
-```
-
-Valid:
-
-```
-{{{
-*	Valid
-}}}
-```
-
-## Variables
-
-Prolly not.
-Best as extension.
-
-Key starting with `#@` is a variable.
-Value starting with `#@` is replaced
-with contents of variable.
-Final output doesn't include variables.
-
-```
-#@name: NAY Ain't YAML
-best lang: @name
-fav lang: @name
-idk lang: @name
-```
-
-Can use to avoid indentation.
-
-```
-#@NAY:
-	NAY:
-		Ain't:
-			YAML
-#@JSON:
-	Java:
-		Script:
-			Object:
-				Notation
-markup languages:
-	config:
-		simple:
-			*	#@NAY
-			*	YAML:
-					Ain't:
-						Markup:
-							Language
-			# No full form
-			*	KDL
-			*	#@JSON
-```
-
 ## ////
 
 ```
@@ -390,4 +309,7 @@ YAML:
 	*	Ain't
 	*	Markup
 	*	Language
+# but:
+	i'd prolly use nestedtext
+	wi' tabs n types
 ```
