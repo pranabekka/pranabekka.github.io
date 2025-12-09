@@ -17,4 +17,5 @@ so if I change this, remember to filter index from backlinks
   <a href="/log">Log</a>
   <a href="/bookmarks">Bookmarks</a>
   <a href="/atom.xml">Web Feed</a>
+  <a href="https://github.com/pranabekka/pranabekka.github.io">Site source</a>
 </nav>
