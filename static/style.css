@@ -12,19 +12,18 @@ GENERAL SETTINGS
 	--black-80: hsl(0 0 75);
 	--black-60: hsl(0 0 60);
 	--black-40: hsl(0 0 35);
+	--black-0: hsl(0 0 0);
 
 	--fg: var(--black-80);
 	--fg-dim: var(--black-60);
 	--fg-dimmer: var(--black-40);
 
-	--purple-10: hsl(260 50 10);
-	--bg: var(--purple-10);
+	--bg: var(--black-0);
 
 	--yellow-80: hsl(45 80 60);
 	--yellow-50: hsl(45 40 40);
 
 	--highlight: var(--yellow-80);
-	--highlight-text: var(--yellow-80);
 	--highlight-stale: var(--yellow-50);
 
 	background: var(--bg);
@@ -40,21 +39,22 @@ GENERAL SETTINGS
 
 @media (prefers-color-scheme: light) {
 	:root {
-		--black-10: hsl(0 0 15);
 		--black-30: hsl(0 0 30);
+		--black-10: hsl(0 0 15);
 
-		--fg: var(--black-90);
+		--white-90: hsl(0 0 90);
+
+		--fg: var(--black-0);
 		--fg-dim: var(--black-70);
 		--fg-dimmer: var(--black-60);
 
-		--purple-70: hsl(260 50 50);
-		--purple-40: hsl(260 30 65);
+		--blue-70: hsl(280 90 30);
+		--blue-40: hsl(280 50 65);
 
-		--highlight: var(--purple-70);
-		--highlight-text: var(--purple-70);
-		--highlight-stale: var(--purple-40);
+		--highlight: var(--blue-70);
+		--highlight-stale: var(--blue-40);
 
-		--bg: hsl(260 50 90);
+		--bg: var(--white-90);
 
 		color-scheme: light;
 	}
@@ -178,7 +178,7 @@ h1 > #icon {
 summary {
 	text-decoration-line: underline;
 	text-decoration-style: dashed;
-	text-decoration-color: var(--highlight-text);
+	text-decoration-color: var(--highlight);
 	text-decoration-thickness: 2px;
 	width: fit-content;
 }
@@ -202,7 +202,7 @@ p {
 
 a {
 	color: inherit;
-	text-decoration-color: var(--highlight-text);
+	text-decoration-color: var(--highlight);
 	text-decoration-thickness: 2px;
 }
 
@@ -220,6 +220,10 @@ a:hover {
 
 a:visited {
 	text-decoration-color: var(--highlight-stale);
+}
+
+a:visited:hover {
+	background: var(--highlight-stale);
 }
 
 pre, code {
