@@ -18,6 +18,15 @@ or Sara Joy's "Weak Notes".
 
 ["Weak Notes" by Sara Joy](https://sarajoy.dev/basic/notes)
 
+## 2025-12-19 The eye
+
+I've always been a bit "edgy",
+though it waxes and wanes,
+and I don't express it all that much.
+It feels silly sometimes,
+but I also enjoy it.
+So.
+
 ## 2025-10-09 A little funny, a little sigh
 
 - Functional programming languages essentially
