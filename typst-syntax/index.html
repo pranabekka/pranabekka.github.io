@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Typst Syntax
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Typst Syntax
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 17, 2023
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>I’ve mentioned <a href="https://pranabekka.github.io/typst-syntax/typst.app">Typst</a> here and there,
+but I just thought I should give it a proper mention.
+They’ve done a lot of interesting things
+to make it easy to write large documents.
+For this post, I just want to talk about the syntax.</p>
+<p><strong>NOTE:</strong> Typst is currently in Beta,
+and the things I mention might change in the future,
+although the general architecture should be the same.</p>
+<p>Typst has three types of syntax (<a href="https://typst.app/docs/reference/syntax/">modes</a>):
+content, math, and code.
+Content is a lot like <a href="https://www.markdownguide.org/getting-started/">Markdown</a>,
+with headings, paragraphs, lists, links, and so on.
+Math is a way to enter formulae with all kinds of special symbols.
+Code is a little bit like <a href="https://en.wikipedia.org/wiki/TeX">TeX</a>’s macros,
+except they’re actually full-fledged functions
+in a specially created programming language.
+There’s a function to describe macros as well.</p>
+<p>When you start writing a Typst document,
+you’re in content mode.
+To enter math mode, you type a dollar sign
+and write out your formulae using math mode syntax.
+To enter code mode you use an octothorpe (‘#’)
+followed by the name of the function,
+and the arguments to the function.
+For example, <code>#heading(level: 1, [Heading Level 1])</code>
+calls the heading function asking for
+a level 1 heading with the text “Heading Level 1”.</p>
+<p>Typst’s syntax is actually built completely on code.
+When you write out special syntax in content mode,
+it gets converted into code.
+Continuing the heading example,
+when you write <code>= My Document</code>,
+it gets transformed into <code>#heading(level: 1, [My Document])</code>.
+When you write a paragraph of text,
+it implicitly calls <code>#para([Paragraph Content])</code>.
+When you write math like <code>$ x + y $</code>,
+it gets converted into <code>#equation([x + y])</code> (I think).</p>
+<p>And that’s the coolest thing about Typst’s syntax.
+This programming language allows you to do lots of exciting things:</p>
+<ul>
+<li><a href="https://typst.app/docs/reference/types/function/#definitions">Create custom functions</a>
+that you can use in your documents.</li>
+<li><a href="https://typst.app/docs/reference/styling/#show-rules">Create/override syntax</a>
+that implicitly calls your functions, or any other Typst function.</li>
+<li><a href="https://typst.app/docs/reference/scripting/#modules">Import</a>
+other Typst files, both content and functions.</li>
+<li><a href="https://typst.app/docs/reference/data-loading/">Import arbitrary files</a>,
+such as JSON, CSV, or any plain text file.</li>
+<li><a href="https://typst.app/docs/reference/visualize/">Draw</a> arbitrary shapes.
+Functions for plotting and diagrams are also being worked on.</li>
+</ul>
+<p>Typst’s biggest current limitation (for me)
+is that it only supports PDF output,
+but HTML output is in the works and should be ready in a few months.
+Along with that, I think they’ll include exporting an intermediate format,
+such that you can use Typst to calculate most of the layout and results,
+then get a structured representation of the resulting content,
+so that you can transform it into whatever you like.</p>
+<p>Additionally, Typst is not out of Beta,
+so things change nearly every month or so.
+However, you can already do exciting stuff with it,
+and I would encourage you to try it out.
+Start with the tutorial at <a href="https://typst.app/docs/tutorial">typst.app/docs/tutorial</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;typst-syntax.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

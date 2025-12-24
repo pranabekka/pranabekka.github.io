@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+An introduction to Soupault
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>An introduction to Soupault
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Aug 10, 2024
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      Nov 20, 2024
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#expected-knowledge">Expected knowledge</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#why-this-introduction">Why this introduction</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#overview">Overview</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#installation">Installation</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#page-files">Page files</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#create-a-template-file">Create a template file</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#your-first-page">Your first page</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#generate">Generate</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#preview">Preview</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#creating-an-index">Creating an index</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#extract-metadata">Extract metadata</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#add-a-page-to-index">Add a page to index</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#allow-html">Allow HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#generate-an-index">Generate an index</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#make-space-for-index-html">Make space for index HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#insert-index-html">Insert index HTML</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#widgets">Widgets!</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#final-setup">Final setup</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#folder-structure">Folder structure</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#soupault-toml">soupault.toml</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#site-index-md">site&#x2F;index.md</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#site-hello-md">site&#x2F;hello.md</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/soupault-intro/#templates-main-html">templates&#x2F;main.html</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-intro/#learn-more">Learn more</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>A beginner’s guide to making a site in Soupault,
+the SSG (static site generator).</p>
+<p>What makes Soupault interesting
+is that it turns all your markup to HTML,
+unless it’s already HTML,
+then it works with that HTML as elements (not text).
+For example, it uses CSS selectors to
+extract metadata from the created HTML,
+and even allows you to add and remove elements.</p>
+<p><a href="https://soupault.app">Soupault</a></p>
+<p>This guide is useful if you’re sitting at the terminal,
+and intend to make a site right this moment.
+Otherwise, I have a higher level overview of Soupault
+that covers the core concepts:</p>
+<p><a href="https://pranabekka.github.io/soupault-notes/">Notes on Soupault</a></p>
+<p><strong>NOTE:</strong> This is written with Soupault 4.x in mind,
+and specifically tested in 4.6.0.</p>
+<!-- TODO: test with more versions -->
+<!--
+  TODO: include checklist of completed and remaining steps
+  at the beggining of each section, or end of each step.
+  seems like a restructure will be required.
+-->
+<h2 id="expected-knowledge">Expected knowledge<a class="zola-anchor" href="#expected-knowledge" aria-label="Anchor link for: expected-knowledge">🔗</a></h2>
+<ul>
+<li>the CLI</li>
+<li>file paths</li>
+<li>TOML and/or other config files</li>
+<li>HTML</li>
+<li>CSS selectors</li>
+<li>jinja style templates</li>
+</ul>
+<h2 id="why-this-introduction">Why this introduction<a class="zola-anchor" href="#why-this-introduction" aria-label="Anchor link for: why-this-introduction">🔗</a></h2>
+<p>The official “blog quickstart” introduction is a bit front-loaded,
+instead of gradually introducing concepts,
+and the reference manual has a decent introduction
+in the “Overview” section,
+but it comes after extensive build and install instructions,
+and is followed by another hefty config example.</p>
+<p>This guide is meant to ramp up slowly,
+starting with the absolute basics,
+and introducing things as they’re required.</p>
+<p><a href="https://soupault.app/tips-and-tricks/quickstart/">Blog quickstart</a></p>
+<p><a href="https://soupault.app/reference-manual/#overview">Overview in reference manual</a></p>
+<h2 id="overview">Overview<a class="zola-anchor" href="#overview" aria-label="Anchor link for: overview">🔗</a></h2>
+<p>Soupault works by breaking down a template
+into an HTML element tree,
+then it goes through the <code>site</code> folder,
+turns each page into HTML,
+and if it doesn’t have an <code>&lt;html&gt;</code> element,
+it inserts it into the template.
+The results are then inserted into the <code>build</code> folder.
+Things like images and CSS are copied over as is.</p>
+<p>All of these things can be changed.</p>
+<p>If you don’t want it to do templates,
+then set <code>generator_mode</code> to <code>false</code>.</p>
+<p>If you want to change which folder it searches for content,
+change the <code>site_dir</code> option.</p>
+<p>If you want to change how it defines a complete page<sup class="footnote-reference"><a href="#1">1</a></sup>,
+change the following option:</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">complete_page_selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>html<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>a page that isn’t put into the template.</p>
+</div>
+<p>If you want to change where it outputs files,
+change the <code>build_dir</code> option.</p>
+<p>With that said, let’s get started!</p>
+<h2 id="installation">Installation<a class="zola-anchor" href="#installation" aria-label="Anchor link for: installation">🔗</a></h2>
+<p>Soupault is available to download as a single executable.</p>
+<p><a href="https://soupault.app/install/">Soupault install</a></p>
+<p>Simply move the executable to a folder in
+your <code>PATH</code> environment variable,
+or add the folder it’s in to the <code>PATH</code> environment variable.</p>
+<p><strong>NOTE:</strong> I’ve included the file structure and contents
+at the bottom of the post,
+so feel free to read through to understand Soupault
+before you install it and play around.</p>
+<h2 id="page-files">Page files<a class="zola-anchor" href="#page-files" aria-label="Anchor link for: page-files">🔗</a></h2>
+<p>First, we create the <code>soupault.toml</code> configuration file,
+and tell it what pages to read and how.</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">settings</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> &quot;Page files&quot; are recognised by the extension &quot;md&quot;.</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">page_file_extensions</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>md<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+  
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> &quot;Page files&quot; need to be processed into HTML before everything else,</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> because Soupault works with HTML.</span>
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">preprocessors</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Markdown is converted to HTML with the `cmark` CLI.</span>
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Remember to install cmark,</span>
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> or use a different markdown CLI.</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">md</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>cmark<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p>See how Soupault doesn’t depend on Markdown,
+or even a specific implementation of Markdown?
+As long as you can convert it to HTML,
+Soupault can work with it.
+You could easily use your preferred Markdown format,
+or an entirely different markup format like Djot instead.</p>
+<p><a href="https://pranabekka.github.io/djot-1/">Introduction to Djot</a></p>
+<p><a href="https://djot.net">Djot home page</a></p>
+<h2 id="create-a-template-file">Create a template file<a class="zola-anchor" href="#create-a-template-file" aria-label="Anchor link for: create-a-template-file">🔗</a></h2>
+<p>Since “page files” don’t generate complete HTML documents,
+we must insert it into a full HTML document.</p>
+<p>The default template file is <code>templates/main.html</code>,
+so that’s where we’ll insert the following:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-sgml z-doctype z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;!</span><span class="z-keyword z-declaration z-doctype z-html">DOCTYPE</span> <span class="z-constant z-language z-doctype z-html">html</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+<span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-structure z-any z-html">html</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-structure z-any z-html">head</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+    <span class="z-meta z-tag z-inline z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-inline z-any z-html">title</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>Generated with Soupault<span class="z-meta z-tag z-inline z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-inline z-any z-html">title</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-structure z-any z-html">head</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-structure z-any z-html">body</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+    <span class="z-comment z-block z-html"><span class="z-punctuation z-definition z-comment z-begin z-html">&lt;!--</span> content will go here <span class="z-punctuation z-definition z-comment z-end z-html">--&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-structure z-any z-html">body</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+<span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-structure z-any z-html">html</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<p>By default, content is added at the end of the <code>body</code> element,
+though you can change it with the following options:</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">default_content_selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>body<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">default_content_action</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>append_child<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p><a href="https://soupault.app/reference-manual/#page-templates">Page template options</a></p>
+<h2 id="your-first-page">Your first page<a class="zola-anchor" href="#your-first-page" aria-label="Anchor link for: your-first-page">🔗</a></h2>
+<p>For Soupault to actually generate a page,
+you’ll need to write something.</p>
+<p>Let’s create an <code>index.md</code> file in the <code>site</code> folder <sup class="footnote-reference"><a href="#2">2</a></sup>:</p>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>Remember, Soupault reads files from <code>site</code>,
+and we’ve asked it to treat <code>md</code> files as pages.</p>
+</div>
+<pre data-lang="markdown" class="language-markdown z-code"><code class="language-markdown" data-lang="markdown"><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-heading z-1 z-markdown"><span class="z-punctuation z-definition z-heading z-begin z-markdown">#</span> </span><span class="z-markup z-heading z-1 z-markdown"><span class="z-entity z-name z-section z-markdown">Index</span><span class="z-meta z-whitespace z-newline z-markdown">
+</span></span></span>
+<span class="z-meta z-paragraph z-markdown">Welcome to the index.
+</span></span></code></pre>
+<p>Now we can start generating a site with Soupault.</p>
+<h2 id="generate">Generate<a class="zola-anchor" href="#generate" aria-label="Anchor link for: generate">🔗</a></h2>
+<p>To generate the site, just run <code>soupault</code>.</p>
+<p>It will automatically create a build folder,
+if there isn’t one already,
+and inside it there should be an index.html file.</p>
+<p>If you have any issues, run Soupault with
+the <code>--debug</code> and/or <code>--verbose</code> flags.
+I’d recommend you run it like that at least once,
+even if you don’t have any issues,
+so that you can see what Soupault does.</p>
+<h2 id="preview">Preview<a class="zola-anchor" href="#preview" aria-label="Anchor link for: preview">🔗</a></h2>
+<p><img src="/soupault-intro-preview-no-index.svg" alt="Home page with heading and welcome paragraph" /></p>
+<p>To serve your pages for preview, 
+you can use a simple web server,
+but if you have Python installed,
+just use the http.server module.</p>
+<details><summary>Web servers</summary>
+  <p><a href="https://github.com/svenstaro/miniserve">miniserve</a></p>
+<p><a href="https://caddyserver.com">Caddy</a></p>
+
+</details>
+<p>Python http server:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">python3</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> -</span>m</span> http.server<span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>directory</span> build</span>
+</span></code></pre>
+<p>Running the command will give you an address
+which you can open in your browser.</p>
+<p>To automatically rebuild the site, use watch:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">watch</span></span><span class="z-meta z-function-call z-arguments z-shell"><span class="z-variable z-parameter z-option z-shell"><span class="z-punctuation z-definition z-parameter z-shell"> --</span>interval</span> 1 <span class="z-string z-quoted z-single z-shell"><span class="z-punctuation z-definition z-string z-begin z-shell">&#39;</span>soupault<span class="z-punctuation z-definition z-string z-end z-shell">&#39;</span></span></span>
+</span></code></pre>
+<p>If you’re using Windows instead, just use an infinite loop:</p>
+<pre data-lang="sh" class="language-sh z-code"><code class="language-sh" data-lang="sh"><span class="z-source z-shell z-bash"><span class="z-keyword z-control z-loop z-while z-shell">while</span> <span class="z-punctuation z-definition z-compound z-begin z-shell">(</span><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">1</span></span><span class="z-punctuation z-definition z-compound z-end z-shell">)</span><span class="z-meta z-function-call z-arguments z-shell"> <span class="z-meta z-group z-expansion z-brace z-shell"><span class="z-punctuation z-section z-expansion z-brace z-begin z-shell">{</span>soupault; sleep 1<span class="z-punctuation z-section z-expansion z-brace z-end z-shell">}</span></span></span>
+</span></code></pre>
+<p>This will run <code>soupault</code> every second,
+and you only need to reload the page to see your changes.</p>
+<p>And that’s it!
+You have a basic site up and running!
+But Soupault has more powerful features
+to help you create the site you really want.</p>
+<h2 id="creating-an-index">Creating an index<a class="zola-anchor" href="#creating-an-index" aria-label="Anchor link for: creating-an-index">🔗</a></h2>
+<p>Soupault doesn’t have any default content model.
+It doesn’t require pages to have any specific metadata.
+Instead, you tell it what metadata to extract from where,
+and what to do with it.</p>
+<h3 id="extract-metadata">Extract metadata<a class="zola-anchor" href="#extract-metadata" aria-label="Anchor link for: extract-metadata">🔗</a></h3>
+<p>Because we want the title to show up in the index,
+and we want to sort the posts by date,
+we’ll define those as the metadata fields.</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">fields</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">title</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>h1<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+  
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">fields</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">date</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>div#post-date<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">fallback_to_content</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">true</span> <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> get the date from the contents, not attribute</span>
+</span></code></pre>
+<p>Note how we’re using the “h1” selector for the title.
+This is because <code>cmark</code> turns <code># Index</code> into an <code>h1</code>,
+and Soupault runs the <code>preprocessors</code>
+before it starts working with the page.</p>
+<h3 id="add-a-page-to-index">Add a page to index<a class="zola-anchor" href="#add-a-page-to-index" aria-label="Anchor link for: add-a-page-to-index">🔗</a></h3>
+<p>Right now, there’s nothing for the index to list,
+so let’s create another page (in <code>site/</code>).
+Maybe <code>hello.md</code>.</p>
+<p>And since we’ve specified the date metadata field
+as the contents of the <code>div</code> with the <code>post-date</code> id,
+we’ll also add that in.</p>
+<pre data-lang="markdown" class="language-markdown z-code"><code class="language-markdown" data-lang="markdown"><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-heading z-1 z-markdown"><span class="z-punctuation z-definition z-heading z-begin z-markdown">#</span> </span><span class="z-markup z-heading z-1 z-markdown"><span class="z-entity z-name z-section z-markdown">Hello, world</span><span class="z-meta z-whitespace z-newline z-markdown">
+</span></span></span>
+<span class="z-meta z-disable-markdown"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-id z-html"><span class="z-entity z-other z-attribute-name z-id z-html">id</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-toc-list z-id z-html">post-date</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  2077-07-07
+<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+
+</span><span class="z-meta z-paragraph z-markdown">This is a page. Wow.
+</span></span></code></pre>
+<h3 id="allow-html">Allow HTML<a class="zola-anchor" href="#allow-html" aria-label="Anchor link for: allow-html">🔗</a></h3>
+<p>By default, <code>cmark</code> replaces raw HTML with a comment.
+To allow HTML, we need to use the <code>--unsafe</code> option,
+which means changing the ‘preprocessor’ for markdown:</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">preprocessors</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">md</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>cmark --unsafe<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<h3 id="generate-an-index">Generate an index<a class="zola-anchor" href="#generate-an-index" aria-label="Anchor link for: generate-an-index">🔗</a></h3>
+<p>Now that we have the metadata, 
+and a page to index,
+let’s generate the index.</p>
+<!-- TODO?: mix in the views section and put most config there? -->
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">index</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">true</span>
+  
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> We specified date as one of the index fields</span>
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> in [index.fields.date]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">sort_by</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>date<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Treat values as dates</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">sort_type</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>calendar<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Use the YYYY-MM-DD format for dates</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">date_formats</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>%F<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+  
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Ensure all dates are valid</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">strict_sort</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">true</span>
+</span></code></pre>
+<p>This is only the index data though.
+We need a place to put this before we turn it into HTML.</p>
+<h3 id="make-space-for-index-html">Make space for index HTML<a class="zola-anchor" href="#make-space-for-index-html" aria-label="Anchor link for: make-space-for-index-html">🔗</a></h3>
+<p>Soupault will need to know where to put the index.
+We’ll just add a <code>div</code> with the <code>index</code> id
+to the index.md file.
+It should look like this:</p>
+<pre data-lang="markdown" class="language-markdown z-code"><code class="language-markdown" data-lang="markdown"><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-heading z-1 z-markdown"><span class="z-punctuation z-definition z-heading z-begin z-markdown">#</span> </span><span class="z-markup z-heading z-1 z-markdown"><span class="z-entity z-name z-section z-markdown">Index</span><span class="z-meta z-whitespace z-newline z-markdown">
+</span></span></span>
+<span class="z-meta z-paragraph z-markdown">Welcome to the index.
+
+</span><span class="z-meta z-disable-markdown"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-id z-html"><span class="z-entity z-other z-attribute-name z-id z-html">id</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-toc-list z-id z-html">main-index</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span></code></pre>
+<p>We’ll tell Soupault to put the index in <code>div#main-index</code>.</p>
+<h3 id="insert-index-html">Insert index HTML<a class="zola-anchor" href="#insert-index-html" aria-label="Anchor link for: insert-index-html">🔗</a></h3>
+<p>Now that we have the index data,
+and a place to put the index,
+we can render it into html.</p>
+<p>Before we do that, we must understand views.</p>
+<p>Since you might want to have different ways to index data,
+such as grouping posts by author or tag,
+Soupault lets you define “views”.
+Views have an “index_selector” property,
+which will put the index HTML
+into the element which matches that selector.
+This allows you to have multiple index views in the same page.
+Yes, we’ve already sorted it by date,
+but you can put those options independently for each view,
+or use different index rendering options.</p>
+<details><summary>Index views and options links</summary>
+  <p><a href="https://soupault.app/reference-manual/#index-views">Index views</a></p>
+<p><a href="https://soupault.app/reference-manual/#index-view-options">Index view options</a></p>
+<p><a href="https://soupault.app/reference-manual/#ways-to-control-index-rendering">Index rendering options</a></p>
+
+</details>
+<p>In our <code>index.md</code> file,
+we’re using a div with the id <code>main-index</code>,
+so we want an index view that applies to <code>div#main-index</code>.</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">views</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">main</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Use the main view for divs with the &quot;main-index&quot; id</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">index_selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>div#main-index<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> The html to generate for each item</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">index_item_template</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-triple z-basic z-block z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;&quot;&quot;</span>
+    &lt;h2&gt;
+      &lt;a href=&quot;{{url}}&quot;&gt;
+        {{title}}
+      &lt;/a&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;Date: {{date}}&lt;/p&gt;
+  <span class="z-punctuation z-definition z-string z-end z-toml">&quot;&quot;&quot;</span></span>
+</span></code></pre>
+<p><code>{{url}}</code>, <code>{{title}}</code>, and <code>{{date}}</code> tell Soupault
+to replace them with the related metadata fields.
+The title and date are fields that we defined in <code>[index.fields]</code>,
+and the url is a built-in field
+that is automatically collected by Soupault.</p>
+<p><a href="https://soupault.app/reference-manual/#built-in-index-fields">Built-in index fields</a></p>
+<p>Now you can reload the page in the browser
+and see your index appear!</p>
+<p><img src="/soupault-intro-preview-with-index.svg" alt="Home page with index" /></p>
+<h2 id="widgets">Widgets!<a class="zola-anchor" href="#widgets" aria-label="Anchor link for: widgets">🔗</a></h2>
+<p>Soupault’s power feature is the ability to manipulate HTML.</p>
+<p>For this, it uses an extensive set of “widgets”,
+though it provides a Lua scripting interface as well,
+where you can create your own widgets.</p>
+<p><a href="https://soupault.app/reference-manual/#widgets">Widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#built-in-widgets">Built-in widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#plugins">Lua plugins/widgets</a></p>
+<p>As an example, we’ll use an <code>insert_html</code> widget
+to add in the author name:</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> add-author is a name *we* choose</span>
+<span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> to help keep track of our widgets</span>
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">widgets</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">add-author</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Widget type</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">widget</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>insert_html<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Replace &quot;Pranab&quot; with your name</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">html</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>&lt;p&gt;by Pranab&lt;/p&gt;<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  
+  <span class="z-comment z-line z-number-sign z-toml"><span class="z-punctuation z-definition z-comment z-toml">#</span> Insert the HTML after the title</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>h1<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">action</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>insert_after<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p>This will insert a paragraph with the text “by Pranab” after the h1.
+Remember to change “Pranab” to your name.</p>
+<p><img src="/soupault-intro-preview-by-pranab.svg" alt="Home page with “by Pranab” text" /></p>
+<p>You can use this same widget to insert a link to the home page,
+as well as a link to some CSS.</p>
+<p>Have a look at the built-in widgets as well as the Lua plugins for more.
+Plugins are as simple as putting a Lua file
+in the (configurable) plugins folder,
+and then adding them like a widget to your <code>soupault.toml</code>.</p>
+<p><a href="https://soupault.app/reference-manual/#built-in-widgets">Built-in widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#plugins">Lua plugins reference</a></p>
+<p><a href="https://soupault.app/plugins/">Available plugins</a></p>
+<h2 id="final-setup">Final setup<a class="zola-anchor" href="#final-setup" aria-label="Anchor link for: final-setup">🔗</a></h2>
+<p>This is a summary of what you should end up with.</p>
+<h3 id="folder-structure">Folder structure<a class="zola-anchor" href="#folder-structure" aria-label="Anchor link for: folder-structure">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">soupault-blog/
+  soupault.toml
+  site/
+    index.md
+    hello.md
+  templates/
+    main.html
+</span></code></pre>
+<h3 id="soupault-toml"><code>soupault.toml</code><a class="zola-anchor" href="#soupault-toml" aria-label="Anchor link for: soupault-toml">🔗</a></h3>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">settings</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">page_file_extensions</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>md<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span> <span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">preprocessors</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">md</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>cmark --unsafe<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">index</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">true</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">sort_by</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>date<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">sort_type</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>calendar<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">date_formats</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>%F<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">strict_sort</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">true</span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">fields</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">title</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>h1<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+  
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">fields</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">date</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span><span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>div#post-date<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">fallback_to_content</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-constant z-language z-toml">true</span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">index</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">views</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">main</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">index_selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>div#main-index<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">index_item_template</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-triple z-basic z-block z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;&quot;&quot;</span>
+    &lt;h2&gt;
+      &lt;a href=&quot;{{url}}&quot;&gt;
+        {{title}}
+      &lt;/a&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;Date: {{date}}&lt;/p&gt;
+  <span class="z-punctuation z-definition z-string z-end z-toml">&quot;&quot;&quot;</span></span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">widgets</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">add-author</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">widget</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>insert_html<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">html</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>&lt;p&gt;by Pranab&lt;/p&gt;<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>h1<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+  <span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">action</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>insert_after<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<h3 id="site-index-md"><code>site/index.md</code><a class="zola-anchor" href="#site-index-md" aria-label="Anchor link for: site-index-md">🔗</a></h3>
+<pre data-lang="markdown" class="language-markdown z-code"><code class="language-markdown" data-lang="markdown"><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-heading z-1 z-markdown"><span class="z-punctuation z-definition z-heading z-begin z-markdown">#</span> </span><span class="z-markup z-heading z-1 z-markdown"><span class="z-entity z-name z-section z-markdown">Index</span><span class="z-meta z-whitespace z-newline z-markdown">
+</span></span></span>
+<span class="z-meta z-paragraph z-markdown">Welcome to the index.
+
+</span><span class="z-meta z-disable-markdown"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-id z-html"><span class="z-entity z-other z-attribute-name z-id z-html">id</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-toc-list z-id z-html">main-index</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></span></code></pre>
+<h3 id="site-hello-md"><code>site/hello.md</code><a class="zola-anchor" href="#site-hello-md" aria-label="Anchor link for: site-hello-md">🔗</a></h3>
+<pre data-lang="markdown" class="language-markdown z-code"><code class="language-markdown" data-lang="markdown"><span class="z-text z-html z-markdown"><span class="z-meta z-block-level z-markdown"><span class="z-markup z-heading z-1 z-markdown"><span class="z-punctuation z-definition z-heading z-begin z-markdown">#</span> </span><span class="z-markup z-heading z-1 z-markdown"><span class="z-entity z-name z-section z-markdown">Hello, world</span><span class="z-meta z-whitespace z-newline z-markdown">
+</span></span></span>
+<span class="z-meta z-disable-markdown"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span> <span class="z-meta z-attribute-with-value z-id z-html"><span class="z-entity z-other z-attribute-name z-id z-html">id</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span></span><span class="z-string z-quoted z-double z-html"><span class="z-meta z-toc-list z-id z-html">post-date</span><span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  2077-07-07
+<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">div</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+
+</span><span class="z-meta z-paragraph z-markdown">This is a page. Wow.
+</span></span></code></pre>
+<h3 id="templates-main-html"><code>templates/main.html</code><a class="zola-anchor" href="#templates-main-html" aria-label="Anchor link for: templates-main-html">🔗</a></h3>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-sgml z-doctype z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;!</span><span class="z-keyword z-declaration z-doctype z-html">DOCTYPE</span> <span class="z-constant z-language z-doctype z-html">html</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+<span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-structure z-any z-html">html</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-structure z-any z-html">head</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+    <span class="z-meta z-tag z-inline z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-inline z-any z-html">title</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>Generated with Soupault<span class="z-meta z-tag z-inline z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-inline z-any z-html">title</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-structure z-any z-html">head</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-structure z-any z-html">body</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+    <span class="z-comment z-block z-html"><span class="z-punctuation z-definition z-comment z-begin z-html">&lt;!--</span> content will go here <span class="z-punctuation z-definition z-comment z-end z-html">--&gt;</span></span>
+  <span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-structure z-any z-html">body</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+<span class="z-meta z-tag z-structure z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-structure z-any z-html">html</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<h2 id="learn-more">Learn more<a class="zola-anchor" href="#learn-more" aria-label="Anchor link for: learn-more">🔗</a></h2>
+<p>If you want to see more options to set up your website,
+have a look at the official blog quickstart,
+as well as the reference manual.</p>
+<p><a href="https://soupault.app/tips-and-tricks/quickstart">Blog quickstart</a></p>
+<p><a href="https://soupault.app/reference-manual/">Reference manual</a></p>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <hr>
+  <p>References to this page:</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;soupault-notes&#x2F;">Notes on Soupault</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;soupault-intro.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

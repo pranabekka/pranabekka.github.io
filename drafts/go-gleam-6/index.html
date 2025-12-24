@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Go Gleam (6)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Go Gleam (6)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+<hr>
+
+<p>In many ways, Gleam is what Go wanted to be.</p>
+<p>Go provides a way to write safe distributed systems
+in a language that’s small and easy to learn and use.</p>
+<blockquote>
+<p>Build simple, secure, scalable systems with Go</p>
+</blockquote>
+<p>Gleam provides a way to write significantly safer
+distributed systems in a language
+that’s smaller and easy to learn and use.</p>
+<blockquote>
+<p>Gleam is a friendly language for building type-safe
+systems that scale!</p>
+</blockquote>
+<p>Gleam eliminates several extra features present in Go
+while enhancing existing features
+and adding a few features Go doesn’t have,
+thus reducing the language along with boilerplate.
+Gleam is so small I learnt it by accident
+just browsing interesting articles.</p>
+<p>In addition to being small and easy to learn,
+Gleam’s features are designed such that they’re
+significantly safer than mainstream languages.
+A Gleam program can only crash by using
+three explicit keywords:
+<code>todo</code>, <code>assert</code> and <code>panic</code>.</p>
+<p>Gleam systems can easily manage
+catastrophic issues like servers shutting down,
+including entire data centres,
+assuming you have other servers/centres also running.
+By running on the BEAM VM with the Erlang OTP library,
+Gleam has a very powerful concurrency system
+that can easily operate across the globe,
+which is how an entire data centre shutting down
+can be managed smoothly.</p>
+<p>Gleam also provides compile-time type checking
+for messages that go across your network,
+which keeps your system stable by eliminating
+sources of errors in your networking code.
+Very few languages, if any, provide such scalability.</p>
+<p>Gleam isn’t a perfect fit, of course.</p>
+<p>It’s a functional language with immutable data,
+so it doesn’t match how most people are taught programming.
+However, Gleam is the easiest functional language to get into.
+You can learn it in a few hours
+and be productive in a few weeks.
+For instance, it has only one way to loop,
+one way to manage conditionals
+and one way to handle errors.</p>
+<p>Gleam also doesn’t compile to standalone binaries,
+so there are limited ways to distribute a Gleam program.
+However, it does compile to Javascript,
+so you can easily write user-facing applications with it,
+while relying on the Erlang VM for backend systems.</p>
+<p>Gleam doesn’t have the ecosystem that Go has,
+which is to be expected of a new language,
+but I expect it to catch up soon.
+Additionally, compiling to Javascript and Erlang/BEAM
+means that there is a vast ecosystem
+that can be accessed with little effort.
+Gleam’s interop is incredibly simple
+and allows access to all platform features.</p>
+<p>I encourage you to have a look at Gleam.
+The syntax is familiar,
+there’s no surprise runtime errors,
+the error messages are incredible
+and the feedback is incredibly fast.</p>
+<p><a href="https://gleam.run">Gleam</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;go-gleam-6.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

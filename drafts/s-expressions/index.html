@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+S-expressions
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>S-expressions
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/s-expressions/#a-note-on-idiomatic-s-expressions">A note on idiomatic S-expressions</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/s-expressions/#writing-html">Writing HTML</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/s-expressions/#writing-json">Writing JSON</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/s-expressions/#writing-programs">Writing programs</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/s-expressions/#further-reference">Further reference</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/s-expressions/#fewer-parentheses-with-whitespace-expressions">Fewer parentheses with whitespace expressions</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/s-expressions/#using">Using</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>S-expression syntax has just two rules:
+(1) group things with parentheses,
+and (2) separate them with spaces.</p>
+<p>They’re a data format
+with power comparable to HTML, XML, JSON, etc.,
+yet with the simplest syntax.</p>
+<pre class="z-code"><code><span class="z-text z-plain">(draw-cards 10)
+(cooked? kebab)
+(add 20 15 10 5)
+(move &quot;Pranab&quot; &quot;hospital&quot;)
+(call-cab (location? &quot;Pranab&quot;))
+</span></code></pre>
+<p>Notice how identifiers, such as <code>draw-cards</code> and <code>location?</code>,
+can now use any characters,
+such as question marks and hyphens —
+because spaces and parentheses are the only syntax!</p>
+<h2 id="a-note-on-idiomatic-s-expressions">A note on idiomatic S-expressions<a class="zola-anchor" href="#a-note-on-idiomatic-s-expressions" aria-label="Anchor link for: a-note-on-idiomatic-s-expressions">🔗</a></h2>
+<p>Most formats try to put parentheses on individual lines,
+and try to match their indentation, like the next example.
+You should avoid that.</p>
+<pre class="z-code"><code><span class="z-text z-plain">(
+  list
+    (
+      item &quot;First&quot;
+    )
+    (
+      item &quot;Second&quot;
+    )
+)
+</span></code></pre>
+<p>Instead of the above,
+you have to learn to ignore most of the parentheses
+while reading S-expressions,
+and let your editor handle parentheses
+while writing S-expressions.</p>
+<p>Here’s an idiomatic representation of the previous example:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(list
+  (item &quot;First item&quot;)
+  (item &quot;Second item&quot;))
+</span></code></pre>
+<p>The indentation and spaces communicate
+the relationship between all the parts,
+making everything a lot more compact
+and easy to read through.</p>
+<h2 id="writing-html">Writing HTML<a class="zola-anchor" href="#writing-html" aria-label="Anchor link for: writing-html">🔗</a></h2>
+<p>Consider the following HTML:</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;ul id=&quot;data-formats&quot;&gt;
+  &lt;li&gt;XML&lt;/li&gt;
+  &lt;li&gt;JSON&lt;/li&gt;
+  &lt;li&gt;S-expressions&lt;/li&gt;
+&lt;/ul&gt;
+</span></code></pre>
+<p>Here’s a pleasant way to write the same thing as an S-expression:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(ul (id &quot;data-formats&quot;)
+  (li () &quot;XML&quot;)
+  (li () &quot;JSON&quot;)
+  (li () &quot;S-expressions&quot;))
+</span></code></pre>
+<p>After each HTML element, there’s a list of properties,
+which can either be empty (as in the case of the <code>li</code> items),
+or populated with keys followed by values (like the <code>id</code>).</p>
+<p>Another example of HTML as an S-expression:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(p (class &quot;warning red&quot;
+    id &quot;first-warning&quot;)
+  &quot;This is the first warning.&quot;)
+</span></code></pre>
+<h2 id="writing-json">Writing JSON<a class="zola-anchor" href="#writing-json" aria-label="Anchor link for: writing-json">🔗</a></h2>
+<p>JSON requires quoting keys with hyphens, question marks,
+or other characters,
+while S-expressions have no such issues.</p>
+<p>S-expressions can trivially represent key-value pairs
+with a simple convention: <code>(:key value :key value)</code>.
+Since they are all pairs,
+every odd item is a key,
+every even item is a value,
+and commas are useless for separating them.</p>
+<p>Consider a (very) short book list in JSON:</p>
+<pre class="z-code"><code><span class="z-text z-plain">{
+  myBooks : [
+    {
+      title : &quot;Super Supportive&quot;,
+      author : &quot;Sleyca&quot;,
+      rank : 5
+    },
+    {
+      title : &quot;Name of The Wind&quot;,
+      author : &quot;Patrick Rothfuss&quot;,
+      rating : 5
+    }
+  ]
+}
+</span></code></pre>
+<p>Here’s the S-expression form:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(:my-books
+  ((:title &quot;Super Supportive&quot;
+    :author &quot;Sleyca&quot;
+    :rating 5)
+   (:title &quot;Name of The Wind&quot;
+    :author &quot;Patrick Rothfuss&quot;
+    :rating 5)))
+</span></code></pre>
+<p>Notice how much more compact this is.
+Commas are not required,
+and the indentation (with the editor)
+does all the work of making it all readable.</p>
+<h2 id="writing-programs">Writing programs<a class="zola-anchor" href="#writing-programs" aria-label="Anchor link for: writing-programs">🔗</a></h2>
+<p>S-expressions are an incredible basis for programming languages,
+using two simple ideas:</p>
+<ol>
+<li>The first item of a list is a function.
+Other items in the list are passed as arguments to that function.</li>
+<li>Symbols are used to define or access a variable,
+such as numbers, strings, lists, and functions.</li>
+</ol>
+<p>Now, you only need to remember the above two rules,
+and the two S-expressions rules:
+(1) group items with parentheses, and (2) separate them with spaces.
+Instead of learning the syntax of the language,
+you can now immediately start working with it!</p>
+<p>You might’ve realised that the “move” example I’ve been using
+is a programming instruction —
+<code>(move &quot;Pranab&quot; &quot;Hospital&quot;)</code> will move me to the hospital
+(in order to get my brain checked).</p>
+<p>Even the “call-cab” example is a programming instruction.
+<code>(call-cab (location &quot;Pranab&quot;))</code>
+will first get the location for “Pranab” (me),
+and then call a cab to that location
+(the hospital; the docs said I’m fine).</p>
+<p>How would you define a variable?</p>
+<p>Use <code>(define name &quot;Pranab&quot;)</code>.</p>
+<p>Define a function?
+(Remember, variables also hold functions)</p>
+<pre class="z-code"><code><span class="z-text z-plain">(define greet
+  (fn (name)
+    (display &quot;Hello, &quot; name)))
+</span></code></pre>
+<p>Conditionals?</p>
+<pre class="z-code"><code><span class="z-text z-plain">(if (is-dummy? &quot;Pranab&quot;)
+  (ensmarten))
+</span></code></pre>
+<h3 id="further-reference">Further reference<a class="zola-anchor" href="#further-reference" aria-label="Anchor link for: further-reference">🔗</a></h3>
+<p>There are a few more constructs required to make a full-fledged language,
+but I’ll leave that for others to explain.
+I’m linking to resources on Scheme,
+since it’s a very neat and mature language that uses S-expressions.</p>
+<p><a href="https://spritely.institute/static/papers/scheme-primer.html">A Scheme Primer</a>
+by Christine Lemmer-Webber and the Spritely Institute
+gives a fairly quick rundown of the Scheme programming language
+(there’s a video form of the same on YouTube, with the title
+“Unlock Lisp / Scheme’s magic: beginner to Scheme-in-Scheme in one hour”).</p>
+<p><a href="https://learnxinyminutes.com/docs/CHICKEN/">Learn CHICKEN (Scheme) in Y minutes</a>
+is a much more terse and straightforward introduction
+to the CHICKEN Scheme dialect.</p>
+<p>Other languages using S-expressions include
+Common Lisp, Clojure, Fennel, and Janet.</p>
+<h2 id="fewer-parentheses-with-whitespace-expressions">Fewer parentheses with whitespace expressions<a class="zola-anchor" href="#fewer-parentheses-with-whitespace-expressions" aria-label="Anchor link for: fewer-parentheses-with-whitespace-expressions">🔗</a></h2>
+<!-- or "Fewer parentheses, more significant whitespace" -->
+<p>Now, seeing the above examples, some of you might have thought
+“Well, that looks tedious”, or “Looks about the same to me”.</p>
+<p>“Wait!” I say, “May I present to you: significant whitespace!”
+Since we’re indenting all of the data in a specific way anyway,
+let’s add some rules to manage lists for us without all the parentheses
+(or without most of them, at least).</p>
+<p>I’ve written a separate article for that,
+to avoid making this too long,
+but here’s what the above examples will look like:</p>
+<pre class="z-code"><code><span class="z-text z-plain">:books
+  :
+    :title &quot;Super Supportive&quot;
+    . :author &quot;Sleyca&quot;
+    . :rating 5
+    :title &quot;Name of The Wind&quot;
+    . :author &quot;Patrick Rothfuss&quot;
+    . :rating 5
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">ul : id &quot;data-formats&quot;
+  li () &quot;XML&quot;
+  li () &quot;JSON&quot;
+  li () &quot;S-expressions&quot;
+</span></code></pre>
+<p><a href="https://pranabekka.github.io/drafts/significant-whitespace/">Significant whitespace S-expressions</a></p>
+<h2 id="using">Using<a class="zola-anchor" href="#using" aria-label="Anchor link for: using">🔗</a></h2>
+<p>libs for go, python, c, zig, rust, ocaml, more</p>
+<p>scheme, common lisp, janet</p>
+<p>fennel, hy, clojure
+if you’re already familiar with the lang
+and want to code in your fav lang</p>
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;s-expressions.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
