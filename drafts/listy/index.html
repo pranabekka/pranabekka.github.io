@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Listy
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Listy
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy/#syntax">Syntax</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy/#semantics">Semantics</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#imperative">imperative</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#no-objects">No objects</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#functions-as-values">functions as values</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#types">Types</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#no-variadic-args">no variadic args</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#keyword-args">keyword args?</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#references">references</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#garbage-collection">Garbage collection</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#tooling">Tooling</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#effects-and-capabilities">effects and capabilities</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#macros">macros?</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#common-lisp-condition-system">common lisp condition system?</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#text-not-string">text, not string</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy/#closures">closures</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy/#the-language">The language</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>A beginner’s programming language.</p>
+<p>In the sense that I’m a beginner in programming.
+But also in the sense that I hope it’s easy for beginners.</p>
+<p>S-exps with whitespace.
+Imperative programming.</p>
+<p>expected to have some programming knowledge
+a separate tutorial style thing could work better
+for newer programmers
+plus a gradual introduction would be nice to write</p>
+<p>this is basically design notes</p>
+<h2 id="syntax">Syntax<a class="zola-anchor" href="#syntax" aria-label="Anchor link for: syntax">🔗</a></h2>
+<p>S-expressions yer mama.</p>
+<p>s-exps provide an incredibly simple syntax.
+there’s a “function” and its arguments.
+everything is just that.
+you don’t need to remember all the different symbols
+and how they fit in with each other.
+now you can focus on the language.</p>
+<p>at the same time,
+managing parens can get tedious
+and turn people off even otherwise.
+this is mainly a “marketing” problem,
+yet perceived familiarity is a valid concern.</p>
+<p>given how popular python is
+significant whitespace syntax can do well.
+look also at godot.
+they deprecated their visual programming
+because people were so comfortable with gdscript,
+which has python-like syntax.</p>
+<p>listy syntax is mostly inspired by wisp,
+but deviates from sexps/lisps a little more.</p>
+<pre class="z-code"><code><span class="z-text z-plain">function arg arg arg
+
+def &#39;me : trim &quot; Pranab    &quot;
+
+# greet takes a string and returns a string
+type-of greet &#39;: (string) (string)
+def-fn greet : name
+  print : concat &quot;Hi, &quot; name &quot;!&quot;
+  
+greet me
+</span></code></pre>
+<p>comparison:</p>
+<pre class="z-code"><code><span class="z-text z-plain">function(arg, arg, arg);
+
+me = &quot; Pranab    &quot;;
+trim(me);
+
+fn greet(name: string) -&gt; string {
+  printf(&quot;Hi, {{name}}!&quot;);
+}
+
+greet(me);
+</span></code></pre>
+<h2 id="semantics">Semantics<a class="zola-anchor" href="#semantics" aria-label="Anchor link for: semantics">🔗</a></h2>
+<p>gradual learning curve</p>
+<h3 id="imperative">imperative<a class="zola-anchor" href="#imperative" aria-label="Anchor link for: imperative">🔗</a></h3>
+<p>while there’s room for functional things,
+it’s often too abstract for me.</p>
+<p>imperative programming just makes more sense,
+even if it can make state management harder over time.
+good programming practices should help.
+plus you could build functional over imperative.</p>
+<h3 id="no-objects">No objects<a class="zola-anchor" href="#no-objects" aria-label="Anchor link for: no-objects">🔗</a></h3>
+<p>In the last few weeks
+objects have started making a little more sense to me,
+but they still seem very complex.</p>
+<p>they seem to require an unecessary amount of ceremony.</p>
+<p>also, if you go with composition over inheritance,
+you can achieve the same thing with types,
+which make more sense to me.</p>
+<p>I still don’t quite get the rest of oop,
+so i can’t address those.</p>
+<h3 id="functions-as-values">functions as values<a class="zola-anchor" href="#functions-as-values" aria-label="Anchor link for: functions-as-values">🔗</a></h3>
+<p>maybe my lisp experiments help here,
+but having functions as values makes sense,
+plus they enable so much</p>
+<h3 id="types">Types<a class="zola-anchor" href="#types" aria-label="Anchor link for: types">🔗</a></h3>
+<p>static, with inference.</p>
+<p>probably have type manipulation like idris?</p>
+<p>this is something to adopt gradually.
+you can start with using primitives,
+despite what some articles say.</p>
+<p>then you can slowly refine your types
+and eventually do idris-style advanced type manipulation.</p>
+<p>i’m pretty sure you can express everything with static types.</p>
+<h3 id="no-variadic-args">no variadic args<a class="zola-anchor" href="#no-variadic-args" aria-label="Anchor link for: no-variadic-args">🔗</a></h3>
+<p>pass an optional array.
+easier to reason about deconstructing an array
+than magically having it done
+and adding/remembering the extra syntax for it</p>
+<h3 id="keyword-args">keyword args?<a class="zola-anchor" href="#keyword-args" aria-label="Anchor link for: keyword-args">🔗</a></h3>
+<p>imagine a function for creating a rectangle.
+it takes in 4 numbers for
+x position, y position, width, and height:</p>
+<pre class="z-code"><code><span class="z-text z-plain">make-rect 0 0 10 20
+</span></code></pre>
+<p>note: use quoting for symbols (<code>func 'key value</code>),
+instead of special :keyword syntax</p>
+<p>with keywords:</p>
+<pre class="z-code"><code><span class="z-text z-plain">make-rect :pos-x 0 :pos-y 0 :width 10 :height 20
+</span></code></pre>
+<p>reasons not to include:</p>
+<ul>
+<li>expressing is tedious and verbose,</li>
+<li>types generally address the same issues,</li>
+<li>this specific api (making a rect) is quite established
+in terms of argument order</li>
+<li>editor tooling makes it fully obsolete</li>
+<li>adds extra syntax/complexity</li>
+</ul>
+<p>there’s one way to make keyword args less tedious —
+if the variable name matches the argument name,
+you can remove the argument name,
+and the variable will be passed to the correct argument:</p>
+<pre class="z-code"><code><span class="z-text z-plain">def-fn keyword-func : arg1 arg2
+  # do things
+
+keyword-func :arg1 val1 :arg2 val2
+
+def arg1 something
+def arg2 something-else
+
+keyword-func arg1 arg2
+# expands to `keyword-func :arg1 arg1 :arg2 arg2`
+</span></code></pre>
+<p>types also have the benefit of being easily applied
+in multiple places.
+you can define a url type and use it in multiple places.
+a nominal type can be basically the same as keyword args,
+and you can refine the type over time.
+for the make-rect example:</p>
+<pre class="z-code"><code><span class="z-text z-plain">def-type position &#39;: x y
+def-type rect-size &#39;: length length
+
+def-fn make-rect &#39;: :pos position :size rect-size
+  # ...
+
+make-rect &#39;(0 0) &#39;(10 20)
+</span></code></pre>
+<p>you could still mess up order, but it’s harder, right?
+okay, maybe keyword args still have the upper hand here
+but the points at the beginning still apply</p>
+<p>you could also use comments if it’s really that helpful</p>
+<pre class="z-code"><code><span class="z-text z-plain">make-rect #(x) 0 #(y) 0 #(w) 10 #(h) 20
+</span></code></pre>
+<p>slightly more verbose than keyword args with 0 extra syntax
+plus you don’t have to define which args
+are keywords args in the function definition</p>
+<h3 id="references">references<a class="zola-anchor" href="#references" aria-label="Anchor link for: references">🔗</a></h3>
+<p>felt the use for it in javascript.
+using objects/arrays for refs felt like such a hack.</p>
+<h3 id="garbage-collection">Garbage collection<a class="zola-anchor" href="#garbage-collection" aria-label="Anchor link for: garbage-collection">🔗</a></h3>
+<p>The rewards of manual memory management
+don’t outweigh the costs for me.</p>
+<p>I’d have progressed much further with programming
+if I didn’t buy into the discourse against GC.</p>
+<p>if it’s possible to fit lifetimes and manual mem mgmt,
+such that you could dive into it for perf critical stuff,
+that would be great,
+but delegating to rust/zig/c is also cool.
+i know common lisp has interesting low-level facilities,
+including defining memory layout (for objects, at least).</p>
+<p>copy on write stuff</p>
+<h3 id="tooling">Tooling<a class="zola-anchor" href="#tooling" aria-label="Anchor link for: tooling">🔗</a></h3>
+<p>A uniform and well-enforced style guide.</p>
+<p>A fast and incremental compiler.</p>
+<p>decentralised package registry like go (and rust?)</p>
+<p>maybe a repl like cl/scheme</p>
+<p>language server, editor support</p>
+<p>visual/structural programming
+with blocks and nodes</p>
+<h3 id="effects-and-capabilities">effects and capabilities<a class="zola-anchor" href="#effects-and-capabilities" aria-label="Anchor link for: effects-and-capabilities">🔗</a></h3>
+<p>they’re basically “tokens” that are passed down
+from the main program to functions
+including library functions</p>
+<p>haskell passes effects through the type system,
+and capabilities are quite similar
+though often more fine-grained</p>
+<p>essentially, the main “top-level” possesses full capabilities
+to do things like read and write files, and make network calls.
+this can be limited by passing custom flags
+to the compiler/interpreter.
+anyway, the top-level can pass it on to functions
+through the type-system
+ah, maybe limit it to the main function
+so main function can request capabilities</p>
+<h3 id="macros">macros?<a class="zola-anchor" href="#macros" aria-label="Anchor link for: macros">🔗</a></h3>
+<p>probably not common lisp style ones,
+or lock it somehow with unsafe or other tooling.</p>
+<p>scheme’s safe macro api could be nice.</p>
+<p>could try nim-style macros,
+though i have no idea about it, actually.
+just saw a complicated snippet
+that seemed to manipulate nodes.
+looked like it had more info about the code
+than raw lisp macros,
+which might’ve been manipulating semantics over syntax.</p>
+<p>how do rust macros work?
+ocaml macros?
+sml macros?</p>
+<h3 id="common-lisp-condition-system">common lisp condition system?<a class="zola-anchor" href="#common-lisp-condition-system" aria-label="Anchor link for: common-lisp-condition-system">🔗</a></h3>
+<p>might be too complicated?
+i don’t actually know it much.
+just heard of it here and there.
+basic error types like rust/gleam could be enough</p>
+<p>the other end option is go style errors,
+but i’m convinced nil is a problem,
+and that making it inexpressible is important</p>
+<p>result and option types</p>
+<h3 id="text-not-string">text, not string<a class="zola-anchor" href="#text-not-string" aria-label="Anchor link for: text-not-string">🔗</a></h3>
+<h3 id="closures">closures<a class="zola-anchor" href="#closures" aria-label="Anchor link for: closures">🔗</a></h3>
+<p>it’s intuitive enough.
+you just pack values into a function</p>
+<h2 id="the-language">The language<a class="zola-anchor" href="#the-language" aria-label="Anchor link for: the-language">🔗</a></h2>
+<p>def/define</p>
+<p>loops</p>
+<p>pattern matching</p>
+<p>types</p>
+<p>ref type</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;listy.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

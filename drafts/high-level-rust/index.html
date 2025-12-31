@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+High-level Rust
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>High-level Rust
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+<hr>
+
+<p>Safe and performant without any annotations.</p>
+<pre class="z-code"><code><span class="z-text z-plain">def num_fn(num):
+	num = 10
+	return num
+
+def list_fn(list):
+	list[0] = 10
+	return list
+	
+a = 1
+b = num_fn(a)
+print(a) # 1
+print(b) # 10
+
+x = [1, 2, 3]
+y = list_fn(x)
+print(x) # [10, 2, 3]
+print(y) # [10, 2, 3]
+</span></code></pre>
+<p>Many people think Rust makes C safer,
+and that’s about it.
+The truth is that it’s an improvement in safety
+over all imperative languages.
+It doesn’t just stop at catching potential crashes.
+Rust prevents many subtle errors
+like the one that occurs with <code>number_fn</code> above.
+The problem, however, is Rust’s learning curve.
+You have to learn all kinds of concepts
+and the incantations that invoke them.
+Hylo attempts to make Rust’s safety easier to use
+with its concept of mutable value semantics,
+but that “lo” in “Hylo” (probably) stands for lo-level,
+which means Hylo still has annotations
+for the different ways that variables can be used.
+It’s not truly suitable for a Hy-level language —
+the likes of Python, Javascript, Java or C#.</p>
+<p><a href="https://hylo-lang.org">Hylo</a></p>
+<p><strong>TODO:</strong> check following example with compiler</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() {
+	let a = [1, 2, 3];
+}
+
+fn list_fn(list: [i64]) {
+	list[0] = 10;
+	list
+}
+</span></code></pre>
+<p>I was, instead, inspired by Rust’s ownership syntax.
+Coming from other high-level languages,
+it might look like Rust is performing copies,
+but I learnt to think of moves as unique references.
+I later learnt that moves are not exactly references,
+and might actually have some overhead,
+but then I thought “Why can’t it be a reference?”
+If we remove the annotations for borrowing,
+then assignment becomes the only form of mutation,
+which means it’s fairly easy to infer references.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fun main() {
+	let pets = [&quot;Lancelot&quot;, &quot;Arthur&quot;, &quot;Merlin&quot;]
+	let pets_sorted = list.sort(pets, string.compare)
+	echo pets // [&quot;Lancelot&quot;, &quot;Arthur&quot;, &quot;Merlin&quot;]
+	echo pets_sorted // [&quot;Arthur&quot;, &quot;Lancelot&quot;, &quot;Merlin&quot;]
+}
+</span></code></pre>
+<p>In the above example,
+we supply pets as an argument to <code>list.sort</code>,
+but the result is assigned to <code>pets_sorted</code>,
+so the sorting function receives a copy of <code>pets</code>.
+<code>pets</code> and <code>pets_sorted</code> are separate values.
+Let’s change that code a bit.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fun main() {
+	let pets = [&quot;Lancelot&quot;, &quot;Arthur&quot;, &quot;Merlin&quot;]
+	pets = list.sort(pets, string.compare)
+	echo pets // [&quot;Arthur&quot;, &quot;Lancelot&quot;, &quot;Merlin&quot;]
+}
+</span></code></pre>
+<p>In the new example above,
+the result of <code>list.sort</code> is put back in <code>pets</code>,
+so <code>list.sort</code> receives a reference to <code>pets</code>.
+<code>string.compare</code> is also sent as a reference,
+but only because it’s not mutated by the sort function.
+<code>pets</code> can be thought of as a mutable borrow,
+while <code>string.compare</code> is an immutable borrow.</p>
+<p>There’s a lot of work to do past this,
+but where I used to ruminate for days,
+it now takes me less than an hour
+to sketch out possible solutions for most problems,
+so I believe this idea is fully viable.
+Trying to explain all the edge cases
+will be a very long post
+or a short post with months of editing,
+so I’d like to do that in a separate post
+in response to various feedback.
+Instead, I’d like to mention the benefits.</p>
+<p>There’s a lot of cool things that this syntax allows.</p>
+<p>References become completely invisible.
+There’s no annotations like Rust.
+Even Python requires knowing about
+where the language uses references
+and when you need to make copies.</p>
+<p>Mutating all types looks the same.
+In other languages,
+numbers and strings are treated differently
+from other kinds of values.</p>
+<p>When you call a function from outside
+you know exactly what it mutates,
+because only the variables you assign to are mutated.
+It does not mutate unrelated variables.</p>
+<p>When you edit the body of a function
+you know it cannot mutate unrelated external variables.
+You don’t need to worry about
+how variables are passed in.</p>
+<p>When you call a function,
+the return value is always meaningful.
+Tooling can guide you better.</p>
+<p>There’s only one way to write functions.
+Other languages allow mutating in place,
+returning a value, or both.</p>
+<p>All functions can be chained,
+because they all use return values.
+They don’t need to be written to
+specifically allow chaining.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;high-level-rust.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

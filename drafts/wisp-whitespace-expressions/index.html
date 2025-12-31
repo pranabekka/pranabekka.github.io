@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Wisp whitespace expressions
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Wisp whitespace expressions
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/wisp-whitespace-expressions/#lines-as-lists">Lines as lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/wisp-whitespace-expressions/#new-lists">New lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/wisp-whitespace-expressions/#nested-lists">Nested lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/wisp-whitespace-expressions/#continued-lists">Continued lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/wisp-whitespace-expressions/#inline-nested-lists">Inline nested lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/wisp-whitespace-expressions/#double-nested-lists">Double nested lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/wisp-whitespace-expressions/#more-examples">More examples</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Wisp is a syntax that adds significant whitespace to S-expressions,
+so that you don’t have to use as many parentheses,
+creating a much easier reading and writing experience
+at the cost of a little more complexity.</p>
+<p>Here’s what you can achieve with wisp:</p>
+<pre class="z-code"><code><span class="z-text z-plain">html ()
+  head ()
+    title () &quot;HTML example&quot;
+    link 
+      :href &quot;styles.css&quot; :rel &quot;stylesheet&quot;
+  body ()
+    h1 () &quot;Welcome to my HTML example&quot;
+    p () &quot;This is compiled from wisp expressions.&quot;
+    ul (:id &quot;data-formats&quot;)
+      li () &quot;Wisp&quot;
+      li () &quot;S-expressions&quot;
+      li () &quot;StrictYAML&quot;
+      li () &quot;JSON&quot;
+      li () &quot;XML&quot;
+</span></code></pre>
+<p>It was created as an alternative syntax for the Scheme programming language,
+though the principles apply to any data format
+that aims to achieve an easier reading and writing experience
+while keeping most of the strengths of S-expressions.</p>
+<p>If you don’t know about S-expressions,
+I’d suggest you quickly skim through my article on the same,
+though the gist is that (1) you separate things by whitespace,
+and (2) group them together with parentheses.</p>
+<p><a href="https://pranabekka.github.io/drafts/s-expressions/">Article on S-expressions</a> </p>
+<p><a href="https://www.draketo.de/software/wisp#after-updates">Wisp home page introduction</a> </p>
+<p>Let’s get started with what wisp adds to S-expressions.</p>
+<h2 id="lines-as-lists">Lines as lists<a class="zola-anchor" href="#lines-as-lists" aria-label="Anchor link for: lines-as-lists">🔗</a></h2>
+<p><strong>RULE:</strong>
+Lines automatically start a list.
+You don’t need to type parentheses anymore.</p>
+<p>S-expression:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(:title &quot;Super Supportive&quot;)
+</span></code></pre>
+<p>Wisp:</p>
+<pre class="z-code"><code><span class="z-text z-plain">:title &quot;Super Supportive&quot;
+</span></code></pre>
+<h2 id="new-lists">New lists<a class="zola-anchor" href="#new-lists" aria-label="Anchor link for: new-lists">🔗</a></h2>
+<p><strong>RULE:</strong>
+Lines on the same indentation as the previous start a new list.</p>
+<p>S-expression:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(:title &quot;Super Supportive&quot;)
+(:title &quot;Name of The Wind&quot;)
+</span></code></pre>
+<p>Wisp:</p>
+<pre class="z-code"><code><span class="z-text z-plain">:title &quot;Super Supportive&quot;
+:title &quot;Name of The Wind&quot;
+</span></code></pre>
+<h2 id="nested-lists">Nested lists<a class="zola-anchor" href="#nested-lists" aria-label="Anchor link for: nested-lists">🔗</a></h2>
+<p><strong>RULE:</strong>
+Lines with more indentation than the previous line start a nested list.</p>
+<p>S-expression:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(
+  :books (
+    (:title &quot;Super Supportive&quot;)
+    (:title &quot;Name of The Wind&quot;)
+  )
+)
+</span></code></pre>
+<p>Wisp:</p>
+<pre class="z-code"><code><span class="z-text z-plain">:books
+  :title &quot;Super Supportive&quot;
+  :title &quot;Name of The Wind&quot;
+</span></code></pre>
+<p>(This is not exactly the same, but we’ll get to that)</p>
+<h2 id="continued-lists">Continued lists<a class="zola-anchor" href="#continued-lists" aria-label="Anchor link for: continued-lists">🔗</a></h2>
+<p><strong>RULE:</strong>
+Lines with more indentation than the previous line,
+but starting with a dot continue the previous list,
+instead of created a nested list.</p>
+<p>S-expression:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(
+  :title &quot;Super Supportive&quot;
+  :author &quot;Sleyca&quot;
+  :rating 5
+)
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">(move &quot;Pranab&quot; &quot;Hospital&quot;)
+</span></code></pre>
+<p>Wisp:</p>
+<pre class="z-code"><code><span class="z-text z-plain">:title &quot;Super Supportive&quot;
+. :author &quot;Sleyca&quot;
+. :rating 5
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">move
+. &quot;Pranab&quot;
+. &quot;Hospital&quot;
+</span></code></pre>
+<h2 id="inline-nested-lists">Inline nested lists<a class="zola-anchor" href="#inline-nested-lists" aria-label="Anchor link for: inline-nested-lists">🔗</a></h2>
+<p><strong>RULE:</strong>
+A colon symbol (atom) creates and ends a list on the same line.
+(You can still use parentheses to open and close within the line)</p>
+<p>S-expression:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(call-cab (location &quot;Pranab&quot;))
+</span></code></pre>
+<p>Wisp:</p>
+<pre class="z-code"><code><span class="z-text z-plain">call-cab : location &quot;Pranab&quot;
+</span></code></pre>
+<p>Notice how the colon is a symbol in itself,
+separated from other atoms with whitespace on either end.</p>
+<!--
+**RULE:**
+If a colon starts a line, it creates and ends a nested list within that line.
+
+S-expression:
+
+```
+(item
+  ((item item))
+  ((item item)))
+```
+
+Wisp:
+
+```
+item
+  : item item
+  : item item
+```
+-->
+<h2 id="double-nested-lists">Double nested lists<a class="zola-anchor" href="#double-nested-lists" aria-label="Anchor link for: double-nested-lists">🔗</a></h2>
+<p><strong>RULE:</strong>
+A colon on a line <em>by itself</em> creates a list
+that continues as long as future lines have more indentation.</p>
+<p>Before:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(:books
+  ((:title &quot;Super Supportive&quot;)
+   (:title &quot;Name of The Wind&quot;)))
+</span></code></pre>
+<p>Wisp:</p>
+<pre class="z-code"><code><span class="z-text z-plain">:books
+  :
+    :title &quot;Super Supportive&quot;
+    :title &quot;Name of The Wind&quot;
+</span></code></pre>
+<h2 id="more-examples">More examples<a class="zola-anchor" href="#more-examples" aria-label="Anchor link for: more-examples">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">:books
+  :
+    :title &quot;Super Supportive&quot;
+    . :author &quot;Sleyca&quot;
+    . :rating 5
+
+    :title &quot;Name of The Wind&quot;
+    . :author &quot;Patrick Rothfuss&quot;
+    . :rating 5
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">ul : id &quot;data-formats&quot;
+  li () &quot;XML&quot;
+  li () &quot;JSON&quot;
+  li () &quot;S-expressions&quot;
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">define me &quot;Pranab&quot;
+
+define greet
+  fn : name
+    display &quot;Hello, &quot; name &quot;!&quot;
+    
+greet me
+</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;wisp-whitespace-expressions.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

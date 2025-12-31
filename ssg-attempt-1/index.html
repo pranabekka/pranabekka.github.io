@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+SSG attempt 1 notes
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>SSG attempt 1 notes
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 24, 2024
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/ssg-attempt-1/#goals">Goals</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/ssg-attempt-1/#codeberg-pages-redirects">Codeberg pages redirects</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/ssg-attempt-1/#proper-builds">Proper builds</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/ssg-attempt-1/#other-issues">Other issues</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/ssg-attempt-1/#design-introduction">Design introduction</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/ssg-attempt-1/#few-more-issues">Few more issues</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>I made a little progress on creating my own SSG,
+but I decided it would take too much time
+and I need to work on my base skills first.</p>
+<p>One roadblock was Codeberg pages redirects not working properly,
+Then I also figured that doing proper builds
+would require a lot of work.</p>
+<h2 id="goals">Goals<a class="zola-anchor" href="#goals" aria-label="Anchor link for: goals">🔗</a></h2>
+<p>Before I start, this project was an attempt of two things:
+using djot for authoring pages,
+and using HTML (manipulation) to glue things.</p>
+<h2 id="codeberg-pages-redirects">Codeberg pages redirects<a class="zola-anchor" href="#codeberg-pages-redirects" aria-label="Anchor link for: codeberg-pages-redirects">🔗</a></h2>
+<p>So, I like my built files to be
+in the same directory that I’m working in,
+and I see no reason to not build the site on my machine,
+since I’m already doing the work.</p>
+<p>In light of that, I liked Codeberg’s <code>_redirects</code> file.
+It lets you specify something like <code>/* /build/:splat 200</code>,
+which serves all requests at the root from the build folder,
+without rewriting any URLs.</p>
+<p>It just has a few bugs right now.</p>
+<p><a href="https://codeberg.org/Codeberg/Community/issues/1545#issuecomment-2033496">Issue report on Codeberg</a></p>
+<p>I could try using worktrees or submodules
+with a simple git hook to deploy pages,
+but then I’d have to deal with other issues
+like managing builds correctly,
+not to mention the complexity of git.</p>
+<h2 id="proper-builds">Proper builds<a class="zola-anchor" href="#proper-builds" aria-label="Anchor link for: proper-builds">🔗</a></h2>
+<p>There’s a lot of things to be handled here:</p>
+<ul>
+<li>
+<p>Removing stale files</p>
+<p>If I delete source files, I need to remove
+the corresponding build files.</p>
+</li>
+<li>
+<p>Depending on the build file</p>
+<p>If your build rules change,
+then you want (changed) builds to be redone.
+If I’m doing a build script in the language,
+then everything will need to be redone,
+unless I come up with a clever way to structure builds,
+or maybe work on a constructed dependency graph.</p>
+</li>
+<li>
+<p>Dependency graph</p>
+<p>A way to manage which items depend on which,
+so that individual build jobs can be scheduled.</p>
+</li>
+</ul>
+<p>Some of these ideas are from the ninja author’s
+notes on ninja and a successor called n2,
+which would be good resources for approaching the issue.
+The design notes have a lot of useful information,
+as well as the links in the project’s README file.</p>
+<p><a href="https://neugierig.org/software/blog/2022/03/n2.html">Design notes on n2</a></p>
+<p><a href="https://github.com/evmar/n2">n2 (pronounced “into”) on Github</a></p>
+<p>Using some sort of build library might also be an option,
+though that’ll be another dependency to figure out,
+which might require me to contort my design,
+and they might encounter the pitfalls
+recorded in the design notes for n2.</p>
+<p>I could try using a simple method of rebuilding everything
+and working through all the pages in the contents folder,
+but it would probably cause strife,
+and I still have to deal with other issues.</p>
+<h2 id="other-issues">Other issues<a class="zola-anchor" href="#other-issues" aria-label="Anchor link for: other-issues">🔗</a></h2>
+<p>I have to figure out the design and code for things like
+backlinks, custom components, build hooks, templating, etc.</p>
+<p>In addition to that, I have to do a lot of reasearch
+to figure out which APIs I can use and how.
+I’ve already encountered many little roadblocks.</p>
+<p>At a certain scale, I might also want to use Typescript,
+but I’m still learning Javascript.</p>
+<p>I’m also working on multiple layers of abstraction right now.
+In the current project repo,
+I have a bunch of custom CSS/JS stuff
+for handling a dark/light mode toggle.</p>
+<p><a href="https://codeberg.org/pranabekka/pages">SSG attempt 1 repo</a></p>
+<p>There’s a few more issues
+at the end of the design introduction:</p>
+<h2 id="design-introduction">Design introduction<a class="zola-anchor" href="#design-introduction" aria-label="Anchor link for: design-introduction">🔗</a></h2>
+<p>Folder structure:</p>
+<pre class="z-code"><code><span class="z-text z-plain">build/
+content/
+  index.djot
+  main.js
+  main.css
+  ...
+extra/
+  template-default.html
+_redirects
+ssg.js
+</span></code></pre>
+<p><code>build</code> is where the built site is stored.</p>
+<p><code>content</code> and <code>extra</code> are the two types of input
+for generating the site.
+<code>extra</code> contains “extra” data like templates
+and maybe some data files to build pages from?
+<code>content</code> contains files that will be copied over
+with minimal changes, that form the content of the site.
+Maybe <code>main.js</code> and <code>main.css</code> shouldn’t be in there —
+I probably put them there because I had logic
+for copying anything that wasn’t djot files.</p>
+<p><code>_redirects</code> is something specific to Codeberg pages,
+which allows you to specify redirects for your pages.</p>
+<p><code>ssg.js</code> is the build script.</p>
+<p>It works by working through all the files in <code>content/</code>.
+If it’s <em>not</em> a djot file,
+it simply copies it over to <code>build/</code>,
+and if it <em>is</em> a djot file,
+then it converts it to HTML,
+inserts its contents into the template,
+and copies over the resulting page to <code>build/</code>.</p>
+<h3 id="few-more-issues">Few more issues<a class="zola-anchor" href="#few-more-issues" aria-label="Anchor link for: few-more-issues">🔗</a></h3>
+<p>This reminds me of a few more issues:</p>
+<ul>
+<li>
+<p>How do I handle data files that generate pages?</p>
+<p>Does the <code>content</code> folder treat data formats
+as something special to generate pages from?
+(data formats like JSON or whatever I like)</p>
+<p>Or do I put data files in <code>extra</code>,
+and have a special component or content file
+to take in data and spit out a page or more?</p>
+</li>
+<li>
+<p>How do I copy djot or data files verbatim?</p>
+<p>This is probably the work of a <code>static</code> folder,
+where <code>main.css</code> and <code>main.js</code> should also go.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;ssg-attempt-1.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

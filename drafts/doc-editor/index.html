@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+A better document editor
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>A better document editor
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#structural-writing-editing">Structural writing&#x2F;editing</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#a-simpler-interface">A simpler interface</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#structure">Structure</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#quality-of-life">Quality of life</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#styling">Styling</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#blocks-and-spans">Blocks and spans</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#base-components">Base components</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#plugins-unknown-components">Plugins, unknown components</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#templates">Templates</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#package-management">Package management</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#file-format-database">File format: database</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#compat">Compat</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#research-questions">Research questions</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/doc-editor/#multi-lingual-support">multi-lingual support</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/doc-editor/#visually-separate-ui-from-doc">visually separate ui from doc</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#presentation">Presentation</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/doc-editor/#inspiration">Inspiration</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Document editors like Word tend to encourage bad formatting,
+yet all “office” apps follow that design.</p>
+<p>A better document editor should have a simpler interface
+and naturally guide the author to write correct documents.</p>
+<p>It’s like cars before they had bumpers —
+they had everything to get you from point A to B,
+but it could be quite painful.
+A bad document editor just boils the frog slower.</p>
+<p>I’m sure everyone’s felt the pain of the current generation,
+so I’d like to spend this post outlining an alternative,
+the first step of which is
+editing the <em>structure</em> of the document
+and making the style completely separate.</p>
+<!--
+I like the more flowery writing,
+though straightforward is a bit easier.
+I think I'm aiming for a general audience,
+and I could pull in more readers with this writing.
+
+Don't go overboard.
+I don't have any established readership.
+-->
+<h2 id="structural-writing-editing">Structural writing/editing<a class="zola-anchor" href="#structural-writing-editing" aria-label="Anchor link for: structural-writing-editing">🔗</a></h2>
+<p>Instead of opening a menu and setting text size to “60”,
+and then making it bold,
+you say “this is a title”,
+and the editor will handle it for you.
+This is what computers are good for.</p>
+<p>The author defines the structure of the document.
+They’re writing content instead of selecting style.</p>
+<p>You can now get a list of contents
+and trivially change how it looks.
+You can organise sections by moving them up and down.
+You can tell the editor to number all the titles.</p>
+<p>Now writing and editing is much simpler.
+What more do you need from a document editor?</p>
+<p>The existing generation of editors have this,
+yet they obscure it with unecessary buttons and menus.</p>
+<p>Have you ever had to open a PDF on your phone?
+Imagine exporting your document to a web page instead <sup class="footnote-reference"><a href="#web">1</a></sup>.
+You no longer have to zoom in and out with one hand
+while the other holds it up.</p>
+<div class="footnote-definition" id="web"><sup class="footnote-definition-label">1</sup>
+<p>Web pages can be shared as files
+and easily opened in your browser.
+They don’t need to be put on a www address.</p>
+</div>
+<!--
+emphasis and strong emphasis
+-->
+<h2 id="a-simpler-interface">A simpler interface<a class="zola-anchor" href="#a-simpler-interface" aria-label="Anchor link for: a-simpler-interface">🔗</a></h2>
+<p>Now that you’re not selecting “text size 60”,
+the interface is much simpler.
+You simply select one of
+paragraph, title, heading, and so on.</p>
+<p>Fewer buttons, menus, and panels.
+Fewer distractions.
+More writing.</p>
+<h2 id="structure">Structure<a class="zola-anchor" href="#structure" aria-label="Anchor link for: structure">🔗</a></h2>
+<!--
+A document is made out of several parts:
+
+- Paragraphs,
+- a title,
+- headings,
+- author(s),
+- other metadata, like dates and topic tags,
+- lists,
+- images,
+- videos (for screens [^video]),
+- tables,
+- and more.
+
+[^video]: You could print "video" by extracting important frames.
+-->
+<p>blocks and spans</p>
+<p>A document is made out of “components”,
+which are identified by their type,
+and contain contents like text, images, and other components.
+These contents are subject to certain rules.</p>
+<p>For example, a heading is a component,
+and it cannot contain a paragraph or a list within it.
+However, a heading <em>can</em> contain an emoji component.</p>
+<p>A table is another component,
+and it <em>requires</em> table cells within it.</p>
+<h2 id="quality-of-life">Quality of life<a class="zola-anchor" href="#quality-of-life" aria-label="Anchor link for: quality-of-life">🔗</a></h2>
+<p>structural suggestions/auto-complete</p>
+<p>kakoune style find and replace</p>
+<p>structural selection (kakoune style)
+with helix style visual mode?
+not so different from kakoune, really
+just turns shift into a toggle</p>
+<p>linters</p>
+<p>keyboard driven
+modal editing?</p>
+<p>auto metadata,
+with auto date and update
+can configure to also include author</p>
+<p>delete table with last cell
+which is what happens if you press delete
+inside last empty cell
+if there was text and you were holding delete
+it deletes till cell is empty
+but doesn’t delete cell unless release and press</p>
+<h2 id="styling">Styling<a class="zola-anchor" href="#styling" aria-label="Anchor link for: styling">🔗</a></h2>
+<p>visual editor, complex selectors, multiple includes</p>
+<p>multiple includes: layer multiple stylesheets,
+so that you can put in one or two custom styles of your own</p>
+<p>would css benefit from modules?
+how would programming lang modules work in css?
+oh, you’d use exports and imports
+so you can import everything, or just specific things
+this would benefit from grouping styles together
+using a label for the group
+could also be a label for a single style
+though i’m not sure how that helps?</p>
+<p>other differences from css:</p>
+<ul>
+<li>classes are replaced with nodes/tags</li>
+<li>shouldn’t expose ids?
+maybe you could id things with a custom component/variable
+and select the parent of that component/variable?</li>
+<li>simpler variable syntax?</li>
+<li>wispy/s-expression syntax?
+which means benefits from block and node editors</li>
+</ul>
+<p>how would you visualise complex selectors?
+a visual programming thing?
+or when you select something in the preview,
+it shows a list of valid ways to select it,
+starting with the component name</p>
+<p>would you ever want to style individual words?
+the spaces between them?
+perhaps a specific component could split them up?
+attach spans for each word and space?</p>
+<h2 id="blocks-and-spans">Blocks and spans<a class="zola-anchor" href="#blocks-and-spans" aria-label="Anchor link for: blocks-and-spans">🔗</a></h2>
+<h2 id="base-components">Base components<a class="zola-anchor" href="#base-components" aria-label="Anchor link for: base-components">🔗</a></h2>
+<h2 id="plugins-unknown-components">Plugins, unknown components<a class="zola-anchor" href="#plugins-unknown-components" aria-label="Anchor link for: plugins-unknown-components">🔗</a></h2>
+<h2 id="templates">Templates<a class="zola-anchor" href="#templates" aria-label="Anchor link for: templates">🔗</a></h2>
+<h2 id="package-management">Package management<a class="zola-anchor" href="#package-management" aria-label="Anchor link for: package-management">🔗</a></h2>
+<h2 id="file-format-database">File format: database<a class="zola-anchor" href="#file-format-database" aria-label="Anchor link for: file-format-database">🔗</a></h2>
+<p>benefits over a zip file of text files, images, etc.:</p>
+<ul>
+<li>update in-place</li>
+<li>atomic updates to combat corruption</li>
+</ul>
+<p>For devs: sqlite or other in-memory dbs.</p>
+<h2 id="compat">Compat<a class="zola-anchor" href="#compat" aria-label="Anchor link for: compat">🔗</a></h2>
+<p>if you’ve heard of md, mdx, tex,
+you might like this.
+if you use them, you might not.</p>
+<p>i do have some compat ideas, however,
+which might let you collab with doc editor users.</p>
+<p>dunno bout tex, but take a look at sile sil syntax</p>
+<p>\node[attrs]{content}</p>
+<p>while markdown’s syntax isn’t as uniform,
+it has limited elements, past which you use HTML/XML:</p>
+<p><node attrs>content</node></p>
+<p>i think something like djot is better than both.
+to start with, it’s less verbose than markdown,
+and provides more convenience than latex:</p>
+<p>{attrs}
+content</p>
+<p>bean, which i based on djot, has a little more than djot.
+it’s essentially equal to LaTeX, XML, etc.</p>
+<p>[node attrs]
+content</p>
+<h2 id="research-questions">Research questions<a class="zola-anchor" href="#research-questions" aria-label="Anchor link for: research-questions">🔗</a></h2>
+<h3 id="multi-lingual-support">multi-lingual support<a class="zola-anchor" href="#multi-lingual-support" aria-label="Anchor link for: multi-lingual-support">🔗</a></h3>
+<p>i’m not quite sure how to do that</p>
+<p>the fluent system/api is likely an important component</p>
+<h4 id="interface">interface<a class="zola-anchor" href="#interface" aria-label="Anchor link for: interface">🔗</a></h4>
+<p>perhaps the base components have multi-lingual support
+and plugin authors use the same api to support multiple.
+this means nodes themselves have names in multiple languages
+in addition to being able to author content in multiple languages</p>
+<p>the ui should also adapt to the language.
+some languages are right to left,
+and others are vertical first.</p>
+<h4 id="authoring">authoring<a class="zola-anchor" href="#authoring" aria-label="Anchor link for: authoring">🔗</a></h4>
+<p>document authors might be concerned with matching translations.
+this might mean components that support multiple languages.</p>
+<p>ah, yes: a language attribute for all nodes.</p>
+<p>could have export templates that only export
+components that match one language.
+could also pair with editor views that only show one language.
+“filter by language:”
+dropdowns and tabs are a decent ui element
+for switching language view filters.</p>
+<p>another option might be using cross-references instead:
+have a single source document
+and translations cross-reference it for various sections.
+a cross reference is a link the editor can follow
+to show previews and links to the source.</p>
+<h3 id="visually-separate-ui-from-doc">visually separate ui from doc<a class="zola-anchor" href="#visually-separate-ui-from-doc" aria-label="Anchor link for: visually-separate-ui-from-doc">🔗</a></h3>
+<p>especially if themes match.
+easy if ui stays in same place,
+but you’ll have some markers,
+and it’s encouraged to show ui at the cursor,
+where the user’s focus is.</p>
+<h2 id="presentation">Presentation<a class="zola-anchor" href="#presentation" aria-label="Anchor link for: presentation">🔗</a></h2>
+<p>If the author requires more control
+over layout and visuals,
+they should use a design application.</p>
+<p>It would offer to reference content from their document
+and automatically include it for them.
+This would include updating
+when the author edits the document.</p>
+<p>They could specify default styles and specific overrides.</p>
+<h2 id="inspiration">Inspiration<a class="zola-anchor" href="#inspiration" aria-label="Anchor link for: inspiration">🔗</a></h2>
+<p>Markdown, LaTeX, MDX, Typora</p>
+<p>macromania by aljoscha meyer
+apparently has safe stateful macros that can be composed,
+and the code is the documentation,
+so i have to read through it carefully to understand.
+it uses JSX, though, which is like XML,
+and should thus fit any syntax.</p>
+<p>see github.com/worm-blossom/macromania</p>
+<blockquote>
+<p>the design ensures meaningful error reporting,
+principled interactions between stateful macros,
+and static typing for the input expressions.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;doc-editor.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

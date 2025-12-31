@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Making UNO is hard
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Making UNO is hard
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#the-journey">The journey</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#the-tough-bit">The tough bit</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#giving-up">Giving up</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#an-undo-system">An undo system</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#the-game">The game</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#conclusion">Conclusion</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#try-the-official-uno-2-go-by-mattel">Try the official UNO 2 GO by Mattel</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#additional-implementation-notes">Additional implementation notes</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/making-uno-is-hard/#todo">TODO</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>You should try making it yourself.
+I chose it as a “simple” project
+to have something other than endless tutorials,
+but it actually took me several months
+(probably because I’m a total beginner).</p>
+<h2 id="the-journey">The journey<a class="zola-anchor" href="#the-journey" aria-label="Anchor link for: the-journey">🔗</a></h2>
+<p>I started out with generating the deck,
+then dealing cards to a player,
+making styles for layouts and cards,
+and finally coming around to modeling the game proper.</p>
+<p>At this stage I started out trying to hook it up
+with my deck generation and dealing logic,
+before I had to stop and starting taking notes.</p>
+<h3 id="the-tough-bit">The tough bit<a class="zola-anchor" href="#the-tough-bit" aria-label="Anchor link for: the-tough-bit">🔗</a></h3>
+<p>I needed to know what information
+the game would need for validation,
+the exact rules we play by,
+and solutions to all the edge cases that might occur,
+for which I even asked some family members.</p>
+<p>For example, think of a turn where
+you challenge the previous player, who played a draw 4,
+and you succeed, then you pick a card
+(to match the colour they chose?),
+and then you play the card you picked,
+because it’s a valid card to play.</p>
+<p>Or consider how you’ll allow anyone to catch
+the last player to finish their turn
+if they forgot to say UNO
+(assuming you play by those rules).</p>
+<h3 id="giving-up">Giving up<a class="zola-anchor" href="#giving-up" aria-label="Anchor link for: giving-up">🔗</a></h3>
+<p>I made several small prototypes,
+with variables like drawSum, isActive,
+direction, currentPlayer, currentPlayerIdx,
+discardPile, initialPlayers, prevCard, and more.</p>
+<p>On top of that, I had to figure out project architecture,
+because this is my biggest project by a significant margin,
+so I gave up at that point, focussing on other things
+and trying to process it in the back of my mind.</p>
+<h3 id="an-undo-system">An undo system<a class="zola-anchor" href="#an-undo-system" aria-label="Anchor link for: an-undo-system">🔗</a></h3>
+<p>I finally started again after two or three months,
+when I figured that I could remove all validation.
+Even after the idea entered my occassional pondering,
+it took me some time before I could accept it.</p>
+<p>I think, if I were to do it again,
+I’d store all the validation state in variables,
+and the cards would be a separate system
+that interact with validation state
+at one or two places like placement and starting turn.
+Maybe I’d also go for a server-client structure.</p>
+<h2 id="the-game">The game<a class="zola-anchor" href="#the-game" aria-label="Anchor link for: the-game">🔗</a></h2>
+<p>I eventually landed on a peer-to-peer system,
+with a server hosting the pages and passing messages:</p>
+<div class="border-images">
+  <p><img src="/juan-cards-2.png" alt="juan-cards started game" /></p>
+<p>Players need to see what’s on the discard pile,
+a general sequence of players <sup class="footnote-reference"><a href="#1">1</a></sup>,
+along with the number of cards in their hand,
+a history to track what cards were played,
+and their hand, of course.
+Because there’s no validation,
+there’s also an ‘Undo’ button.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>though the screenshot only shows 1 :p</p>
+</div>
+<p><img src="/juan-cards-0.png" alt="juan-cards lobby" /></p>
+<p>The login page is actually stupidly simple —
+it redirects you to <code>/u/{user-name}</code>,
+and the game logic reads the user-name from the URL.
+They basically have no relation to each other.
+You could skip past the login page to join.</p>
+<p><img src="/juan-cards-1.png" alt="juan-cards unstarted game" /></p>
+<p>Until the game is started, there’s a ‘Start’ button,
+which disappears when you press it.</p>
+<!-- TODO: add draw dialog -->
+</div>
+<h2 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">🔗</a></h2>
+<p>Overall, I’m quite happy that I finished this project,
+even if I don’t have any validation.</p>
+<p>The undo system actually works quite well,
+because people don’t actually think of cheating,
+and I’m playing with people who I’ve played
+with in-person, using physical cards,
+which has basically the same mechanics.</p>
+<p>As for the peer-to-peer architecture,
+I chose it because I found it easier to conceptualise
+a single type of entity talking to more of its type,
+instead of trying to figure out the server/client divide.</p>
+<h2 id="try-the-official-uno-2-go-by-mattel">Try the official UNO 2 GO by Mattel<a class="zola-anchor" href="#try-the-official-uno-2-go-by-mattel" aria-label="Anchor link for: try-the-official-uno-2-go-by-mattel">🔗</a></h2>
+<p>By the way,
+you should install UNO 2 GO on your respective
+(mobile) app store.</p>
+<p>When you first start the game,
+make sure to keep sounds on and don’t skip anything.</p>
+<h2 id="additional-implementation-notes">Additional implementation notes<a class="zola-anchor" href="#additional-implementation-notes" aria-label="Anchor link for: additional-implementation-notes">🔗</a></h2>
+<ul>
+<li>
+<p>4 types of messages:</p>
+<ul>
+<li>join: -</li>
+<li>playerList: -</li>
+<li>start: -</li>
+<li>draw: -</li>
+<li>play: -</li>
+<li>undo: -</li>
+</ul>
+</li>
+<li>
+<p>I simply redraw whole ‘components’
+if their data model changes.
+It’s basically instant,
+and anything more complex would take more time.</p>
+<p>‘Components’ include the hand, player list, and history.</p>
+</li>
+<li>
+<p>Cards have an ID, because I wanted to track
+which card should be moved —
+if somebody has two green 2s,
+the one they press should be the one that moves.</p>
+</li>
+<li>
+<p>aspect-ratio: quite useful,
+except on a particularly old phone
+which we had to resurect to fill in for another
+that met its untimely demise.
+Even then it worked well enough.</p>
+</li>
+<li>
+<p>So many divs, just to make styling easier.
+I didn’t want to deal with browser specific button styles.</p>
+</li>
+<li>
+<p>The history scrolls automatically.
+Maybe I should include a video.</p>
+</li>
+<li>
+<p>Highlight self in player list.</p>
+</li>
+<li>
+<p>Three letter names to fit many easily.
+Also, old video games used to do that,
+which is fun, plus it works well enough.</p>
+</li>
+</ul>
+<h2 id="todo">TODO<a class="zola-anchor" href="#todo" aria-label="Anchor link for: todo">🔗</a></h2>
+<p>There’s a few things that could be used
+to improve the game right now,
+and a few ideas I’m considering for after
+I’ve progressed further in the tutorial <sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p><a href="https://javascript.info">javascript.info</a>, btw.
+It’s free, concise, comprehensive, and includes good exercises.</p>
+</div>
+<ul>
+<li>
+<p>Highlight the last player to play or draw a card.
+This should make it easier to track the game,
+because it can be hard to parse the text.</p>
+</li>
+<li>
+<p>Draw arrows in player list,
+and change direction if play card value is reverse.
+Will need to account for it in undo as well.</p>
+</li>
+<li>
+<p>Highlight if new card on discard pile doesn’t match old.
+Only if it’s particularly hard to track,
+but I find the idea of (lighthearted) cheating fun —
+we usually don’t take UNO too seriously.</p>
+</li>
+<li>
+<p>Use a host/join architecture.
+I ended up watching two tutorials on Godot networking,
+which showed servers just being a specialised peer,
+so that was interesting.
+That would also make lots of things easier.</p>
+</li>
+<li>
+<p>Try peer-js. They have a free server for passing messages,
+so I could play online with people.</p>
+</li>
+<li>
+<p>Handle disconnects.
+This would probably require a server-client implementation.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;making-uno-is-hard.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
