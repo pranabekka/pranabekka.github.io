@@ -1,8 +1,7 @@
 +++
 title = "Borrow inferrer"
-## remember to change date on publishing
-date = 2026-01-20 11:01:53 # draft date
-updated = 2026-01-20 11:01:53
+date = 2026-01-20 13:59:52
+updated = 2026-01-20 13:59:53
 +++
 
 Mutation thout annotations xor bugs.
