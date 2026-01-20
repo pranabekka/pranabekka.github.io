@@ -10,16 +10,11 @@ The key part of Rust is sharing xor mutating,
 where "xor" means "either but not both",
 so you can share or you can mutate,
 but you cannot do both at the same time.
-This is a feature that would remove
-an amazing amount of subtle aliasing bugs
-and others if all the major languages could adopt it,
-including high-level ones like Python and Go,
-which would make them easier to use
-and closer to the goals of high-level languages.
+This gives Rust some high-level properties
+that only functional programming languages have,
+but not any of the mainstream languages.
 The ownership and performance aspects of Rust
-are a sort-of side-effect of the share xor mutate rule,
-though Rust makes some design decisions
-that lean on them further.
+are a sort-of side-effect of the share xor mutate rule.
 Manish Goregaokar has an excellent post
 on the subtler errors caused by shared mutability.
 
