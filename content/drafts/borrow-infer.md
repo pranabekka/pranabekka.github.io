@@ -1,12 +1,11 @@
 +++
-title = "Borrow inferring"
+title = "Borrow inferrer"
 ## remember to change date on publishing
 date = 2026-01-20 11:01:53 # draft date
 updated = 2026-01-20 11:01:53
 +++
 
-A high-level language idea with mutation
-thout annotations xor bugs.
+Mutation thout annotations xor bugs.
 
 The key part of Rust is sharing xor mutating,
 where "xor" means "either but not both",
@@ -38,6 +37,7 @@ However, I might have a way to completely remove bugs
 and annotations at the same time,
 by using Rust's share xor mutate rule
 with a syntax tweak to infer clones, moves and borrows.
+
 We start by looking at moves in Rust:
 
 ```
@@ -79,12 +79,13 @@ assign the result back into the variable.
 Conversely, if a function doesn't return a parameter,
 that means it doesn't mutate it,
 so it receives an immutable borrow or move.
-Now we don't need `&` or `&mut`.
+Now `&` and `&mut` are inferred without annotations.
 The call to `dbg!` above would use an immutable borrow
 because it has a smaller lifetime and
 it doesn't mutate `list`,
-and so we can use `list`
-even after passing it to `dbg!`.
+which means we can use `list`
+even after passing it to `dbg!`,
+which is not possible with Rust.
 
 Values are copied when they're assigned to a new variable,
 based on the fact that there's no point to
@@ -148,8 +149,9 @@ or tail-call optimisation.
 
 The language would also
 make numbers and other values use the same mutation syntax,
-it would give only one string type,
-it would give only one parameter passing method,
+it would have only one string type,
+it would have only one parameter passing method,
+instead of references vs moves,
 it would make functions much easier to reuse,
 and it would allow chaining any normal functions
 as long as their outputs and inputs match,
@@ -216,4 +218,5 @@ provide built-in types and functions for it,
 and we have a solid foundation regardless!
 
 I hope you see the potential!
-I'd love any feedback you have!
+There's lots to figure out still,
+so I'd love any feedback you have!
