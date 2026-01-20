@@ -29,8 +29,9 @@ we must have annotations or we must have bugs,
 but we cannot remove both while still allowing mutation.
 However, I might have a way to completely remove bugs
 and annotations at the same time,
-by using Rust's share xor mutate rule
-with a syntax tweak to infer clones, moves and borrows.
+by using Rust's share xor mutate rule and a syntax tweak,
+so that instead of just checking,
+we can infer clones, moves and borrows.
 
 We start by looking at moves in Rust:
 
