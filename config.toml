@@ -4,7 +4,7 @@ title = "Pranab's site"
 
 # used in index.html template as well as feed
 description = """
-I <3 books, programming, games with people, note-taking and UX.
+I <3 reading, programming, games with people, note-taking and UX.
 """
 
 compile_sass = true
