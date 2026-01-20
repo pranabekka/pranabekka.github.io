@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+Page Not Found - {{ config.title | markdown | striptags }}
+{% endblock %}
+
+{% block content %}
+<h1>Page not found</h1>
+<p class="subtitle">This is not the page you're looking for</p>
+<p>
+This is a link to a draft post
+that is likely deleted or moved out of drafting,
+though it might also not be created yet.
+You can look for moved posts on the home page.
+</p>
+<p>
+<a href="javascript:window.history.back();">Back to previous page</a>
+</p>
+<p>
+<a href="{{ config.base_url }}">Home page</a>
+</p>
+<p>
+<a href="{{ config.base_url }}/about#usage-tips">How to search</a>
+</p>
+{% endblock %}
