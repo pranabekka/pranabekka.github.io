@@ -6,7 +6,7 @@ updated = 2026-01-21 21:07:03
 
 Ruminating on Ginger Bill's post on the same.
 
-[The Only Two Markup Languages](https://gingerbill.org/article/2026/01/19/two-families-of-markup-languages]
+[The Only Two Markup Languages](https://gingerbill.org/article/2026/01/19/two-families-of-markup-languages)
 
 He says XML and TeX are the only families
 of proper arbitrary markup.
