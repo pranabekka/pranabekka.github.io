@@ -37,21 +37,39 @@ fn first_method(bar: Bar) { ... }
 fn second_method(bar: Bar) { ... }
 ```
 
-Here's how I'd use the type in a different module:
+Here's another module implementing the same functions
+with the type `Foo`:
+
+```
+// file: foo.code
+
+type Bar { ... }
+
+fn first_method(foo: Foo) { ... }
+
+fn second_method(foo: Foo) { ... }
+```
+
+Here's how I'd use the types and their functions
+in a different module:
 
 ```
 // file: main.code
 
 import bar.Bar
+import foo.Foo
 
 pub fn main() {
-	let my_var = Bar{...}
-	my_var.first_method()
+	let var_one = Bar{...}
+	var_one.first_method()
+	
+	let var_two = Foo{...}
+	var_two.first_method()
 }
 ```
 
 I had no need to explicitly import `first_method`;
-only prefix it with `my_var`.
+only prefix it with the variable name.
 
 We can also use pipe syntax instead,
 so that the function isn't disguised as a property.
