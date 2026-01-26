@@ -20,10 +20,10 @@ that's unique to objects and interfaces.
 
 We can instead emulate them by
 automatically bundling associated functions in a module.
-Any function in the same module as the type
-that also applies to the type
-is used automatically when added after a type,
-without requiring separate imports or parameters.
+Whenever we use a type,
+we can attach any function from the same module
+as long as it applies to that type,
+without using any imports or parameters.
 
 For example, I have a module with the type `Bar`:
 
@@ -60,15 +60,22 @@ import bar.Bar
 import foo.Foo
 
 pub fn main() {
-	let var_one = Bar{...}
-	var_one.first_method()
+	let one = my_fn(Bar{...})
+	one.second_method()
 	
-	let var_two = Foo{...}
-	var_two.first_method()
+	let too = my_fn(Foo{...})
+	too.second_method()
+}
+
+fn my_fn(var: any) {
+	...
+	var.first_method()
+	...
 }
 ```
 
-I had no need to explicitly import `first_method`;
+I had no need to explicitly import
+or pass around `first_method`;
 only prefix it with the variable name.
 
 We can also use pipe syntax instead,
@@ -85,7 +92,8 @@ pub fn main() {
 }
 ```
 
-Trying to use the function before the type
+Trying to use the function
+without the value before it
 would cause an error.
 
 ```
@@ -171,22 +179,93 @@ Functions from external interfaces aren't
 resolved automatically,
 but that's only true of languages
 that use interfaces instead of objects,
-and even for those,
-I believe it's nicer to see where exactly
-you're importing functions from,
-instead of importing a bunch of interfaces
-that magically pull in arbitrary functions.
+plus we can still just do `import module.*`.
 If we wanted to import and use
 the same function name for different types,
 we can have the language allow those imports
 as long as the function signature is different.
 
 ```
-import foo.to_string
-import bar.to_string
+import foo.{Foo, to_string}
+import bar.{Bar, to_string}
+import baz.*
 
 pub fn main() {
-	to_string(foo.Foo{...})
-	to_string(bar.Bar{...})
+	to_string(Foo{...})
+	to_string(Bar{...})
+	to_string(Baz{...})
 }
 ```
+
+There's still one issue with this.
+Let's say you have an external module
+with a function that expects a type
+with the "method" `external_method`,
+and an external type that doesn't have `external_method`,
+then you'd need to wrap the external type,
+in order to bundle `external_method` with the type.
+
+```
+// ##### file: main.code #####
+
+import foo.expects_dothing
+import bar.ExternalType
+import baz.external_method
+
+pub fn main() {
+	let var = ExternalType{...}
+	
+	// Error: ExternalType does not bundle external_method
+	expects_external_method(var)
+}
+
+// ##### file: baz.code #####
+
+pub fn expects_external_method(var: any) {
+	...
+	var.external_method()
+	...
+}
+```
+
+One way to go about this is to simply disallow
+public functions from using interfaces on unknown types.
+This means libraries must use parametric polymorphism
+and application code can still benefit
+from ad-hoc polymorhism.
+
+If we really wanted to, though,
+we could perhaps attach functions to types
+using a `with` keyword or something similar,
+with the option to use it in function signatures
+to specify the expected interfaces.
+
+```
+// ##### file: main.code #####
+
+import foo.expects_external_method
+import bar.ExternalType
+import baz.external_method
+
+pub fn main() {
+	let var = ExternalType{...}
+	
+	expects_external_method(var with external_method)
+}
+
+// ##### file: baz.code #####
+
+// could specify interface in function signature
+// as `(var: any with external_method)`
+pub fn expects_external_method(var: any) {
+	...
+	var.external_method()
+	...
+}
+```
+
+I think it might be better to restrict
+ad-hoc polymorphism to private functions in app code,
+but we do have the option to put it everywhere,
+and so that solves all our problems
+without any classes, interfaces or newtype issues.
