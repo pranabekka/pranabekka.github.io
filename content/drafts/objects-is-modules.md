@@ -1,5 +1,5 @@
 +++
-title = "Objects is modules <!-- cuz -->"
+title = "Objects is modules, cuz"
 ## remember to change date on publishing
 date = 2026-01-27 19:33:36 # draft date
 updated = 2026-01-27 19:33:36
@@ -12,7 +12,7 @@ when the module is imported.
 That's what the other systems are doing
 --- objects, interfaces, traits, what have you.
 
-Let's say I have a module `foo`:
+Let's say we have a module `foo`:
 
 ```
 pub type Bar { ... }
@@ -26,7 +26,7 @@ pub fn bar_func(bar: Bar) -> Bar {
 }
 ```
 
-Here's how I can use it:
+Here's how we can use it:
 
 ```
 import foo
