@@ -7,7 +7,7 @@ updated = 2026-01-27 19:33:36
 
 Makin' methods from plain ol' funcs, no interface.
 
-Just import functions for a type as methods on it
+Just import functions for a type as methods on the type
 when the module is imported.
 That's what the other systems are doing
 --- objects, interfaces, traits, what have you.
@@ -70,6 +70,8 @@ pub fn mo_func(bar: Bar) -> Bar {
 }
 
 pub fn een_mo_func(bar: Bar) -> Bar {
+	...
+	bar::bar_func()
 	...
 }
 ```
