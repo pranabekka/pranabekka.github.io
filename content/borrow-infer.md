@@ -1,10 +1,22 @@
 +++
 title = "Borrow inferrer"
 date = 2026-01-20 13:59:52
-updated = 2026-01-20 13:59:53
+updated = 2026-01-29 20:21:28
 +++
 
 Mutation thout annotations xor bugs.
+
+**NOTE:** The core idea is pretending to use copies,
+while favouring references or moves under the hood.
+This post tried to be a short introduction,
+but it also tried explaining months of evolution
+from Rust's move syntax to the final language idea,
+which means the post is incomplete
+and includes uneccessary details.
+I'm working on a post that does a better job
+by explaining the core idea.
+I'll link it here in a few weeks,
+but you can read on if you want to.
 
 The key part of Rust is sharing xor mutating,
 where "xor" means "either but not both",
