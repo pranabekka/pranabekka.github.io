@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+SSGs should be libraries
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>SSGs should be libraries
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 24, 2024
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      Aug 04, 2024
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>Hugo (SSG) should’ve been a set of libraries
+that the user imported and hooked up.</p>
+<p><a href="https://gohugo.io">Hugo</a></p>
+<p>The basic proposal is that an SSG in Go
+should provide a simple core API <sup class="footnote-reference"><a href="#1">1</a></sup>
+and a set of libraries to customise and build your site,
+similar to how Bevy and its ecosystem works for games.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Or two or three,
+starting with a dependency graph, I think,
+but I wouldn’t really know.</p>
+</div>
+<p><a href="https://go.dev">Go</a></p>
+<p><a href="https://bevyengine.org">Bevy</a></p>
+<p>You would import the libraries you want,
+maybe implement some specific functionality,
+and build your site from that.</p>
+<p>Given that one of Go’s advantages
+is a fast compile/feedback cycle,
+this approach seems viable,
+and perhaps even desired.</p>
+<p>It enables better customisation
+than trying to program in a templating language,
+and you can use the language that you already know.
+For those unfamiliar with the language,
+it could make a good introduction as well.</p>
+<p>Soupault is an interesting reference here:
+first, you define your page files and how to convert them to HTML,
+then you define things to do with that HTML.
+Another cool thing it does is that there’s no content model.
+You have to define what metadata to extract and how,
+then you decide what to do with it.</p>
+<p><a href="https://soupault.app">Soupault</a></p>
+<p>Zine is another interesting reference point.
+It’s a work-in-progress SSG
+that uses the Zig build system to build your site,
+and allows you to swap in components as you need,
+though I haven’t looked into it too much.
+It also includes structural templating
+that’s a superset of HTML,
+instead of the string templating you find
+in non-Javascript SSGs.</p>
+<p><a href="https://zine-ssg.io">Zine</a></p>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <hr>
+  <p>References to this page:</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;random-foughts-go-ssg-clean-urls&#x2F;">Two random foughts</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;ssg-libs.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

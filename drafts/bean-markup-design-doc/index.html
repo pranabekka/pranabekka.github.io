@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Bean markup design document
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Bean markup design document
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/bean-markup-design-doc/#prior-art">Prior art</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Bean is an extensible markup language,
+with constructs for delimiting and marking up text,
+as well as syntax sugar for commonly used markup,
+such as emphasis, lists, and tables.</p>
+<ul>
+<li>prior art</li>
+<li>rationale</li>
+<li>element attributes</li>
+<li>nesting rules</li>
+<li>blocks <br />
+newline and backtick delimited <br />
+default backticks to containers — anonymous divs/spans</li>
+<li>reserved tag attribute characters <br />
+. for classname <br />
+# for id <br />
+this will even turn paragraphs into generic divs/spans <br />
+if an element isn’t specified like <code>[.class]</code> <br />
+something for a key attribute? <br />
+that automatically selects valid tag? <br />
+<code>[:lang thing]</code> might make it code? <br />
+although that might mean human language <br />
+so forget about that</li>
+<li>inline delimiters <br />
+backticks, asterisks <br />
+allow inline tag before delimiters as well?
+could be quite convenient for some use cases</li>
+<li>headings <br />
+provisionally use 3 hashes for level 1 header <br />
+level 4 and below can use generic block syntax</li>
+<li>metadata</li>
+<li>footnotes</li>
+<li>custom elements/components and extension <br />
+implementation dependent to start with <br />
+although i’d prefer a scheme or newer/custom lisp <br />
+use something like jsx components</li>
+<li>disable elements with config <br />
+implementation dependent</li>
+<li>namespaces/modules/imports/something</li>
+</ul>
+<h2 id="prior-art">Prior art<a class="zola-anchor" href="#prior-art" aria-label="Anchor link for: prior-art">🔗</a></h2>
+<p>Bean borrows from the tradition of Markdown,
+yet is more obviously influenced by
+djot, AsciiDoc, and MDX.</p>
+<p><a href="https://www.markdownguide.org/getting-started/">Markdown</a></p>
+<p><a href="https://djot.net">Djot</a></p>
+<p><a href="https://asciidoc.org/">AsciiDoc</a></p>
+<p><a href="https://mdxjs.com/">MDX</a></p>
+<p>Markdown suffers from being
+an ad-hoc specification with many issues.
+The author of CommonMark and djot
+has already explained these issues
+in ‘Beyond Markdown’.</p>
+<p>While I was initially enamoured by AsciiDoc,
+I eventually realised that it has a lot of complex markup,
+and even more complex rules of its own,
+which makes it hard to implement and use.
+However, it does have some clever syntax decisions.</p>
+<p>Djot is the format I find the most appealing,
+though it has made some choices
+that I believe could be done better.</p>
+<p>The biggest power of MDX is its components system,
+which has a slightly different equivalent in Bean.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;bean-markup-design-doc.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

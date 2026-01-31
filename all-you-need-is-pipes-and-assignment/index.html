@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+All you need is pipes and assignment
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>All you need is pipes and assignment
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 30, 2025
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>For function composition and clearer mutation.</p>
+<p>Most modern languages have realised
+that you should make references explicit,
+but even that can be stripped out.
+If you remove references,
+then assignment is the only way to mutate,
+and you don’t need a second syntax and semantics,
+with its own set of keywords and/or symbols.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = 210
+x = double(x)
+</span></code></pre>
+<p>The main reason references are used
+is to prevent expensive copies,
+but those have been solved for some time.
+The copy-on-write mechanism uses a reference,
+until a mutation is performed,
+at which point it stores a mutated copy.
+Similary, if I’m passing in <code>x</code> and
+assigning it back into <code>x</code>,
+or I never use <code>x</code> again,
+then it can be mutated in place.</p>
+<p>Tada! No copies, no references, no performance cost,
+and a cleaner language with one obvious way to mutate.</p>
+<p>In fact, references have also been lamented by Tony Hoare,
+of “billion-dollar mistake” fame.
+I found an article by without.boats citing this,
+titled “References are like jumps”.
+What’s funny is that they didn’t directly say
+“References considered harmful”,
+but comparing them to jump/goto heavily implies that.
+Their article is a much better advocation
+for removing references in high level languages.</p>
+<p><a href="https://without.boats/blog/references-are-like-jumps/">References considered harmful</a></p>
+<p>Either way,
+I think all new languages should adopt this.
+If your concern is intermediate variables,
+those can also be optimised the same way I suggested,
+although the nicer way is piping or method chaining,
+with piping as the other feature new languages should adopt.</p>
+<pre class="z-code"><code><span class="z-text z-plain">// Intermediate variables
+let metadata = parse_metadata(post)
+let authors = get_authors(metadata)
+let me = find_author(authors, my_name)
+
+// No intermediate variables
+let me = post
+	.parse_metadata()
+	.get_authors()
+	.find_author(&quot;Pranab&quot;)
+</span></code></pre>
+<p>So pass-by-value functions enforce
+nice piping interfaces
+for function composition.</p>
+<p>In fact, I was thinking about references because
+I was wondering how to make nice functions for piping.
+The key to a good piping or method chaining interface
+is returning values instead of mutating references.
+If either of the above functions mutated their arguments,
+then the next function in the chain would get nothing,
+and I’d have to do <code>x.bar()</code> on a new line.
+The best way to ensure functions return values
+is to remove references completely.
+And that brings us the happy accident of creating
+only one obvious way to mutate.</p>
+<p>One benefit of piping over chaining,
+is that chaining requires methods,
+which requires objects,
+which requires mutation,
+thus enabling empty return values.
+Piping only needs functions,
+without any mutation of <code>self</code>.
+Simple pass-by-value functions.
+And it can be used with any function
+that has the right argument type.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let parse_metadata(post: Post) -&gt; Metadata { ... }
+let get_authors(metadata: Metadata) -&gt; List(Author) { ... }
+let find_author(authors: List(Author), name: String) -&gt; Author { ... }
+let me = post
+	|&gt; parse_metadata()
+	|&gt; get_authors()
+	|&gt; find_author(&quot;Pranab&quot;)
+</span></code></pre>
+<p>By the way,
+the question about pipe interfaces,
+and the answer of removing references,
+was actually inspired by Gleam.
+It’s such a neat language.
+You could learn its features in a day
+and the programming style in a week.
+If it had native cross-compilation,
+I’d never look at Go or Rust.</p>
+<p><a href="https://gleam.run">Gleam</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;all-you-need-is-pipes-and-assignment.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

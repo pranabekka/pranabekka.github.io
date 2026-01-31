@@ -1,0 +1,527 @@
+/*****************************************************
+GENERAL SETTINGS
+*/
+
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--max-width: 32rem; /* there's no rch :( */
+
+	--black-80: hsl(0 0 75);
+	--black-60: hsl(0 0 60);
+	--black-40: hsl(0 0 35);
+	--black-0: hsl(0 0 0);
+
+	--fg: var(--black-80);
+	--fg-dim: var(--black-60);
+	--fg-dimmer: var(--black-40);
+
+	--bg: var(--black-0);
+
+	--yellow-80: hsl(45 80 60);
+	--yellow-50: hsl(45 40 40);
+
+	--highlight: var(--yellow-80);
+	--highlight-stale: var(--yellow-50);
+
+	background: var(--bg);
+	color: var(--fg);
+	color-scheme: dark;
+
+	font-family: Work Sans, sans-serif;
+	font-size: 16pt;
+	line-height: 1.4em;
+
+	tab-size: 4;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--black-30: hsl(0 0 30);
+		--black-10: hsl(0 0 15);
+
+		--white-90: hsl(0 0 90);
+
+		--fg: var(--black-0);
+		--fg-dim: var(--black-70);
+		--fg-dimmer: var(--black-60);
+
+		--blue-70: hsl(280 90 30);
+		--blue-40: hsl(280 50 65);
+
+		--highlight: var(--blue-70);
+		--highlight-stale: var(--blue-40);
+
+		--bg: var(--white-90);
+
+		color-scheme: light;
+	}
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+/*****************************************************
+BASIC ELEMENTS
+*/
+
+body {
+	margin: 0 auto;
+	padding: 0;
+	max-width: var(--max-width);
+}
+
+header {
+	max-width: 100%;
+	padding: .5rem;
+}
+
+header > * {
+	vertical-align: middle;
+}
+
+nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	padding: .5rem;
+}
+
+main {
+	margin: 0 auto;
+}
+
+main > p,
+main > div.footnote-definition,
+main > .pipgrid,
+main > details {
+	padding: 0 .5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-bottom: 0;
+	line-height: 1.1em;
+	overflow-wrap: break-word;
+}
+
+.zola-anchor {
+	font-weight: 300;
+	font-size: 1.25rem;
+	line-height: 1.1em;
+	padding-left: 0.3em;
+}
+
+main > h2, main > h3, main > h4, main > h5, main > h6 {
+	padding: 0 .5rem;
+}
+
+h1 {
+	font-weight: 400;
+	font-size: 2rem;
+	padding: 2rem .5rem .5rem;
+}
+
+main > h1 {
+	margin-top: 0;
+}
+
+h2 {
+	font-weight: 400;
+	font-size: 1.75rem;
+}
+
+h3 {
+	font-weight: 400;
+	font-size: 1.25rem;
+}
+
+h4 {
+	font-weight: 600;
+}
+
+#icon {
+	display: inline;
+	width: 1rem;
+	height: 1rem;
+	vertical-align: middle;
+}
+
+h1 > #icon {
+	width: 1.5rem;
+	height: 1.5rem;
+	vertical-align: baseline;
+}
+
+.smalltitle {
+	font-size: 1.25rem;
+}
+
+.subtitle {
+	padding: 0 .5rem .5rem;
+	color: var(--fg-dim);
+	margin: 0; /* override 'main > *' */
+}
+
+#draft-warning {
+	margin-top: .5em;
+}
+
+summary {
+	text-decoration-line: underline;
+	text-decoration-style: dashed;
+	text-decoration-color: var(--highlight);
+	text-decoration-thickness: 2px;
+	width: fit-content;
+}
+
+summary:hover {
+	background: var(--highlight);
+	color: var(--bg);
+}
+
+.contents {
+	margin-top: 0.5em;
+}
+
+.contents > ol {
+	margin-top: 0.5em;
+}
+
+p {
+	margin: .5rem 0;
+}
+
+a {
+	color: inherit;
+	text-decoration-color: var(--highlight);
+	text-decoration-thickness: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+	a {
+		text-decoration-thickness: 3px;
+	}
+}
+
+a:hover {
+	background: var(--highlight);
+	text-decoration: none;
+	color: var(--bg);
+}
+
+a:visited {
+	text-decoration-color: var(--highlight-stale);
+}
+
+a:visited:hover {
+	background: var(--highlight-stale);
+}
+
+pre, code {
+	font-family: IntelOne Mono, monospace;
+}
+
+p > code, li > code, h1 > code, h2 > code, h3 > code {
+	border: 1px solid var(--fg-dimmer);
+	border-radius: 4px;
+	padding: 0 .3rem;
+}
+
+.sample-block {
+	border: 1px solid var(--fg-dim);
+	padding: 0 .5rem;
+}
+
+pre {
+	border: 1px solid var(--fg-dim);
+	overflow-x: scroll;
+}
+
+pre code {
+	margin: .5rem;
+	display: inline-block;
+}
+
+p code {
+	overflow-wrap: break-word
+}
+
+ul {
+	padding: 0 .5rem 0 2rem;
+	list-style-type: disc;
+}
+
+ol {
+	padding: 0 .5rem 0 2.5rem;
+}
+
+ol > li::marker {
+	font-weight: 600;
+	font-size: .8em;
+}
+
+.contents > ol {
+	padding-left: 0;
+	list-style-position: inside;
+}
+
+li + li {
+	padding-top: .5rem;
+}
+
+li > ul, li > ol {
+	padding-top: .5rem;
+	padding-left: 1.2rem;
+	padding-right: 0;
+}
+
+li > p:nth-child(1) {
+	display: inline;
+}
+
+img, video {
+	max-width: 100%;
+	max-height: 90vh;
+}
+
+main img, main video {
+	display: block;
+	margin: auto;
+}
+
+img[data-image-type="logo"] {
+	max-width: min(100%, 15rem)
+}
+
+.tablewrapper {
+	overflow-x: scroll;
+}
+
+.border-images img {
+	border: 1px solid var(--fg-dim);
+}
+
+.border-images > p,
+.border-images > .footnote-definition {
+	padding: 0 .5rem;
+}
+
+table {
+	text-align: left;
+	border: 1px solid var(--fg-dim);
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table * {
+	border: 1px solid var(--fg-dim);
+	padding: .5rem 1rem;
+	vertical-align: top;
+}
+
+blockquote {
+	border-left: 3px solid var(--fg-dim);
+	padding-left: .5rem;
+	margin: 0 .5rem;
+}
+
+sup.footnote-reference, sup.footnote-definition-label {
+	vertical-align: bottom;
+	font-size: 1rem;
+	text-align: center;
+	color: var(--fg-dim);
+}
+
+.footnote-reference:before,
+.footnote-reference:after {
+	color: var(--fg-dim);
+}
+
+.footnote-reference:before {
+	content: "[";
+}
+
+.footnote-reference:after {
+	content: "]";
+}
+
+.footnote-definition-label {
+	border-color: var(--fg-dim);
+}
+
+.footnote-definition-label:before {
+	content: "[";
+}
+
+.footnote-definition-label:after {
+	content: "]";
+}
+
+.footnote-definition > p {
+	display: inline;
+	color: var(--fg-dim);
+}
+
+footer {
+	margin: 0 auto;
+	margin-top: 6rem; /* match upper margin between title and header */
+	border-top: 1px solid var(--fg);
+}
+
+hr {
+	margin: 0 .5rem;
+	border-color: var(--fg-dimmer);
+}
+
+figure {
+	margin: 0 .5rem;
+}
+
+figcaption {
+	color: var(--fg-dim);
+}
+
+figcaption {
+	margin-top: .25rem;
+}
+
+/*****************************************************
+LAYOUT
+after settings and basic elements to override them
+*/
+
+main > * {
+	margin-top: 1.5em;
+}
+
+footer > * {
+	margin: .5rem auto;
+	padding: 0 .5rem; /* only horizontal, to keep alignment, since footer manages vertical */
+}
+
+footer > hr {
+	margin: 0 .5rem;
+}
+
+/*****************************************************
+SYNTAX HIGHLIGHTING
+*/
+
+.z-tag, .z-markdown.z-section {
+	font-weight: bold;
+}
+
+.z-comment {
+	color: var(--fg-dim);
+}
+
+/*****************************************************
+special: HEADING NUMBERS
+*/
+
+main {
+	counter-reset: h2-counter;
+}
+
+main > h2 {
+	counter-reset: h3-counter;
+}
+
+main > h2:before, main > h3:before {
+	color: var(--fg-dim);
+	font-weight: 300;
+	font-size: 1.25rem;
+	line-height: 1.1em;
+}
+
+main > h2:before {
+	content: counter(h2-counter) ". ";
+	counter-increment: h2-counter;
+}
+
+main > h3:before {
+	content: counter(h2-counter) "." counter(h3-counter) ". ";
+	counter-increment: h3-counter;
+}
+
+/*****************************************************
+special: CARD
+used in index, resume
+*/
+
+.cards {
+	list-style-position: inside;
+	padding: 0 .5rem;
+	list-style: none;
+	margin-top: 2.5rem;
+}
+
+.cards .subtitle {
+	padding: .5rem 0 0;
+}
+
+/*****************************************************
+special: PIPS, ICONS
+used in: resume
+*/
+
+.icon {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	position: relative;
+	top: .1em;
+	margin: 0 .2em;
+	stroke: currentColor;
+	stroke-width: 2;
+}
+
+.pipgrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+	gap: 1.5em;
+	align-items: end;
+}
+
+.pip-display {
+	line-height: 1em;
+}
+
+.pip {
+	display: inline-block;
+	width: 1.5em;
+	height: .2em;
+	border-radius: .1em;
+	background: var(--fg-dimmer);
+}
+
+@media (prefers-color-scheme: light) {
+	.pip {
+		height: .26em;
+		border-radius: .13em;
+	}
+}
+
+.pip.full {
+	background: var(--fg);
+}
+
+/*****************************************************
+special: FOLIO GRID
+thumbnail grid view setup for portfolio
+*/
+
+.folio-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
+	gap: 1em;
+}

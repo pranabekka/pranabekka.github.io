@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Borrow inferrer
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Borrow inferrer
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jan 20, 2026
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      Jan 29, 2026
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>Mutation thout annotations xor bugs.</p>
+<p><strong>NOTE:</strong> The core idea is pretending to use copies,
+while favouring references or moves under the hood.
+This post tried to be a short introduction,
+but it also tried explaining months of evolution
+from Rust’s move syntax to the final language idea,
+which means the post is incomplete
+and includes uneccessary details.
+I’m working on a post that does a better job
+by explaining the core idea.
+I’ll link it here in a few weeks,
+but you can read on if you want to.</p>
+<p>The key part of Rust is sharing xor mutating,
+where “xor” means “either but not both”,
+so you can share or you can mutate,
+but you cannot do both at the same time.
+This gives Rust some high-level properties
+that only functional programming languages have,
+but not any of the mainstream languages.
+The ownership and performance aspects of Rust
+are a sort-of side-effect of the share xor mutate rule.
+Manish Goregaokar has an excellent post
+on the subtler errors caused by shared mutability.</p>
+<p><a href="https://manishearth.github.io/blog/2015/05/17/the-problem-with-shared-mutability/">The Problem With Single-Threaded Shared Mutability</a></p>
+<p>The problem with Rust is that
+it requires explicit annotations for borrows and clones,
+which is not suitable for a high-level language,
+even if lifetimes are the truly scary bit.
+Rust’s language design suggests that
+we must have annotations or we must have bugs,
+but we cannot remove both while still allowing mutation.
+However, I might have a way to completely remove bugs
+and annotations at the same time,
+by using Rust’s share xor mutate rule and a syntax tweak,
+so that instead of just checking,
+we can infer clones, moves and borrows.</p>
+<p>We start by looking at moves in Rust:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() {
+	let mut list = [&quot;ay&quot;, &quot;bee&quot;, &quot;sea&quot;];
+	list = list_fn(list);
+	dbg!(list);
+}
+
+fn list_fn(mut list: [&amp;str; 3]) -&gt; [&amp;str; 3] {
+	list[0] = &quot;ecks&quot;;
+	list
+}
+</span></code></pre>
+<p>There’s a borrow annotation because of
+the specific string type,
+but otherwise there’s no reference
+or lifetime annotations here.
+It looks almost like a high-level language.
+If we remove explicit borrow annotations,
+then our new language would require assignment syntax
+to invisibly mutate with moves or mutable borrows.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let mut list = [&quot;ay&quot;, &quot;bee&quot;, &quot;sea&quot;]
+	list = list_fn(list)
+	dbg!(list)
+
+fun list_fn(list)
+	list[0] = [&quot;ecks&quot;]
+	list
+</span></code></pre>
+<p>This means that a function must return a parameter
+if it intends to mutate it, and then we need to
+assign the result back into the variable.
+Conversely, if a function doesn’t return a parameter,
+that means it doesn’t mutate it,
+so it receives an immutable borrow or move.
+Now <code>&amp;</code> and <code>&amp;mut</code> are inferred without annotations.
+The call to <code>dbg!</code> above would use an immutable borrow
+because it has a smaller lifetime and
+it doesn’t mutate <code>list</code>,
+which means we can use <code>list</code>
+even after passing it to <code>dbg!</code>,
+which is not possible with Rust.</p>
+<p>Values are copied when they’re assigned to a new variable,
+based on the fact that there’s no point to
+creating a new variable if you’re going to have it
+point to the same thing as the original.
+The new variable needs to be different from the old,
+so it needs to be copied.
+Now we don’t need <code>.clone()</code> or <code>derive(Copy)</code>.
+In this example,<code>list2</code> is a copy of <code>list</code>
+that is mutated by <code>list_fn</code>:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let list = [&quot;ay&quot;, &quot;bee&quot;, &quot;sea&quot;]
+	let list2 = list_fn(list)
+	dbg!(list)
+	dbg!(list2)
+</span></code></pre>
+<p>Some types won’t be magically copied in this way,
+such as files and network connections,
+and types that use them would also be treated the same.
+The language would use moves when
+assigning such values to a different variable,
+and require explicit clones, if possible.
+Any types that used those would also use
+moves and explicit clones.
+The compiler would provide built-in types and functions
+for these resources.</p>
+<p>Even iterators would ensure that we cannot
+mutate a list directly while looping over it,
+because iteration requires sharing,
+which would prevent mutation.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let mut list = [&quot;ay&quot;, &quot;bee&quot;, &quot;sea&quot;]
+	list = for list item {
+		item = string.join(item, &quot;!!&quot;)
+		// ERROR:
+		list = push(list, item)
+	}
+</span></code></pre>
+<p>The <code>for</code> loop takes a mutable reference to each item
+and mutates it in-place,
+then returns the result with the reference.
+It’s similar to <code>map</code>,
+but it allows mutable access to variables outside the loop.
+If we wanted to add items to <code>list</code>,
+we could loop over indexes or do it after the loop.</p>
+<p>All this should give us most of Rust’s performance
+along with the safety guarantees,
+but without any of the low-level annotations.
+In fact, you could say this language is higher level
+than Python and even functional languages,
+because you don’t need to think about references
+or tail-call optimisation. </p>
+<p>The language would also
+make numbers and other values use the same mutation syntax,
+it would have only one string type,
+it would have only one parameter passing method,
+instead of references vs moves,
+it would make functions much easier to reuse,
+and it would allow chaining any normal functions
+as long as their outputs and inputs match,
+which is super fun!</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	[&quot;ay&quot;, &quot;bee&quot;, &quot;sea&quot;]
+	|&gt; fn_one()
+	|&gt; fn_two()
+	|&gt; fn_three()
+	|&gt; dbg!()
+
+fun fn_one(l)
+	l[0] = &quot;ecks&quot;
+	l
+
+fun fn_two(l)
+	l[1] = &quot;why&quot;
+	l
+
+fun fn_three(l)
+	l[2] = &quot;zed&quot;
+	l
+</span></code></pre>
+<p>You can learn more about chaining
+by trying it out in Gleam,
+where it’s called piping.
+The code example in the link below is interactive,
+so you can edit it to see how it works.
+You’ll see that it’s much more flexible
+than method chaining.</p>
+<p><a href="https://tour.gleam.run/functions/pipelines/">Chaining normal functions in Gleam</a></p>
+<p>The snippets I’ve shown so far
+might remind some people of functional programming,
+but this language would allow
+clear in-place mutation,
+higher performance,
+and the popular imperative programming semantics.
+That said, part of the inspiration for this
+came around June 2025,
+when I was wondering how to adopt pipes
+from functional languages like Gleam
+to imperative languages,
+though learning and understanding Rust
+showed a better way to achieve it.</p>
+<p><a href="https://pranabekka.github.io/all-you-need-is-pipes-and-assignment/">An inferior reference inference idea</a></p>
+<p>Going back to the point,
+we would have a language that’s safe,
+correct, high-level, familiar
+to the vast majority of imperative
+and low-level programmers,
+high performance, and fun to use!
+It wouldn’t even have a garbage collector!
+There’s still a lot to figure out,
+especially for concurrency,
+but the compiler should be able to
+provide built-in types and functions for it,
+and we have a solid foundation regardless!</p>
+<p>I hope you see the potential!
+There’s lots to figure out still,
+so I’d love any feedback you have!</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;borrow-infer.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

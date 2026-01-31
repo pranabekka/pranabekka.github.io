@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+How Static Site Generators Work ft. Zola
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>How Static Site Generators Work ft. Zola
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Apr 19, 2023
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/how-ssgs-work/#structure">Structure</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/how-ssgs-work/#getting-started">Getting Started</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/how-ssgs-work/#authoring-pages">Authoring Pages</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/how-ssgs-work/#static-files">Static Files</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/how-ssgs-work/#actually-using-zola">Actually Using Zola</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<!--
+TODO: clarify where to use terminal commands.
+TODO: mention template engine
+-->
+<p>This is a general guide about how static site generators work,
+using the Zola static site generator as an example,
+with a sprinkling of why they are organised this way.
+Other static site generators have the same requirements,
+and generally use the same ideas and structure,
+so this knowledge should help you get started with
+any static site generator.</p>
+<p>This post will be easier to digest if you understand
+the difference between static and dynamic sites,
+HTML and CSS, text editors, and the terminal.
+Also, follow the Zola <a href="https://www.getzola.org/documentation/getting-started/installation/">installation instructions</a>
+so that you can follow along with the examples.</p>
+<p><strong>NOTE:</strong> Please don’t write the files as presented in this post
+for an actual blog/website for others.
+One reason is that I’m only putting partial HTML
+(it works, but it’s a good way to make a terrible site),
+and I’ve also skipped on some other more advanced topics.
+This post only explains how a static site generator
+brings everything together.</p>
+<h2 id="structure">Structure<a class="zola-anchor" href="#structure" aria-label="Anchor link for: structure">🔗</a></h2>
+<p>Let’s get right into it.
+The basic folders a static site generator needs are as follows:</p>
+<ol>
+<li>content</li>
+<li>static</li>
+<li>templates</li>
+<li>public</li>
+</ol>
+<p>The <code>content</code> folder is meant for the posts you write.
+Zola and other popular generators use <a href="https://spec.commonmark.org/dingus/">markdown</a> for writing,
+and then these posts are processed
+before being placed in the <code>public</code> folder,
+using roughly the same file and folder structure.
+They usually also include some more advanced features
+that go beyond markdown.</p>
+<p>The <code>static</code> folder is for files that are to be served as is,
+without any modifications.
+This includes images and CSS files.
+These files and folders are copied directly to the <code>public</code> directory.
+You can duplicate the folder structure from your <code>content</code> folder
+and the files will then be placed in the same places
+under the <code>public</code> directory,
+next to the processed files from the <code>content</code> folder,
+if they have the same relative path.
+i.e. if you have the files <code>content/posts/post1.md</code>
+and <code>static/posts/post2.html</code>
+then your <code>public</code> folder will have <code>post1.html</code>
+(remember, files from <code>content</code> are processed)
+and <code>post2.html</code> under <code>public/posts/</code>.</p>
+<p>The <code>templates</code> folder includes a bunch of html
+files that are processed along with
+a markdown file from the <code>content</code> folder
+whenever you tell the markdown file to use that template,
+or according to some special rules
+so that you don’t have to specify it every time.
+Templates allow you to do things like
+putting a list of important links on every page,
+or creating a list of all your pages.
+To do this, they allow some special codes in them
+to access the contents of the folders and files
+in the <code>content</code> folder.</p>
+<p>Finally, the <code>public</code> folder is where all the processed content
+is finally output for the “public” to view.
+This is where the “static” from “static site generator” comes in —
+they’re simply a bunch of static files,
+served as-is to anyone who visits your site.</p>
+<p>Most generators also include a <code>theme</code> folder
+where you can place “themes” from other people,
+which include custom styling (css) and templates
+to do most of the heavy lifting —
+all you have to do is write your markdown posts.</p>
+<p>Other files and folders can also be included for various things.
+The config file is a common one, placed with the other folders,
+to control things like your website name, url, theme, etc.
+The website url is used when generating the paths for links,
+amongst other places.</p>
+<h2 id="getting-started">Getting Started<a class="zola-anchor" href="#getting-started" aria-label="Anchor link for: getting-started">🔗</a></h2>
+<p>The easiest way to get started in Zola is to create an <code>index.html</code>
+file within the <code>templates</code> folder.
+All you would need to put is <code>&lt;h1&gt;Hello, world&lt;/h1&gt;</code>,
+and you’re done.</p>
+<p>If you run <code>zola build</code> and check the <code>public</code> directory,
+you’ll see the <code>index.html</code> file, which is copied as-is.
+Open it in your web browser to see what it looks like
+(kind of ugly, unless that’s your taste).
+Open it in your editor to check that
+it’s actually copied <code>templates/index.html</code> as-is.</p>
+<p>The <code>templates/index.html</code> file is required because
+every website needs an index file to start,
+and markdown files can’t be processed without a template.</p>
+<p>The <code>_index.md</code> file is not required
+because there’s no reason to edit it often,
+which means that there’s little benefit to writing it in markdown,
+so Zola simply assumes it exists.</p>
+<p>A cleaner way would have been to accept
+an <code>index.html</code> file in the <code>static</code> folder,
+since you only need Zola to copy it as-is,
+but Zola has (rightly) assumed
+that there is no reason to do that,
+so they never check for it.</p>
+<h2 id="authoring-pages">Authoring Pages<a class="zola-anchor" href="#authoring-pages" aria-label="Anchor link for: authoring-pages">🔗</a></h2>
+<p>Like I said above, a markdown file requires a template
+for it to be processed.
+Zola automatically applies the <code>templates/index.html</code> file
+to the (automatically created) <code>content/_index.md</code> file,
+and any other pages are usually assigned the <code>page.html</code> template,
+unless you specify otherwise.</p>
+<p>So, the first thing to do is to create a <code>page.html</code> file
+inside the <code>templates/</code> folder.
+Within that file, we enter the following:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>{{ page.title }}<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+{{ page.content }}
+</span></code></pre>
+<p>The text between the braces (<code>{{ }}</code>) are the special codes
+that I mentioned earlier.</p>
+<p>When the <code>page.html</code> file is processed with a markdown file,
+it is given access to parts of the markdown file using
+the <code>page</code> variable.
+The <code>page</code> variable has fields called <code>title</code> and <code>content</code>.
+Our <code>page.html</code> template file puts the page title inside a heading tag,
+then dumps the rest of the page under that.</p>
+<p>Now, we can write our first page in the <code>content</code> folder.
+Choose a name for your file.
+We’ll choose <code>first-post.md</code>,
+and within it, we’ll write some text:</p>
+<p>Try to write your own title and text,
+so that you can see Zola respond to your wishes.</p>
+<pre data-lang="md" class="language-md z-code"><code class="language-md" data-lang="md"><span class="z-text z-html z-markdown"><span class="z-meta z-paragraph z-markdown">+++
+title = &quot;My First Post&quot;
+date = 2023-04-19
++++
+
+</span><span class="z-meta z-paragraph z-markdown">Hi, this is my first post!
+</span></span></code></pre>
+<p>The section between the two sets of plus symbols (<code>+++</code>)
+is known as the frontmatter.
+Different sites use different styles for frontmatter.
+The frontmatter is used to specify basic information about your post,
+including some custom information you can pick for yourself.
+The title field is what is accessed by <code>{{ page.title }}</code>
+in your <code>page.html</code> template,
+and everything outside the frontmatter is the content,
+accessed by <code>{{ page.content }}</code>.</p>
+<p>If you run <code>zola build</code>,
+and open the <code>public</code> folder,
+you’ll see a <code>first-post/</code> folder,
+within which is an <code>index.html</code> file.
+This is done because opening <code>first-post.html</code>
+would show the <code>.html</code> at the end of the url,
+which people might find ugly
+because they’re not used to seeing it,
+and it’s something that a visitor to your site
+doesn’t need to know.
+It works because whenever the browser opens a folder on a server,
+it automatically shows any <code>index.html</code> file within that folder.
+This will not work when opening a folder on your computer.
+In that case the browser shows a list of files in that folder.</p>
+<p>If you open <code>first-post/index.html</code> in your editor,
+you’ll see the following:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>My First Post<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+<span class="z-constant z-character z-entity z-named z-html"><span class="z-punctuation z-definition z-entity z-html">&amp;</span>lt<span class="z-punctuation z-terminator z-entity z-html">;</span></span>p<span class="z-constant z-character z-entity z-named z-html"><span class="z-punctuation z-definition z-entity z-html">&amp;</span>gt<span class="z-punctuation z-terminator z-entity z-html">;</span></span>Hi! This is my first post.<span class="z-constant z-character z-entity z-named z-html"><span class="z-punctuation z-definition z-entity z-html">&amp;</span>lt<span class="z-punctuation z-terminator z-entity z-html">;</span></span><span class="z-constant z-character z-entity z-hexadecimal z-html"><span class="z-punctuation z-definition z-entity z-html">&amp;#x</span>2F<span class="z-punctuation z-terminator z-entity z-html">;</span></span>p<span class="z-constant z-character z-entity z-named z-html"><span class="z-punctuation z-definition z-entity z-html">&amp;</span>gt<span class="z-punctuation z-terminator z-entity z-html">;</span></span>
+</span></code></pre>
+<p>Open the file in your browser to see exactly what it’s doing.
+<code>page.content</code> has basically created the text
+<code>&lt;p&gt;Hi! This is my first post&lt;/p&gt;</code>,
+and Zola makes sure by default that random text
+is not converted into HTML elements,
+otherwise it might mess up your page.</p>
+<p>To correct the issue, edit your <code>page.html</code> file
+in the <code>templates</code> folder.
+Change <code>{{ page.content }}</code> to <code>{{ page.content | safe }}</code>.
+The safe command tells Zola that page.content
+(or whatever comes before the <code>|</code>)
+is properly formatted HTML,
+and is thus safe to show as is.</p>
+<p>Run <code>zola build</code> again and check the file
+in your editor and the browser
+to make sure that everything is working.
+Your editor should now show the following:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>My First Post<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>Hi! This is my first post.<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">p</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+</span></code></pre>
+<p>Feel free to create a second post to test it out further.</p>
+<h2 id="static-files">Static Files<a class="zola-anchor" href="#static-files" aria-label="Anchor link for: static-files">🔗</a></h2>
+<p>The <em>static</em> folder is a good place to put your <code>style.css</code>.
+Just put <code>body { background: cyan; }</code> to test it out.</p>
+<p>Remember to edit your template file
+so that it links to the CSS file:</p>
+<pre data-lang="html" class="language-html z-code"><code class="language-html" data-lang="html"><span class="z-text z-html z-basic"><span class="z-meta z-tag z-inline z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-inline z-any z-html">link</span> <span class="z-meta z-attribute-with-value z-html"><span class="z-entity z-other z-attribute-name z-html">rel</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span>stylesheet<span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span> <span class="z-meta z-attribute-with-value z-html"><span class="z-entity z-other z-attribute-name z-html">href</span><span class="z-punctuation z-separator z-key-value z-html">=</span><span class="z-string z-quoted z-double z-html"><span class="z-punctuation z-definition z-string z-begin z-html">&quot;</span>../style.css<span class="z-punctuation z-definition z-string z-end z-html">&quot;</span></span></span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>{{ page.title }}<span class="z-meta z-tag z-block z-any z-html"><span class="z-punctuation z-definition z-tag z-begin z-html">&lt;/</span><span class="z-entity z-name z-tag z-block z-any z-html">h1</span><span class="z-punctuation z-definition z-tag z-end z-html">&gt;</span></span>
+{{ page.content | safe }}
+</span></code></pre>
+<p>Run <code>zola build</code> and refresh the browser page to review your changes.</p>
+<h2 id="actually-using-zola">Actually Using Zola<a class="zola-anchor" href="#actually-using-zola" aria-label="Anchor link for: actually-using-zola">🔗</a></h2>
+<p>I explained things using the slightly cumbersome way
+so you could see the things I explain for yourself,
+and I omitted several other features that were
+not necessary to explain the main components.</p>
+<p>The first thing to know is that <code>zola serve</code>
+creates a local url that you can open in your browser,
+and whenever you save changes to any of your files,
+Zola will refresh the page
+and serve any new pages that you create.
+You don’t have to run <code>zola build</code> and manually refresh the page,
+so you can focus on simply editing your website
+while Zola does the rest of the work.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;how-ssgs-work.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

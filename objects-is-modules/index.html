@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Objects is modules, cuz
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Objects is modules, cuz
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jan 31, 2026
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>Makin’ methods from plain ol’ funcs, no interface.</p>
+<p>Just import functions for a type as methods on the type
+when the module is imported.
+That’s what the other systems are doing
+— objects, interfaces, traits, what have you.</p>
+<p>Let’s say we have a module <code>foo</code>:</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub type Bar { ... }
+
+pub fn new_bar() -&gt; Bar {
+	...
+}
+
+pub fn bar_func(bar: Bar) -&gt; Bar {
+	...
+}
+</span></code></pre>
+<p>Here’s how we can use it:</p>
+<pre class="z-code"><code><span class="z-text z-plain">import foo
+
+pub fn main() -&gt; Nil {
+	let my_var = foo.new_bar()
+	
+	// Call as method
+	my_var.bar_func()
+	
+	// Call as plain ol&#39; func
+	foo.bar_func(my_var)
+}
+</span></code></pre>
+<p>Probably change method syntax
+to not look like a variable field or module access,
+but yeah, we’ve made methods with plain ol’ funcs.
+Everything works the way you like,
+but with less boilerplate.</p>
+<pre class="z-code"><code><span class="z-text z-plain">import foo
+import baz
+
+pub fn main() {
+	foo.new_bar()
+		::bar_func()
+		::mo_func()
+		::een_mo_func()
+}
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">// baz.file
+
+import foo.Bar
+
+pub fn mo_func(bar: Bar) -&gt; Bar {
+	...
+}
+
+pub fn een_mo_func(bar: Bar) -&gt; Bar {
+	...
+	bar::bar_func()
+	...
+}
+</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;objects-is-modules.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
