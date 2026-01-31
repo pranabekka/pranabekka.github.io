@@ -1,8 +1,7 @@
 +++
 title = "Objects is modules, cuz"
-## remember to change date on publishing
-date = 2026-01-27 19:33:36 # draft date
-updated = 2026-01-27 19:33:36
+date = 2026-01-31 16:31:39
+updated = 2026-01-31 16:31:39
 +++
 
 Makin' methods from plain ol' funcs, no interface.
