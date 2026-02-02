@@ -20,7 +20,7 @@ Soon after that,
 looking at the move syntax sparked my imagination.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
@@ -59,7 +59,7 @@ the mutation is obvious even without
 separate `&mut` annotations.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
@@ -79,7 +79,7 @@ Similarly, function calls must have their return value
 assigned to a variable to take effect.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	// WARNING: Return value of `offset_point` is ignored.
 	offset_point(main_point, Vec2 { x: 2, y: 2 });
@@ -120,7 +120,7 @@ We've taken care of mutable borrows,
 but we can 
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, main_point.clone());
 	dbg!(main_point);
@@ -132,7 +132,7 @@ to use a mutable reference instead of needing ownership.
 It was only using it to see the values anyway.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, &main_point);
 	dbg!(main_point);
@@ -150,7 +150,7 @@ but even newly created and independent values
 would need to use borrows.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, &Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
@@ -167,7 +167,7 @@ which is impossible in this case,
 where we construct a temporary `Vec2`.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
@@ -189,7 +189,7 @@ Just like Rust, Airy doesn't allow any more borrows
 while a mutable borrow exists.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, main_point.clone());
 	dbg!(main_point);
@@ -206,7 +206,7 @@ In that case, Airy can just do the clone
 instead of forcing us to add it.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	main_point = offset_point(main_point, main_point);
 	dbg!(main_point);
@@ -265,7 +265,7 @@ and then the new copy in `main_point`
 will be passed into `offset_point` by reference.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let main_point = Vec2 { x: 1, y: 1 };
 	let new_point = offset_point(main_point, main_point)
 	dbg!(main_point); // Vec2 { x: 1, y: 1 }
@@ -286,7 +286,7 @@ However, Airy can see that `offset_x`
 only mutates `x` and never touches `y`.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut point = Vec2 { x: 1, y: 1}
 	main_point = offset_x_twice(main_point, main_point.y);
 	dbg!(main_point);
@@ -306,7 +306,7 @@ such as file handles and network connections,
 so Airy will prevent it with an error.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let mut file = open_file("./example.txt").unwrap();
 	// ERROR: `file` moved to `fillle` here
 	(fillle, let contents) = read_file(file).unwrap();
@@ -322,7 +322,7 @@ Users would have to call functions
 if they intend to copy such types.
 
 ```
-fn main() {
+fn main() -> Nil {
 	let file = open_file("./in.txt").unwrap();
 	let new_file = copy_file(file, "./out.txt");
 	dbg!(new_file); // Ok(...)
