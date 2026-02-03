@@ -1,5 +1,5 @@
 +++
-title = "Rust to reference inference"
+title = "Rust to borrow inference"
 ## remember to change date on publishing
 date = 2026-02-01 19:55:00 # draft date
 updated = 2026-02-01 19:55:00
@@ -8,30 +8,29 @@ updated = 2026-02-01 19:55:00
 Evolving a new high-level language from Rust.
 
 I realised while looking at Rust's move syntax,
-that when you move in and back out,
+that when you move ownership in and back out,
 it's basically a mutation without any annotations,
 like a slightly different looking Typescript.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
-	main_point = offset_point(main_point, Vec2 { x: 2, y: 2 });
+	main_point = offset(main_point, Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
 }
 ```
 
 ## Mutation by assignment
 
-When used like this,
-moves are basically just mutable borrows,
-so we can remove `&mut` completely
-and use assignment syntax for all mutations,
-which makes mutation obvious even without `&mut`.
+What if we just remove `&mut`
+and use "moves" for mutable borrows.
+Using assignment makes mutation obvious,
+even if arguments aren't annotated as `&mut`.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
-	main_point = offset_point(main_point, Vec2 { x: 2, y: 2 });
+	main_point = offset(main_point, Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
 	// Vec2 { x: 3, y: 3 }
 }
@@ -42,9 +41,9 @@ and they must return the parameter
 for the mutation to apply for the caller.
 
 ```
-// `mut point` in Airy is similar
+// `mut point` with the borrow inferrer is similar
 // to Rust's `mut point` and `&mut point`.
-fn offset_point(point: mut Vec2, by: Vec2) -> Vec2 {
+fn offset(point: mut Vec2, by: Vec2) -> Vec2 {
 	point.x = point.x + by.x
 	point.y = point.y + by.y
 	point
@@ -53,24 +52,25 @@ fn offset_point(point: mut Vec2, by: Vec2) -> Vec2 {
 
 If we ignore the return value of a function,
 then it won't affect any variable in the caller,
-so Airy will generate a warning for it.
+so the borrow inferrer will generate a warning for it.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
-	// WARNING: Return value of `offset_point` is ignored.
-	offset_point(main_point, Vec2 { x: 2, y: 2 });
+	// WARNING: Return value of `offset` is ignored.
+	offset(main_point, Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
 	// Vec2 { x: 1, y: 1 }
 }
 ```
 
-## Mutation by return
+## Not quite moves
 
 `mut` in a function signature does not mean a move,
 it means a mutable reference
 that will only work if it's returned,
-so users will be required to return mutable parameters.
+so users will be required to return
+if they mutate a parameter.
 
 ```
 fn bad_func(point: mut Vec2) {
@@ -85,7 +85,7 @@ that it doesn't want to return,
 then it'll need to create its own copy.
 
 ```
-fn print_offset(point: &Vec2, by: &Vec2) -> Nil {
+fn print_offset(point: &Vec2, by: &Vec2) -> () {
 	// Copying to a new variable
 	let mut new_point = point.clone();
 	new_point.x = point.x + by.x;
@@ -110,7 +110,7 @@ The following example has no explicit `mut` annotation,
 but the first parameter is mutated and returned at the end.
 
 ```
-fn offset_point(point: Vec2, by: Vec2) -> Vec2 {
+fn offset(point: Vec2, by: Vec2) -> Vec2 {
 	point.x = point.x + by.x
 	point.y = point.y + by.y
 	point
@@ -124,26 +124,26 @@ then it's an immutable borrow.
 It's still not a move, only a reference.
 This is why functions need to create
 their own private mutable variables.
-In the following `offset_point()` function,
+In the following `offset()` function,
 `by` is an immutable borrow.
 
 ```
-fn offset_point(point: mut Vec2, by: Vec2) -> Vec2 {
+fn offset(point: mut Vec2, by: Vec2) -> Vec2 {
 	point.x = point.x + by.x;
 	point.y = point.y + by.y;
 	point
 }
 ```
 
-Airy can then infer immutable borrows
+We can then infer immutable borrows
 if there's no mutable borrows of the value,
 which is impossible in the following example,
 because we're constructing a temporary `Vec2`.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
-	main_point = offset_point(main_point, Vec2 { x: 2, y: 2 });
+	main_point = offset(main_point, Vec2 { x: 2, y: 2 });
 	dbg!(main_point);
 }
 ```
@@ -153,40 +153,70 @@ allows us to reuse variables even after supplying them
 as function arguments.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
 	let offset = Vec2 { x: 2, y: 2 };
-	main_point = offset_point(main_point, offset);
+	main_point = offset(main_point, offset);
 	dbg!(main_point);
 	dbg!(offset);
 }
 ```
 
+## Safety enforced at call site
+
+If functions always take borrows,
+then the function caller is responsible for
+making sure that aliasing xor mutability is followed.
+
+```
+fn main() {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+
+	main_point = offset(main_point, main_point.clone());
+
+	let offset_amount = main_point.clone();
+	main_point = offset(main_point, offset_amount);
+
+	let new_point = offset(main_point.clone(), main_point.clone());
+
+	main_point = offset(main_point, Vec2 { x: 1, y: 1 });
+}
+```
+
+<!--
+## No storing or returning borrows
+
+Because we've removed borrow annotations,
+there's no way for a variable to borrow another,
+and functions can't return borrowed variables either.
+-->
+
 ## Clone inference
 
-At this point Airy completely removes
+At this point we've completely removed
 the need for all borrow annotations,
 but that still leaves some clone annotations,
-because just like Rust,
-Airy doesn't allow shared borrows
+because it's unsafe to allow shared borrows
 while a mutable borrow exists.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
-	main_point = offset_point(main_point, main_point.clone());
+	main_point = offset(main_point, main_point.clone());
 	dbg!(main_point);
 }
 ```
 
-The only way to reuse `main_point` for the second parameter
+The only way to reuse `main_point`
+for the second parameter
 is to clone it or rearchitect our code.
-Airy simply clones it for us.
+In the following example,
+the second use of `main_point` in `offset()` is a clone.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
-	main_point = offset_point(main_point, main_point);
+	main_point = offset(main_point, main_point);
 	dbg!(main_point);
 }
 ```
@@ -194,26 +224,25 @@ fn main() -> Nil {
 The same applies when assigning to a new variable.
 In the example below,
 `main_point` is being reused after the `new_point` declaration
-so the only way to use it in `offset_point()`
+so the only way to use it in `offset()`
 is to clone it into `new_point` and pass that
-into `offset_point()` by reference,
+into `offset()` by reference,
 and create a second clone for the immutable borrow.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let main_point = Vec2 { x: 1, y: 1 };
-	let new_point = offset_point(main_point, main_point)
+	let new_point = offset(main_point, main_point)
 	dbg!(main_point); // Vec2 { x: 1, y: 1 }
 	dbg!(new_point);  // Vec2 { x: 2, y: 2 }
 }
 ```
 
-## Unique ownership
+## Unique references
 
-We can actually use a shared borrow
-when calling `offset_point()` with the same variable
-for both parameters.
-Because `offset_point()` uses the `by` parameter only once,
+`offset()` actually doesn't need a clone
+when passing the same variable as the second arg.
+Because `offset()` uses the `by` parameter only once,
 after which it will never be used again,
 the reference to `by` is unique,
 like moving ownership in Rust.
@@ -221,20 +250,20 @@ This means `main_point` is passed by mutable borrow
 and then also passed by immutable borrow.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
-	main_point = offset_point(main_point, main_point);
+	main_point = offset(main_point, main_point);
 	dbg!(main_point);
 }
 
-fn offset_point(point: mut Vec2, by: Vec2) -> Vec2 {
+fn offset(point: mut Vec2, by: Vec2) -> Vec2 {
 	point.x = point.x + by.x;
 	point.y = point.y + by.y;
 	point
 }
 ```
 
-When `offset_point()` performs its mutation,
+When `offset()` performs its mutation,
 both borrows have the same value,
 and the immutable borrow is never used again.
 
@@ -244,14 +273,17 @@ to offset by self without cloning.
 
 ```
 // NOTE: Temporarily interrupting
-// our scheduled Airy evolution
+// our scheduled borrow inferrer evolution
 // with a bit of Rust.
 
-fn main() -> Nil {
+fn main() -> () {
 	let mut main_point = Vec2 { x: 1, y: 1 };
+
 	// Notice the call to `clone()`.
-	main_point = offset_point(main_point, main_point.clone());
-	// No need to clone, but we had to create a new function.
+	main_point = offset(main_point, main_point.clone());
+
+	// No need to clone,
+	// but we had to create a new function.
 	main_point = offset_by_self(main_point);
 }
 
@@ -262,23 +294,23 @@ fn offset_by_self(point: Vec2) -> Vec2 {
 }
 ```
 
-Alright, back to Airy.
+Alright, back to the borrow inferrer.
 
 ## Partial borrows
 
-Airy can also perform partial borrows,
+The borrow inferrer can also infer partial borrows,
 where it can borrow parts of a variable
 instead of cloning the whole thing.
 In the following example,
 `offset_x()` takes a mutable borrow of `main_point`,
-so Airy shouldn't allow a second borrow
+so the borrow inferrer shouldn't allow a second borrow
 for the second argument.
-However, Airy can see that `offset_x()`
+However, the borrow inferrer can see that `offset_x()`
 only mutates field `x` and never touches field `y`,
 so it's safe to pass in `main_point`.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut point = Vec2 { x: 1, y: 1}
 	main_point = offset_x_twice(main_point, main_point.y);
 	dbg!(main_point);
@@ -300,7 +332,7 @@ never mutate or read the same fields,
 then they can share those fields instead.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut point = Vec2 { x: 1, y: 1}
 	main_point = offset_x_twice(main_point, main_point.y);
 	new_point = offset_y_twice(main_point, main_point.x);
@@ -318,10 +350,10 @@ so it's safe for them to use the same memory.
 
 There are some types that can't be cloned automatically,
 such as file handles and network connections,
-so Airy will prevent it with an error.
+so the borrow inferrer will prevent it with an error.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let mut file = open_file("./example.txt").unwrap();
 	// ERROR: Created new reference `file_two`.
 	let (file_two, contents) = read_file(file).unwrap();
@@ -347,14 +379,14 @@ fn use_new_ref() {
 }
 ```
 
-Airy will also prevent automatic clones
+The borrow inferrer will also prevent automatic clones
 for any types that use these non-copyable types
 in any of their fields.
 Users would have to call functions
 if they intend to copy such types.
 
 ```
-fn main() -> Nil {
+fn main() -> () {
 	let file = open_file("./in.txt").unwrap();
 	let new_file = copy_file(file, "./out.txt");
 	dbg!(file); // File { ... }
@@ -366,8 +398,9 @@ fn main() -> Nil {
 
 Loops are another place where restrictions show up,
 because while we're iterating over a variable
-Airy will only allow mutating its individual items.
-The following code is rejected by Airy.
+the borrow inferrer will only allow mutating
+its individual items.
+The following code is rejected by the borrow inferrer.
 
 ```
 let mut list = [1, 2, 3];
@@ -387,7 +420,7 @@ for index in 0..len(list) {
 }
 ```
 
-I think it's possible for Airy
+I think it's possible for the borrow inferrer
 to optimise the "incorrect" loop
 to look like the above loop,
 but this solution works well enough for now.
@@ -423,7 +456,7 @@ There's a few quick observations I'd like to make
 about reference inference:
 all functions can be chained,
 there's no garbage collector,
-it can compile to any imperative language,
+it can compile to any imperative language like C or JS,
 users get safe and simple async,
 it can be bootstrapped with a compiler
 that copies everything,
