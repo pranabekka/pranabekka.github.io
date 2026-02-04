@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Looping in Gleam (1)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Looping in Gleam (1)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#on-recursion">On “recursion”</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#repeating-things">Repeating things</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#limiting-repetition">Limiting repetition</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#for-loops-and-function-loops">for loops and function loops</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#the-other-for-loop">The other for loop</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#benefits-over-for">Benefits over for</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#recursion-results">Recursion results</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#nicer-recursion-results">Nicer recursion results</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#results-from-for">Results from for</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#bonus-for-function">Bonus for function</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#recursion-recap">Recursion recap</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#looping-patterns">Looping patterns</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#anti-pattern-sort-of">Anti-pattern (sort-of)</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#memory-usage">Memory usage</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/looping-gleam-1/#tail-call-optimisation-and-stack-frames">Tail-Call Optimisation and Stack Frames</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>How do we loop without <code>for</code> and <code>while</code>?</p>
+<p>If you’re used to those statements for looping,
+it can be confusing to learn that Gleam uses functions,
+but it’s honestly quite simple.</p>
+<p><a href="https://gleam.run">Gleam</a></p>
+<p>The form of looping I’m going to describe
+is called “recursion” in Gleam
+as well as other functional languages.
+If you were expected a tutorial on recursion in Gleam,
+you’re in the right place
+(assuming I explained it well).</p>
+<h2 id="on-recursion">On “recursion”<a class="zola-anchor" href="#on-recursion" aria-label="Anchor link for: on-recursion">🔗</a></h2>
+<p>“Recursion” comes from “recur”,
+which means “re-occur”, or “repeat”.</p>
+<p>We don’t call it “looping”
+because it’s meaning has changed, in programming,
+to the <code>for</code> keyword.</p>
+<p>We don’t call it “repetition” because…
+mathematicians and other academics, probably?</p>
+<p>Anyway, let’s get into it!</p>
+<h2 id="repeating-things">Repeating things<a class="zola-anchor" href="#repeating-things" aria-label="Anchor link for: repeating-things">🔗</a></h2>
+<p>Why do we “loop”?
+When we want to repeat things.</p>
+<p>Say you were greeting the world:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet() {
+	io.println(&quot;Hello, World&quot;)
+}
+</span></code></pre>
+<p>If you want to greet the world several times,
+what do you do?</p>
+<p>Well, you could just call it several times:</p>
+<pre class="z-code"><code><span class="z-text z-plain">greet()
+greet()
+greet()
+greet()
+</span></code></pre>
+<p>Mmmm… but why are we programming, then?
+It’s easier to click the “Hello world” button 10 times.</p>
+<p>Well, we just call the function again at the end:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet_repeat() {
+	io.println(&quot;Hello, World&quot;)
+	greet_repeat()
+}
+</span></code></pre>
+<p>It might seem absurd, but it’s honestly that simple.
+Almost.</p>
+<h2 id="limiting-repetition">Limiting repetition<a class="zola-anchor" href="#limiting-repetition" aria-label="Anchor link for: limiting-repetition">🔗</a></h2>
+<p>While repeating is good,
+our last function will repeat forever:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet_repeat() {
+	io.println(&quot;Hello, World&quot;)
+	greet_repeat()
+}
+</span></code></pre>
+<p>We need to figure out when to stop
+and what to do at that point,
+which is called a “base case”.</p>
+<p>In this instance, our base case is
+when we’ve looped a given number of times.
+Here’s what it looks like:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet(count) {
+	case count &lt; 1 {
+		True -&gt; Nil // Stop the loop.
+		False -&gt; {
+			io.println(&quot;Hello, World&quot;)
+			greet(count - 1) // Continue the loop.
+		}
+	}
+}
+</span></code></pre>
+<p>We give the function a <code>count</code> variable to start from.
+If <code>count</code> is less than 1, it stops.
+If <code>count</code> is 1 or higher,
+it greets the world and then starts again
+with <code>count</code> reduced by 1.</p>
+<p>Here’s how it’ll progress if we use <code>greet(4)</code>:</p>
+<ul>
+<li>Start <code>greet</code> with <code>greet(4)</code></li>
+<li><code>count &lt; 1</code> is <code>False</code></li>
+<li>Print “Hello, World”</li>
+<li>Repeat <code>greet</code> as <code>greet(4 - 1)</code></li>
+<li><code>count &lt; 1</code> is <code>False</code></li>
+<li>Print “Hello, World”</li>
+<li>Repeat <code>greet</code> as <code>greet(3 - 1)</code></li>
+<li><code>count &lt; 1</code> is <code>False</code></li>
+<li>Print “Hello, World”</li>
+<li>Repeat <code>greet</code> as <code>greet(2 - 1)</code></li>
+<li><code>count &lt; 1</code> is <code>False</code></li>
+<li>Print “Hello, World”</li>
+<li>Repeat <code>greet</code> as <code>greet(1 - 1)</code></li>
+<li><code>count &lt; 1</code> is <code>True</code></li>
+<li>Stop repeating</li>
+</ul>
+<h2 id="for-loops-and-function-loops"><code>for</code> loops and function loops<a class="zola-anchor" href="#for-loops-and-function-loops" aria-label="Anchor link for: for-loops-and-function-loops">🔗</a></h2>
+<p>It’s honestly very similar to a basic <code>for</code> loop.
+Here’s an example of one:</p>
+<pre class="z-code"><code><span class="z-text z-plain">for (i = count; i = 0; i--) {
+//   ^ init     ^      ^ reduce count
+//              stopping case
+	io.println(&quot;Hello, World&quot;)
+}
+</span></code></pre>
+<p>Here’s how the simple function style matches it:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet(count) {
+//       ^ init
+	case count &lt; 1 {
+//       ^ stopping case
+		True -&gt; Nil
+		False -&gt; {
+			io.println(&quot;Hello, World&quot;)
+			greet(count - 1)
+//                ^ reduce count
+		}
+	}
+}
+</span></code></pre>
+<p>Recursion is actually present in most languages,
+but rarely used or advertised
+because it doesn’t fit well in those languages.</p>
+<h2 id="the-other-for-loop">The other <code>for</code> loop<a class="zola-anchor" href="#the-other-for-loop" aria-label="Anchor link for: the-other-for-loop">🔗</a></h2>
+<p>Now, we rarely use the kinds of loops
+where we count down.
+There’s another looping construct
+that’s used way more often:</p>
+<pre class="z-code"><code><span class="z-text z-plain">// This is not actually possible in Gleam
+for (name in names) {
+	io.println(&quot;Hello, &quot; &lt;&gt; name)
+}
+</span></code></pre>
+<p>The way to do it with functions
+is just to do one name at a time
+and pass the rest to the next function call:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet_all(names) {
+	case names {
+		[] -&gt; Nil // Stop if no names
+		[name, ..rest] -&gt; {
+			io.println(&quot;Hello, &quot; &lt;&gt; name)
+			greet(rest) // Continue with rest
+		}
+	}
+}
+</span></code></pre>
+<p>This case statement compares the list to two patterns:</p>
+<ol>
+<li>
+<p>An empty list, in which case we stop.
+This is the base case.</p>
+</li>
+<li>
+<p>A list with at least one element,
+where we capture the rest as <code>rest</code>.
+The “rest” can also be an empty list
+— think of it as calling “Next!” for a line
+and realising you’re done with the last person.
+We simply pass <code>rest</code> to the next function call
+after we say “Hello” to the current <code>name</code>,
+at which point it compares again to pattern 1 and 2.</p>
+</li>
+</ol>
+<p>Let’s say we call it like so:</p>
+<pre class="z-code"><code><span class="z-text z-plain">greet_all([&quot;World&quot;, &quot;Fello&quot;])
+</span></code></pre>
+<p>Here’s how it’ll run:</p>
+<ul>
+<li>List is not empty</li>
+<li>First item is “World”, rest is <code>[&quot;Fello&quot;]</code></li>
+<li>Print “Hello, World”</li>
+<li>Repeat <code>greet_all</code> with rest (<code>[&quot;Fello&quot;]</code>)</li>
+<li>List is not empty</li>
+<li>First item is “Fello”, rest is <code>[]</code> (empty)</li>
+<li>Print “Hello, Fello”</li>
+<li>Repeat <code>greet_all</code> with rest (<code>[]</code>)</li>
+<li>List is empty</li>
+<li>Return <code>Nil</code>. Don’t repeat <code>greet_all</code>.</li>
+</ul>
+<h2 id="benefits-over-for">Benefits over <code>for</code><a class="zola-anchor" href="#benefits-over-for" aria-label="Anchor link for: benefits-over-for">🔗</a></h2>
+<p>Comparing the <code>for</code> loop examples,
+you might wonder why you should write
+the longer “recursive” functions.</p>
+<ol>
+<li>
+<p>Your loops return a meaningful value by default.</p>
+</li>
+<li>
+<p>You only need to know how to use functions,
+instead of learning two or more looping constructs.
+The language is smaller and easier to understand.</p>
+</li>
+<li>
+<p>Common looping patterns are available as functions,
+with documentation in the relevant library.</p>
+</li>
+<li>
+<p>When you need to write a loop manually,
+you naturally get a simple reusable function.
+No need to write a loop every time.</p>
+</li>
+<li>
+<p>The result of the loop cannot be changed outside the loop.
+<code>for</code> loops require that you declare a variable
+outside the loop and change it from inside the loop.</p>
+</li>
+</ol>
+<h2 id="recursion-results">Recursion results<a class="zola-anchor" href="#recursion-results" aria-label="Anchor link for: recursion-results">🔗</a></h2>
+<!--
+Not explaining tco at all.
+Is there any reason to get into that instead?
+Or will this explanation carry them through?
+-->
+<p>The functions I’ve described so far only return <code>Nil</code>.
+If you need to construct and return values,
+then these functions won’t do.</p>
+<p>The best way to construct values is to use an “accumulator”.
+We use it to collect results from each step
+and pass it along to the next.</p>
+<p>For example, let’s take a function
+that adds up a list of scores.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn total_score(scores: List(Int), current_total: Int) -&gt; Int {
+	case scores {
+		[] -&gt; current_total
+		[first, ..rest] -&gt; {
+			total_score(rest, first + current_total)
+		}
+	}
+}
+</span></code></pre>
+<p>Do you understand how this works?</p>
+<p>If the list of scores is empty,
+then there are no scores left to process,
+so we return the total that we’ve calculated so far.
+If there are any scores left to process,
+we add the first one to the current total,
+and then call the function again
+to process the rest of the scores.</p>
+<p>Here’s how using it might look like:</p>
+<pre class="z-code"><code><span class="z-text z-plain">total_score(
+	[71, 100, 43, 85, 66],
+	0
+)
+</span></code></pre>
+<ul>
+<li>current total is <code>0</code></li>
+<li><code>scores</code> is not empty</li>
+<li><code>first</code> is <code>71</code>, <code>rest</code> is <code>[100, 43, 85, 66]</code></li>
+<li>recurse with <code>rest</code> and <code>71 + 0</code>
+<ul>
+<li>current total is <code>71</code></li>
+<li><code>scores</code> is not empty</li>
+<li><code>first</code> is <code>100</code>, <code>rest</code> is <code>[43, 85, 66]</code></li>
+<li>recurse with <code>rest</code> and <code>100 + 71</code>
+<ul>
+<li>current total is <code>171</code></li>
+<li><code>scores</code> is not empty</li>
+<li><code>first</code> is <code>43</code>, <code>rest</code> is <code>[85, 66]</code></li>
+<li>recurse with <code>rest</code> and <code>43 + 171</code>
+<ul>
+<li>current total is <code>214</code></li>
+<li><code>scores</code> is not empty</li>
+<li><code>first</code> is <code>85</code>, <code>rest</code> is <code>[66]</code></li>
+<li>recurse with <code>rest</code> and <code>85 + 214</code>
+<ul>
+<li>current total is <code>299</code></li>
+<li><code>scores</code> is not empty</li>
+<li><code>first</code> is <code>66</code>, <code>rest</code> is <code>[]</code></li>
+<li>recurse with <code>rest</code> and <code>85 + 171</code>
+<ul>
+<li>current total is <code>365</code></li>
+<li><code>scores</code> is empty</li>
+<li>return <code>365</code></li>
+</ul>
+</li>
+<li>return <code>365</code></li>
+</ul>
+</li>
+<li>return <code>365</code></li>
+</ul>
+</li>
+<li>return <code>365</code></li>
+</ul>
+</li>
+<li>return <code>365</code></li>
+</ul>
+</li>
+<li>return <code>365</code></li>
+</ul>
+<h2 id="nicer-recursion-results">Nicer recursion results<a class="zola-anchor" href="#nicer-recursion-results" aria-label="Anchor link for: nicer-recursion-results">🔗</a></h2>
+<p>There is one issue with this.
+We need to type out 0 every time,
+even though it’s the only value.</p>
+<pre class="z-code"><code><span class="z-text z-plain">total_score(game_scores, 0)
+total_score(exam_scores, 0)
+total_score(football_scores, 0)
+total_score(dancing_scores, 0)
+</span></code></pre>
+<p>It’s not too bad here,
+but what if someone accidentally put a 10 there?
+Computers should do this repetitive work for us.</p>
+<p>What we do instead is create a separate function
+that calls the main function with the starting value.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn total_score(scores) {
+	total_score_loop(scores, 0)
+//                           ^ hidden starting value
+}
+</span></code></pre>
+<p>Now we no longer need to supply a starting value
+to every accumulator function we use.</p>
+<p><strong>TODO</strong>: mention accumulator a few more times
+to keep it in the reader’s memory</p>
+<pre class="z-code"><code><span class="z-text z-plain">total_score(game_scores)
+total_score(exam_scores)
+total_score(football_scores)
+total_score(dancing_scores)
+</span></code></pre>
+<h2 id="results-from-for">Results from <code>for</code><a class="zola-anchor" href="#results-from-for" aria-label="Anchor link for: results-from-for">🔗</a></h2>
+<p>This is also very similar to
+another common <code>for</code> loop pattern:</p>
+<pre class="z-code"><code><span class="z-text z-plain">function total_scores(scores) {
+	let current_total = 0
+	//  ^ collector     ^ starting value
+	for (score in scores) {
+		current_total = score + current_total
+	}
+	return current_total
+}
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">fn total_score_loop(scores, current_total) {
+//                          ^ collector
+	case scores {
+		[] -&gt; current_total
+		[score, ..rest] -&gt; {
+			total_score_loop(rest, score + current_total)
+		}
+	}
+}
+
+let total = total_score_loop(scores, 0)
+//                                   ^ starting value
+</span></code></pre>
+<p>The benefit of using functions instead of <code>for</code> loops
+is that your current_total remains constant
+outside the looping function.
+In the <code>for</code> loop,
+<code>current_total</code> isn’t guaranteed to remain constant
+after the loop is done with it,
+because we needed to change it in the <code>for</code> loop.</p>
+<h2 id="bonus-for-function">Bonus <code>for</code> <em>function</em><a class="zola-anchor" href="#bonus-for-function" aria-label="Anchor link for: bonus-for-function">🔗</a></h2>
+<p>There’s basically no use for it
+and it’s a smidge longer to use,
+but you could write a <code>for</code> function
+that looks very similar to the statement.</p>
+<pre class="z-code"><code><span class="z-text z-plain">import gleam/io
+
+pub fn main() {
+	let i = 4
+	for(i, fn(i){i&gt;0}, fn(i){i-1},
+		fn(_) {
+			io.println(&quot;Hello, World&quot;)
+		}
+	)
+}
+
+/// Repeat body as long as cond is True
+fn for(counter, cond, step, body) {
+	case cond(counter) {
+		True -&gt; {
+			body(counter)
+			for(step(counter), cond, step, body)
+		}
+		False -&gt; Nil
+	}
+}
+</span></code></pre>
+<p>Can you see how it’s put together?</p>
+<p>The reason it has limited use
+is because it can only do things like IO,
+since Gleam doesn’t allow you to mutate variables.
+Gleam doesn’t have statements or functions like
+<code>my_num = my_num + 1</code> or <code>my_list[i] = i</code>.</p>
+<h2 id="recursion-recap">Recursion recap<a class="zola-anchor" href="#recursion-recap" aria-label="Anchor link for: recursion-recap">🔗</a></h2>
+<p>I hope all that made sense.</p>
+<ul>
+<li>
+<p>The style of looping in Gleam is called “recursion”.</p>
+</li>
+<li>
+<p>Looping is repeating a function,
+which is just calling the function again,
+with a check for when to stop repeating.</p>
+<ul>
+<li>The check for when to stop and what to do then
+is called the “base case”.</li>
+</ul>
+</li>
+<li>
+<p>To return a result from a loop,
+we add an extra argument to collect that result.</p>
+<ul>
+<li>
+<p>We generally refer to this extra argument
+as the “accumulator”.</p>
+</li>
+<li>
+<p>To avoid providing an empty accumulator every time,
+we create an extra function that calls the main one.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>At this point, you should go and try out Gleam.</p>
+<p>It might be a good idea to write a few loops.
+Maybe figure out how to do the ones I showed
+without actually looking back at them.</p>
+<p><strong>TODO</strong>: suggest some exercises</p>
+<p>If you have Gleam installed and in front of you:</p>
+<pre class="z-code"><code><span class="z-text z-plain">gleam new looping
+</span></code></pre>
+<p>If you don’t have Gleam, try the playground:</p>
+<p><a href="https://playground.gleam.run">Gleam online playground</a></p>
+<p>If you want to know more,
+join the Gleam community
+or read onwards for common patterns.</p>
+<p><a href="https://discord.gg/Fm8Pwmy">Gleam Discord</a></p>
+<p><a href="https://github.com/gleam-lang/gleam/discussions">Gleam discussions on Github</a></p>
+<p>Once you’ve tried writing a few recursive functions,
+you should have a look at the standard library,
+which includes several useful looping functions.
+I’ve described some of them below,
+along with a few extra patterns.</p>
+<h2 id="looping-patterns">Looping patterns<a class="zola-anchor" href="#looping-patterns" aria-label="Anchor link for: looping-patterns">🔗</a></h2>
+<p>list.each</p>
+<p>list.map
+into list.each
+with person records
+from where you extract names</p>
+<p>list.take</p>
+<p>int.sum
+from list.map over score records</p>
+<p>list update, as i need in connect 4
+manual recursion
+or actually, can this be done with fold? accumulator?
+can fold update the previous item?
+feels like an abuse of fold at that point
+if i collect anything and everything
+fn fold_body(acc: #(prev?, List(Cell)), cur: Cell) -&gt; Row { }
+i hain’t sure</p>
+<h2 id="anti-pattern-sort-of">Anti-pattern (sort-of)<a class="zola-anchor" href="#anti-pattern-sort-of" aria-label="Anchor link for: anti-pattern-sort-of">🔗</a></h2>
+<p>The tutorial so far has taught you
+the “correct” ways of looping,
+so you will likely never need to know more.</p>
+<p>If you think the following function makes little sense,
+then you should be safe and return to your projects.</p>
+<pre class="z-code"><code></code></pre>
+<p>While it’s not strictly an anti-pattern,
+it’s bad for performance with large sets of data,
+and can even crash your program in extreme cases.</p>
+<p>If that function appeals to you,
+you should read on before you try using that pattern.
+You can also read on if you want to know more.
+Just be aware that the explanation is long.</p>
+<h3 id="memory-usage">Memory usage<a class="zola-anchor" href="#memory-usage" aria-label="Anchor link for: memory-usage">🔗</a></h3>
+<p>… explanation without mention of tco, stacks …</p>
+<h3 id="tail-call-optimisation-and-stack-frames">Tail-Call Optimisation and Stack Frames<a class="zola-anchor" href="#tail-call-optimisation-and-stack-frames" aria-label="Anchor link for: tail-call-optimisation-and-stack-frames">🔗</a></h3>
+<p>… naming tco and stack frames, with a little explanation …</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;looping-gleam-1.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

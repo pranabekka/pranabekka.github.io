@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+HTML to Bean
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>HTML to Bean
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/html-to-bean/#paragraphs">Paragraphs</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#html">HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#basic-bean">Basic Bean</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#bean">Bean</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/html-to-bean/#list">List</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#html-1">HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#basic-bean-1">Basic Bean</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#bean-1">Bean</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/html-to-bean/#nested-list">Nested list</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#html-2">HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#basic-bean-2">Basic Bean</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#bean-2">Bean</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/html-to-bean/#empty-document">Empty document</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#html-3">HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#basic-bean-3">Basic Bean</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#bean-3">Bean</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/html-to-bean/#basic-document">Basic document</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#html-4">HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#basic-bean-4">Basic Bean</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/html-to-bean/#bean-4">Bean</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>What an HTML document might look like in Bean,
+both with and without the syntax sugar and post-processing.</p>
+<p><a href="https://pranabekka.github.io/drafts/html-to-bean/bean">Bean markup (missing)</a></p>
+<h2 id="paragraphs">Paragraphs<a class="zola-anchor" href="#paragraphs" aria-label="Anchor link for: paragraphs">🔗</a></h2>
+<h3 id="html">HTML<a class="zola-anchor" href="#html" aria-label="Anchor link for: html">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;p&gt;Another paragraph.&lt;/p&gt;
+</span></code></pre>
+<h3 id="basic-bean">Basic Bean<a class="zola-anchor" href="#basic-bean" aria-label="Anchor link for: basic-bean">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[p]
+This is a paragraph.
+
+[p]
+Another paragraph.
+</span></code></pre>
+<h3 id="bean">Bean<a class="zola-anchor" href="#bean" aria-label="Anchor link for: bean">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">This is a paragraph.
+
+Another paragraph.
+</span></code></pre>
+<h2 id="list">List<a class="zola-anchor" href="#list" aria-label="Anchor link for: list">🔗</a></h2>
+<h3 id="html-1">HTML<a class="zola-anchor" href="#html-1" aria-label="Anchor link for: html-1">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;ul&gt;
+  &lt;li&gt;List item&lt;/li&gt;
+  &lt;li&gt;Another list item&lt;/li&gt;
+&lt;/ul&gt;
+</span></code></pre>
+<h3 id="basic-bean-1">Basic Bean<a class="zola-anchor" href="#basic-bean-1" aria-label="Anchor link for: basic-bean-1">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[ul]
+`List item`[li]
+`Another list item`[li]
+</span></code></pre>
+<h3 id="bean-1">Bean<a class="zola-anchor" href="#bean-1" aria-label="Anchor link for: bean-1">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">* List item
+* Another list item
+</span></code></pre>
+<h2 id="nested-list">Nested list<a class="zola-anchor" href="#nested-list" aria-label="Anchor link for: nested-list">🔗</a></h2>
+<h3 id="html-2">HTML<a class="zola-anchor" href="#html-2" aria-label="Anchor link for: html-2">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;ul&gt;
+  &lt;li&gt;List item&lt;/li&gt;
+  &lt;li&gt;Another list item
+    &lt;ul&gt;
+      &lt;li&gt;Nested list item&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Third item&lt;/li&gt;
+&lt;/ul&gt;
+</span></code></pre>
+<h3 id="basic-bean-2">Basic Bean<a class="zola-anchor" href="#basic-bean-2" aria-label="Anchor link for: basic-bean-2">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[ul]
+`List item`[li]
+`Another list item`[li]
+  [ul]
+  ``
+  `Nested list item`[li]
+  ``
+`Third item`[li]
+</span></code></pre>
+<h3 id="bean-2">Bean<a class="zola-anchor" href="#bean-2" aria-label="Anchor link for: bean-2">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">* List item
+* Another list item
+** Nested list item
+* Third item
+</span></code></pre>
+<h2 id="empty-document">Empty document<a class="zola-anchor" href="#empty-document" aria-label="Anchor link for: empty-document">🔗</a></h2>
+<h3 id="html-3">HTML<a class="zola-anchor" href="#html-3" aria-label="Anchor link for: html-3">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  
+&lt;/body&gt;
+&lt;/html&gt;
+</span></code></pre>
+<h3 id="basic-bean-3">Basic Bean<a class="zola-anchor" href="#basic-bean-3" aria-label="Anchor link for: basic-bean-3">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[!DOCTYPE html]
+
+[html lang en]
+[head]
+``
+  [meta charset UTF-8]
+
+  [meta name viewport content &quot;width=device-width, initial-scale=1.0&quot;]
+
+  [title]
+  Document
+``
+[body]
+``
+
+``
+</span></code></pre>
+<h3 id="bean-3">Bean<a class="zola-anchor" href="#bean-3" aria-label="Anchor link for: bean-3">🔗</a></h3>
+<pre class="z-code"><code></code></pre>
+<h2 id="basic-document">Basic document<a class="zola-anchor" href="#basic-document" aria-label="Anchor link for: basic-document">🔗</a></h2>
+<h3 id="html-4">HTML<a class="zola-anchor" href="#html-4" aria-label="Anchor link for: html-4">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello, world&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</span></code></pre>
+<h3 id="basic-bean-4">Basic Bean<a class="zola-anchor" href="#basic-bean-4" aria-label="Anchor link for: basic-bean-4">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[!DOCTYPE html]
+
+[html lang en]
+[head]
+``
+  [meta charset UTF-8]
+
+  [meta name viewport content &quot;width=device-width, initial-scale=1.0&quot;]
+
+  [title]
+  Document
+``
+[body]
+``
+  [h1]
+  Hello, world
+``
+</span></code></pre>
+<h3 id="bean-4">Bean<a class="zola-anchor" href="#bean-4" aria-label="Anchor link for: bean-4">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">### Hello, world
+</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;html-to-bean.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

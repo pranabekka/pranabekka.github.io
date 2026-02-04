@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Bean markup
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Bean markup
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Mar 13, 2024
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-markup/#the-other-formats">The other formats</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-markup/#rationale">Rationale</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-markup/#terms">Terms</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-markup/#begin">Begin</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#paragraphs">Paragraphs</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#other-blocks-and-tags">Other blocks, and tags</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#multi-line-tags">Multi-line tags</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#nested-blocks">Nested blocks</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#indentation-and-whitespace">Indentation and whitespace</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#fenced-blocks">Fenced blocks</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#inline-tags">Inline tags</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#lists">Lists</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#tables">Tables</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#headings">Headings</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#emphasis">Emphasis</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#openers-and-closers">Openers and closers</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#meta-information-tag-s">Meta-information tag(s)</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#conditional-passthrough">Conditional passthrough</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-markup/#waffle">Waffle</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#tag-syntax">Tag syntax</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#classes-and-ids">Classes and IDs</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#custom-elements-tags">Custom elements&#x2F;tags</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#bean-as-an-extensible-markup-format">Bean as an extensible markup format</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#fences-as-code">Fences as code</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#cool-features-to-consider">Cool features to consider</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#table-wrappers">Table wrappers</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#details-component">Details component</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#inline-tag-nesting">Inline tag nesting</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#inline-vs-block-elements-tags">Inline vs block elements&#x2F;tags</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#block-link-syntax">Block link syntax</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#unknown-blocks">Unknown blocks</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#attribute-accumulation">attribute accumulation</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/bean-markup/#definition-lists">definition lists</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Bean is an extensible markup language,
+with generic constructs for delimiting and marking up text,
+as well as syntax sugar for commonly used markup,
+such as emphasis, lists, and tables.</p>
+<p>Bean borrows from the tradition of Markdown,
+yet is more obviously influenced by djot and AsciiDoc.</p>
+<p><a href="https://djot.net">Djot</a></p>
+<p><a href="https://asciidoc.org/">AsciiDoc</a></p>
+<p><a href="https://www.markdownguide.org/getting-started/">Markdown</a></p>
+<p><strong>NOTE:</strong> Bean doesn’t have an implementation.
+This is just an idea in my head right now.</p>
+<!--
+## Audience
+
+People already familiar with Markdown,
+and maybe even other markup languages,
+who are interested in plain text markup formats.
+-->
+<h2 id="the-other-formats">The other formats<a class="zola-anchor" href="#the-other-formats" aria-label="Anchor link for: the-other-formats">🔗</a></h2>
+<p>Markdown suffers from being a mix of plain-text email conventions
+instead of a fully considered specification,
+and thus has many complexities,
+inconsistencies, and surprises.
+The author of CommonMark and djot
+has already explained these issues
+in ‘Beyond Markdown’.</p>
+<p><a href="https://johnmacfarlane.net/beyond-markdown.html">Beyond Markdown</a></p>
+<p>While I was initially enamoured by AsciiDoc and all its features,
+I eventually realised that it has a lot of complex syntax,
+which makes it hard to learn and use,
+and even harder to port.</p>
+<p>Djot is the format I find the most appealing,
+though it has made some choices
+that I believe could be done better.
+Djot’s syntax isn’t <em>completely</em> fixed yet,
+but I obviously can’t resist dreaming up my own format.</p>
+<p>Typst is another format that I quite like,
+although it’s currently made for PDF output,
+and includes a whole new scripting language.</p>
+<p><a href="https://typst.app">Typst</a></p>
+<p>MDX is another format that I like,
+but just for the component system,
+because it’s still a Markdown dialect.</p>
+<p><a href="https://mdxjs.com/">MDX</a></p>
+<h2 id="rationale">Rationale<a class="zola-anchor" href="#rationale" aria-label="Anchor link for: rationale">🔗</a></h2>
+<p>The first factor that led me to devise another format
+was my desire to create and use custom markup elements
+that conform to my preferences.</p>
+<p>Bean includes </p>
+<ul>
+<li>concise and regular markup,</li>
+<li>a general syntax that is equal to XML,
+except with reduced tag soup,</li>
+<li>convenient syntax sugar for common elements,</li>
+<li>plain text readability,</li>
+<li>and a way to declare custom elements.</li>
+</ul>
+<h2 id="terms">Terms<a class="zola-anchor" href="#terms" aria-label="Anchor link for: terms">🔗</a></h2>
+<p>I want to clarify some terms before I continue,
+which I have borrowed from HTML,
+due to my familiarity with it.</p>
+<ul>
+<li>
+<p><strong>Element:</strong>
+An abstract ‘part’ of the document,
+identified with tags and delimiters.</p>
+</li>
+<li>
+<p><strong>Tag:</strong>
+A declaration, within the document,
+of an element, its type,
+and optional or required attributes.</p>
+</li>
+<li>
+<p><strong>Delimiter:</strong>
+Marker for where an element begins or ends.</p>
+</li>
+<li>
+<p><strong>Block (Element):</strong>
+A ‘block’ level element,
+usually delimited by blank lines.
+Examples include paragraphs and lists.</p>
+</li>
+<li>
+<p><strong>Inline (Element):</strong>
+An element that usually occurs within a line of text,
+such as a link or emphasised text.</p>
+</li>
+</ul>
+<h2 id="begin">Begin<a class="zola-anchor" href="#begin" aria-label="Anchor link for: begin">🔗</a></h2>
+<h3 id="paragraphs">Paragraphs<a class="zola-anchor" href="#paragraphs" aria-label="Anchor link for: paragraphs">🔗</a></h3>
+<p>As in Markdown and the rest,
+a block of text delimited by newlines is a paragraph,
+with line breaks converted to spaces.</p>
+<pre class="z-code"><code><span class="z-text z-plain">A paragraph.
+
+Another paragraph.
+</span></code></pre>
+<h3 id="other-blocks-and-tags">Other blocks, and tags<a class="zola-anchor" href="#other-blocks-and-tags" aria-label="Anchor link for: other-blocks-and-tags">🔗</a></h3>
+<p>Bean uses square brackets to tag a block.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[tagged-block]
+This block is tagged as a `tagged-block` element.
+</span></code></pre>
+<p>Tags can also have options for the element,
+such as the language for a verbatim block.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[verbatim :language bean]
+This block represents Bean markup.
+</span></code></pre>
+<h3 id="multi-line-tags">Multi-line tags<a class="zola-anchor" href="#multi-line-tags" aria-label="Anchor link for: multi-line-tags">🔗</a></h3>
+<p>Tags can span multiple lines to aid readability.</p>
+<p>All the blocks below produce the same content.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[tag
+  :option1 value1
+  option2
+  :option3 value3]
+Block contents
+
+[tag
+ :option1 value1
+ option2
+ :option3 value3
+]
+Block contents
+
+[tag :option1 value1 option2 :option3 value3]
+Block contents
+
+[
+  tag
+  :option1 value1
+  option2
+  :option3 value3
+]
+Block contents
+</span></code></pre>
+<h3 id="nested-blocks">Nested blocks<a class="zola-anchor" href="#nested-blocks" aria-label="Anchor link for: nested-blocks">🔗</a></h3>
+<p>A block-level tag within another block-level tag
+indicates that it is nested.
+“Within” is defined as not separated by a blank line.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[parent-block]
+parent-block content
+[child-block]
+child-block content
+
+[parent-block]
+[child-block]
+child-block contents
+</span></code></pre>
+<h3 id="indentation-and-whitespace">Indentation and whitespace<a class="zola-anchor" href="#indentation-and-whitespace" aria-label="Anchor link for: indentation-and-whitespace">🔗</a></h3>
+<p>Bean ignores indentation and extra whitespace,
+unless it’s a verbatim block or a list.
+Whitespace at the end is stripped,
+and line breaks are collapsed into a space,
+unless there is a blank line,
+which breaks apart blocks.</p>
+<p>The two paragraphs in the following example
+produce the same content,
+regardless of their indentation.</p>
+<pre class="z-code"><code><span class="z-text z-plain">A paragraph that I am writing.
+
+  A paragraph that I am writing.
+</span></code></pre>
+<h3 id="fenced-blocks">Fenced blocks<a class="zola-anchor" href="#fenced-blocks" aria-label="Anchor link for: fenced-blocks">🔗</a></h3>
+<p>Block elements can also be delimited by
+two or more backticks.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[tag]
+``
+This is a block element.
+
+This is a second block within the block element.
+``
+</span></code></pre>
+<p>A fenced block defaults to a generic block,
+unless there’s a tag specifying otherwise.</p>
+<p>Fenced blocks can also be nested.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[fenced-block]
+``
+  [nested-fenced-block]
+  ```
+  nested fenced block contents
+  ```
+``
+</span></code></pre>
+<p>Fenced blocks can also contain blocks that are not fenced.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[unordered-list]
+``
+  [list-item]
+  First list item
+
+  [list-item]
+  Second list item
+``
+</span></code></pre>
+<h3 id="inline-tags">Inline tags<a class="zola-anchor" href="#inline-tags" aria-label="Anchor link for: inline-tags">🔗</a></h3>
+<p>Sometimes you want to mark up a part of a paragraph of text.
+A single backtick or more is used to do so.
+You can use tags within running text to mark inline content.</p>
+<pre class="z-code"><code><span class="z-text z-plain">A paragraph with an inline[tag] element.
+
+A paragraph with an [tag]inline element.
+</span></code></pre>
+<p>The tag identifies it’s content using whitespace.
+If it comes after whitespace,
+it will apply to the content after the tag,
+if it comes after a non-whitespace character,
+it will apply to the content before it,
+and if it is surrounded by whitespace on both sides,
+it will not apply to any content.</p>
+<p>If you want to tag more than a single word,
+use backticks to create an inline fence
+and put your tag before the opening backtick,
+or after the closing backtick.</p>
+<pre class="z-code"><code><span class="z-text z-plain">A paragraph with a
+`tagged inline element`[inline-tag].
+</span></code></pre>
+<p>These can also use multiple backticks and be nested arbitrarily,
+though it is not encouraged.</p>
+<p>Similar to block tags,
+inline tags can contain attributes for the element.</p>
+<pre class="z-code"><code><span class="z-text z-plain">A paragraph with a `link`[link :target https://example.com].
+</span></code></pre>
+<p>Output:</p>
+<div class="sample-block">
+  <p>A paragraph with a <a href="https://example.com">link</a>.</p>
+
+</div>
+<h3 id="lists">Lists<a class="zola-anchor" href="#lists" aria-label="Anchor link for: lists">🔗</a></h3>
+<p>This is the first of the syntax sugar,
+since using tags and fences for lists
+would get tedious very quickly.</p>
+<pre class="z-code"><code><span class="z-text z-plain">* List item
+* Another list item
+
+1. First item
+2. Second item
+
+. First item
+. Second item
+</span></code></pre>
+<p>While they appear the same as Markdown at a first glance,
+we borrow list syntax from AsciiDoc
+and avoid the mistakes and limitations of list syntax
+in both Markdown and djot.</p>
+<p>Nested list items require extra list item markers
+for each level of indentation,
+and must share the same indentation
+as the first list item.</p>
+<pre class="z-code"><code><span class="z-text z-plain">* List item
+** Nested list item
+* Second top-level list item
+  * with running text (this is not a list item)
+* Third list item
+
+[hr]
+
+1. First item
+1.1. Part 1 of first item
+1. 2. Second item (automatically numbered 2)
+3. Third item
+</span></code></pre>
+<p>Output:</p>
+<div class="sample-block">
+  <ul>
+<li>List item
+<ul>
+<li>Nested list item</li>
+</ul>
+</li>
+<li>Second top-level list item * with running text
+(this is not a list item)</li>
+<li>Third list item</li>
+</ul>
+<hr />
+<ol>
+<li>First item
+<ol>
+<li>Part 1 of first item</li>
+</ol>
+</li>
+<li><span>2</span>. Second item <!-- It creates an inline nested list, otherwise --></li>
+<li>Third item</li>
+</ol>
+
+</div>
+<p>Notice how the bullet mark doesn’t create a new list item
+if it doesn’t have the same indentation as the first list marker.
+Djot navigates this by requiring a blank line before a nested list,
+while Markdown can cause unexpected issues and requires escaping.</p>
+<h3 id="tables">Tables<a class="zola-anchor" href="#tables" aria-label="Anchor link for: tables">🔗</a></h3>
+<p>Tables are another construct that can appear with some regularity.
+Bean defaults to comma separated values under a <code>table</code> tag,
+but you can specify your own separator.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[table :header :separator ,]
+markup   , rating
+markdown , 7/10
+djot     , 9/10
+asciidoc , 8/10
+typst    , 9/10
+</span></code></pre>
+<p>Output:</p>
+<div class="tablewrapper">
+  <table><thead><tr><th>markup</th><th>rating</th></tr></thead><tbody>
+<tr><td>markdown</td><td>7/10</td></tr>
+<tr><td>djot</td><td>9/10</td></tr>
+<tr><td>asciidoc</td><td>8/10</td></tr>
+<tr><td>typst</td><td>9/10</td></tr>
+</tbody></table>
+
+</div>
+<h3 id="headings">Headings<a class="zola-anchor" href="#headings" aria-label="Anchor link for: headings">🔗</a></h3>
+<p>Bean accomodates for the title
+and three heading levels by default.
+Further heading levels are discouraged
+and require explicit heading tags.</p>
+<p>The document title uses four ‘#’ signs,
+the first heading level uses three,
+the second uses two,
+and the third uses one.
+This is based on the idea
+that higher level headings are more important,
+and should be more prominent in plain text,
+than lower level headings.</p>
+<pre class="z-code"><code><span class="z-text z-plain">#### Document title
+
+An introductory paragraph.
+
+### Level 1 heading
+
+## Level 2 heading
+
+# Level 1 heading
+</span></code></pre>
+<h3 id="emphasis">Emphasis<a class="zola-anchor" href="#emphasis" aria-label="Anchor link for: emphasis">🔗</a></h3>
+<p>While you could use a generic inline element for emphasis,
+bean provides custom delimiters to make it easy.</p>
+<pre class="z-code"><code><span class="z-text z-plain">A paragraph with *emphasised text*.
+</span></code></pre>
+<p>Output:</p>
+<div class="sample-block">
+  <p>A paragraph with <em>emphasised text</em>.</p>
+
+</div>
+<p>Delimiters for emphasis can also be tagged:</p>
+<pre class="z-code"><code><span class="z-text z-plain">Some *emphasised text*[link :target https://example.com] in the paragraph.
+</span></code></pre>
+<p>Output:</p>
+<div class="sample-block">
+  <p>A paragraph with <a href="https://example.com"><em>emphasised text</em></a>.</p>
+
+</div>
+<h3 id="openers-and-closers">Openers and closers<a class="zola-anchor" href="#openers-and-closers" aria-label="Anchor link for: openers-and-closers">🔗</a></h3>
+<p>Djot has a neat construct for dealing with
+complex and nested delimiters:
+delimiters can have braces to indicate
+whether they are opening or closing delimiters.</p>
+<pre class="z-code"><code><span class="z-text z-plain">{*Emphasised * text.*}
+
+{`inline ` fence`}
+</span></code></pre>
+<p>Output:</p>
+<div class="sample-block">
+  <p><em>Emphasised * text.</em> </p>
+<p><code>inline ` fence</code></p>
+
+</div>
+<p>This way you can explicitly say where the emphasis should end,
+instead of having to worry about escaping delimiter characters.</p>
+<p>Another cool thing (I think) djot does,
+is to use openers and closers with single and double ticks
+to specify whether they’re right or left quotes,
+though it usually infers them correctly.</p>
+<pre class="z-code"><code><span class="z-text z-plain">{&quot;Hello, world&quot;}
+</span></code></pre>
+<p>Output:</p>
+<div class="sample-block">
+  <p>“Hello, world”</p>
+
+</div>
+<h3 id="meta-information-tag-s">Meta-information tag(s)<a class="zola-anchor" href="#meta-information-tag-s" aria-label="Anchor link for: meta-information-tag-s">🔗</a></h3>
+<p>A meta tag helps set document-level options and properties,
+along with a slightly better alternative to frontmatter. <sup class="footnote-reference"><a href="#f-mtr">1</a></sup></p>
+<div class="footnote-definition" id="f-mtr"><sup class="footnote-definition-label">1</sup>
+<p>Frontmatter introduces a second language to markdown files,
+and breaks the usual flow of markdown,
+by moving the level 1 heading and even cluttering it a bit.</p>
+</div>
+<pre class="z-code"><code><span class="z-text z-plain">#### Document title
+
+[meta
+  :date 2049-01-01
+  :author &quot;Pranab&quot;
+]
+</span></code></pre>
+<p>A summary would be a similarly related element.
+It provides meta-information about the document,
+while not quite being part of the document contents.</p>
+<pre class="z-code"><code><span class="z-text z-plain">#### Document title
+
+[meta :date 2049-01-01]
+
+[summary]
+A summary of the document,
+to be used in listings and previews,
+but not when displaying the document directly.
+</span></code></pre>
+<h3 id="conditional-passthrough">Conditional passthrough<a class="zola-anchor" href="#conditional-passthrough" aria-label="Anchor link for: conditional-passthrough">🔗</a></h3>
+<p>Djot has passthrough blocks that take a format specifier,
+so if the export format matches the specifier,
+then the contents of the block are passed as is.
+This would allow writing raw HTML, for example,
+though there should be no need for that in Bean.</p>
+<pre class="z-code"><code><span class="z-text z-plain">Regular indentation/spacing.
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[passthrough HTML]Indented by four spaces in HTML.
+
+[passthrough HTML]
+&lt;ul id=&quot;document-formats&quot;&gt;
+  &lt;li&gt;Djot&lt;/li&gt;
+  &lt;li&gt;AsciiDoc&lt;/li&gt;
+  &lt;li&gt;Markdown&lt;/li&gt;
+&lt;/ul&gt;
+</span></code></pre>
+<p>Output:</p>
+<div class="sample-block">
+  <p>Regular indentation/spacing.</p>
+<p>    Indented by four spaces in HTML.</p>
+<ul id="document-formats">
+  <li>Djot</li>
+  <li>AsciiDoc</li>
+  <li>Markdown</li>
+</ul>
+</div>
+<h2 id="waffle">Waffle<a class="zola-anchor" href="#waffle" aria-label="Anchor link for: waffle">🔗</a></h2>
+<p><strong>NOTE:</strong>
+These are random unorganised and/or incomplete bits.</p>
+<h3 id="tag-syntax">Tag syntax<a class="zola-anchor" href="#tag-syntax" aria-label="Anchor link for: tag-syntax">🔗</a></h3>
+<p>I’m not a 100% sure about the tag property syntax.
+These are the three main options I considered:</p>
+<pre class="z-code"><code><span class="z-text z-plain">[tag option1=value1 option2 option3=value3]
+
+[tag :option1 value1 option2 :option3 value3]
+
+[tag option1 value1 option2 true option3 value3]
+</span></code></pre>
+<p>The last is the easiest to type,
+but I don’t feel like the difference is that big,
+plus having an indicator like the colon or equal sign
+can be quite helpful, and thus worth the extra character.
+I guess the second has the benefit
+that you won’t need to escape equal signs?</p>
+<h3 id="classes-and-ids">Classes and IDs<a class="zola-anchor" href="#classes-and-ids" aria-label="Anchor link for: classes-and-ids">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[.big .red]
+Big red paragraph (has &quot;big&quot; and &quot;red&quot; classes)
+
+[#warning]
+This paragraph has the &quot;warning&quot; ID
+</span></code></pre>
+<p>This is another concept that djot has.
+I’m not quite sure it’s necessary or even desired,
+and it injects a bit of HTML in some ways.</p>
+<h3 id="custom-elements-tags">Custom elements/tags<a class="zola-anchor" href="#custom-elements-tags" aria-label="Anchor link for: custom-elements-tags">🔗</a></h3>
+<p>Roughly the same as custom components in MDX,
+except you use Bean tags instead of XML/HTML.</p>
+<p>I guess it would be implementation dependent,
+so there’s no real point of examples here,
+though if I were to require an extension language,
+I’d pick an S-expression language.</p>
+<p>I was imagining the API would be something simple like
+defining a function that takes in the tag contents
+and outputs HTML by manipulating child tags and text content.</p>
+<h3 id="bean-as-an-extensible-markup-format">Bean as an extensible markup format<a class="zola-anchor" href="#bean-as-an-extensible-markup-format" aria-label="Anchor link for: bean-as-an-extensible-markup-format">🔗</a></h3>
+<p>Bean is basically the same as HTML and XML,
+with some syntax differences,
+and a few added conveniences for authoring documents
+(such as the syntax sugar for lists).
+At a base level, it has
+tags, attributes, nested tags, and text content.</p>
+<p>An initial Bean compiler can just
+use the base tag and block/inline rules,
+and automatically convert them to HTML/XML tags.</p>
+<p>Here’s an HTML in Bean example:</p>
+<pre class="z-code"><code><span class="z-text z-plain">[ul :id &quot;document-formats&quot;]
+[li]Djot
+[li]AsciiDoc
+[li]Markdown
+</span></code></pre>
+<p>Looking at that,
+I’m almost tempted to remove syntax sugar for lists.</p>
+<p>Anyway, the basic rules make Bean a decent document/data format,
+though the syntax will make it more or less suitable
+for various uses.</p>
+<h3 id="fences-as-code">Fences as code<a class="zola-anchor" href="#fences-as-code" aria-label="Anchor link for: fences-as-code">🔗</a></h3>
+<p>Initially, fences defaulted to code if no tag was given,
+but then I thought that shouldn’t be default behaviour
+to avoid specialising too much for writing about programming.</p>
+<h3 id="cool-features-to-consider">Cool features to consider<a class="zola-anchor" href="#cool-features-to-consider" aria-label="Anchor link for: cool-features-to-consider">🔗</a></h3>
+<ul>
+<li>Namespaces to avoid custom tag collisions.</li>
+<li><code>import &lt;package&gt; as &lt;nickname&gt;</code> statements
+to avoid namespace collisions?
+Maybe in the meta tag.</li>
+<li>Some sort of package registry and manager?</li>
+<li>Default config file for all Bean files within folder.</li>
+<li>Comments — probably using the djot method.
+Better than adding extra syntax sugar.
+Maybe a comment “tag” and/or attribute?</li>
+</ul>
+<h3 id="table-wrappers">Table wrappers<a class="zola-anchor" href="#table-wrappers" aria-label="Anchor link for: table-wrappers">🔗</a></h3>
+<p>I really dislike how tables break layouts
+if they stretch past the page width,
+so I’d like Bean to automatically insert
+a <code>div.tablewrapper</code> around them,
+either by over-riding the default component,
+or creating a custom component.</p>
+<h3 id="details-component">Details component<a class="zola-anchor" href="#details-component" aria-label="Anchor link for: details-component">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[details]
+[summary]This is the summary of this block
+Insert any ol&#39; content over here,
+which will be displayed when the details element is opened.
+</span></code></pre>
+<div class="sample-block">
+  <br>
+<details>
+<summary>This is the summary of this block</summary>
+Insert any ol' content over here,
+which will be displayed when the details element is opened.
+</details>
+<br>
+</div>
+<p>Another option is to use fences,
+and make the first block the summary.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[details]
+``
+This block is the summary
+
+Any other blocks are part of the hidden content.
+``
+</span></code></pre>
+<p>Trying them out will give the answers.</p>
+<h3 id="inline-tag-nesting">Inline tag nesting<a class="zola-anchor" href="#inline-tag-nesting" aria-label="Anchor link for: inline-tag-nesting">🔗</a></h3>
+<p>Later tags should be nested inside earlier tags
+when they’re prefixed.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[parent-inline-tag][child-inline-tag]content
+</span></code></pre>
+<p>But what about suffixed inline tags?
+Just reverse the order?</p>
+<pre class="z-code"><code><span class="z-text z-plain">content[child-inline-tag?][parent-inline-tag?]
+</span></code></pre>
+<h3 id="inline-vs-block-elements-tags">Inline vs block elements/tags<a class="zola-anchor" href="#inline-vs-block-elements-tags" aria-label="Anchor link for: inline-vs-block-elements-tags">🔗</a></h3>
+<p>Would it be okay to mark a heading or other block
+with a lone inline tag?</p>
+<pre class="z-code"><code><span class="z-text z-plain">[h4]My heading
+</span></code></pre>
+<p>The h2 component would know this is a block,
+but how does the surrounding context know this?
+How do I prevent it from wrapping it in a paragraph?</p>
+<p>What about a suffixed inline tag?</p>
+<pre class="z-code"><code><span class="z-text z-plain">`My heading`[h1]
+</span></code></pre>
+<p>Perhaps the wrapper checks its contents
+before deciding to be a paragraph, a div,
+or whatever the inline tag specifies as a block element.
+Or maybe it just errors out?
+Like, a paragraph cannot take a block element,
+but things like lists can.
+So the inline/block nature of the tagged element doesn’t quite matter,
+but it does matter in the case of a parent element
+that disallows block elements inside it.</p>
+<p>Perhaps, if there is only one child block element,
+it swallows the parent element?
+That seems like a bad idea.
+Simply erroring out is probably best.</p>
+<h3 id="block-link-syntax">Block link syntax<a class="zola-anchor" href="#block-link-syntax" aria-label="Anchor link for: block-link-syntax">🔗</a></h3>
+<p>Similar to that in gemtext:</p>
+<pre class="z-code"><code><span class="z-text z-plain">=&gt; https://example.com my link text
+</span></code></pre>
+<p><a href="https://gemini.flounder.online/docs/gemtext.gmi">Gemtext</a></p>
+<p>Block links can be increased in size
+to improve the experience of tapping or clicking them,
+without disrupting any surrounding text.</p>
+<p>A dedicated syntax should encourage that.</p>
+<p>A details and/or aside element
+can be used to move large lists of links
+out of the way.</p>
+<h3 id="unknown-blocks">Unknown blocks<a class="zola-anchor" href="#unknown-blocks" aria-label="Anchor link for: unknown-blocks">🔗</a></h3>
+<p>Unknown blocks can be rendered with a label at the top,
+and the verbatim contents of the block.
+It could include a warning inside a prominent box
+to say (in the HTML) that it’s unknown.</p>
+<p>Probably emit an error and cancel building
+if the build is for production,
+though allow configuration to disable that.
+And log a warning for dev builds.</p>
+<h3 id="attribute-accumulation">attribute accumulation<a class="zola-anchor" href="#attribute-accumulation" aria-label="Anchor link for: attribute-accumulation">🔗</a></h3>
+<p>djot allows accumulating attributes (for block only?).
+maybe using an &amp; block to accumulate instead of nest?</p>
+<h3 id="definition-lists">definition lists<a class="zola-anchor" href="#definition-lists" aria-label="Anchor link for: definition-lists">🔗</a></h3>
+<p>how does asciidoc do it?</p>
+<p>djot requires loose lists for definition lists</p>
+<p>maybe this:</p>
+<pre class="z-code"><code><span class="z-text z-plain">: item
+- definition?
+: item
+  continued
+- definition?
+</span></code></pre>
+<p>i don’t think hyphens (at beginning of line)
+have any other significance.
+though maybe i want to keep it for hyphens.</p>
+<pre class="z-code"><code><span class="z-text z-plain">: item
+= definition
+: item
+  continued
+= definition
+</span></code></pre>
+<p>that should work, i think.
+and the <code>=</code> sign carries some related meaning,
+like <code>item = definition</code>.</p>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <hr>
+  <p>References to this page:</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;bean-troduction&#x2F;">A Bean-troduction</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;bean-markup.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

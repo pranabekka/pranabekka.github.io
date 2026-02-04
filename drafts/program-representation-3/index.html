@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Program representation (3)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Program representation (3)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation-3/#a-case-for-both">a case for both</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation-3/#text-representation">text representation</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation-3/#presenting-block-code">presenting: block code</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation-3/#making-node-graphs">making node graphs</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>as text, blocks, and nodes, <em>at the same time</em></p>
+<p>i think i’ve struck a balance between
+text programming and visual programming
+that allows seamless translation and collaboration
+between the two representations and their users.</p>
+<h2 id="a-case-for-both">a case for both<a class="zola-anchor" href="#a-case-for-both" aria-label="Anchor link for: a-case-for-both">🔗</a></h2>
+<p>text programming is hard for beginners
+because they need to learn multiple skills —
+one of which is typing out all the syntax correctly
+while also trying to understand programming concepts.
+also, most users are more comfortable
+with the mouse or touchscreen.</p>
+<p>visual programming is hard for experienced users,
+because they have tools and workflows
+that visual editors get in the way of.</p>
+<p>being able to transition between them
+means that people can view the code as they like,
+and use the input methods that suit them most.
+a visual programmer can assemble some code
+that they can hand of to a text programmer
+who can review it and make edits in their text editor.
+the opposite can also be done.</p>
+<p>so, let’s get into it
+with the text representation.</p>
+<h2 id="text-representation">text representation<a class="zola-anchor" href="#text-representation" aria-label="Anchor link for: text-representation">🔗</a></h2>
+<p>this is a program that makes wallpapers
+with a random image under a random quote.</p>
+<pre class="z-code"><code><span class="z-text z-plain"># make random wallpaper
+let picture
+	random-pick picture-list
+let quote
+	random-pick quote-list
+let wallpaper
+	draw:new [screen-width screen-height]
+		draw:text quote
+		draw:image picture
+</span></code></pre>
+<p>this is a simple syntax like a command-line meeting python,
+which is inspired by s-expressions.</p>
+<ul>
+<li>each line is a function call</li>
+<li>spaces separate items on the line</li>
+<li>the first line item is the function</li>
+<li>the other line items are arguments</li>
+<li>indented lines are arguments
+to the last less-indented line before it
+(the <code>draw:text</code> call is an argument to <code>draw:new</code>,
+which is an argument to <code>let wallpaper</code>)</li>
+</ul>
+<p>in a more familiar syntax for most people:</p>
+<pre class="z-code"><code><span class="z-text z-plain">let(&quot;picture&quot;,
+	random-pick(picture-list)
+)`
+let(&quot;quote&quot;,
+	random-pick(quote-list)
+)`
+let(&quot;wallpaper&quot;,
+	draw:new([screen-width screen-height],
+		draw:text(quote),
+		draw:image(picture)
+	)
+)`
+</span></code></pre>
+<p>the reason i’m using the
+s-expression inspired<sup class="footnote-reference"><a href="#not-sxp">1</a></sup> syntax
+that looks like command-line-meets-python
+is because it represents all constructs uniformly
+with little to no visual clutter:
+the first item on a line is always a function,
+and the rest are always arguments to that function,
+all of which are separated by spaces.</p>
+<p>using this makes it trivial for the computer to transform it,
+and for people to understand it —
+especially across representations,
+when we switch it up
+with lots of whitespace and colourful shapes.</p>
+<div class="footnote-definition" id="not-sxp"><sup class="footnote-definition-label">1</sup>
+<p>the reason i’m not using s-expressions
+is because some people really dislike them</p>
+</div>
+<h2 id="presenting-block-code">presenting: block code<a class="zola-anchor" href="#presenting-block-code" aria-label="Anchor link for: presenting-block-code">🔗</a></h2>
+<p><img src="/program-representation-blocks.svg" alt="block code" /></p>
+<p>while this might look like syntax highlighted code
+with a whole lot of whitespace,
+each block can be dragged around by the user.
+if you’ve ever used mit scratch as a beginner,
+you might know what this is like.</p>
+<p>blocks help users just snap existing pieces together
+a lot more like lego than typing text.</p>
+<p>while this disrupts the flow of code editor users,
+they don’t actually have to use the block editor,
+plus great mouse support doesn’t mean bad keyboard support.</p>
+<p>the block editor should include
+keyboard shortcuts to add and move blocks,
+and have autocomplete for node names.</p>
+<p>we can pick keyboard shortcuts such that
+existing text editor users can easily switch to blocks,
+and block editor users can also go the opposite way:</p>
+<ul>
+<li>pressing space while writing a function or variable name
+will create a new argument block and move to it,</li>
+<li>the quote key will create a text block (“string” of characters),</li>
+<li>the return key will create a new function call block,</li>
+<li>the tab key will indent the line block,</li>
+<li>and shift + tab will de-indent the line block.</li>
+</ul>
+<h2 id="making-node-graphs">making node graphs<a class="zola-anchor" href="#making-node-graphs" aria-label="Anchor link for: making-node-graphs">🔗</a></h2>
+<p>honestly, this is pretty exciting in itself,
+but one day i just figured out something about blocks:</p>
+<p><img src="/program-representation-block-nodes.svg" alt="deconstructed block code" /></p>
+<p>each block has a connection to its parent block,
+and variable declarations carry over to the immediate parent.</p>
+<p>the other revelation is that the top-level is also a node
+that accepts infinite expressions.</p>
+<p><img src="/program-representation-nodes.svg" alt="node code" /></p>
+<p>while nodes can become sprawling and hard to read,
+they do have some benefits.</p>
+<p>nodes can include custom ui
+without breaking the flow.
+imagine a colour wheel for a node
+that creates a colour type,
+or a carousel of images for a list of them.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;program-representation-3.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+DIY (Fish) Shell Templating
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>DIY (Fish) Shell Templating
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    May 07, 2023
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      May 11, 2023
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/shell-templating/#how-it-works">How it Works</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/shell-templating/#future-work">Future Work</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/shell-templating/#code">Code</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>If you’ve seen my note on creating a
+<a href="https://pranabekka.github.io/static-site-build-tool/">Static Site Build Tool</a>,
+you might’ve seen the link to <a href="https://adi.onl/pp.html">pp</a>,
+and that I lament the syntax and the fact that it uses ash/dash.
+Turns out it’s quite easy to implement in fish,
+along with a syntax I prefer!</p>
+<p>It started with me just going about my day,
+when I remembered the <code>eval</code> command
+and I started thinking of the pieces I might need
+to create a parser/state machine of sorts in fish.
+I tinkered a bit with some of the commands
+I was thinking of,
+and I managed to get it working quite well!</p>
+<p>I haven’t made a way of putting in variables
+or reading and writing from a file,
+and I haven’t thought of too many edge cases,
+but the basic functionality is there.</p>
+<p>If I run <code>./parser.fish &quot;the date is {{ date -I }}&quot;</code>
+it will give me the output <code>the date is 2023-05-07</code></p>
+<p>I’ve pasted in the whole thing,
+as it currently is,
+at the end,
+if you’re curious.</p>
+<h2 id="how-it-works">How it Works<a class="zola-anchor" href="#how-it-works" aria-label="Anchor link for: how-it-works">🔗</a></h2>
+<p>The basic way it works,
+is it uses a variable to figure out
+if it’s reading normal text or command text.
+If it’s reading normal text,
+it simply passes it along to stdout,
+and if it’s reading command text,
+it gathers that into a string,
+then runs <code>eval</code> on it,
+which spits out its output to stdout.</p>
+<h2 id="future-work">Future Work<a class="zola-anchor" href="#future-work" aria-label="Anchor link for: future-work">🔗</a></h2>
+<p>I want to be able to parse files
+instead of just strings.
+The answer might be somewhere in <code>string join \n $fileContents</code>.</p>
+<p>When parsing files,
+it would be useful to provide variables for substitution.
+Perhaps it could be done by specifying environment variables
+in the same line as the command.
+Something like <code>VAR=val fish-template str &quot;{{ echo $VAR }}</code>.
+Another way would be a syntax for keys and values.
+Perhaps <code>--variables &quot;key1: val1; key2: val2&quot;</code>.</p>
+<p>A short syntax for variable expansion might also be nice.
+Something like <code>{{ $var }}</code> or <code>{$ var $}</code></p>
+<p>It would be cool to have a way to limit its scope,
+depending on where it’s being called from.
+Include a list to allow certain commands,
+as well as one to block some.
+If the first the command isn’t in the allow list,
+or is present in the block list,
+then raise an error instead of evaluating it.</p>
+<p>In a similar vein, providing additional commands would be great.
+A simple way is to create commands in a <code>bin/</code> directory
+and then run them with <code>{{ ./bin/my-command }}</code>,
+but a shorter syntax would be quite useful.
+Perhaps use the <code>bin/</code> directory
+with a syntax like <code>{{ @my-command }}</code>?
+Or simply <code>{{ my-command }}</code>,
+such that if <code>my-command</code> is not installed,
+it would look in the bin directory.</p>
+<p>It is ideal that the template evaluation
+takes place from a specific directory.
+Especially if relying on file operations
+or something like a <code>./bin/</code> directory.
+When calling the command on a template file,
+ensure the current working directory
+is the same as the file’s parent directory,
+unless specified otherwise.
+Changing directories in the script
+sounds like a potential footgun,
+since it’s implicit behaviour that people will not be aware of.
+An easy flag, then,
+to execute in the context of the template file’s folder.
+So <code>--dir &lt; current | file-dir | &lt;path&gt; &gt;</code>,
+where <path> is relative (starting with <code>./</code>) or absolute.</p>
+<p>It would also be great to have all commands in the file/template
+evaluate in the same context.
+This way a variable declared at the top
+could be used in a command further down.
+Currently, it spawns subshells using the <code>eval</code> command.
+Maybe it could use <code>source</code> or a flag in <code>eval</code>?
+Another approach might be to gather content
+as an <code>echo $content</code> command
+along with the other commands in the given sequence,
+then calling all the echo and other commands
+using a single <code>eval</code> command at the end.
+Use <code>string escape</code> to prevent unwanted expansions.</p>
+<h2 id="code">Code<a class="zola-anchor" href="#code" aria-label="Anchor link for: code">🔗</a></h2>
+<pre data-lang="fish" class="language-fish z-code"><code class="language-fish" data-lang="fish"><span class="z-source z-shell z-fish"><span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">normal</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span><span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span><span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+<span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">echo</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-fish"><span class="z-meta z-string z-unquoted z-fish"><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>argv</span><span class="z-meta z-brackets z-index-expansion z-fish"><span class="z-punctuation z-section z-brackets z-begin z-fish">[</span><span class="z-constant z-numeric z-fish">1</span><span class="z-punctuation z-section z-brackets z-end z-fish">]</span></span></span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-operator z-pipe z-stdout z-implicit z-fish"><span class="z-keyword z-operator z-pipe z-fish">|</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-block z-while z-fish"><span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">while</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">read</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-option z-short z-fish"><span class="z-variable z-parameter z-fish"><span class="z-punctuation z-definition z-option z-short z-fish"><span class="z-meta z-string z-unquoted z-fish">-</span></span><span class="z-meta z-string z-unquoted z-fish">n</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-numeric z-fish"><span class="z-meta z-string z-unquoted z-fish"><span class="z-constant z-numeric z-fish">1</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">char</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>  <span class="z-meta z-block z-switch z-fish"><span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">switch</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-double z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&quot;</span><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>parserMode</span></span> <span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>char</span></span><span class="z-punctuation z-definition z-string z-end z-fish">&quot;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>normal {<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">open-brace</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>open-brace {<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command-mode</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span><span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>open-brace *<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">normal</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">printf</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>{%s<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-fish"><span class="z-meta z-string z-unquoted z-fish"><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>char</span></span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>command-mode }<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">close-brace</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>close-brace }<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">normal</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-comment z-line z-fish"><span class="z-punctuation z-definition z-comment z-fish">#</span> echo \&#39;$command\&#39;
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">eval</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-fish"><span class="z-meta z-string z-unquoted z-fish"><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>command</span></span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>close-brace *<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-double z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&quot;</span><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>command</span></span>\}<span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>char</span></span><span class="z-punctuation z-definition z-string z-end z-fish">&quot;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>command-mode <span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-comment z-line z-fish"><span class="z-punctuation z-definition z-comment z-fish">#</span> newline creates &#39;&#39; when read
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-double z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&quot;</span><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>command</span></span> ; <span class="z-punctuation z-definition z-string z-end z-fish">&quot;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>command-mode #<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">comment</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>comment <span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-comment z-line z-fish"><span class="z-punctuation z-definition z-comment z-fish">#</span> newline creates &#39;&#39; when read
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">parserMode</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command-mode</span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-double z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&quot;</span><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>command</span></span> ; <span class="z-punctuation z-definition z-string z-end z-fish">&quot;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>command-mode *<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">set</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish">command</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-double z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&quot;</span><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>command<span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>char</span></span></span><span class="z-punctuation z-definition z-string z-end z-fish">&quot;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>normal <span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-comment z-line z-fish"><span class="z-punctuation z-definition z-comment z-fish">#</span> newline creates &#39;&#39; when read
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">printf</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-meta z-string z-unquoted z-fish"><span class="z-constant z-character z-escape z-fish">\n</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>
+    <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">case</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-path z-fish"><span class="z-string z-quoted z-single z-fish"><span class="z-punctuation z-definition z-string z-begin z-fish">&#39;</span>normal *<span class="z-punctuation z-definition z-string z-end z-fish">&#39;</span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>      <span class="z-meta z-function-call z-name z-fish"><span class="z-variable z-function z-fish"><span class="z-meta z-string z-unquoted z-fish">printf</span></span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-process-expansion z-other z-fish"><span class="z-meta z-string z-unquoted z-fish"><span class="z-punctuation z-definition z-process z-fish">%</span></span><span class="z-meta z-string z-unquoted z-fish">s</span></span><span class="z-meta z-function-call z-fish"> </span><span class="z-meta z-function-call z-parameter z-argument z-fish"><span class="z-meta z-string z-unquoted z-fish"><span class="z-meta z-variable-expansion z-fish"><span class="z-variable z-other z-fish"><span class="z-punctuation z-definition z-variable z-fish">$</span>char</span></span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span>  <span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">end</span></span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span><span class="z-meta z-function-call z-name z-fish"><span class="z-keyword z-control z-conditional z-fish"><span class="z-meta z-string z-unquoted z-fish">end</span></span></span></span><span class="z-meta z-function-call z-operator z-control z-fish">
+</span></span></code></pre>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <hr>
+  <p>References to this page:</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;static-site-build-tool&#x2F;">Static Site Build Tool</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;shell-templating.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

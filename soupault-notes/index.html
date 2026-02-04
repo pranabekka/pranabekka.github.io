@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Notes on Soupault
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Notes on Soupault
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Nov 20, 2024
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-notes/#understanding-html">Understand­ing HTML</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-notes/#widget-function">Widget = function</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/soupault-notes/#html-and-markup-languages">HTML and markup languages</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>An SSG (static site generator) that understands HTML.</p>
+<p><a href="https://soupault.app">Soupault</a></p>
+<p>This is what “An introduction to Soupault” was going to be.
+For some reason I turned that into a full beginner’s guide.
+Maybe because these notes might only make sense in context.
+Anyway, if you have the terminal open
+and want to start making a website,
+that’s what you’re looking for.</p>
+<p><a href="https://pranabekka.github.io/soupault-intro/">An introduction to Soupault</a></p>
+<p>If you just want a brief introduction,
+this is what you’re looking for.</p>
+<h2 id="understanding-html">Understand­ing HTML<a class="zola-anchor" href="#understanding-html" aria-label="Anchor link for: understanding-html">🔗</a></h2>
+<p>Here’s what I mean when I say Soupault understands HTML:
+it uses CSS selectors to extract and add information.</p>
+<p>This means that it turns the HTML into a series of nodes
+with attributes and children —
+it’s not just arbitrary text being put together.</p>
+<p>The way Soupault works is by
+configuring everything in a TOML file.
+This is where you specify “widgets”,
+which are steps in a pipeline that work on a page.
+Widgets that interact with the HTML use CSS selectors.</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">widgets</span><span class="z-punctuation z-separator z-table z-toml">.</span><span class="z-entity z-name z-table z-toml">add-author</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">widget</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>insert_html<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">html</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>&lt;p&gt;by Pranab&lt;/p&gt;<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">selector</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>h1<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">action</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>insert_after<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p>This is a widget that adds “by Pranab”
+under the title of every page in the site.
+Here’s how it works:</p>
+<ul>
+<li>
+<p><code>add-author</code> is like a comment,
+to help you keep track of how your site is made.
+Soupault also uses it for logging and debugging.</p>
+</li>
+<li>
+<p><code>widget</code> specifies the type of the widget.
+<code>insert_html</code> is a built-in widget type,
+which inserts HTML into the page.</p>
+</li>
+<li>
+<p><code>html</code> is the HTML you want <code>insert_html</code> to insert.
+I’m inserting a paragraph (<code>&lt;p&gt;</code>) with the text “by Pranab”.</p>
+</li>
+<li>
+<p><code>selector</code> is a CSS selector for the element
+where you want to insert the HTML.
+I chose to add the HTML near the <code>h1</code> element.</p>
+</li>
+<li>
+<p><code>action</code> provides finer control over where
+you want the HTML to be inserted.
+The CSS <code>selector</code> can only select an element,
+while the action specifies if it must be inserted
+after the element, inside it, or instead of it.</p>
+</li>
+</ul>
+<h2 id="widget-function">Widget = function<a class="zola-anchor" href="#widget-function" aria-label="Anchor link for: widget-function">🔗</a></h2>
+<p>It helps to think of a widget as a function call.</p>
+<p>The <code>widget</code> key specifies the name of the function,
+and the rest of the keys are arguments to it.</p>
+<p>The widget title is simply a description of
+what the widget does:</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">widget</span><span class="z-invalid z-illegal z-table z-toml">.</span></span><span class="z-invalid z-illegal z-table z-toml">&lt;description&gt;]</span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">widget</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>&lt;type&gt;<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+	<span class="z-invalid z-illegal z-toml">&lt;arg1&gt; = &quot;&lt;val1&gt;&quot;</span>
+	<span class="z-invalid z-illegal z-toml">&lt;arg2&gt; = &quot;&lt;val2&gt;&quot;</span>
+	<span class="z-invalid z-illegal z-toml">...</span>
+</span></code></pre>
+<p>This, specifically, was the revelation
+that made Soupault finally click for me,
+and what prompted me to write the first “introduction”,
+before it turned into a full beginner’s guide.</p>
+<h2 id="html-and-markup-languages">HTML and markup languages<a class="zola-anchor" href="#html-and-markup-languages" aria-label="Anchor link for: html-and-markup-languages">🔗</a></h2>
+<p>If Soupault works with HTML,
+what about all the Markdown?</p>
+<p>Well, Soupault first converts your markup to HTML.</p>
+<p>You tell it which file extensions should be converted to HTML,
+and which shell command to use for conversion.</p>
+<p>For example, Cmark is a widely available tool
+that converts Markdown to HTML.</p>
+<p>Here’s how you’d use it:</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">settings</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">page_file_extensions</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>md<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span> <span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">preprocessors</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">md</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>cmark --unsafe<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p>As long as you can convert it to HTML,
+you can use any markup language you want.</p>
+<p>If you really wanted,
+you could author your pages in JSON,
+and write a custom CLI tool to convert it to HTML.
+Just tell Soupault to use your program.</p>
+<pre data-lang="toml" class="language-toml z-code"><code class="language-toml" data-lang="toml"><span class="z-source z-toml"><span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">settings</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">page_file_extensions</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-punctuation z-definition z-array z-begin z-toml">[</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>md<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span><span class="z-punctuation z-separator z-array z-toml">,</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>json<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span> <span class="z-punctuation z-definition z-array z-end z-toml">]</span>
+
+<span class="z-punctuation z-definition z-table z-begin z-toml">[</span><span class="z-meta z-tag z-table z-toml"><span class="z-entity z-name z-table z-toml">preprocessors</span></span><span class="z-punctuation z-definition z-table z-end z-toml">]</span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">md</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>cmark --unsafe<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+	<span class="z-meta z-tag z-key z-toml"><span class="z-entity z-name z-tag z-toml">json</span></span> <span class="z-punctuation z-definition z-key-value z-toml">=</span> <span class="z-string z-quoted z-double z-basic z-toml"><span class="z-punctuation z-definition z-string z-begin z-toml">&quot;</span>my-cli<span class="z-punctuation z-definition z-string z-end z-toml">&quot;</span></span>
+</span></code></pre>
+<p>If all this didn’t make sense,
+maybe the full introduction might be for you:</p>
+<p><a href="https://pranabekka.github.io/soupault-intro/">An introduction to Soupault</a></p>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <hr>
+  <p>References to this page:</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;soupault-intro&#x2F;">An introduction to Soupault</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;soupault-notes.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

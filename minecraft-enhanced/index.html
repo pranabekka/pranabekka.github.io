@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Do More in Your Minecraft Worlds
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Do More in Your Minecraft Worlds
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    May 06, 2023
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/minecraft-enhanced/#the-problem">The Problem</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/minecraft-enhanced/#the-solution">The Solution</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/minecraft-enhanced/#bonus-rule-additional-accessibility">Bonus Rule: Additional Accessibility</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/minecraft-enhanced/#implementation-and-caveats">Implementation and Caveats</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/minecraft-enhanced/#conclusion">Conclusion</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<!--
+TODO: link to /fill and /clone command use
+-->
+<p>It’s hard to get things done in a Minecraft world,
+because you often don’t have time,
+and you can’t achieve the things that you dream of,
+especially the cool things you see from other people,
+and maybe prototype in your creative worlds.
+This is a set of rules to help you do cool things
+in your Minecraft worlds,
+including singleplayer,
+as well as small multiplayer worlds with friends.</p>
+<p>There’s also a bonus solution at the end
+to make the game more accessible
+(in a looser sense of the word),
+similar to the accessibility options of games like
+<a href="https://celeste.ink/wiki/Assist_Mode">Celeste (Celeste Wiki)</a> and
+<a href="https://araisegamer.com/rusted-moss-how-to-fly/">Rusted Moss (Article on Flying)</a><sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>You can see the other options in the screenshots.
+The basic instructions apply to those as well.</p>
+</div>
+<p><strong>NOTE:</strong> A lot of this is trust based,
+and might not scale so well.
+It works best with friends and acquaintances.</p>
+<h2 id="the-problem">The Problem<a class="zola-anchor" href="#the-problem" aria-label="Anchor link for: the-problem">🔗</a></h2>
+<p>You can’t build large things:</p>
+<ul>
+<li>Not enough time</li>
+<li>Not enough materials</li>
+</ul>
+<p>You can’t accumulate enough materials from your farms:</p>
+<ul>
+<li>Not enough time</li>
+<li>Can’t AFK because you can’t run Minecraft
+while doing other work.
+It slows your computer.</li>
+<li>Can’t AFK because you can’t keep your computer on.
+Possible reasons: high energy bills,
+having to carry your laptop around,
+unable to monitor computer,
+power cutoffs.</li>
+<li>Can’t AFK because of poor networks.</li>
+<li>Can’t AFK because you host a server from a personal computer,
+in which case the previous considerations apply.</li>
+</ul>
+<h2 id="the-solution">The Solution<a class="zola-anchor" href="#the-solution" aria-label="Anchor link for: the-solution">🔗</a></h2>
+<ul>
+<li>Offline Hours:
+When you’re not playing on the server
+you build up a sort of currency called “Offline Hours”.
+While the name says hours,
+you can time it down to minutes, half hours, or quarters.
+This currency can be spent on certain actions
+which have varying costs.</li>
+<li>AFK Simulation Rule:
+If you have an automatic farm of some kind,
+measure its output for 5–10 minutes and record it.
+You can now spend your “Offline Hours”
+and get the materials you would get for that amount of time
+by multiplying it with your measurements.</li>
+<li>Build Grind Rule:
+You can also establish an average baseline for
+how many blocks can be placed per minute,
+and spend your “Offline Hours”
+to fill/copy large amounts of blocks
+based on that amount.
+This can be used to copy repeated elements of a build,
+such as a large patterned wall,
+or to clear out a large area,
+for example.</li>
+</ul>
+<h2 id="bonus-rule-additional-accessibility">Bonus Rule: Additional Accessibility<a class="zola-anchor" href="#bonus-rule-additional-accessibility" aria-label="Anchor link for: bonus-rule-additional-accessibility">🔗</a></h2>
+<p><strong>NOTE:</strong> I’m using “accessibility” in a looser sense of the word,
+not in the sense of a11y <sup class="footnote-reference"><a href="#2">2</a></sup>. </p>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>https://en.wikipedia.org/wiki/Computer_accessibility</p>
+</div>
+<p>This rule derives from my own frustrations with lag,
+but they apply to any player
+who might be disadvantaged in any way.
+For example, they might not be hardcore gamers,
+or they play with special hardware.
+Other disadvantages include lag and rubberbanding.</p>
+<ul>
+<li>Accessibility Rule:
+Players with disadvantages have reduced penalties,
+or buffs to deal with their disadvantages.
+For example, they might keep their inventory whenever they die,
+or they could have extra health,
+or they could have permanent regeneration/resistance,
+or they could have other special items and/or abilities,
+such as flying
+or fire spells that damage hostiles in a given radius.
+See what the frustrations and needs of your players are.
+The rule need not apply at all times.
+For example, network effects can be temporary.</li>
+</ul>
+<p><strong>NOTE:</strong> The other rules are also about accessibility —
+they’re about making certain parts of the game
+more accessible to everyday players
+who might not have enough time
+to achieve the big builds they dream of.</p>
+<h2 id="implementation-and-caveats">Implementation and Caveats<a class="zola-anchor" href="#implementation-and-caveats" aria-label="Anchor link for: implementation-and-caveats">🔗</a></h2>
+<p>This is a largely trust based system.</p>
+<p>The easiest way to run it,
+is to calculate your Offline Hours, etc.,
+and then use commands according to the rules.
+The AFK rule can be achieved by using <code>/give</code>
+after calculating how many items you should get.
+The build rule can be achieved by using
+the <code>/fill</code> or <code>/clone</code> commands.
+Make sure to use the destroy option,
+so that you get any blocks that are replaced (or “broken”).
+This is also the most flexible and powerful system.</p>
+<p>Make sure to take regular backups
+if you’re relying on players to use the commands.
+Maybe before each command,
+or before you start up the server
+(this is the same as backing up after closing the server).</p>
+<p>People who are unfamiliar with the commands
+can either learn to use them with some tutorials,
+or they can rely on other people to run it for them.
+If you’re applying this to a server,
+it would be ideal for the server admin to know them,
+since they should be available when the server is up.</p>
+<p>To make it easier for people who don’t know commands,
+you could set up trigger commands for them.
+Trigger commands won’t be able to do everything,
+but they should let players do some things on their own.</p>
+<p>If you have Minecraft modding experience,
+that would be really cool —
+you could implement it
+and share it with people who are
+uncomfortable with commands.
+Some additional accesibility features
+are best achieved through mods, in fact.
+However, try to not make them too invasive.</p>
+<p>If people build up “too many” Offline Hours,
+you can put a limit on how many they can make.
+Make the decision based on the situation.</p>
+<p>If you find yourself abusing commands in other ways,
+you could create a process
+which makes you take it more seriously.</p>
+<p>For example, in a singleplayer world,
+you can simply create a note,
+and every time you use a command,
+you put it into that note
+with the time, the command,
+and why you’re allowed to use it
+(number of Offline Hours, any other reasoning).
+That note could also include how many Offline Hours you have.</p>
+<p>If you’re in a multiplayer world,
+you can create a way to submit requests
+and get them approved by at least on or two other members.
+The admin or other operators could then fulfil these requests,
+or you could trust players to responsibly fulfil them
+once their request has been approved.
+You can make it more or less strict as required.</p>
+<h2 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">🔗</a></h2>
+<p>Make a simple set of rules for achieving things
+without requiring prohibitive amounts of work.
+The rules should reflect the costs and rewards
+that you (and/or your players) find
+reasonable and enjoyable.</p>
+<p>Remember to fine tune the rules and rewards
+according to your (or others’) needs.
+You don’t want to make the game too easy,
+or it won’t be as rewarding,
+nor do you want to make it too strict.
+You must also communicate this to your players
+and discuss matters with them
+to create a fun environment for everyone.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;minecraft-enhanced.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

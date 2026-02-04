@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+parsing aim logs in gleam
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>parsing aim logs in gleam
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jan 01, 2026
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/parsing-aim-logs-gleam/#starting-simple">starting simple</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/parsing-aim-logs-gleam/#starting-with-types">starting with types</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>just some quick fun with the plain text logs.</p>
+<p>based on michael lynch’s post on trying gleam,
+where he wants to take old chat logs in various formats
+and put them all in the same file format.
+he starts with the plain-text logs,
+and i thought i’d have a go :)</p>
+<p><a href="https://mtlynch.io/notes/gleam-first-impressions/">michael lynch’s post</a></p>
+<h2 id="starting-simple">starting simple<a class="zola-anchor" href="#starting-simple" aria-label="Anchor link for: starting-simple">🔗</a></h2>
+<p>plain-text log sample:</p>
+<pre class="z-code"><code><span class="z-text z-plain">Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005
+[18:44] Jane: hi
+[18:55] Me: hey whats up
+Session Close (Jane): Mon Sep 12 18:56:02 2005
+</span></code></pre>
+<p>first, we <code>gleam new</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">gleam new aim_log_parser
+</span></code></pre>
+<p>because i’m just having fun,
+i’ll paste the test input into the main file.
+plus it makes it easy to follow along
+even in the online playground</p>
+<pre class="z-code"><code><span class="z-text z-plain">const test_input =
+	&quot;Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005&quot;
+	&lt;&gt; &quot;[18:44] Jane: hi&quot;
+	&lt;&gt; &quot;[18:55] Me: hey whats up&quot;
+	&lt;&gt; &quot;Session Close (Jane): Mon Sep 12 18:56:02 2005&quot;
+</span></code></pre>
+<p><code>gleam run</code> for fun, and gleam tells me
+i can remove <code>test_input</code> because it’s never used.
+well, let’s do something about that.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn main() -&gt; Nil {
+	string.split(test_input, &quot;\n&quot;)
+	|&gt; echo as &quot;log lines&quot;
+	Nil
+}
+</span></code></pre>
+<p>let’s <code>gleam run</code> that</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:12 log lines
+[&quot;Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005[18:44] Jane: hi[18:55] Me: hey whats upSession Close (Jane): Mon Sep 12 18:56:02 2005&quot;]
+</span></code></pre>
+<p>ah, there’s just one list item there.
+i changed the input because it looked ugly,
+but i forgot to add the line breaks.
+i could use <code>\n</code>, but that doesn’t feel much better.
+let’s just stick to copy-pasting the input.</p>
+<pre class="z-code"><code><span class="z-text z-plain">const test_input =
+&quot;Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005
+[18:44] Jane: hi
+[18:55] Me: hey whats up
+Session Close (Jane): Mon Sep 12 18:56:02 2005&quot;
+</span></code></pre>
+<p>and <code>gleam run</code> that</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:12 log lines
+[&quot;Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005&quot;,
+&quot;[18:44] Jane: hi&quot;,
+&quot;[18:55] Me: hey whats up&quot;,
+&quot;Session Close (Jane): Mon Sep 12 18:56:02 2005&quot;]
+</span></code></pre>
+<p>alright, we have 4 lines in the list.
+processing a list usually means <code>list.map</code>,
+since we want to go over each item.</p>
+<p>feels like a sad chat, by the way</p>
+<p>a message line starts with “[”,
+while the other two have
+“Session Start” and “Session Close”.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn main() -&gt; Nil {
+	string.split(test_input, &quot;\n&quot;)
+	|&gt; list.map(fn(line) {
+		case line {
+			&quot;[&quot; &lt;&gt; _ -&gt; &quot;Message&quot;
+			&quot;Session Start&quot; &lt;&gt; _ -&gt; &quot;Start&quot;
+			&quot;Session Close&quot; &lt;&gt; _ -&gt; &quot;Close&quot;
+			_ -&gt; panic as &quot;Unkown log entry&quot;
+		}
+	})
+	|&gt; echo as &quot;log lines&quot;
+	Nil
+}
+</span></code></pre>
+<p><code>gleam run</code>:</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:21 log lines
+[&quot;Start&quot;, &quot;Message&quot;, &quot;Message&quot;, &quot;Close&quot;]
+</span></code></pre>
+<p>so we start message, exchange two messages, then close.
+looks good.
+let’s pull out that function from <code>list.map</code>.
+call it <code>parse_line</code>.
+we’ll add types soon.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn main() -&gt; Nil {
+	string.split(test_input, &quot;\n&quot;)
+	|&gt; list.map(parse_line)
+	|&gt; echo as &quot;log lines&quot;
+	Nil
+}
+
+fn parse_line(line) {
+	case line {
+		&quot;[&quot; &lt;&gt; _ -&gt; &quot;Message&quot;
+		&quot;Session Start&quot; &lt;&gt; _ -&gt; &quot;Start&quot;
+		&quot;Session Close&quot; &lt;&gt; _ -&gt; &quot;Close&quot;
+		_ -&gt; panic as &quot;Unkown log entry&quot;
+	}
+}
+</span></code></pre>
+<p>runs the same. always good to confirm.
+could’ve forgotten the line breaks.</p>
+<p>i’d normally start with types,
+but we didn’t really need them then.
+now we want to store information.
+let’s turn the strings into types.</p>
+<pre class="z-code"><code><span class="z-text z-plain">type LogEntry {
+	Message
+	SessionStart
+	SessionClose
+}
+
+fn parse_line(line) {
+	case line {
+		&quot;[&quot; &lt;&gt; _ -&gt; Message
+		&quot;Session Start&quot; &lt;&gt; _ -&gt; SessionStart
+		&quot;Session Close&quot; &lt;&gt; _ -&gt; SessionClose
+		_ -&gt; panic as &quot;Unkown log entry&quot;
+	}
+}
+</span></code></pre>
+<p>running it looks good.
+we still have start, two messages and close,
+but they’re not strings anymore.</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:14 log lines
+[SessionStart, Message, Message, SessionClose]
+</span></code></pre>
+<p>we can start saving information about the entries,
+like the username and date or time.</p>
+<p>i’ll start with the messages.
+they’ve got a time, an author,
+and a body with the actual message contents.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[18:44] Jane: hi
+            ^^ separates metadata and body
+       ^ separates time and author
+^-----^ wraps time
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">type LogEntry {
+	Message(time: String, author: String, body: String)
+	SessionStart
+	SessionClose
+}
+</span></code></pre>
+<p>first, we split the metadata and body on <code>: </code>.
+gleam doesn’t know, but we assure it
+that splitting will always work.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let assert Ok(#(metadata, body)) = string.split_once(line, &quot;: &quot;)
+</span></code></pre>
+<p>then we split the metadata into time and author on <code> </code>,
+again assuring gleam that the split will succeed.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let assert Ok(#(time, author)) = string.split_once(metadata, &quot; &quot;)
+</span></code></pre>
+<p>then we construct a <code>Message</code> from that</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn parse_line(line) {
+	case line {
+		&quot;[&quot; &lt;&gt; _ -&gt; {
+			let assert Ok(#(metadata, body)) = string.split_once(line, &quot;: &quot;)
+			let assert Ok(#(time, name)) = string.split_once(metadata, &quot; &quot;)
+			Message(time, name, body)
+		}
+		&quot;Session Start&quot; &lt;&gt; _ -&gt; SessionStart
+		&quot;Session Close&quot; &lt;&gt; _ -&gt; SessionClose
+		_ -&gt; panic as &quot;Unkown log entry&quot;
+	}
+}
+</span></code></pre>
+<p>a quick <code>gleam run</code>:</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:14 log lines
+[SessionStart,
+Message(&quot;[18:44]&quot;, &quot;Jane&quot;, &quot;hi&quot;),
+Message(&quot;[18:55]&quot;, &quot;Me&quot;, &quot;hey whats up&quot;),
+SessionClose]
+</span></code></pre>
+<p>looks good, just need to strip out the brackets.
+we’ll drop a character at the start and end for that</p>
+<pre class="z-code"><code><span class="z-text z-plain">let time = time
+	|&gt; string.drop_start(1)
+	|&gt; string.drop_end(1)
+</span></code></pre>
+<p><code>gleam run</code> that, and it looks good</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:14 log lines
+[SessionStart,
+Message(&quot;18:44&quot;, &quot;Jane&quot;, &quot;hi&quot;),
+Message(&quot;18:55&quot;, &quot;Me&quot;, &quot;hey whats up&quot;),
+SessionClose]
+</span></code></pre>
+<p>let’s do the same for the session start and close.</p>
+<pre class="z-code"><code><span class="z-text z-plain">type LogEntry {
+	Message(time: String, author: String, body: String)
+	SessionStart(name: String, datetime: String)
+	SessionClose(name: String, datetime: String)
+}
+
+fn parse_line(line) {
+	case line {
+		&quot;[&quot; &lt;&gt; _ -&gt; todo as &quot;cut out for brevity&quot;
+		&quot;Session Start&quot; &lt;&gt; _ -&gt; {
+			let assert Ok(#(other_data, datetime)) = string.split_once(line, &quot;: &quot;)
+			let assert Ok(#(_, name)) = other_data
+				|&gt; string.drop_end(1)
+				|&gt; string.split_once(&quot;(&quot;)
+			SessionStart(name, datetime)
+		}
+		&quot;Session Close&quot; &lt;&gt; _ -&gt; {
+			let assert Ok(#(other_data, datetime)) = string.split_once(line, &quot;: &quot;)
+			let assert Ok(#(_, name)) = other_data
+				|&gt; string.drop_end(1)
+				|&gt; string.split_once(&quot;(&quot;)
+			SessionClose(name, datetime)
+		}
+		_ -&gt; panic as &quot;Unkown log entry&quot;
+	}
+}
+</span></code></pre>
+<p>start and close are exactly the same
+apart from the constructor’s name,
+so let’s split that out to a function.
+i even created a separate session info type
+so that the new function can construct it directly
+and then it can be put directly into the session entries,
+instead of putting it together manually from tuples</p>
+<pre class="z-code"><code><span class="z-text z-plain">type LogEntry {
+	Message(time: String, author: String, body: String)
+	SessionStart(SessionInfo)
+	SessionClose(SessionInfo)
+}
+
+type SessionInfo {
+	SessionInfo(name: String, datetime: String)
+}
+
+fn parse_line(line) {
+	case line {
+		&quot;[&quot; &lt;&gt; _ -&gt; todo as &quot;cut out for brevity&quot;
+		&quot;Session Start&quot; &lt;&gt; _ -&gt; {
+			parse_session_info(line) |&gt; SessionStart
+		}
+		&quot;Session Close&quot; &lt;&gt; _ -&gt; {
+			parse_session_info(line) |&gt; SessionClose
+		}
+		_ -&gt; panic as &quot;Unkown log entry&quot;
+	}
+}
+
+fn parse_session_info(line) -&gt; SessionInfo {
+	let assert Ok(#(other_data, datetime)) = string.split_once(line, &quot;: &quot;)
+	let assert Ok(#(_, name)) = other_data
+		|&gt; string.drop_end(1)
+		|&gt; string.split_once(&quot;(&quot;)
+	SessionInfo(name:, datetime:)
+}
+</span></code></pre>
+<h2 id="starting-with-types">starting with types<a class="zola-anchor" href="#starting-with-types" aria-label="Anchor link for: starting-with-types">🔗</a></h2>
+<p>i think it’s generally a good idea to think of types,
+and then write them out and go from there.</p>
+<p>while slinging strings gets some immediate output,
+types help solidify our understanding of the problem
+and discourage over-using strings and other built-ins,
+because then the type system can’t help you as much.
+we’ll also have to do less refactoring,
+and the gleam lsp will help us a lot</p>
+<p>so, we have a look at the sample log</p>
+<pre class="z-code"><code><span class="z-text z-plain">Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005
+[18:44] Jane: hi
+[18:55] Me: hey whats up
+Session Close (Jane): Mon Sep 12 18:56:02 2005
+</span></code></pre>
+<p>and we see three types of log entries</p>
+<pre class="z-code"><code><span class="z-text z-plain">type LogEntry {
+	Message(time: String, author: String, body: String)
+	SessionStart(name, datetime)
+	SessionClose(name, datetime)
+}
+</span></code></pre>
+<p>we know that having a SessionInfo type is useful,
+and we can see that it’s being repeat here,
+but it also feels like extra typing at this point,
+so i personally wouldn’t have done it,
+but i think the lesson is that you should probably
+split out repeat info into it’s own type,
+because they’ll be handled the same.</p>
+<pre class="z-code"><code><span class="z-text z-plain">type LogEntry {
+	Message(time: String, author: String, body: String)
+	SessionStart(info: SessionInfo)
+	SessionClose(info: SessionInfo)
+}
+
+type SessionInfo {
+	SessionInfo(name: String, datetime: String)
+}
+</span></code></pre>
+<p>from here, it’s best to write a parser for each,
+which i prefer over one big function
+like we did before with <code>parse_entry</code>.
+we can have it delegate to the individual ones</p>
+<p>first, i’ll change <code>main</code> a bit
+because i like seeing something</p>
+<pre class="z-code"><code><span class="z-text z-plain">const test_input =
+&quot;Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005
+[18:44] Jane: hi
+[18:55] Me: hey whats up
+Session Close (Jane): Mon Sep 12 18:56:02 2005&quot;
+
+pub fn main() -&gt; Nil {
+	let lines = string.split(test_input, &quot;\n&quot;)
+	echo lines
+	Nil
+}
+</span></code></pre>
+<p><code>gleam run</code> that, and we see a list of lines.
+cool, let’s start parsing</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn main() -&gt; Nil {
+	string.split(test_input, &quot;\n&quot;)
+	|&gt; list.map(parse_entry)
+	|&gt; echo as &quot;entries&quot;
+
+	Nil
+}
+
+fn parse_entry(text: String) -&gt; LogEntry {
+	case text {
+		&quot;Session Start&quot; &lt;&gt; _ -&gt; parse_session_start(text)
+		&quot;[&quot; &lt;&gt; _ -&gt; parse_message(text)
+		&quot;Session Close&quot; &lt;&gt; _ -&gt; parse_session_start(text)
+		_ -&gt; {
+			echo text as &quot;unkown entry&quot;
+			panic
+		}
+	}
+}
+</span></code></pre>
+<p><code>gleam run</code> won’t work right now.
+it’ll give errors because the functions don’t exist.
+we can use the lsp to generate the functions for us,
+which is kinda nice</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn parse_session_start(text: String) -&gt; LogEntry {
+	todo
+}
+
+fn parse_message(text: String) -&gt; LogEntry {
+	todo
+}
+</span></code></pre>
+<p>oop, we there’s only two functions,
+we copied <code>parse_session_start</code>
+and forgot to change it to <code>close</code>.</p>
+<p>alright, we’ll parse session start.</p>
+<pre class="z-code"><code><span class="z-text z-plain">// Session Start (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005
+// -------------- junk
+// session info  --------------------------------------------------
+fn parse_session_start(text: String) -&gt; LogEntry {
+	let assert &quot;Session Start &quot; &lt;&gt; data = text
+	parse_session_info(data) |&gt; SessionStart |&gt; echo
+}
+
+// (DumbAIMScreenName:Jane): Mon Sep 12 18:44:17 2005
+//                           ------------------------ datetime
+//                         -- separator
+// ------------------------ name_parens
+//  ---------------------- name
+fn parse_session_info(text: String) -&gt; SessionInfo {
+	let assert Ok(#(name_parens, datetime)) =
+		string.split_once(text, &quot;: &quot;)
+	let name = name_parens
+		|&gt; string.drop_start(1)
+		|&gt; string.drop_end(1)
+	SessionInfo(name:, datetime:)
+}
+</span></code></pre>
+<p>i’m echoing the data in <code>parse_session_start</code>
+because the <code>todo</code>s make it crash
+before <code>main</code> shows anything.
+the extra <code>echo</code> shows us some info
+before the crash</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:45
+SessionStart(SessionInfo(&quot;DumbAIMScreenName:Jane&quot;, &quot;Mon Sep 12 18:44:17 2005&quot;))
+</span></code></pre>
+<p>looks nice. we can parse the message</p>
+<pre class="z-code"><code><span class="z-text z-plain">// [18:44] Jane: hi
+//               -- body
+//             -- separator
+// ------------ metadata
+//         ---- name
+//        - separator
+// ------- time_brackets
+//  ----- time
+fn parse_message(text: String) -&gt; LogEntry {
+	let assert Ok(#(metadata, body)) =
+		string.split_once(text, &quot;: &quot;)
+	let assert Ok(#(time_brackets, name)) =
+		string.split_once(metadata, &quot; &quot;)
+	let time = time_brackets
+		|&gt; string.drop_start(1)
+		|&gt; string.drop_end(1)
+	Message(time:, author:, body:) |&gt; echo
+}
+</span></code></pre>
+<p><code>gleam run</code> output looks nice
+(before the crash; <code>parse_session_close</code> is still <code>todo</code>)</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:45
+SessionStart(SessionInfo(&quot;DumbAIMScreenName:Jane&quot;, &quot;Mon Sep 12 18:44:17 2005&quot;))
+src/parse_aim_log.gleam:78
+Message(&quot;18:44&quot;, &quot;Jane&quot;, &quot;hi&quot;)
+src/parse_aim_log.gleam:78
+Message(&quot;18:55&quot;, &quot;Me&quot;, &quot;hey whats up&quot;)
+</span></code></pre>
+<p>finally, we parse <code>SessionClose</code>,
+copying freely from <code>parse_session_start</code>,
+while remembering to change “start” to “close”</p>
+<pre class="z-code"><code><span class="z-text z-plain">// Session Close (Jane): Mon Sep 12 18:56:02 2005
+// -------------- junk
+// session info  --------------------------------------------------
+fn parse_session_close(text: String) -&gt; LogEntry {
+	let assert &quot;Session Close &quot; &lt;&gt; data = text
+	parse_session_info(data) |&gt; SessionClose |&gt; echo
+}
+</span></code></pre>
+<p><code>gleam run</code> now completes without a crash,
+but with all entries shown again at the end</p>
+<pre class="z-code"><code><span class="z-text z-plain">src/parse_aim_log.gleam:45
+SessionStart(SessionInfo(&quot;DumbAIMScreenName:Jane&quot;, &quot;Mon Sep 12 18:44:17 2005&quot;))
+src/parse_aim_log.gleam:78
+Message(&quot;18:44&quot;, &quot;Jane&quot;, &quot;hi&quot;)
+src/parse_aim_log.gleam:78
+Message(&quot;18:55&quot;, &quot;Me&quot;, &quot;hey whats up&quot;)
+src/parse_aim_log.gleam:86
+SessionClose(SessionInfo(&quot;Jane&quot;, &quot;Mon Sep 12 18:56:02 2005&quot;))
+src/parse_aim_log.gleam:13 entries
+[SessionStart(SessionInfo(&quot;DumbAIMScreenName:Jane&quot;, &quot;Mon Sep 12 18:44:17 2005&quot;)), Message(&quot;18:44&quot;, &quot;Jane&quot;, &quot;hi&quot;), Message(&quot;18:55&quot;, &quot;Me&quot;, &quot;hey whats up&quot;), SessionClose(SessionInfo(&quot;Jane&quot;, &quot;Mon Sep 12 18:56:02 2005&quot;))]
+</span></code></pre>
+<p>incidentally, i noticed one pattern repeated twice,
+for stripping the square and round brackets,
+which i could pull out into a separate function</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn drop_brackets(text: String) -&gt; String {
+	text
+	|&gt; string.drop_start(1)
+	|&gt; string.drop_end(1)
+}
+</span></code></pre>
+<p>we’re relying on the name for this to be used correctly,
+and we’re experienced devs so we won’t abuse it
+even in a small project like this.
+if this ever became bigger
+maybe we could check for brackets
+and have an error otherwise?
+or just not drop anything?
+yeah, probably just don’t touch the string
+if there’s no brackets</p>
+<p>also, we could save the separators in variables,
+and it might have the variable names as documentation
+in a way?</p>
+<p>also-also, gleam doc comments use three slashes,
+after which it’s parsed as markdown or djot,
+both of which use the same code block syntax,
+so we could generate pretty docs with <code>gleam docs</code>.
+we also need to make the function <code>pub</code>
+to have it show up in the docs</p>
+<pre class="z-code"><code><span class="z-text z-plain">/// ```
+/// Session Close (Jane): Mon Sep 12 18:56:02 2005
+/// -------------- junk
+/// session info  --------------------------------
+/// ```
+pub fn parse_session_close(text: String) -&gt; LogEntry {
+	let assert &quot;Session Close &quot; &lt;&gt; data = text
+	parse_session_info(data) |&gt; SessionClose |&gt; echo
+}
+</span></code></pre>
+<p>you’ll need to <code>gleam docs build</code> that,
+open the link in your browser,
+then open the module name,
+because it opens the readme by default</p>
+<p>welp, that’s about it</p>
+<p>kinda fun.
+i really do enjoy using gleam</p>
+<p>could be fun to add <code>to_string</code>
+to reconstruct the plain-text logs
+from the parsed <code>LogEntry</code> types.
+we’d need it to normalise all the logs anyway</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;parsing-aim-logs-gleam.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

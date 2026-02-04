@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Dates in your SSG
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Dates in your SSG
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+<hr>
+
+<p>’Tis incidental work the SSG should manage.</p>
+<p>All SSGs I know of make people do the work for dates,
+instead of just focusing on writing. 
+They won’t even do any checks for them.
+I’ve forgotten to update the date many times,
+and I have several commits to fix dates.
+I’ve probably even missed a few.</p>
+<pre class="z-code"><code><span class="z-text z-plain">---
+title: Dates in your SSG
+## DRAFT DATES - remember to change on publishing
+date: 2025-12-05 21:33:57
+updated: 2025-12-05 21:33:57
+---
+
+Getting it to do the all the work itself.
+</span></code></pre>
+<p>SSGs require tracking dates manually
+because dates in file metadata can get erased.
+This requires the ability to
+keep track of them outside filesystem metadata,
+and correcting them by hand in case of issues.</p>
+<p>I’d like the SSG to get the dates from the computer
+and just save the dates to the file whenever it runs.
+The file system exposes creation and modification dates,
+and once they’re added to the file,
+the risk of loosing that data is gone.
+If the creation date is missing, it’ll be added.
+If the modification date is newer than the current,
+it will be updated in place.
+You can also override it in case something goes wrong.</p>
+<p>The most interesting feature is
+tracking the published date.
+My posts are published by pushing it to a Git repo,
+so the nicest way is using a pre-push hook.
+Whenever I push to <code>origin/main</code>,
+the hook should run the SSG to check
+if I’m publishing any new posts,
+and if I am, it should add in a published date,
+followed by a quick commit and push.
+I’d also use a pre-commit hook to update modification dates
+with the commit that changes the file.</p>
+<p><a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks">Git hooks</a></p>
+<p>I feel like SSGs should use hooks more often anyway.
+It’d be nice for the SSG to check your work on commit.
+You can catch build failures before CI surprises,
+and you don’t need to manually run the SSG.</p>
+<p>Anyway, automatic dates!
+I’ll probably add in my own hooks for them.
+I guess that’s why we use plain text and CLI tools.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;ssg-dates.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

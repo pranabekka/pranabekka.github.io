@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+A Unix-y spaced repetition system
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>A Unix-y spaced repetition system
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/unixy-spaced-repetition/#markdown-extension">Markdown extension</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/unixy-spaced-repetition/#a-unix-y-system">A Unix-y system</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>A flashcards app idea inspired by hashcards.</p>
+<p>“Hashcards: A Plain Text Spaced Repetition System”
+is an introductory post for hashcards,
+an app by Fernando Borretti
+that uses Markdown files for flashcard “decks”.
+The idea sparked my imagination,
+which is what I present to you here.</p>
+<p>While hashcards obviously fits their needs,
+I think it could certainly use a smidge more work,
+and there’s a few cool ideas that can be built on top,
+though that’s basically a different app entirely.
+You’ll see what I mean.</p>
+<h2 id="markdown-extension">Markdown extension<a class="zola-anchor" href="#markdown-extension" aria-label="Anchor link for: markdown-extension">🔗</a></h2>
+<p>My only critique of hashcards is that
+Markdown is an odd choice.
+The proposed syntax isn’t really Markdown,
+which makes me think they chose it
+because the cards will be rendered nicely
+when uploaded to Github,
+as they did for their cards.
+However, the question and answer syntax
+doesn’t account for how Markdown is rendered.</p>
+<p>The syntax used in hashcards:</p>
+<pre class="z-code"><code><span class="z-text z-plain">Q: What is hashcards?
+A: A plain text spaced repetition system.
+</span></code></pre>
+<p>The rendered output:</p>
+<div class="sample-block">
+  <p>Q: What is hashcards?
+A: A plain text spaced repetition system.</p>
+
+</div>
+<p>In Markdown, lines following each other are paragraphs.
+Line breaks are turned into spaces.</p>
+<p>This is the only flaw,
+which is why I said “a smidge more work”,
+though that’s a surface-level evaluation.</p>
+<p>I’d say unordered lists would work well here.</p>
+<pre class="z-code"><code><span class="z-text z-plain">- What is hashcards
+- A plain text spaced repetition system
+
+- What is spaced repetition?
+- Repeated tests for knowledge recall with
+  spaces of time in between.
+</span></code></pre>
+<div class="sample-block">
+  <ul>
+<li>
+<p>What is hashcards?</p>
+</li>
+<li>
+<p>A plain text spaced repetition system.</p>
+</li>
+<li>
+<p>What is spaced repetition?</p>
+</li>
+<li>
+<p>Repeated tests for knowledge recall with
+spaces of time in between.</p>
+</li>
+</ul>
+
+</div>
+<p>Questions and answers are easier to read,
+<code>-</code> is a bit easier to type than <code>Q</code> or <code>A</code>,
+Markdown parsers can understand some of the structure,
+and editors can make it easier to write cards.</p>
+<pre class="z-code"><code><span class="z-text z-plain">- What is hashcards, really?
+  Give me a nice long paragraph about it.
+- hashcards is a local-first spaced repetition app,
+  along the lines of Anki or Mochi.
+  Like Anki, it uses FSRS,
+  the most advanced scheduling algorithm yet,
+  to schedule reviews.
+
+- Hmm, could you list the features?
+- - Plain Text
+  - Content Addressable
+  - Low Friction
+  - Simple
+  - Efficient
+
+- hashcards is efficient because it uses [FSRS]
+</span></code></pre>
+<p>That’s my only reasonable suggestion.
+From this point onwards,
+I’m describing a completely different app.</p>
+<h2 id="a-unix-y-system">A Unix-y system<a class="zola-anchor" href="#a-unix-y-system" aria-label="Anchor link for: a-unix-y-system">🔗</a></h2>
+<p>The hashcards format isn’t really Markdown,
+though it could be taken as an extension.</p>
+<p>Why not a more concise syntax?
+What if you prefer other formats?
+Especially given the problems with markdown,
+as described by John MacFarlane
+in his essay “Beyond Markdown”.</p>
+<p><a href="https://johnmacfarlane.net/beyond-markdown.html">Beyond Markdown</a></p>
+<p>What if you’d like to extract cards
+from existing note files?</p>
+<p>Additionally, the app will always have its own
+internal representation of the cards.</p>
+<p>So what if we only had a certain internal representation,
+and the input format could be anything you want,
+assuming there’s a converter or that you’ll create it.</p>
+<p>The app could be extended in several ways:</p>
+<ul>
+<li>
+<p>A scripting interface, maybe using Lua.</p>
+</li>
+<li>
+<p>Provide the API as a library to use
+in your programming language of choice.</p>
+</li>
+<li>
+<p>Allow running executables that print cards to stdout,
+perhaps using a JSON or other line-oriented schema,
+which the app can take as input.</p>
+</li>
+</ul>
+<p>That last one is the “Unix-y” bit I’ve talked about.
+You can write an executable
+in whatever language you prefer
+and configure the app to call it how you like,
+and then the app will consume its output
+to produce the internal card representation.
+You can bundle these executables in the same folder,
+or use compiled binaries in your <code>PATH</code>,
+like an AWK script to parse some CSV
+or a Rust binary to import notes from Notion.</p>
+<p>Configuration would be in a file
+that’s within the same folder as the cards.</p>
+<pre class="z-code"><code><span class="z-text z-plain">// This file was auto-generated by The App
+// See the-app.com/configuration to know more
+import *.md builtin markdown
+import notion-link.txt custom {
+	&quot;./notion-card-importer.py&quot; &quot;--card-json&quot; $file
+}
+</span></code></pre>
+<p>The app will need to
+store a hash of the config file as well
+because changing it also changes the cards.</p>
+<p>The rest can be the same as hashcards,
+although plain text statistics would be great,
+perhaps stored in a similar file as the config.
+It would make it easy to extract information
+and to backup history along with the cards.</p>
+<p>I might start working on it in December,
+in an upcoming code jam,
+assuming it’s within the rules.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;unixy-spaced-repetition.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Arbitrary proper markup
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Arbitrary proper markup
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jan 21, 2026
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>Ruminating on Ginger Bill’s post on the same.</p>
+<p><a href="https://gingerbill.org/article/2026/01/19/two-families-of-markup-languages">The Only Two Markup Languages</a></p>
+<p>He says XML and TeX are the only families
+of proper arbitrary markup.
+I guess the biggest difference between the two
+is that a TeX-like would be less verbose
+than an XML derivative,
+but I feel like <code>&lt;/node&gt;</code> can become <code>&lt;/&gt;</code>
+and then the difference in verbosity is negligible.</p>
+<p>Anyway, here’s the two families for demonstration.</p>
+<p>SGML/XML:</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;node&gt;Some arbitrary text&lt;/node&gt;
+&lt;node attribute=value&gt;Some arbitrary text&lt;/node&gt;
+</span></code></pre>
+<p>TeX-like:</p>
+<pre class="z-code"><code><span class="z-text z-plain">\node{Some arbitrary text}
+\node[attribute=value]{Some arbitrary text}
+</span></code></pre>
+<p>While Ginger Bill claims only the above two
+allow wrapping arbitrary text,
+in truth, any data format allows it,
+because text/strings are a universal data type.</p>
+<p>JSON:</p>
+<pre class="z-code"><code><span class="z-text z-plain">[&quot;node&quot;, &quot;Some arbitrary text&quot;]
+[&quot;node&quot;, {&quot;attribute&quot;: &quot;value&quot;}, &quot;Some arbitrary text&quot;] 
+</span></code></pre>
+<p>NestedText (I can’t write YAML):</p>
+<pre class="z-code"><code><span class="z-text z-plain">-
+  - node
+  - Some arbitrary text
+-
+  -
+    attribute: value
+  - Some arbitrary text
+</span></code></pre>
+<p>S-expression-like:</p>
+<pre class="z-code"><code><span class="z-text z-plain">[:node &quot;Some arbitrary text&quot;]
+[:node [@ :attribute &quot;value&quot;] &quot;Some arbitrary text&quot;]
+</span></code></pre>
+<p>KDL:</p>
+<pre class="z-code"><code><span class="z-text z-plain">node &quot;Some arbitrary text&quot;;
+node attribute=value &quot;Some arbitrary text&quot;;
+</span></code></pre>
+<p>There are only three differences between TeX/XML
+and the other languages in the examples above.</p>
+<p>First, we’re working with a subset of these languages.
+This means proper arbitrary markup in KDL
+will always be valid KDL,
+but not all valid KDL will be
+valid proper arbitrary markup.
+That’s not a big deal, though,
+because not all plain-text files are valid TeX either.
+In fact, using a subset of a structured language
+like KDL or S-expressions is quite useful.</p>
+<p>The second difference is that these other languages
+require wrapping the whole document,
+because text/strings only allow text inside them.
+While I don’t think TeX requires it,
+XML and well-formed HTML do require it,
+and most authors do wrap the whole document.
+Additionally, even for a derived format,
+these documents are implicitly wrapped
+in a <code>\texdoc</code> or <code>&lt;html-doc&gt;</code> node anway.
+It helps to imagine the data structure,
+which would be some kind of document struct.
+Finally, it’s trivial to add an extra node
+while you’re marking up the rest of the document.</p>
+<p>The third difference is that
+nesting nodes is a bit roundabout and unintuitive,
+which is also because strings only allow text inside.
+Nesting uses the same amount of insertion points,
+but it’s not as simple as an open and close tag.
+Instead, it’s more of a close previous and open new.
+I don’t think it’s too hard to learn, though.</p>
+<p>Here’s how XML looks:</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;outer&gt;Some arbitrary text&lt;/outer&gt;
+&lt;outer&gt;Some &lt;inner&gt;arbitrary&lt;/inner&gt; text&lt;/outer&gt;
+</span></code></pre>
+<p>Here’s how KDL looks:</p>
+<pre class="z-code"><code><span class="z-text z-plain">outer &quot;Some arbitrary text&quot;
+outer &quot;Some &quot; { inner &quot;arbitrary&quot; } &quot; text&quot;
+</span></code></pre>
+<p>In XML we insert <code>&lt;inner&gt;</code> and <code>&lt;/inner&gt;</code>,
+but in KDL we insert <code>&quot; { inner &quot;</code> and <code>&quot; } &quot;</code>.
+It’s helpful to think of it as
+closing the previous part of the text
+and then opening the next part of the text,
+and maybe NestedText would make this easier
+because opening and closing are easy to see.
+This would be the key difference between
+TeX/XML-likes and the other languages I mention.</p>
+<p>Though we’re essentially at the end of our rumination,
+I’m going to briefly mention escaping.</p>
+<p>NestedText requires indenting your text content
+instead of allowing you to just add nodes,
+but even TeX and XML require escaping characters
+inside the text content of the nodes.
+KDL is the only format
+that allows just adding nodes
+without escapes for the characters inside them.
+TeX/XML-likes could probably create something similar.</p>
+<pre class="z-code"><code><span class="z-text z-plain">node #&quot;Some arbitrary text with a &quot; character&quot;#
+node ##&quot;Some arbitrary text with &quot;# characters&quot;##
+</span></code></pre>
+<p>I’d like to conclude this post by saying
+Wasted Eyes by Amaarae is a fun song.
+I don’t understand genres,
+but Wikipedia says she’s known for
+her fusion of pop, R&amp;B, Afrobeats and alté.</p>
+<p>Have fun!</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;arbitrary-proper-markup.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

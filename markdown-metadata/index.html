@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Metadata in Markdown
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Metadata in Markdown
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 24, 2024
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      Sep 20, 2024
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/markdown-metadata/#solution-1-metadata-tag">Solution 1: metadata tag</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/markdown-metadata/#solution-2-metadata-code-block">Solution 2: metadata “code” block</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Alternatives to putting the markdown title in TOML/YAML.</p>
+<p>Because frontmatter breaks Markdown syntax
+and puts the title at the same importance as
+other metadata like the date and thumbnail.</p>
+<p>The title is a primary piece of data for the document,
+and it is not on the same level of importance as the date.</p>
+<p>With frontmatter, your Markdown (not metadata) document
+starts with a level 2 heading and no level 1 heading,
+or it has multiple level 1 headings (titles).</p>
+<p>Instead, put the document heading at the top
+using Markdown syntax,
+and add metadata like the date below that.</p>
+<h2 id="solution-1-metadata-tag">Solution 1: metadata tag<a class="zola-anchor" href="#solution-1-metadata-tag" aria-label="Anchor link for: solution-1-metadata-tag">🔗</a></h2>
+<p>Since Markdown requires extension with HTML,
+and is primarily an HTML generation tool,
+we could use a ‘metadata’ tag.</p>
+<pre class="z-code"><code><span class="z-text z-plain"># My document title
+
+&lt;metadata
+  date=&quot;2024-06-24&quot;
+  update=&quot;2024-06-27&quot;
+/&gt;
+
+post content ...
+</span></code></pre>
+<p>‘metadata’ could also be shortened to ‘meta’
+for the convenience of authors,
+but there should ideally be a simple template
+and a <code>new</code> command to create a skeleton
+and fill in the basic information.</p>
+<p>You can also prefix the tag with a ‘namespace’ of sorts,
+to avoid potential collisions.
+Hugo would call it <code>hugo-metadata</code>,
+while Zola might call it <code>zola-metadata</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;my-metadata
+  date=&quot;2024-06-24&quot;
+  update=&quot;2024-06-27&quot;
+/&gt;
+</span></code></pre>
+<p>It should be easy to use HTML if the tool already uses it,
+although XML/HTML can be verbose for some people.</p>
+<h2 id="solution-2-metadata-code-block">Solution 2: metadata “code” block<a class="zola-anchor" href="#solution-2-metadata-code-block" aria-label="Anchor link for: solution-2-metadata-code-block">🔗</a></h2>
+<p>Another solution is to author metadata in YAML, TOML,
+or whatever format is already used,
+by using a code block with the ‘metadata’ language.</p>
+<pre class="z-code"><code><span class="z-text z-plain">```metadata
+date: 2024-06-24
+update: 2024-06-27
+```
+</span></code></pre>
+<p>In addition to the previous ‘meta’ suggestion,
+you could also include the metadata format
+if multiple formats are available,
+with a default format if none is included.</p>
+<pre class="z-code"><code><span class="z-text z-plain">```metadata/toml
+date = 2024-06-24
+update = 2024-06-24
+```
+</span></code></pre>
+<p>Specifiers like <code>metadata/toml</code> are also used in
+HTTP responses as well as HTML <code>link</code> elements.</p>
+<p>Most markup formats include code blocks,
+and setting the language should be easy.
+Plus people tend to like YAML/TOML over XML/HTML.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;markdown-metadata.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

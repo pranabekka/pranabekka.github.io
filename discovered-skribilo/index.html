@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+I Discovered Skribilo!
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>I Discovered Skribilo!
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 29, 2023
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p><a href="https://www.nongnu.org/skribilo/">Skribilo</a> is a way to interleave markup and scheme code,
+with very similar semantics to what I was envisioning
+in <a href="https://pranabekka.github.io/lispy-templates/">Lispy Templates</a>:</p>
+<ol>
+<li>It uses <code>,(</code> to evaluate code inside a markup block.</li>
+<li>It uses square brackets (‘[…]’)for content blocks instead of quotes.</li>
+</ol>
+<p>Skribilo actually supports multiple types of syntax,
+since it’s more of a framework for defining your own syntax.
+The syntax it uses by default is the Skribe syntax,
+which has its origins in LAML roughly as far back as 1999,
+as per <a href="https://people.cs.aau.dk/~normark/laml/papers/laml-retrospective-paper.pdf">this paper</a> by Kurt Nørmark.</p>
+<p>The <a href="https://www.nongnu.org/skribilo/">Skribilo page</a> also mentions a lot of prior art
+and similar projects at the bottom,
+which might be interesting to look at.</p>
+<p>Here’s an example of a Skribe document:</p>
+<pre data-lang="scheme" class="language-scheme z-code"><code class="language-scheme" data-lang="scheme"><span class="z-text z-plain">(define (skribilo . body)
+  (ref :url &quot;https://www.nongnu.org/skribilo/&quot; :text body))
+
+(document :title [I Discovered Skribilo!]
+          :draft #t
+          :date (make-date 0 0 28 10 29 06 2023 0) ;(nanosecond second minute hour day month year timezone-offset)
+
+  (p [,(skribilo [Skribilo]) is a way to interleave markup and scheme code,
+with very similar semantics to what I was envisioning in
+,(ref &quot;@/lispy-templates.skribe&quot; &quot;Lispy Templates&quot;).]))
+</span></code></pre>
+<p>At this stage, I think all it needs
+is a way to define syntax sugar (like <code># title</code> or <code>- list item</code>),
+and it would be roughly on par with typst.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;discovered-skribilo.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
