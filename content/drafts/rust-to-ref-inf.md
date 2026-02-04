@@ -67,10 +67,11 @@ fn main() -> () {
 ## Not quite moves
 
 `mut` in a function signature does not mean a move,
-it means a mutable reference
-that will only work if it's returned,
-so users will be required to return
-if they mutate a parameter.
+it means a mutable borrow,
+but unlike Rust's mutable borrows
+it will only work if it's returned.
+This means functions will be required to
+return a parameter if the parameter is mutated.
 
 ```
 fn bad_func(point: mut Vec2) {
@@ -182,6 +183,13 @@ fn main() {
 	main_point = offset(main_point, Vec2 { x: 1, y: 1 });
 }
 ```
+
+Every call to `clone()` is enforced
+by our incomplete borrow inferrer,
+to ensure that there's no shared borrows
+while using a mutable borrow.
+Rust's borrow checker would do the same,
+in addition to requiring `&mut`.
 
 <!--
 ## No storing or returning borrows
@@ -346,7 +354,7 @@ In the above case,
 and `new_point` only uses the `y` field,
 so it's safe for them to use the same memory.
 
-## Move, no-copy types
+## Move types
 
 There are some types that can't be cloned automatically,
 such as file handles and network connections,
@@ -355,7 +363,7 @@ so the borrow inferrer will prevent it with an error.
 ```
 fn main() -> () {
 	let mut file = open_file("./example.txt").unwrap();
-	// ERROR: Created new reference `file_two`.
+	// ERROR: `file` moved to `file_two`.
 	let (file_two, contents) = read_file(file).unwrap();
 	// ERROR: attempt to reuse `file` here.
 	file = write_file(file, "Example contents");
@@ -363,7 +371,7 @@ fn main() -> () {
 ```
 
 We would either need to assign to `file`,
-or use the new reference to the file.
+or use the new owner of the file handle.
 
 ```
 fn use_same_ref() {
@@ -373,7 +381,7 @@ fn use_same_ref() {
 }
 
 fn use_new_ref() {
-	let mut file = open_file("./example.txt").unwrap();
+	let file = open_file("./example.txt").unwrap();
 	let (mut file_two, contents) = read_file(file).unwrap();
 	file_two = write_file(file_two, "Example contents");
 }
