@@ -1,22 +1,29 @@
 +++
 title = "Borrow inferrer"
 date = 2026-01-20 13:59:52
-updated = 2026-01-29 20:21:28
+updated = 2026-03-01 20:09:53
 +++
 
 Mutation thout annotations xor bugs.
 
-**NOTE:** The core idea is pretending to use copies,
-while favouring references or moves under the hood.
-This post tried to be a short introduction,
-but it also tried explaining months of evolution
-from Rust's move syntax to the final language idea,
-which means the post is incomplete
-and includes uneccessary details.
-I'm working on a post that does a better job
-by explaining the core idea.
-I'll link it here in a few weeks,
-but you can read on if you want to.
+---
+
+**NOTE**
+
+This post doesn't communicate the idea well.
+The following discussion on the Rust user forums
+is a better explanation.
+
+[Aliased Xor Mutable core for a high-level language](https://users.rust-lang.org/t/aliased-xor-mutable-core-for-a-high-level-language/138482)
+
+The core idea is a high-level language
+that presents normal values as copies to the user,
+while using references under the hood,
+and unique ownership for external resources,
+which means a safer and more performant
+high-level language.
+
+---
 
 The key part of Rust is sharing xor mutating,
 where "xor" means "either but not both",
