@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Connect 4 Gleam
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Connect 4 Gleam
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Oct 18, 2025
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>Making a little Connect 4 TUI in Gleam.</p>
+<p>I like looking for little projects to work on,
+though sometimes I guess the scope incorrectly.
+Also, I’m prone to overthinking things
+and trying to get it perfect,
+which means tweaking things and going back and forth
+on the smallest details.
+For example, how should I model a grid cell?
+Is it one of empty, red and yellow,
+or is it empty and full, with full containing a piece?
+I’m usually inclined towards piece being separate,
+but I can’t articulate why,
+which makes me a bit uncomfortable.</p>
+<p>Anyway, I was thinking of Ludo a while back,
+and I realised setting up the board
+would be a lot of work,
+so I wondered how I might render it in the terminal.
+I never really got around to it,
+but one day I remembered Connect 4,
+and I realised that’s perfect for a CLI!</p>
+<pre class="z-code"><code><span class="z-text z-plain">1 2 3 4 5 6 7
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ _ _ _
+_ _ _ _ O _ _
+_ _ _ _ X O _
+_ _ _ O X X _
+</span></code></pre>
+<p>Connect 4 usually has 7 columns and 6 rows,
+and I can use simple letters for the pieces.
+I picked X and O from knots and crosses,
+though I’ve seen people use emojis,
+which is also a fine idea.</p>
+<p>I managed to theorise about the perfect
+board representation as well, by the way.
+I started off with two wide columns,
+Rd and Bk for Red and Black pieces,
+dashes for empty cells,
+and zero padded numbers for the columns.</p>
+<p>Yikes.</p>
+<p>Oh, the reason I picked Gleam
+was because the language is so interesting,
+so even though I don’t see any particular use for it,
+I felt like implementing a small project in it,
+which made Connect 4 seem like a decent idea.</p>
+<p>I’ve been hitting roadblocks with
+functional programming since then,
+partly because I’m trying to get it right.
+I probably should have ended it there
+and come back later to improve the code,
+but here we are, over a month later,
+and I still haven’t finished it,
+because I think lots and do little.</p>
+<p>Oh, well.</p>
+<p>What I like about type systems like Gleam
+is how easy it is to model things.
+I have pieces which can be X or O,
+cells which can be empty or filled with a piece,
+rows which are a list of cells,
+and a grid which is a list of rows.</p>
+<pre class="z-code"><code><span class="z-text z-plain">type Grid = List(Row)
+
+type Row = List(Cell)
+
+type Cell = Option(Piece)
+
+type Piece {
+	X
+	O
+}
+</span></code></pre>
+<p>Ahhh, and pipes are so nice.
+I was already critical of objects,
+but even procedural languages
+can’t do pipes like this.</p>
+<pre class="z-code"><code><span class="z-text z-plain">const height = 6
+const width = 7
+
+fn grid_new() -&gt; Grid {
+	list.repeat(Empty, width)
+	|&gt; list.repeat(height)
+}
+</span></code></pre>
+<p>I even wrote a test for this,
+though I did that… let me look it up
+— just 7 days ago.
+Huh, it feels like it’s been longer.</p>
+<p>Ah, and I used <code>Option(Piece)</code> for the cell.
+I’m thinking that’s an odd choice right now.
+It really doesn’t matter that much,
+but, as I’ve already established,
+this is my specialty.
+Let me have it.</p>
+<p>This feels like a case of primitive obsession.
+It’s better to have custom types where possible.
+Not using a list for the row and grid
+has terrible ergonomics,
+but options use the built-in types feature,
+so the only difference is importing a general type.
+Dang, I must fix it to use a custom type.</p>
+<pre class="z-code"><code><span class="z-text z-plain">type Cell {
+	Empty
+	Full(Piece)
+}
+</span></code></pre>
+<p>Well.</p>
+<p>I’m sorry! But I simply must overthink this.
+I cannot help myself.</p>
+<p>I don’t see what benefits the custom type gives.
+A cell will always be either empty or full.
+It can never be partially full.
+The custom type does give a better name though.
+Let’s stick with it.</p>
+<p>Sorry.</p>
+<p>Anyway, after making a grid,
+we must print the thing.
+Initially I put it all into a single function
+with lots of case statements,
+but as I was implementing it in Rust (what can I say),
+I was encouraged to have a string function for each type.
+The Rust display trait is weirdly complicated, by the way.
+Anyway, I made a string function for each type,
+delegating down the chain for each new one.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn grid_string(grid: Grid) -&gt; String {
+	list.map(grid, row_string)
+	|&gt; string.join(&quot;\n&quot;)
+}
+
+pub fn row_string(row: Row) -&gt; String {
+	list.map(row, cell_string)
+	|&gt; string.join(&quot; &quot;)
+}
+
+pub fn cell_string(cell: Cell) -&gt; String {
+	case cell {
+		Full(piece) -&gt; piece_string(piece)
+		Empty -&gt; &quot;_&quot;
+	}
+}
+
+pub fn piece_string(piece: Piece) -&gt; String {
+	case piece {
+		X -&gt; &quot;X&quot;
+		O -&gt; &quot;O&quot;
+	}
+}
+</span></code></pre>
+<p>Such nice and pretty little functions.
+Did you notice how readable it is
+with the pipes and implicit returns?
+Mmmm, delicious. Chef’s kiss.</p>
+<p>My first stumbling block was here.
+I needed to put a piece in the board,
+and it must drop all the way down
+to the last empty cell in the column.</p>
+<p>I was thinking in the imperative style
+and spent several hours
+browsing the standard library and experimenting
+to write the perfect function
+to get the correct cell to put the piece.</p>
+<p>But Gleam deals with values, not references.
+I can’t do <code>a.b.c = X</code>.</p>
+<p>I came back a few days later, I think,
+after I saw the <code>dict.insert</code> function,
+which will replace a value if the key exists.
+I got it to work and began to write about it,
+but turning a few days into a few words
+helped me realise that it was a roundabout way
+to do something like <code>a.b.c = X</code>.
+It felt like the wrong way to do it.</p>
+<p>I’ve put the code using dictionaries below.
+While it might look a bit complicated,
+it’s actually much easier than figuring out lists.</p>
+<p>Maybe I should’ve gone with the dictionary
+instead of making my life hard.</p>
+<p>Oh, well.</p>
+<p>I’ll get into handling lists in another post.</p>
+<pre class="z-code"><code><span class="z-text z-plain">type Grid = Dict(Int, Row)
+
+type Row = Dict(Int, Cell)
+
+fn grid_new() -&gt; Grid {
+	let number_update = fn(entry: #(_, _), idx) {
+		#(entry.0 + idx, entry.1)
+	}
+
+	let row = list.repeat(#(1, Empty), width)
+	|&gt; list.index_map(number_update)
+	|&gt; dict.from_list
+	
+	list.repeat(#(1, row), width)
+	|&gt; list.index_map(number_update)
+	|&gt; dict.from_list
+}
+
+fn grid_update(grid: Grid, piece: Piece, column_number: Int) {
+	let column = dict.fold(grid, [], fn(column, row_number, row) {
+		// SAFE: We make sure the user inputs a valid column number.
+		let assert Ok(cell) = dict.get(row, column_number)
+		[#(row_number, cell), ..column]
+	}
+
+	let empty_row_result =
+		column
+		// Column got reversed, so this starts from bottom.
+		|&gt; list.find(fn(row) { row.1 == Empty })
+	
+	case empty_row_result {
+		Ok(#(row_number, _)) -&gt; {
+			// SAFE: The row_number was generated from the grid.
+			let assert Ok(old_row) = dict.get(grid, row_number)
+			let new_row = dict.insert(old_row, column_number, Full(piece))
+			dict.insert(grid, row_number, new_row)
+		}
+	}
+}
+</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;connect-4-gleam.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

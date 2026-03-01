@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Light theme toggle
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Light theme toggle
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 24, 2024
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/light-theme-toggle/#add-the-selector">Add the selector</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/light-theme-toggle/#apply-the-theme-in-pure-css">Apply the theme in pure CSS</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/light-theme-toggle/#system">System</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/light-theme-toggle/#light-and-dark">Light and dark</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/light-theme-toggle/#light-and-dark-javascript-fallback">Light and dark Javascript fallback</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/light-theme-toggle/#save-and-load-preferences">Save and load preferences</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/light-theme-toggle/#summary">Summary</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>A CSS based system/light/dark mode toggle,
+with Javascript for fallback and additional functionality.</p>
+<p>Big thanks to Kevin Powell for the core CSS <code>:has()</code> solution.
+I simply added some functionality for falling back to Javascript,
+and storing and loading your preferences for later.</p>
+<p><a href="https://codepen.io/kevinpowell/pen/KKEevOp">Simple light/dark example by Kevin Powell</a></p>
+<p>This implementation does four things:</p>
+<ul>
+<li>Adds a selector in HTML,</li>
+<li>applies the theme using pure CSS,</li>
+<li>falls back to applying the theme with Javascript
+if the required CSS feature (<code>:has()</code>) isn’t supported,</li>
+<li>and saves and loads the theme using Javascript.</li>
+</ul>
+<h2 id="add-the-selector">Add the selector<a class="zola-anchor" href="#add-the-selector" aria-label="Anchor link for: add-the-selector">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;label&gt;Colour Scheme:
+  &lt;select name=&quot;colour-scheme-picker&quot; id=&quot;colour-scheme-picker&quot;&gt;
+    &lt;option value=&quot;system&quot;&gt;System&lt;/option&gt;
+    &lt;option value=&quot;light&quot;&gt;Light&lt;/option&gt;
+    &lt;option value=&quot;dark&quot;&gt;Dark&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/label&gt;
+</span></code></pre>
+<p>The selected theme can be one of <code>system</code>, <code>light</code>, or <code>dark</code>.</p>
+<h2 id="apply-the-theme-in-pure-css">Apply the theme in pure CSS<a class="zola-anchor" href="#apply-the-theme-in-pure-css" aria-label="Anchor link for: apply-the-theme-in-pure-css">🔗</a></h2>
+<h3 id="system">System<a class="zola-anchor" href="#system" aria-label="Anchor link for: system">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">@media (prefers-color-scheme: dark) {
+  body {
+    /* dark theme settings */
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    /* light theme settings */
+  }
+}
+</span></code></pre>
+<p>If no specific theme is set,
+it will listen to what the browser says.
+This default will apply in all cases.</p>
+<p>Remember to set default preferences
+for when nothing specific is set or shared
+by the browser.</p>
+<h3 id="light-and-dark">Light and dark<a class="zola-anchor" href="#light-and-dark" aria-label="Anchor link for: light-and-dark">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">body:has(#colour-scheme-picker [value=&quot;dark&quot;]:checked) {
+  /* dark theme settings */
+}
+
+body:has(#colour-scheme-picker [value=&quot;light&quot;]:checked) {
+  /* light theme settings */
+}
+</span></code></pre>
+<p>If the “Dark” or “Light” option is checked,
+it applies the respective settings,
+and overrides the default browser settings.</p>
+<h2 id="light-and-dark-javascript-fallback">Light and dark Javascript fallback<a class="zola-anchor" href="#light-and-dark-javascript-fallback" aria-label="Anchor link for: light-and-dark-javascript-fallback">🔗</a></h2>
+<p>Check if the <code>:has()</code> selector is supported:</p>
+<pre class="z-code"><code><span class="z-text z-plain">const supportsSelectorHas = CSS.supports(&quot;( selector(:has(h1)) )&quot;);
+</span></code></pre>
+<p>Get a reference to the colour scheme picker,
+and because we’ll be setting a custom property on the body,
+get a reference to the body as well:</p>
+<pre class="z-code"><code><span class="z-text z-plain">const colourSchemePicker = document.getElementById(&#39;colour-scheme-picker&#39;);
+const body = document.querySelector(&#39;body&#39;);
+</span></code></pre>
+<p>If <code>supportsSelectorHas</code> is false,
+we add the <code>data-colour-scheme</code> property to the body:</p>
+<pre class="z-code"><code><span class="z-text z-plain">colourSchemePicker.addEventListener(&#39;change&#39;, () =&gt; {
+  if (colourSchemePicker.value != &#39;system&#39;) {
+    /* save preference */
+    if (!supportsSelectorHas) {
+      body.dataset.colourScheme = colourSchemePicker.value;
+    }
+  } else {
+    /* save preference */
+    if (!supportsSelectorHas) {
+      delete body.dataset.colourScheme;
+    }
+  }
+});
+</span></code></pre>
+<p>Normally we’d only add the event listener
+if the selector isn’t supported,
+but we’ll need to add it anyway to save preferences,
+so the check is inside the listener.</p>
+<p>Since the ‘system’ theme is the default,
+we remove the custom property for that,
+but we add it for the other cases
+(either ‘light’ or ‘dark’).</p>
+<details><summary>Dataset API and data- attributes</summary>
+  <p>The dataset API sets a <code>data-</code> attribute on the element,
+and converts <code>camelCase</code> to <code>kebab-case</code>.
+So <code>body.dataset.colourScheme</code> converts
+<code>colourScheme</code> to <code>colour-scheme</code>,
+then sets a <code>data-colour-scheme</code> property on the body.</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset">Dataset property on MDN</a></p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*">Custom data attributes on MDN</a></p>
+
+</details>
+<p>This will need the associated CSS selector
+for <code>data-colour-scheme</code>,
+which you can combine with the previous <code>:has()</code> selector:</p>
+<pre class="z-code"><code><span class="z-text z-plain">body:has(#colour-scheme-picker [value=&quot;dark&quot;]:checked),
+body[data-colour-scheme=&quot;dark&quot;] { /* ADDING THIS */
+  /* dark theme settings */
+}
+
+body:has(#colour-scheme-picker [value=&quot;light&quot;]:checked),
+body[data-colour-scheme=&quot;light&quot;] { /* ADDING THIS */
+  /* light theme settings */
+}
+</span></code></pre>
+<h2 id="save-and-load-preferences">Save and load preferences<a class="zola-anchor" href="#save-and-load-preferences" aria-label="Anchor link for: save-and-load-preferences">🔗</a></h2>
+<p>To save preferences:</p>
+<pre class="z-code"><code><span class="z-text z-plain">colourSchemePicker.addEventListener(&#39;change&#39;, () =&gt; {
+  if (colourSchemePicker.value != &#39;system&#39;) {
+
+    /* ADDING THIS */
+    localStorage.setItem(&#39;colourScheme&#39;, colourSchemePicker.value);
+
+    if (!supportsSelectorHas) {
+      body.dataset.colourScheme = colourSchemePicker.value;
+    }
+  } else {
+
+    /* ADDING THIS */
+    localStorage.removeItem(&#39;colourScheme&#39;);
+
+    if (!supportsSelectorHas) {
+      delete body.dataset.colourScheme;
+    }
+  }
+});
+</span></code></pre>
+<p>For the system theme we’re actually deleting it
+because that’s the default when nothing is set.</p>
+<p>To load the preferences,
+we need to check it before the page loads,
+and we need to update the selector after the page loads.</p>
+<p>Inside your HTML <code>body</code> tag,
+add a script tag before anything else:</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;body&gt;
+  &lt;script&gt;
+    if ( localStorage.getItem(&#39;colourScheme&#39;) != null ) {
+      const docBody = document.querySelector(&#39;body&#39;);
+      docBody.dataset.colourScheme = localStorage.getItem(&#39;colourScheme&#39;);
+    }
+  &lt;/script&gt;
+
+  &lt;!-- the rest of the body --&gt;
+&lt;/body&gt;
+</span></code></pre>
+<p>The script has to be inline, and at the beginning of the body,
+to load before anything else,
+otherwise you’ll see a flickering effect,
+where the default theme is loaded before it updates
+to the saved user selection.</p>
+<p>In your main script, where the rest of the logic is,
+check if the colour scheme was stored,
+and updated the picker to reflect that:</p>
+<pre class="z-code"><code><span class="z-text z-plain">const storedColourScheme = localStorage.getItem(&#39;colourScheme&#39;);
+
+if (storedColourScheme) {
+  colourSchemePicker.value = storedColourScheme;
+}
+</span></code></pre>
+<h2 id="summary">Summary<a class="zola-anchor" href="#summary" aria-label="Anchor link for: summary">🔗</a></h2>
+<p>HTML:</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;body&gt;
+  &lt;!-- Load saved colour scheme --&gt;
+  &lt;script&gt;
+    if ( localStorage.getItem(&#39;colourScheme&#39;) != null ) {
+      const docBody = document.querySelector(&#39;body&#39;);
+      docBody.dataset.colourScheme = localStorage.getItem(&#39;colourScheme&#39;);
+    }
+  &lt;/script&gt;
+
+  &lt;!-- ... --&gt;
+
+  &lt;!-- Colour scheme picker --&gt;
+  &lt;label&gt;Colour Scheme:
+    &lt;select name=&quot;colour-scheme-picker&quot; id=&quot;colour-scheme-picker&quot;&gt;
+      &lt;option value=&quot;system&quot;&gt;System&lt;/option&gt;
+      &lt;option value=&quot;light&quot;&gt;Light&lt;/option&gt;
+      &lt;option value=&quot;dark&quot;&gt;Dark&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/label&gt;
+  
+  &lt;!-- ... --&gt;
+
+&lt;/body&gt;
+</span></code></pre>
+<p>CSS:</p>
+<pre class="z-code"><code><span class="z-text z-plain">/* {{{ Default browser preferences */
+  @media (prefers-color-scheme: dark) {
+    body {
+      /* dark theme settings */
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    body {
+      /* light theme settings */
+    }
+  }
+/* end Default browser preferences }}} */
+
+/* {{{ User preferences */
+  /* Selector for pure CSS method */
+  body:has(#colour-scheme-picker [value=&quot;dark&quot;]:checked),
+  /* Selector for Javascript fallback method */
+  body[data-colour-scheme=&quot;dark&quot;] {
+    /* dark theme settings */
+  }
+
+  /* Selector for pure CSS method */
+  body:has(#colour-scheme-picker [value=&quot;light&quot;]:checked),
+  /* Selector for Javascript fallback method */
+  body[data-colour-scheme=&quot;light&quot;] {
+    /* light theme settings */
+  }
+/* end User preferences }}} */
+</span></code></pre>
+<p>Javascript:</p>
+<pre class="z-code"><code><span class="z-text z-plain">const supportsSelectorHas = CSS.supports(&quot;( selector(:has(h1)) )&quot;);
+const storedColourScheme = localStorage.getItem(&#39;colourScheme&#39;);
+
+const colourSchemePicker = document.getElementById(&#39;colour-scheme-picker&#39;);
+const body = document.querySelector(&#39;body&#39;);
+
+if (storedColourScheme) {
+  colourSchemePicker.value = storedColourScheme;
+}
+
+colourSchemePicker.addEventListener(&#39;change&#39;, () =&gt; {
+  if (colourSchemePicker.value != &#39;system&#39;) {
+    /* &#39;light&#39; or &#39;dark&#39; theme */
+    localStorage.setItem(&#39;colourScheme&#39;, colourSchemePicker.value);
+    if (!supportsSelectorHas) {
+      body.dataset.colourScheme = colourSchemePicker.value;
+    }
+  } else {
+    /* &#39;system&#39; (default) theme */
+    localStorage.removeItem(&#39;colourScheme&#39;);
+    if (!supportsSelectorHas) {
+      delete body.dataset.colourScheme;
+    }
+  }
+});
+</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;light-theme-toggle.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
