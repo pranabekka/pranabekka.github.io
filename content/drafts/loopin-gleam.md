@@ -7,7 +7,8 @@ updated = 2026-03-10 15:57:34
 
 How to survive without `for` loops.
 
-This is a simple way to build intuition for recursion,
+This is a simple introduction
+to build intuition for recursion,
 which can be used for looping in any language
 with functions,
 though it will be of limited use
@@ -123,7 +124,7 @@ you can reuse loops created by other people,
 and you can share your loops with others.
 
 See the language tour to learn more about
-recursion, tail calls, common looping function,
+recursion, tail calls, common looping functions,
 and Gleam in general.
 It takes just an afternoon,
 and you can join the Discord server
