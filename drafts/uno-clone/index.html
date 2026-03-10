@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+My biggest program!
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>My biggest program!
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/uno-clone/#concept">Concept</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/uno-clone/#no-validation">No validation</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/uno-clone/#how-to-play">How to play</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/uno-clone/#installation-and-hosting">Installation and hosting</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/uno-clone/#joining-and-playing">Joining and playing</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>I decided to implement UNO to have a small project
+instead of simple exercises on language topics,
+and I’ve finally finished it!</p>
+<p>!!! SCREENSHOT (in-game) !!!</p>
+<p>You can download it below if you want to try it out.
+I’ve included basic instructions,
+but feel free to reach out.</p>
+<h2 id="concept">Concept<a class="zola-anchor" href="#concept" aria-label="Anchor link for: concept">🔗</a></h2>
+<p>The basic idea was to have something I could play —
+I like doing things with people,
+and games are some of the most fun.</p>
+<p>UNO sounded like a simple first project,
+though it’s actually quite difficult to handle verification.
+After being stalled on that for several weeks,
+I finally settled on no validation and an undo system,
+which actually works quite well for my purposes.</p>
+<p>A LAN game was inevitable,
+since I wasn’t going to buy a server.
+However, the peer-js library provides a free server
+that I could use.</p>
+<p>I wanted to implement it in plain Javascript,
+since I was aiming to learn the language.
+I did break the rule for a websocket library,
+because Node doesn’t have a good websockets interface.</p>
+<p>I made it peer-to-peer because
+it was easier for me to work with
+a single type of entity.
+I couldn’t quite understand where to make the divide
+between a server and a client.</p>
+<p>So bring that all together,
+and you have a simple peer-to-peer, LAN UNO clone,
+with an undo system in place of validation.</p>
+<h2 id="no-validation">No validation<a class="zola-anchor" href="#no-validation" aria-label="Anchor link for: no-validation">🔗</a></h2>
+<p>No validation actually makes life quite a bit easier,
+and even provides some benefits.</p>
+<p>Since people rarely put the wrong card down,
+validation is rarely required.</p>
+<p>Since it’s played with friends and family,
+you can trust them to play fair,
+and undo any mistakes or
+(hopefully) half-hearted attempts at cheating.</p>
+<p>You can also play by your own home rules,
+or switch up the rules for a game or more,
+though there is some benefit to canonical rules
+if you’re playing with new people.</p>
+<h2 id="how-to-play">How to play<a class="zola-anchor" href="#how-to-play" aria-label="Anchor link for: how-to-play">🔗</a></h2>
+<p>You’ll need a little bit of familiarity with NodeJS
+and some web technologies,
+but if you’re struggling with understanding any step,
+please reach out!</p>
+<p><a href="https://nodejs.org">NodeJS</a></p>
+<p><a href="https://pranabekka.github.io/about/#contact">Contact</a></p>
+<h3 id="installation-and-hosting">Installation and hosting<a class="zola-anchor" href="#installation-and-hosting" aria-label="Anchor link for: installation-and-hosting">🔗</a></h3>
+<p>You actually don’t need to install any dependencies,
+because I just included everything in the zip file.</p>
+<p>Once you’ve downloaded the file,
+you only need to unzip it and run <code>node server.js</code>.</p>
+<p>!!! DOWNLOAD (zip file) !!!
+<a href="/ting.zip">UNO clone download</a></p>
+<p>When you run the server,
+it will print out the address to connect to.
+Make sure everyone is on the same network
+when you get them to connect.</p>
+<p>If connecting to the address gives you something else,
+you can change the port to something else.</p>
+<p>If you just want to test it out on a single machine,
+you can connect on <code>localhost:8000</code>.</p>
+<p>If you’re hosting it on Termux,
+keep it in the foreground,
+otherwise the game becomes unplayable.</p>
+<h3 id="joining-and-playing">Joining and playing<a class="zola-anchor" href="#joining-and-playing" aria-label="Anchor link for: joining-and-playing">🔗</a></h3>
+<p>Have everyone connect to the address printed out by the server.</p>
+<p>They’ll see a ‘login’ screen where they can
+enter a username and join the game.</p>
+<p><strong>IMPORTANT:</strong>
+Make sure nobody uses the same username,
+because I have no validation for that.
+Both players will see and use the same cards,
+unless one disconnects and joins with a different username.</p>
+<p>Make sure nobody presses start until everyone has joined.
+Also, once someone has joined, they can’t exactly leave
+unless everybody goes back to the login screen and starts again.
+The same is true for starting a new game —
+have everyone press back and ‘login’ again.</p>
+<p>!!! SCREENSHOT !!!</p>
+<p>The card on the top left is the discard pile.
+Under that is the history,
+which you should use to confirm the state of the game.
+The player list highlights your name,
+and can be used to know who should be playing next.</p>
+<p>If there are any incorrect moves,
+you can simply press ‘Undo’.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;uno-clone.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

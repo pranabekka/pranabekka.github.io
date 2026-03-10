@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Listy syntax
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Listy syntax
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#comments">Comments</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#function-calls">Function calls</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#nested-functions">Nested functions</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy-syntax/#indentation">Indentation</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy-syntax/#colon-and-semi-colon">Colon (and semi-colon)</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy-syntax/#parentheses">Parentheses</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/listy-syntax/#indentation-colon">Indentation + colon</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#text">Text</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#numbers-and-math">Numbers and math</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#lists">Lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#dictionaries">Dictionaries</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#quoting">Quoting</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/listy-syntax/#credits">Credits</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>A programming language syntax
+with lots of significant whitespace.</p>
+<p>Significant whitespace is a familiar syntax for users,
+with wide adoption in the form of Python,
+and increasing popularity in Godot.</p>
+<p>In fact, Godot’s Python-like syntax was so popular
+they removed visual scripting from the core engine.</p>
+<p>Significant whitespace benefits beginners,
+because they don’t need to format parentheses.
+With brackets, they don’t understand the value of formatting,
+which leads to incorrectly scoped code.
+Significant whitespace makes scope obvious.</p>
+<p>Significant whitespace is also easier to use
+without extra editor features for balancing brackets.</p>
+<p>Even languages with brackets tend to have
+some significant whitespace,
+and they encourage or enforce
+significant whitespace patterns in the code.</p>
+<h2 id="comments">Comments<a class="zola-anchor" href="#comments" aria-label="Anchor link for: comments">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain"># Comment
+</span></code></pre>
+<p>Anything following a <code>#</code> (hash) sign is a comment.
+The only exception is a <code>#</code> sign in text.</p>
+<p>[<strong>NOTE:</strong> commenting nodes/trees,
+discussed after indented/multi-line functions]</p>
+<h2 id="function-calls">Function calls<a class="zola-anchor" href="#function-calls" aria-label="Anchor link for: function-calls">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">my-func arg1 arg2 arg3
+my-func2 arg1 arg2 arg3
+</span></code></pre>
+<p>Each line begins a function call,
+which end with a line break.
+There are some exceptions listed below
+[<strong>TODO</strong>: mention exactly which exceptions and link].</p>
+<p>Identifiers<sup class="footnote-reference"><a href="#sym-space">1</a></sup> and data are separated by spaces.
+The first item is the function being called,
+and the rest are arguments.</p>
+<div class="footnote-definition" id="sym-space"><sup class="footnote-definition-label">1</sup>
+<p>symbols can include spaces.
+see quoting and escaping symbols.
+[<strong>TODO</strong>: link]</p>
+</div>
+<p>[<strong>TODO</strong>: case insensitive unless quoted]</p>
+<p>Only one space is required to separate items,
+and any more than that is not allowed.</p>
+<h2 id="nested-functions">Nested functions<a class="zola-anchor" href="#nested-functions" aria-label="Anchor link for: nested-functions">🔗</a></h2>
+<h3 id="indentation">Indentation<a class="zola-anchor" href="#indentation" aria-label="Anchor link for: indentation">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">func1
+	func1.1
+
+func2
+	func2.1
+
+	func2.2
+		func2.2.1
+</span></code></pre>
+<p>If the next line is indented further
+than the current line,
+it continues the function call,
+with the indented line as an argument.</p>
+<p>Empty lines and comments cannot end nesting.
+Comments are expected to match indentation.</p>
+<p>Indentation must be one tab (no spaces) per level.
+A nested function call can only have
+one indentation more than its parent function.</p>
+<h3 id="colon-and-semi-colon">Colon (and semi-colon)<a class="zola-anchor" href="#colon-and-semi-colon" aria-label="Anchor link for: colon-and-semi-colon">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">func1 : func1.1 : func1.1.1
+	func1.2
+
+func1
+	func1.1 : func1.1.1
+	func1.2
+
+func1
+	func1.1
+		func1.1.1
+	func1.2
+</span></code></pre>
+<p>A colon creates a nested function on the same line.
+A function nested inline will never continue past that line.</p>
+<pre class="z-code"><code><span class="z-text z-plain">func1 : func1.1 ; func1-item
+
+func1 ; func2 ; func3
+
+# for example
+func1 : func1.1 ; ; func2
+</span></code></pre>
+<p>Semi-colons end a function call.</p>
+<p>If you start a nested function call with a colon,
+you end it with a semi-colon.</p>
+<p>If you end the main function call in a line with a semi-colon,
+it’s like creating a new list with a newline and no indentation.
+This is useful for formats that don’t allow multiple lines.</p>
+<h3 id="parentheses">Parentheses<a class="zola-anchor" href="#parentheses" aria-label="Anchor link for: parentheses">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">func1 (func1.1) func1-item
+
+# for example
+func1 (func1.1) ; func2
+</span></code></pre>
+<p>Parentheses also define a nested function.
+This is useful when having multiple
+nested functions on the same line.</p>
+<p>Parentheses cannot span multiple lines
+and must be matched with a closing parenthesis.</p>
+<h3 id="indentation-colon">Indentation + colon<a class="zola-anchor" href="#indentation-colon" aria-label="Anchor link for: indentation-colon">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">func1
+	# unlabelled func1.1
+	:
+		func1.1.1
+		func1.1.2
+
+# equivalent:
+func1 : (func1.1.1) (func1.1.2)
+</span></code></pre>
+<p>If you need to indent a function more than one level,
+without labelling the middle list,
+use the <code>:</code> on a line by itself.</p>
+<p>This is useful in a scenario where
+<code>func1.1.1</code> returns a function,
+and that returned function is immediately called
+with the result of <code>function1.1.2</code> as the argument.</p>
+<h2 id="text">Text<a class="zola-anchor" href="#text" aria-label="Anchor link for: text">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">write &quot;Some text&quot;
+
+write &quot;Some \&quot;quotes\&quot; inside text&quot;
+
+write
+	&quot; Some &quot;quotes&quot; inside text
+
+write
+	&quot;
+		Some &quot;quotes&quot; inside text
+		with multiple lines.
+				Even some indented text.
+</span></code></pre>
+<p>Text is put inside double quotes.
+Most languages call these “strings”.</p>
+<p>Text allows all characters.</p>
+<p>To include a double quote inside text,
+put a <code>\</code> (backslash) before it to “escape” it,
+or use the <code>&quot;</code> as a “function”.</p>
+<p>When used as a “function”,
+the rest of the line is text,
+and lines indented further are also text.</p>
+<p>The first space or newline after the <code>&quot;</code> “function” is ignored,
+and the rest is part of the text.</p>
+<p>In multi-line text, indentation beyond one level further
+is counted as part of the text.</p>
+<h2 id="numbers-and-math">Numbers and math<a class="zola-anchor" href="#numbers-and-math" aria-label="Anchor link for: numbers-and-math">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">add 1 2 3 4
+</span></code></pre>
+<p>Any combination of numbers, underscores, and points (<code>.</code>),
+are treated as numbers if they begin with a number.
+If they don’t match all of these conditions,
+then they’re treated as an identifier.
+[<strong>TODO</strong>: consider commas in numbers?]</p>
+<pre class="z-code"><code><span class="z-text z-plain">$ 1 + 2 + 3 + 4
+
+$ (1 + 2 + 3) * 6
+
+$ number1 + number2
+</span></code></pre>
+<p>The <code>$</code> function allows writing math expressions.</p>
+<p>Numbers are treated as above.</p>
+<p><code>+</code>, <code>-</code>, <code>/</code>, <code>*</code>, and <code>%</code> are operators
+for addition, subtraction, division, multiplication,
+and modulo (division remainder) respectively.
+[<strong>TODO</strong>: any other operators?]</p>
+<p>Parentheses (<code>()</code>) are used for grouping math expressions.</p>
+<p>Anything else is a variable.</p>
+<h2 id="lists">Lists<a class="zola-anchor" href="#lists" aria-label="Anchor link for: lists">🔗</a></h2>
+<h2 id="dictionaries">Dictionaries<a class="zola-anchor" href="#dictionaries" aria-label="Anchor link for: dictionaries">🔗</a></h2>
+<h2 id="quoting">Quoting<a class="zola-anchor" href="#quoting" aria-label="Anchor link for: quoting">🔗</a></h2>
+<p>any identifier is resolved into its value.
+if you don’t want that, use quoting</p>
+<p>for example, if you want to set a variable,
+you need to assign the value to the given identifier,
+not the value the identifier (possibly) refers to</p>
+<p>maybe don’t mention quasi-quoting/unquoting till later?
+i don’t even know of any valid use cases</p>
+<p>include list quoting here with colons, parens, and lines</p>
+<h2 id="credits">Credits<a class="zola-anchor" href="#credits" aria-label="Anchor link for: credits">🔗</a></h2>
+<p>Wisp, s-expressions, lisp</p>
+<p><code>#</code> from shell, plus breaking from lisp
+hence “lispy”
+wanted <code>;</code> for breaking inline lists
+because some formats don’t support multiple lines</p>
+<p>“Listy” is easily searchable<sup class="footnote-reference"><a href="#search">2</a></sup>, sounds fun,
+has syntax about lists,
+and is inspired by s-exps in lisp
+(which also stands for list processing)</p>
+<div class="footnote-definition" id="search"><sup class="footnote-definition-label">2</sup>
+<p>main result is a lists app
+for things like movies, music, and books,
+with another lists app with the same name.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;listy-syntax.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
