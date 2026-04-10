@@ -7,20 +7,17 @@ updated = 2026-04-08 18:21:31
 
 Safe mutability for high-level languages.
 
-Mainstream high-level languages
-alias everything by default,
-which leads to discovering crashes
-and subtle errors at runtime,
-that can only be avoided with defensive copies
-and thoroughly testing new function calls.
-Rust catches these potential errors at compile time,
-but programmers have to deal with low-level details.
-Functional languages make these errors
-completely invisible at both compile time and runtime,
-but then programmers have to deal with
-how immutability invalidates past experiences,
-most learning material,
-and general programming discourse.
+With mainstream high-level languages
+pervasive aliasing causes issues at run time,
+which can only be prevented with defensive copies
+or testing every change to a function.
+While Rust automatically catches these at compile time,
+users still have to deal with aliasing issues
+through compiler errors,
+which is unsuitable for high-level programming.
+Functional programming languages make this invisible,
+but they will instead raise errors for
+the programming patterns most people are familiar with.
 
 Copy semantics allow mutability
 without run time or compiler errors
@@ -57,20 +54,6 @@ but many of them will never read this
 
 ```
 ```
-
-## Aliasing issues
-
-Aliasing
-
-If you already know about the pitfalls of aliasing,
-the next section describes what copy semantics
-looks like on a surface level,
-followed by the section describing
-what happens under the hood.
-
-### Hidden mutation
-
-### API instability
 
 ## Copy semantics
 
@@ -131,6 +114,7 @@ let old = Point(x 1, y 1)
 let new = old
 old = double(old)
 echo new // Point(x 1, y 1)
+echo old // Point(x 2, y 2)
 ```
 
 Loops also seem to work on copies.
@@ -176,14 +160,16 @@ The next section describes when we use aliasing.
 
 ## Reference inference
 
-We can often use aliases
-while still appearing to use copies,
-which is affected by two things.
+There are two things to select
+when we can use aliases,
+and when we must copy.
 
-One: assigning the result of a function means mutation,
+First,
+assigning the result of a function means mutation,
 otherwise the function doesn't mutate a variable.
 
-Two: multiple variables can alias the same value
+Second,
+multiple variables can alias the same value
 as long as none of them are mutable.
 This is the same Alias Xor Mutate rule
 driving Rust's borrow checker.
@@ -234,9 +220,10 @@ Numbers and strings are copied every time,
 but lists and struct-like types with fields
 are always passed by reference.
 
-Instead, we allow variables to be aliases
+Instead, copy semantics
+allows variables to be aliases
 to the same underlying value
-as long as they're unchanged or unique.
+as long as the variables are unchanged or unique.
 
 #### Unchanging
 
