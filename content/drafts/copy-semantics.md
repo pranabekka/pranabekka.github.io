@@ -343,6 +343,15 @@ and better performance.
 
 ### Chain everything
 
+### Performance
+
+Aliases and copies are tracked at compile time,
+which can also be used to determine memory usage
+at compile time,
+thus removing the overhead of a garbage collector.
+
+### Safe transpile
+
 A language with copy semantics can compile to
 other languages that support aliasing
 by using them where required.
@@ -461,14 +470,5 @@ and should also give an idea of how copy semantics work.
 
 All the examples will draw a line
 from x2 and y3 to x4 and y6.
-
-### Performance
-
-Aliases and copies are tracked at compile time,
-which can also be used to determine memory usage
-at compile time,
-thus removing the overhead of a garbage collector.
-
-### Safe transpile
 
 ### Easy bootstrap/port
