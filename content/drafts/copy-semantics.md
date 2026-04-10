@@ -176,7 +176,9 @@ The next section describes when we use aliasing.
 
 ## Reference inference
 
-There are two things that guide the use of aliases.
+We can often use aliases
+while still appearing to use copies,
+which is affected by two things.
 
 One: assigning the result of a function means mutation,
 otherwise the function doesn't mutate a variable.
@@ -189,7 +191,7 @@ driving Rust's borrow checker.
 These are the foundation of copy semantics,
 which create safe high-level mutability.
 
-### Annotated mutation
+### Mutation annotation
 
 A key issue with other languages is that
 function callers don't know
@@ -225,54 +227,97 @@ a function can mutate.
 The other issue with mainstream languages
 is their rules for when to use aliasing.
 
-### Exclusive mutable aliasing
+### Sharing
 
 Most languages pick aliasing by the type of the value.
 Numbers and strings are copied every time,
 but lists and struct-like types with fields
 are always passed by reference.
 
-The core underlying difference has been
-popularised by the Rust community.
-If a variable is used to mutate a value,
-then other variables cannot safely alias that value.
+Instead, we allow variables to be aliases
+to the same underlying value
+as long as they're unchanged or unique.
+
+#### Unchanging
+
+If variables don't change their values,
+then they can be aliases.
+
+This means `point` is aliased in the following example,
+because `print` doesn't attempt to mutate it.
 
 ```
+fun main()
+	let point = Point(x 3, y 7)
+	print(point)
+
+fun print(p Point)
+	echo "x{p.x}, y{p.y}"
 ```
 
-Another related concept is the lifetime of variables,
-which is how long they remain in scope.
-This allows more fine-grained tracking of
-exclusive references.
+If the function attempts to mutate the parameter,
+then it would have to be copied.
+In the following example,
+`print_double` mutates its `p` parameter,
+so it's given a copy of `point` from `main`.
+
+```
+fun main()
+	let point = Point(x 3, y 4)
+	print_double(point)
+
+fun print_double(p Point)
+	p.x *= 2
+	p.y *= 2
+	print(p)
+```
+
+#### Unique
+
+Mutable variables can be aliased if they're unique.
+
+In the following example,
+`p1` is used once to assign to `p2`
+and then it's never used again.
+This means `p2` can be an alias to the same value,
+because it has unique mutable access to the value.
 
 ```
 let p1 = Point(x 3, y 4)
-let p2 = p1 // End of p1's lifetime
-p2 = double(p2)
-echo p2 // Point(x 6, y 8)
+let p2 = p1 // Last use of p1.
+p2.x += 2
+echo p2 // Point(x 5, y 4)
 ```
 
-Because the last use of `p1` is its assignment to `p2`,
-at the moment that we `double(p2)`,
-`p2` has an exclusive alias to `Point(x 3, y 4)`.
-
-If we used `p1` after that point,
-then `p2` would have a shared alias to `Point(x 3, y 4)`,
-which would then mutate `p1` indirectly,
-so `p2` instead gets a _copy_ of `p1`,
-thus avoiding accidental mutation.
+If `p1` was reused after that point,
+then `p2` would have to be made unique
+by copying the value of `p1`.
 
 ```
 let p1 = Point(x 3, y 4)
-let p2 = p1
-p2 = double(p2)
-echo p1 // p1 reused here
-echo p2
+let p2 = p1 // Last use of p1.
+p2.x += 2
+echo p1 // Point(x 3, y 4)
+echo p2 // Point(x 5, y 4)
 ```
 
-If we didn't track the usage of a variable,
-then we'd have to copy variables more often.
-Here's another place lifetimes come up:
+But we can still make `p2` alias `p1`
+by moving its mutation after the last use of `p1`.
+In the following example,
+`p2` reuses the same memory as `p1`.
+
+```
+let p1 = Point(x 3, y 4)
+let p2 = p1 // Last use of p1.
+echo p1 // Point(x 3, y 4)
+p2.x += 2
+echo p2 // Point(x 5, y 4)
+```
+
+#### Unique sharing
+
+In the following example,
+the comments show how `double` is applied to `point`.
 
 ```
 fun main()
@@ -292,41 +337,16 @@ fun double(p Point) -> Point
 	return p
 ```
 
-The comments in `main` show how `double` is applied,
-in a way.
+p is unique for a bit,
+and then it's shared back into point?
+and point is unique?
 
-We create a "copy" of `point`
-to pass into `double` as `p`,
-then we mutate `p` inside `double`
-and then "copy" `p` to `point`.
+for a brief period,
+p diverges from point,
+but then they become shared again,
+and between that time, p is unique?
 
-The lifetime of `p` begins in the call to `double`
-and ends when assigning the result back to `point`.
-At the end of that lifetime,
-`point` gets the same value as `p`.
-Because the lifetime of `p` has ended,
-`point` gets an exclusive alias to the value in `p`.
-Additionally, the lifetime of `point` is suspended
-while the lifetime of `p` is active,
-because we're inside the `double` function.
-The lifetime of `point` is resumed
-after `p` is assigned to it at the end of `double`,
-so `p` has an exclusive alias to the value in `point`
-during the time that `p` is being used.
-This means `p` and `point` can alias the same memory
-without changing the behaviour of `main`.
-
-With copy semantics,
-the language is aware when
-it's safe to mutate a variable,
-so it will make copies when it shouldn't.
-
-all the places where we use refs
-
-All of this is an application of
-Rust's Aliasing Xor Mutability rule,
-where state can be aliasied or mutable,
-but not both.
+It can also apply to fields of variables.
 
 ## Additional benefits
 
