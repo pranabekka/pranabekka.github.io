@@ -335,11 +335,52 @@ and between that time, p is unique?
 
 It can also apply to fields of variables.
 
+## Concerns
+
+### Resource management
+
+can't simply copy files and whatnot
+invalidate previous references
+
+### Escape hatches
+
+### Compile times
+
+Performing all this analysis
+might take longer to compile.
+
+Development builds could use quick compiles
+with a run time that performs copy-on-write,
+while release builds take longer
+to optimise everything at compile time.
+
+Sharing variable fields could be suspended
+for development builds.
+
+### Mixed mutation and declaration
+
 ## Additional benefits
 
+As I alluded to in the beginning,
+aliasing errors require defensive copies
+or thorough testing for every function change,
+but copy semantics eliminates that,
+allowing people to focus on core functionality.
+
 In addition to safety,
-copy semantics also present nicer APIs
-and better performance.
+copy semantics also present nicer APIs,
+better performance,
+and other benefits.
+
+### Easy onboarding
+
+Only having to deal with "copies"
+makes it easier to learn the language,
+instead of remembering the aliasing rules
+for different types.
+
+Not having to deal with aliasing errors
+is especially helpful for beginners to programming.
 
 ### Chain everything
 
@@ -355,8 +396,11 @@ thus removing the overhead of a garbage collector.
 A language with copy semantics can compile to
 other languages that support aliasing
 by using them where required.
+This includes all the mainstream imperative languages,
+and most of the less popular ones as well.
 
-Take the following example with copy semantics:
+Take the following example for copy semantics
+in the made-up language I've been using:
 
 ```
 fun main()
