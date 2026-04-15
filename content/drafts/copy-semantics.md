@@ -160,180 +160,46 @@ The next section describes when we use aliasing.
 
 ## Reference inference
 
-There are two things to select
-when we can use aliases,
-and when we must copy.
+using assignment shows which vars to mutate,
+instead of making all func params mutable refs
 
-First,
-assigning the result of a function means mutation,
-otherwise the function doesn't mutate a variable.
+we can then track which variables can be safely shared,
+versus which ones must be kept distinct via copies
 
-Second,
-multiple variables can alias the same value
-as long as none of them are mutable.
-This is the same Alias Xor Mutate rule
-driving Rust's borrow checker.
+variables usually get freed at the end of the scope
+they're created in
+sometimes they're passed outside that block
+in which case they last longer
+or should i describe variables having a lifetime?
+or the values having a lifetime?
+a variable is an alias to a value in memory
+when passing a value across scopes
+it can be aliased by different variables
+sometimes the value needs to be copied
+so that the variables refer to distinct values
 
-These are the foundation of copy semantics,
-which create safe high-level mutability.
+constant variables can be shared safely.
+this includes a function parameter that's unchanged
 
-### Mutation annotation
+anything further requires tracking where the value goes,
+from one variable to another,
+across functions and threads
 
-A key issue with other languages is that
-function callers don't know
-if an argument will be mutated or not,
-and function authors don't know
-if it's safe to mutate a parameter or not.
-With copy semantics,
-function callers know that only variables
-on the left side of an assignment is mutated.
-Similarly, function authors know that
-only parameters that are returned from the function
-can be mutated,
-which means they can mutate parameters without worry.
+the value from main point is assigned to double point,
+then it gets mutated
+and the new value is assigned to main point.
+during each stage, the value has only one alias.
+first main point, then double point, then main point.
 
-By requiring assignment for mutation in each scope,
-the language knows precisely which variables
-should be mutated.
-
-```
-let point_1 = Point(x: 2, y: 3)
-let point_2 = Point(x: -1, y: 5)
-point_1 = offset(point_1, point_2)
-draw_line(point_1, point_2)
-```
-
-In the above example,
-`offset` can mutate `point_1`,
-but it can never mutate `point_2`,
-and `draw_line` can't mutate anything.
-
-We now know which parameters/arguments
-a function can mutate.
-The other issue with mainstream languages
-is their rules for when to use aliasing.
-
-### Sharing
-
-Most languages pick aliasing by the type of the value.
-Numbers and strings are copied every time,
-but lists and struct-like types with fields
-are always passed by reference.
-
-Instead, copy semantics
-allows variables to be aliases
-to the same underlying value
-as long as the variables are unchanged or unique.
-
-#### Unchanging
-
-If variables don't change their values,
-then they can be aliases.
-
-This means `point` is aliased in the following example,
-because `print` doesn't attempt to mutate it.
-
-```
-fun main()
-	let point = Point(x 3, y 7)
-	print(point)
-
-fun print(p Point)
-	echo "x{p.x}, y{p.y}"
-```
-
-If the function attempts to mutate the parameter,
-then it would have to be copied.
-In the following example,
-`print_double` mutates its `p` parameter,
-so it's given a copy of `point` from `main`.
-
-```
-fun main()
-	let point = Point(x 3, y 4)
-	print_double(point)
-
-fun print_double(p Point)
-	p.x *= 2
-	p.y *= 2
-	print(p)
-```
-
-#### Unique
-
-Mutable variables can be aliased if they're unique.
-
-In the following example,
-`p1` is used once to assign to `p2`
-and then it's never used again.
-This means `p2` can be an alias to the same value,
-because it has unique mutable access to the value.
-
-```
-let p1 = Point(x 3, y 4)
-let p2 = p1 // Last use of p1.
-p2.x += 2
-echo p2 // Point(x 5, y 4)
-```
-
-If `p1` was reused after that point,
-then `p2` would have to be made unique
-by copying the value of `p1`.
-
-```
-let p1 = Point(x 3, y 4)
-let p2 = p1 // Last use of p1.
-p2.x += 2
-echo p1 // Point(x 3, y 4)
-echo p2 // Point(x 5, y 4)
-```
-
-But we can still make `p2` alias `p1`
-by moving its mutation after the last use of `p1`.
-In the following example,
-`p2` reuses the same memory as `p1`.
-
-```
-let p1 = Point(x 3, y 4)
-let p2 = p1 // Last use of p1.
-echo p1 // Point(x 3, y 4)
-p2.x += 2
-echo p2 // Point(x 5, y 4)
-```
-
-#### Unique sharing
-
-In the following example,
-the comments show how `double` is applied to `point`.
-
-```
-fun main()
-	let point = Point(x 1, y 2)
-
-	point = double(point)
-	// let p = point
-	// p.x *= 2
-	// p.y *= 2
-	// point = p
-
-	echo point // Point(x 2, y 4)
-
-fun double(p Point) -> Point
-	p.x *= 2
-	p.y *= 2
-	return p
-```
-
-p is unique for a bit,
-and then it's shared back into point?
-and point is unique?
-
-for a brief period,
-p diverges from point,
-but then they become shared again,
-and between that time, p is unique?
-
-It can also apply to fields of variables.
+the difference between threads and functions
+is that even if a thread is spawned after another,
+the variables could be in use at the same time,
+so we shouldn't rely on that information.
+....
+with one mutating one reading,
+the mutation applies after awaiting the thread?
+ah, but the thread starts before awaiting
+so it can't be aliased
 
 ## Concerns
 
