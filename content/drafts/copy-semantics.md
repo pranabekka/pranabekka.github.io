@@ -5,380 +5,141 @@ date = 2026-04-08 18:21:31 # draft date
 updated = 2026-04-08 18:21:31
 +++
 
-Safe mutability for high-level languages.
+High-level mutability without defensive copies and
+other aliasing issues.
 
-With mainstream high-level languages
-pervasive aliasing causes issues at run time,
-which can only be prevented with defensive copies
-or testing every change to a function.
-While Rust automatically catches these at compile time,
-users still have to deal with aliasing issues
-through compiler errors,
-which is unsuitable for high-level programming.
-Functional programming languages make this invisible,
-but they will instead raise errors for
-the programming patterns most people are familiar with.
-
-Copy semantics allow mutability
-without run time or compiler errors
-by presenting function parameters and results
-as copies.
-
-```
-fun main()
-	let a = Point(x: 2, y: 3)
-	let b = double(a)
-
-type Point
-	x: Int
-	y: Int
-
-fun double(point: Point) -> Point
-	return offset(point, point)
-
-fun offset_twice(one: Point, two: Point) -> Point
-	one = offset(one, two)
-	one = offset(one, two)
-	return one
-
-fun offset(one: Point, two: Point) -> Point
-	one.x += two.x
-	one.y += two.y
-	return one
-```
-
-Translated to Python:
-(or typescript?)
-ts is newer and web dev is very popular,
-but many of them will never read this
-
-```
-```
-
-## Copy semantics
-
+Mainstream high-level languages have pervasive aliasing,
+which causes crashes and even silent errors.
+This is addressed by defensive copies
+and testing every function change thoroughly.
+As Rust and functional programming languages show,
+a better aliasing strategy allows us to
+move faster without breaking things.
+At least once you're past the initial learning curve.
 With copy semantics,
-functions seem to receive copies of their arguments.
-Because of that, `point` doesn't change inside `main`
-in the following example.
+we get the same benefits with a lower learning curve,
+those benefits being plain old mutability
+without needing careful workarounds like
+defensive copies and tests for each function change.
+
+What does this look like?
+Well, it looks like any other language,
+but variables can only be mutated in a given scope
+if they're assigned to in that scope.
+This means that we are guaranteed,
+in the following example,
+that `foo` can never mutate `name`.
 
 ```
 fun main()
-	let point = Point(x: 3, y: 4)
-	double(point)
-	echo point // Point(x: 3, y: 4)
-
-fun double(p: Point) -> Point
-	p.x *= 2
-	p.y *= 2
-	return p
+	let name = "Avery Beverly"
+	foo(name)
 ```
 
-Because functions take and give "copies",
-we need to assign their results to mutate variables.
+To mutate `name`, we would have to assign to it.
+Unlike other languages, this must be in the same scope.
+Incidentally, when I compare languages,
+I'm talking about mainstream high-level languages,
+unless explicitly stated otherwise.
+Back to the matter of mutating `name`:
 
 ```
 fun main()
-	let point = Point(x: 3, y: 4)
-
-	// We're now assigning to `point`.
-	point = double(point)
-
-	echo point // Point(x: 6, y: 8)
+	let name = "Avery Beverly"
+	name = foo(name)
 ```
 
-Because we must assign the result of a function
-to mutate a variable,
-functions must return a meaningful result.
+With the assignment,
+we now know that `foo` might mutate `name`.
 
 ```
-fun main()
-	let point = Point(x: 3, y: 4)
-	point = double(point)
-	echo point // Nil
-
-// Functions return Nil by default.
-fun double(p: Point)
-	p.x *= 2
-	p.y *= 2
+fun foo(name)
+	if name == "Avery Beverly"
+		return name
+	else
+		return "Avery Beverly"
 ```
 
-Modern languages shouldn't make values
-automatically nil-able,
-but this is just for demonstration.
+This might look like functional programming,
+but there's two surface-level differences,
+and a big underlying one as well.
 
-Anyway, new variables also seem to be copies.
-
-```
-let old = Point(x 1, y 1)
-let new = old
-old = double(old)
-echo new // Point(x 1, y 1)
-echo old // Point(x 2, y 2)
-```
-
-Loops also seem to work on copies.
+First,
+though it's not a big deal,
+we can easily mutate parts of a variable:
 
 ```
-let my_list = [1, 2, 3]
-my_list =
-	for items(my_list) item
-		// Assume some complex mutation
-		item *= 2
-		// Return mutation at end
-		return item
-echo my_list // [2, 4, 6]
+let point = Point(x: 3, y: 3)
+point.x = point.x + point.x
 ```
 
-The `items` function exposes the items of `my_list`,
-which we call `item` in each iteration.
-In each iteration, we return the double of the item,
-and then the `for` loop collects that into a "copy",
-which we finally assign back to `my_list`.
-If we didn't assign the result
-of the `for` loop to `my_list`,
-then `my_list` wouldn't be mutated.
-There are other ways to do it,
-but I think this works the best.
-
-Loops can still mutate variables outside the loop:
-
-```
-let my_list = [1, 2, 3]
-for indexes(my_list) i
-	my_list[i] *= 2
-echo my_list // [2, 4, 6]
-```
-
-That about sums up what using copy semantics looks like,
-but if we actually did use copies everywhere
-the performance of the program would be horrible.
-Instead, we actually infer aliases in most places,
-hence copy _semantics_,
-because it behaves like copies while using aliases.
-The next section describes when we use aliasing.
-
-## Reference inference
-
-using assignment shows which vars to mutate,
-instead of making all func params mutable refs
-
-we can then track which variables can be safely shared,
-versus which ones must be kept distinct via copies
-
-variables usually get freed at the end of the scope
-they're created in
-sometimes they're passed outside that block
-in which case they last longer
-or should i describe variables having a lifetime?
-or the values having a lifetime?
-a variable is an alias to a value in memory
-when passing a value across scopes
-it can be aliased by different variables
-sometimes the value needs to be copied
-so that the variables refer to distinct values
-
-constant variables can be shared safely.
-this includes a function parameter that's unchanged
-
-anything further requires tracking where the value goes,
-from one variable to another,
-across functions and threads
-
-the value from main point is assigned to double point,
-then it gets mutated
-and the new value is assigned to main point.
-during each stage, the value has only one alias.
-first main point, then double point, then main point.
-
-the difference between threads and functions
-is that even if a thread is spawned after another,
-the variables could be in use at the same time,
-so we shouldn't rely on that information.
-....
-with one mutating one reading,
-the mutation applies after awaiting the thread?
-ah, but the thread starts before awaiting
-so it can't be aliased
-
-## Concerns
-
-### Resource management
-
-can't simply copy files and whatnot
-invalidate previous references
-
-### Escape hatches
-
-### Compile times
-
-Performing all this analysis
-might take longer to compile.
-
-Development builds could use quick compiles
-with a run time that performs copy-on-write,
-while release builds take longer
-to optimise everything at compile time.
-
-Sharing variable fields could be suspended
-for development builds.
-
-### Mixed mutation and declaration
-
-## Additional benefits
-
-As I alluded to in the beginning,
-aliasing errors require defensive copies
-or thorough testing for every function change,
-but copy semantics eliminates that,
-allowing people to focus on core functionality.
-
-In addition to safety,
-copy semantics also present nicer APIs,
-better performance,
-and other benefits.
-
-### Easy onboarding
-
-Only having to deal with "copies"
-makes it easier to learn the language,
-instead of remembering the aliasing rules
-for different types.
-
-Not having to deal with aliasing errors
-is especially helpful for beginners to programming.
-
-### Chain everything
-
-### Performance
-
-Aliases and copies are tracked at compile time,
-which can also be used to determine memory usage
-at compile time,
-thus removing the overhead of a garbage collector.
-
-### Safe transpile
-
-A language with copy semantics can compile to
-other languages that support aliasing
-by using them where required.
-This includes all the mainstream imperative languages,
-and most of the less popular ones as well.
-
-Take the following example for copy semantics
-in the made-up language I've been using:
+Second,
+we can mutate variables outside a loop.
 
 ```
 fun main()
-	let p1 = Point(x: 2, y: 3)
-	let p2 = double(p1)
-	draw_line(p1, p2)
-
-type Point
-	x: Int
-	y: Int
-
-fun double(p Point) -> Point
-	p.x *= 2
-	p.y *= 2
-	return p
+	let strings = ["A", "B", "C", "D"]
+	for idx in strings.len - 1
+		strings[i] = strings[i] ++ string.repeat("!", i + 1)
+	print(strings)
+	// ["A!", "B!!", "C!!!", "D!!!!"]
 ```
 
-Here's one way to compile it to Python:
+Now, the third, big, underlying difference,
+from functional languages,
+is that all values are mutable in-place.
+Even mainstream languages make some types immutable,
+such as strings,
+but copy semantics have a better aliasing strategy.
 
-**TODO**: test this
+Much like Rust,
+copy semantics tracks the usage of variables
+to determine when it's safe to alias them.
+It is however, a perversion of Rust's rules ---
+hopefully a delightful one,
+since it's better suited to scripting and
+applications programming, as it were.
+Since it's a perversion,
+I'm going to explain it from scratch.
+If you do know Rust,
+you might want to forget everything you know about it,
+at least until you've read this at least once.
+I won't mention Rust while I'm explaining all of it,
+so you'll have to draw parallels yourself.
+
+Now, let's see how variables are tracked.
+To do this,
+we must distinguish the values and variables.
+Variables are simply names that refer to values
+that are stored on the computer.
+Values are the actual data, in a sense,
+while variables are simply aliases to them.
+This distinction should become clearer as we go on.
+
+A value can be aliased by multiple variables
+over the course of the program.
+For example,
+when passing a variable as a function argument,
+the relevant parameter in the function
+is a new variable aliasing the same value
+as the variable that was passed in at the call site.
+In the example below,
+`variable` and `parameter` are both variables
+that alias `[1, 2, 3]`.
 
 ```
-def main():
-	p1 = Point(x=2, y=3)
-	p2 = p1.copy()
-	double(p2)
-	draw_line(p1, p2)
-
-@dataclass
-class Point:
-	x: Int
-	y: Int
+fun function_1()
+	let variable = [1, 2, 3]
+	func_2(variable)
 	
-	def copy(self)
-		Point(x=self.x, y=self.y)
-
-def double(p: Point):
-	p.x *= 2
-	p.y *= 2
+fun function_2(parameter)
+	print(parameter)
 ```
 
-Here's one way to compile to Go:
-
-**TODO:** test changes
-
-```
-func main() {
-	p1 := point {x: 2, y: 3}
-	p2 := p1 // Copy
-	double(&p2)
-	draw_line(&p1, &p2)
-}
-
-type point struct{ x, y int }
-
-func double(p *point) {
-	p.x *= 2
-	p.y *= 2
-```
-
-Here's a way to compile to Rust:
-
-```
-fn main() {
-	let p1 = Point { x: 2, y: 3 }
-	let p2 = p1.clone()
-	double(&mut p2)
-}
-
-#[derive(Clone)]
-struct Point {
-	x: i32,
-	y: i32,
-}
-
-fn double(p: &mut Point) {
-	a.x *= 2;
-	a.y *= 2;
-}
-```
-
-Finally, here's a way to compile to C:
-
-**TODO**: test changes
-
-```
-typedef struct {
-	int x;
-	int y;
-} point;
-
-void p_double(point* p);
-
-int main()
-{
-	point p1 = { .x = 2, .y = 2 };
-	point p2 = p1; // Copy
-	p_double(&p2);
-	draw_line(&p1, &p2);
-}
-
-void p_double(point* p)
-{
-	p->x *= 2;
-	p->y *= 2;
-};
-```
-
-The code examples simply present one way of compiling,
-and should also give an idea of how copy semantics work.
-
-All the examples will draw a line
-from x2 and y3 to x4 and y6.
-
-### Easy bootstrap/port
+The key difference between the two is of time.
+At any given time,
+the value `[1, 2, 3]` is aliased by only one variable.
+At first, this is `variable`,
+and then it is `parameter`,
+and then whatever parameter name is specified for
+`print`.
