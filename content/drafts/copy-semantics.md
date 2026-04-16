@@ -95,51 +95,88 @@ but copy semantics have a better aliasing strategy.
 Much like Rust,
 copy semantics tracks the usage of variables
 to determine when it's safe to alias them.
-It is however, a perversion of Rust's rules ---
-hopefully a delightful one,
-since it's better suited to scripting and
-applications programming, as it were.
-Since it's a perversion,
-I'm going to explain it from scratch.
-If you do know Rust,
-you might want to forget everything you know about it,
-at least until you've read this at least once.
-I won't mention Rust while I'm explaining all of it,
-so you'll have to draw parallels yourself.
+It is however, a perversion of Rust's rules,
+to better suit scripting and application programming,
+so I'm going to explain it from scratch.
+Even if you do know Rust,
+it might be better to give a decent skim
+before attempting to translate concepts.
 
 Now, let's see how variables are tracked.
-To do this,
-we must distinguish the values and variables.
-Variables are simply names that refer to values
-that are stored on the computer.
-Values are the actual data, in a sense,
-while variables are simply aliases to them.
-This distinction should become clearer as we go on.
 
-A value can be aliased by multiple variables
-over the course of the program.
-For example,
-when passing a variable as a function argument,
-the relevant parameter in the function
-is a new variable aliasing the same value
-as the variable that was passed in at the call site.
-In the example below,
-`variable` and `parameter` are both variables
-that alias `[1, 2, 3]`.
+Over the course of the program,
+values are passed through multiple variables.
 
 ```
-fun function_1()
-	let variable = [1, 2, 3]
-	func_2(variable)
+fun main()
+	let a = "Hello"
+	let b = a
+	foo(a)
+
+fun foo(x)
+	print(x)
+```
+
+In the above example,
+`"Hello"` is passed to `a`,
+then it is passed to `b`,
+and finally it is passed to `x` inside `foo`.
+Since none of them are mutated,
+they can alias the same value in memory.
+
+Let's say one of them was mutated.
+
+```
+fun main()
+	let a = "Hello"
+	let b = a
+	foo(a)
 	
-fun function_2(parameter)
-	print(parameter)
+fun foo(x)
+	x = x ++ "!"
+	print(x)
 ```
 
-The key difference between the two is of time.
-At any given time,
-the value `[1, 2, 3]` is aliased by only one variable.
-At first, this is `variable`,
-and then it is `parameter`,
-and then whatever parameter name is specified for
-`print`.
+In the above example,
+`x` is mutated,
+so it shouldn't share memory with `a` and `b`,
+lest they be mutated by surprise.
+However, `a` and `b` aren't reused after
+`x` is mutated.
+This means `x` is actually a unique alias
+to the underlying value,
+and doesn't need to be copied
+to a separate place in memory.
+`x` can be mutated in-place.
+
+Now let's reuse one of the aliases after `x`.
+
+```
+fun main()
+	let a = "Hello"
+	let b = a
+	foo(a)
+	foo(b)
+	
+fun foo(x)
+	x = x ++ "!"
+	print(x)
+```
+
+In the above example,
+`a` is passed to `b`,
+then `a` is passed to `x`, which is mutated.
+While `a` doesn't get reused after that point,
+`b` does get reused.
+So `a` can be shared with `x`,
+but `b` needs to be copied to a new memory location,
+otherwise it'd become `"Hello!"`
+through the shared alias with `a`,
+and then it'd become `"Hello!!"`
+with the second call to `foo`.
+So when we declare `b`, it gets a copy of `a`,
+instead of aliasing the same memory.
+
+If there's multiple aliases with overlapping uses,
+where at least one is mutable,
+the mutable one must be copied to a new location.
