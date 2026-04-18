@@ -1,9 +1,9 @@
-..+
++++
 title = "Copy semantics"
 ## remember to change date on publishing
 date = 2026-04-08 18:21:31 # draft date
 updated = 2026-04-08 18:21:31
-..+
++++
 
 Safe in-place mutation for high-level languages.
 
