@@ -7,25 +7,46 @@ updated = 2026-04-08 18:21:31
 
 Safe in-place mutation for high-level languages.
 
-With copy semantics,
-users don't need to think about aliasing
-or defensive copies at all,
-and they don't need to test as many things.
+Defensive copies are just a simple symptom
+of the problem with aliasing in high-level languages.
+Because variables and function parameters
+form aliases to each other,
+the implementation of a function leaks,
+where intermediate calculations affect callers,
+thus requiring tests when adding a function call
+and testing all callers when changing
+those intermediate calculations.
+Functional languages certainly hide this details,
+but they do this be preventing mutation,
+which is a core part of programming in practice.
 
-This is because all variables and function parameters
-appear to be copies.
-We just pass "copies" around
-through variables and functions
-without worrying about aliasing issues.
+With copy semantics,
+all variables and function parameters appear to be copies,
+allowing familiar patterns
+like mutating parts of variables
+and mutating variables outside loops,
+without actually creating copies
+until certain conditions are met.
+
+Users don't need to think about aliasing
+or defensive copies at all,
+and they don't need tests for simple things.
+
+I'll briefly show what it looks like,
+before I explain how it works.
 
 Because function parameters are like copies,
 simply calling a function doesn't mutate a variable.
+Notice how `a` only changes after assigning to it.
 
 ```
 let a = "burp"
 uppercase(a)
+
 print(a) // burp
+
 a = uppercase(a)
+
 print(a) // BURP
 ```
 
@@ -46,12 +67,17 @@ In most high-level languages,
 because they usually use aliasing
 for types like lists and structs.
 Consider slices for Go, and objects for PHP and Swift.
+Copy semantics has no such inconsistencies.
+Numbers, strings, lists, structs and all other types
+behave the same as each other,
+as if they were copies.
 
 Copy semantics will only perform copies
-if two variables or more are used at the same time,
-or might be used at the same time via async,
-with different mutations applied to them.
-In all other cases it will use aliases
+if two variables or more
+have mutations applied to them at the same time,
+or if there's a possibility of that happening
+given asynchronous code and conditionals.
+In all other cases copy semantics will use aliases
 while still appearing to use copies,
 so that the programmer only thinks with copies
 instead of being concerned about aliasing.
@@ -73,6 +99,10 @@ print(b) // [1, 2, 3]
 
 Because `a` and `b` are guaranteed to remain constant,
 they can be aliases to the same memory.
+This is more impactful with functions.
+If a function doesn't mutate its parameters,
+and the variables passed to it don't mutate,
+then they can always be aliases.
 
 For this next example,
 keep in mind that copy semantics allows
