@@ -1,8 +1,7 @@
 +++
 title = "Loop in Gleam"
-## remember to change date on publishing
-date = 2026-03-10 15:57:34 # draft date
-updated = 2026-03-10 15:57:34
+date = 2026-04-22 18:00:05
+updated = 2026-04-22 18:00:05
 +++
 
 How to survive without `for` loops.
@@ -119,9 +118,9 @@ print, then `0`, and stop.
 There are a few implications of this,
 each leading into the other:
 creating a loop means creating a function,
-you can reuse this loop function anywhere,
-you can reuse loops created by other people,
-and you can share your loops with others.
+which can be reused anywhere as a function,
+and given by other people in a library,
+and even given to other people in your own libraries.
 
 See the language tour to learn more about
 recursion, tail calls, common looping functions,
@@ -134,7 +133,3 @@ The community is very friendly!
 [The Gleam Language Tour](https://tour.gleam.run)
 
 [Gleam Discord server](https://discord.gg/Fm8Pwmy)
-
-[Gleam website](https://gleam.run)
-
-[Contact me](@/about.md#contact)
