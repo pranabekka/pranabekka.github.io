@@ -31,8 +31,10 @@ until certain conditions are met.
 Users don't need to think about aliasing
 or defensive copies at all,
 and they don't need tests for simple things.
+Small changes become trivial
+and large refactoring also becomes easy.
 
-I'll briefly show what it looks like,
+I'll briefly show what it looks like
 before I explain how it works.
 
 Because function parameters are like copies,
@@ -176,7 +178,8 @@ never mutate its second argument,
 so it's safe to hand `..` an alias to `b`
 in the above example.
 
-Functions build upon base operations like `..`,
+Functions build upon base operations,
+like the `..` append operator in earlier examples,
 which means they have the same rules.
 
 ```
