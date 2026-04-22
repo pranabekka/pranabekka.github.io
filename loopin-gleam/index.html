@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Loop in Gleam
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Loop in Gleam
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Apr 22, 2026
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>How to survive without <code>for</code> loops.</p>
+<p>This is a simple introduction
+to build intuition for recursion,
+which can be used for looping in any language
+with functions,
+though it will be of limited use
+if it’s not optimised.</p>
+<p><a href="https://en.wikipedia.org/wiki/Tail_call#Language_support">Languages with optimised recursion</a></p>
+<p>Let’s get started.</p>
+<p>Looping and recursion is all about repeating.
+In fact, the regular word “recurse”
+is a synonym for “repeat”.</p>
+<p>Say you have a function to greet somebody:</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn main() -&gt; Nil {
+	greet()
+}
+
+fn greet() -&gt; Nil {
+	io.println(&quot;Howdy!&quot;)
+}
+</span></code></pre>
+<p>If we wanted to repeat the greeting multiple times,
+we can just call the function again.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn main() -&gt; Nil {
+	greet()
+	greet()
+	greet()
+}
+</span></code></pre>
+<p>That’s rarely a valid option, though.
+Instead, we can simply call the function again
+at the end of the function:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet() -&gt; Nil {
+	io.println(&quot;Hallo!&quot;)
+	greet()
+}
+</span></code></pre>
+<p>This is the essence of recursion:
+calling a function again at the end.
+After this point we just need to take care
+that it stops before the program
+crashes or force quits.</p>
+<p>For the <code>greet</code> function,
+we will want a number to track how often
+the greeting should be repeated.
+The function must be called
+with that parameter each time.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet(times: Int) -&gt; Nil {
+	io.println(&quot;Hi!&quot;)
+	greet(times)
+}
+</span></code></pre>
+<p>Each time we repeat the function,
+we decrease the number by 1.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet(times: Int) -&gt; Nil {
+	io.println(&quot;Hi!&quot;)
+	greet(times - 1)
+}
+</span></code></pre>
+<p>If the number reaches 0,
+then we don’t repeat the function, just return <code>Nil</code>.
+We also check if the number is negative,
+otherwise the program would go on, as before,
+until it crashes or force quits.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet(times: Int) -&gt; Nil {
+	case times &lt;= 0 {
+		True -&gt; Nil
+		False -&gt; {
+			io.println(&quot;Hi!&quot;)
+			greet(times - 1)
+		}
+	}
+}
+</span></code></pre>
+<p>Now, let’s greet four times.</p>
+<pre class="z-code"><code><span class="z-text z-plain">pub fn main() -&gt; Nil {
+	greet(4)
+}
+</span></code></pre>
+<p>The <code>greet</code> function will print,
+then call <code>greet</code> with <code>3</code>,
+print, then <code>2</code>, print, then <code>1</code>,
+print, then <code>0</code>, and stop.</p>
+<p>There are a few implications of this,
+each leading into the other:
+creating a loop means creating a function,
+which can be reused anywhere as a function,
+and given by other people in a library,
+and even given to other people in your own libraries.</p>
+<p>See the language tour to learn more about
+recursion, tail calls, common looping functions,
+and Gleam in general.
+It takes just an afternoon,
+and you can join the Discord server
+to get help immediately.
+The community is very friendly!</p>
+<p><a href="https://tour.gleam.run">The Gleam Language Tour</a></p>
+<p><a href="https://discord.gg/Fm8Pwmy">Gleam Discord server</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;loopin-gleam.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

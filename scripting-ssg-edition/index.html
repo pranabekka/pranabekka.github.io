@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Scripting (SSG Edition)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Scripting (SSG Edition)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    May 17, 2023
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      May 18, 2023
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/scripting-ssg-edition/#benefits">Benefits</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/scripting-ssg-edition/#starlark">Starlark</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/scripting-ssg-edition/#nickel">Nickel</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>A lot of applications that are meant for creating media
+benefit from some sort of scripting,
+including SSGs (static site generators).
+All of the Javascript ones seem to use Javascript,
+but Hugo and Zola rely on templates to do everything,
+which can be quite cumbersome, limited and generally painful.</p>
+<p>However, it should be relatively easy to add scripting to them,
+since Go and Rust have several scripting languages
+that are designed to be easily embedded.
+You can have a look at <a href="https://github.com/dbohdan/embedded-scripting-languages">this (Github) page on embedded scripting languages</a>
+for a full list,
+but some interesting options include
+<a href="https://github.com/rhaiscript/rhai">Rhai (Github)</a>
+for Rust, and <a href="https://github.com/d5/tengo">Tengo (Github)</a>
+and <a href="https://github.com/mattn/anko/">Anko (Github)</a>
+for Go.</p>
+<p>The most interesting options, however, are
+<a href="https://github.com/bazelbuild/starlark">Starlark(Github)</a>
+and <a href="https://pranabekka.github.io/scripting-ssg-edition/github.com/tweag/nickel">Nickel (Github)</a>,
+both of which are designed for configuring
+build systems and related tools.</p>
+<p>I think they’re quite suitable
+because they’re designed with a very specific use case
+instead of some abstract theory,
+and that specific use case happens to be build systems,
+which are what static site generators essentially are.</p>
+<p>Starlark has implementations in both Go and Rust,
+while Nickel is implemented in Rust.</p>
+<h2 id="benefits">Benefits<a class="zola-anchor" href="#benefits" aria-label="Anchor link for: benefits">🔗</a></h2>
+<p>As stated earlier, full fledged scripting languages
+make it easier to write complex and reusable code.</p>
+<p>They can also be used to make a more intuitive
+and integrated templating system,
+by using the same language in the templating system.
+I’ve included a templating example with Starlark below,
+but it can also be used to implement metadata
+(or “frontmatter”) with a simple function call
+like <code>{{ meta(&quot;2022-03-05&quot;, draft) }}</code>
+at the top of your markdown file.</p>
+<h2 id="starlark">Starlark<a class="zola-anchor" href="#starlark" aria-label="Anchor link for: starlark">🔗</a></h2>
+<p>Starlark is a Python-like scripting language
+designed for build systems,
+and static site generators are basically specialised build systems.
+It’s designed to be parallel (for fast builds),
+safe (for executing untrusted code) and simple.
+Honestly, sounds perfect for a static site generator.
+The one downside might be randomness,
+but that could be provided by the application (Zola or Hugo).
+The <a href="https://github.com/facebook/buck2/">Buck2 build system (Github)</a>
+for example, provides an <a href="https://github.com/facebook/buck2/blob/main/docs/benefits.md#benefits-for-rule-authors">API (Github)</a>
+that can be accessed by scripts.</p>
+<p>You could even embed it inside the template language.
+As an example:</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;h1&gt;{{ page.title }}&lt;/h1&gt;
+&lt;ul&gt;
+{%
+  for page in pages:
+    &quot;&quot;&quot;
+    &lt;li&gt;
+      &lt;a href={{page.permalink}}&gt;{{ page.title }}&lt;/a&gt;
+    &lt;/li&gt;
+    &quot;&quot;&quot;
+%}
+&lt;/ul&gt;
+</span></code></pre>
+<p><strong>NOTE:</strong> I’m not 100% sure about Starlark syntax and features,
+and I’m not really a Python user either,
+so this might not be correct.
+Although, you could probably add additional features
+through the app, such as a custom string format (I think).</p>
+<p>This enables you to write more complex scripts directly,
+instead of writing them in the (imho) awkward template syntax.</p>
+<pre class="z-code"><code><span class="z-text z-plain">def page_list(pages):
+  &quot;&quot;&quot;create a list of pages&quot;&quot;&quot;
+  result = &quot;&lt;ul&gt;&quot;
+  for page in pages:
+    result += &quot;&quot;&quot;&lt;li&gt;&lt;a href=&quot;{page.permalink}&quot;&gt;{page.title}&lt;/a&gt;&lt;/li&gt;&quot;&quot;&quot;
+  result += &quot;&lt;/ul&gt;&quot;
+  return result
+</span></code></pre>
+<p>That example is not so bad in the templating language,
+but ending all your statements with <code>end-&lt;statement&gt;</code>
+and scripting more complex logic can get quite annoying.</p>
+<h2 id="nickel">Nickel<a class="zola-anchor" href="#nickel" aria-label="Anchor link for: nickel">🔗</a></h2>
+<p>Another language that could be used is <a href="https://github.com/tweag/nickel">Nickel</a>.
+It’s designed with the Nix build/configuration system in mind,
+and is inspired by the Nix language.</p>
+<p>One advantage over Starlark is gradual typing and contracts.
+(Contracts are basically like assertions.)
+This is especially helpful when writing scripts
+that expect data in a specific form,
+but would otherwise return incorrect results
+which you might find several weeks later.
+You can also use it to ensure that your configuration
+conforms to a certain type or contract,
+instead of causing errors later on.
+Contracts, for example, can ensure properties
+about your strings, such as what they can contain,
+what they can start or end with, and so on.
+As a simple example, you can do</p>
+<pre class="z-code"><code><span class="z-text z-plain">let dateToString : Date -&gt; String
+</span></code></pre>
+<p>Another is easier multiline strings —
+in the Starlark/Python example above,
+it would preserve the indentation of the text
+(quite unintuitively, might I add).
+Here’s how it looks in Nickel:</p>
+<pre class="z-code"><code><span class="z-text z-plain">let it&#39;s-a-multiline-string = m%&quot;
+  This isn&#39;t indented.
+    This is indented.
+  This isn&#39;t indented.
+&quot;%
+</span></code></pre>
+<p>(Yes, examples imply it allows hyphens
+and single quotes in its identifiers.)</p>
+<p>While most configuration languages try to avoid
+turing completeness, Nickel is Turing-complete,
+with restricted accessibility to side-effects.
+This can allow things like reading file contents
+and updating backlinks, which are quite useful.</p>
+<p>Nickel can also import and reuse YAML, TOML and JSON,
+which allows gradually migrating to it,
+instead of completely invalidating older (site) configurations.</p>
+<p>Have a look at the <a href="https://github.com/tweag/nickel/blob/master/RATIONALE.md">Rationale (Github)</a>
+to understand their design choices and
+how it compares to other languages, including Starlark.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;scripting-ssg-edition.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

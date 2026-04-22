@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Lispy Templates
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Lispy Templates
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    May 15, 2023
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>Lisp makes a pretty great system for templating all kinds of material.
+Simply let people write lisp code directly in their files
+and evaluate it in the context of the document,
+while blocking features unsuitable for templating.</p>
+<p>In the most basic form treat <code>,&lt;anything&gt;</code>
+as a call to evaluate <code>&lt;anything&gt;</code>.
+So <code>,var</code> expands to the variable <code>var</code>,
+and <code>,(func arg1)</code> expands to the function <code>func</code>
+with the argument <code>arg1</code>.</p>
+<p>The next step after this is to create content blocks.
+If you need to wrap some content inside a function
+(such as a loop),
+you wouldn’t want to worry about escaping all the quotes.
+For that purpose, use square brackets
+(Borrowed from <a href="https://typst.app/docs/reference/types/content/">Typst</a>.
+This allows you to write
+<code>(link [Link to article called &quot;Hello, World&quot;])</code>
+without worrying about escaping the quotes or using single quotes.
+You still have to escape closing square brackets,
+but that’s not as big a problem in my opinion.</p>
+<p>In addition to representing flat data,
+s-expressions can easily model nested data structures as well,
+which is where their power truly shines.
+HTML is a common format that represents nested data.
+All you need is custom functions to create various HTML elements,
+which allows you to write something like the following:</p>
+<pre class="z-code"><code><span class="z-text z-plain">,(:para
+   [This is some content with a 
+     ,(:link [link text] &quot;example.com&quot;)
+    in it])
+</span></code></pre>
+<p>The coolest part is that you don’t need to
+embed a scripting language.
+You just re-use the lisp programming language!</p>
+<pre class="z-code"><code><span class="z-text z-plain">;; definitions
+
+,(define fn1
+   (:footnote [I am but a Lisp newbie]))
+
+,(define fn2
+   (:footnote
+     (:link [CommonMark specification] &quot;commonmark.org&quot;)))
+
+,(define fn3
+   (:footnote
+     (:link [LaTeX Website] &quot;latex-project.org&quot;)))
+
+;; html content
+
+&lt;h2&gt; ,next-steps &lt;/h2&gt;
+
+&lt;p&gt;I have yet to see or implement this ,fn1 ,
+but imagine using it in regular prose
+as a Markdown ,fn2 or LaTeX ,fn3 alternative?&lt;/p&gt;
+
+&lt;p&gt;It would probably require being able to define
+custom syntax, since it would be tedious to type
+&lt;code&gt;,(:link [This is my title])&lt;/code&gt;
+every time you wanted to insert a link,
+for example.&lt;/p&gt;
+</span></code></pre>
+<p>A lot of these ideas were inspired by <a href="https://typst.app">Typst</a>, by the way.
+Check it out.</p>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <hr>
+  <p>References to this page:</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;discovered-skribilo&#x2F;">I Discovered Skribilo!</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;lispy-templates.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
