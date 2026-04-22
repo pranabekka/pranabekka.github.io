@@ -16,12 +16,13 @@ where intermediate calculations affect callers,
 thus requiring tests when adding a function call
 and testing all callers when changing
 those intermediate calculations.
-Functional languages certainly hide this details,
+Functional languages certainly hide these details,
 but they do this be preventing mutation,
 which is a core part of programming in practice.
 
 With copy semantics,
-all variables and function parameters appear to be copies,
+all variables and function parameters
+appear to be copies,
 allowing familiar patterns
 like mutating parts of variables
 and mutating variables outside loops,
@@ -37,7 +38,8 @@ and large refactoring also becomes easy.
 I'll briefly show what it looks like
 before I explain how it works.
 
-Because function parameters are like copies,
+With copy semantics,
+because function parameters are like copies,
 simply calling a function doesn't mutate a variable.
 Notice how `a` only changes after assigning to it.
 
@@ -94,9 +96,9 @@ Let's get into it.
 
 ```
 let a = [1, 2, 3]
-let b = a
-print(a) // [1, 2, 3]
-print(b) // [1, 2, 3]
+let b = /* alias */ a
+print(/* alias */ a) // [1, 2, 3]
+print(/* alias */ b) // [1, 2, 3]
 ```
 
 Because `a` and `b` are guaranteed to remain constant,
@@ -115,8 +117,8 @@ of adding items to a list.
 
 ```
 let a = [1, 2, 3]
-a = a .. [4]
-print(a) // [1, 2, 3, 4]
+a = /* alias */ a .. [4]
+print(/* alias */ a) // [1, 2, 3, 4]
 ```
 
 The `..` operator expects to
@@ -128,9 +130,9 @@ if we assigned to another variable.
 
 ```
 let a = [1, 2, 3]
-let b = a .. [4]
-print(a) // [1, 2, 3]
-print(b) // [1, 2, 3, 4]
+let b = /* copy */ a .. [4]
+print(/* alias */ a) // [1, 2, 3]
+print(/* alias */ b) // [1, 2, 3, 4]
 ```
 
 Because we haven't assigned to `a`,
@@ -155,8 +157,8 @@ Sometimes memory is left unused by its aliases.
 
 ```
 let a = [1, 2, 3]
-let b = a .. [4]
-print(b) // [1, 2, 3, 4]
+let b = /* alias */ a .. [4]
+print(/* alias */ b) // [1, 2, 3, 4]
 ```
 
 Because `a` isn't reused after creating `b`,
@@ -168,9 +170,9 @@ which can be mutated in place by `..`.
 ```
 let a = [1, 2, 3]
 let b = [4]
-a = a .. b
-print(a) // [1, 2, 3, 4]
-print(b) // [4]
+a = /* alias */ a .. /* copy */ b
+print(/* alias */ a) // [1, 2, 3, 4]
+print(/* alias */ b) // [4]
 ```
 
 The `..` operator is guaranteed to
@@ -185,11 +187,11 @@ which means they have the same rules.
 ```
 fun main()
 	let a = [1, 2, 3]
-	a = foo(a)
-	print(a) // [1, 2, 3, 4]
+	a = foo(/* alias */ a)
+	print(/* alias */ a) // [1, 2, 3, 4]
 	
-fun foo(x)
-	x .. [4]
+fun foo(/* alias */ x)
+	/* alias */ x .. [4]
 ```
 
 `foo` expects to mutate the variable it receives,
@@ -201,12 +203,12 @@ which it mutates in-place.
 ```
 fun main()
 	let a = [1, 2, 3]
-	let b = foo(a)
-	print(a) // [1, 2, 3]
-	print(b) // [1, 2, 3, 4]
+	let b = foo(/* copy */ a)
+	print(/* alias */ a) // [1, 2, 3]
+	print(/* alias */ b) // [1, 2, 3, 4]
 	
-fun foo(x)
-	x .. [4]
+fun foo(/* alias */ x)
+	/* alias */ x .. [4]
 ```
 
 `foo` expects to mutate its argument,
@@ -250,9 +252,9 @@ based on whether the fields or items are reused.
 
 ```
 let a = [1, 2]
-let b = double_second(a)
-print(a[0]) // 1
-print(b[1]) // 4
+let b = double_second(/* alias */ a)
+print(/* alias */ a[0]) // 1
+print(/* alias */ b[1]) // 4
 ```
 
 `double_second` mutates the second item,
@@ -269,9 +271,9 @@ to ensure correct behaviour.
 
 ```
 let a = [1, 2, 3]
-async print(a) // [1, 2, 3]
+async print(/* copy */ a) // [1, 2, 3]
 a[0] = 10
-print(a) // [10, 2, 3]
+print(/* alias */ a) // [10, 2, 3]
 ```
 
 While it appears as if the asynchronous call to print
@@ -282,21 +284,108 @@ or even during the mutation of `a`.
 Therefore, the thread must receive a copy of `a`,
 which the async `print` can then alias safely.
 
-That explains nearly everything.
-We'll briefly have a look at translations
-to other languages
-before I explain the underlying principles better.
+A good way to confirm understanding
+is to test your knowledge.
+I'm going to present some examples,
+with hidden answers
+for where copies and aliases will occur.
+Try to figure them out using
+the rules presented earlier,
+and check them against the answers.
 
-I'm going to present examples
-using the syntax and semantics I've been using,
-and then follow them with possible translations
-to Python, Go, Rust and C.
+examples
+- double using offset
+  meaning two levels of indirection
+  also a more complicated reuse analysis
+- offset_twice
 
-Try to guess what the translation could be
-before having a look at whichever ones
-you're familiar with.
-Think about the least amount of copies possible,
-using the rules I've presented.
+- no-copy types
+- maybe loops
+- credit rust
+
+The rules we've explored so far
+assume that all values can be copied trivially.
+However, there are some types of values
+that can't simply be copied.
+For example, a file needs to know
+where it must be copied,
+and copying a network connection
+doesn't really make sense.
+These are "resource" types,
+since they refer to external resources.
+
+A value with a resource type must be unique,
+and it preserves this by invalidating old aliases.
+
+```
+let a = open_file("example.txt")
+
+// ERROR: File transferred from `a` to `b`.
+let b = a
+
+// ERROR: Attempt to reuse `a` after transfer.
+write_all(a, "Hello")
+
+let text = read_all(b)
+print(text)
+```
+
+We fix the above example by never creating `b`.
+
+```
+let a = open_file("example.txt")
+write_all(a, "Hello")
+let text = read_all(a)
+print(text)
+```
+
+That's the copy semantics system.
+
+Sometimes aliasing might be desirable,
+so there should be an escape hatch,
+but it should be explicit,
+instead of having people trip over it.
+The language should nudge people
+towards dealing with independent copies.
+
+Copy semantics makes it much easier for beginners
+to learn programming,
+because all variables start behaving the same,
+instead of numbers and objects being in separate worlds.
+This reduces the rules that fledglings need to learn.
+This also removes the need to track
+how aliases move throughout the system,
+which is particularly unintuitive for beginners.
+
+Programmers who've dealt with aliasing
+through defensive copies and thorough testing
+should also benefit from moving faster
+without breaking things.
+Copy semantics removes the need to tiptoe
+around implementation details
+because the call site enforces the change it desires,
+without special input from the programmer.
+
+Copy semantics also enables a few other things
+that are nearly as exciting.
+
+A simple one is that all functions can be chained,
+because they must return values.
+Function authors don't have to think about
+adding a return statement,
+and they don't need to think about what to return.
+
+A more exciting property
+is that all analysis is performed at compile time.
+
+This makes it easy to compile
+to other languages with mutation and aliasing.
+Take this following example,
+and try to figure out how it will translate
+before checking the translation
+for languages you're familiar with.
+The translation isn't perfect,
+but it shows where aliases and copies will occur.
 
 ```
 fun main()
@@ -403,111 +492,38 @@ void double(position* pos) {
 ```
 {% end %}
 
-examples
-- double using offset
-  meaning two levels of indirection
-  also a more complicated reuse analysis
-- offset_twice
-
-- no-copy types
-- maybe loops
-- credit rust
-
-The rules we've explored so far
-assume that all values can be copied trivially.
-However, there are some types of values
-that can't simply be copied.
-For example, a file needs to know
-where it must be copied,
-and copying a network connection
-doesn't really make sense.
-These are "resource" types,
-since they refer to external resources.
-
-A value with a resource type must be unique,
-and it preserves this by invalidating old aliases.
-
-```
-let a = open_file("example.txt")
-
-// ERROR: File transferred from `a` to `b`.
-let b = a
-
-// ERROR: Attempt to reuse `a` after transfer.
-write_all(a, "Hello")
-
-let text = read_all(b)
-print(text)
-```
-
-We fix the above example by never creating `b`.
-
-```
-let a = open_file("example.txt")
-write_all(a, "Hello")
-let text = read_all(a)
-print(text)
-```
-
-That's the copy semantics system.
-
-Sometimes aliasing might be desirable,
-so there should be an escape hatch,
-but it should be explicit,
-instead of having people trip over it.
-The language should nudge people
-towards dealing with independent copies.
-
-This makes it much easier for beginners
-to learn programming,
-because all variables start behaving the same,
-like numbers and strings.
-This reduces the rules they need to learn.
-This also removes the need to track
-how aliases move throughout the system,
-which is particularly unintuitive for beginners.
-
-Programmers who've dealt with aliasing
-through defensive copies and thorough testing
-should also benefit from moving faster
-without breaking things.
-When all function parameters become aliases
-to variables from their caller,
-this risks leaking implementation details,
-where some intermediate calculation
-mutates variables in the caller.
-This means calling a function is risky,
-and changing a function is also risky.
-All callers will need to be tested every time.
-Copy semantics eliminates this need.
-
-Copy semantics also enables a few other things
-that are nearly as exciting.
-
-A simple one is that all functions can be chained,
-because they must return values.
-Function authors don't have to think about
-adding a return statement,
-and they don't need to think about what to return.
-
-A more exciting property
-is that all analysis is performed at compile time.
-
-This makes it easy to compile
-to other languages with mutation and aliasing,
-as I showed in the comparisons
-to Python, Go, Rust and C.
-This allows us to benefit from their ecosystem,
+Compiling to other languages
+allows us to benefit from their ecosystem,
 which includes their tooling and platforms.
 We can write code for browsers
 with direct access to Web APIs,
 we can translate to Python scripts
-that can run on most Linux systems,
+that will run on most Linux systems
+without any extra installation,
 and we can translate to Go
-for easily cross-compiling binaries.
+for quick and easy cross-compiling.
 
 Performing all analysis at compile time
-means there's no garbage collector
+also means there's no garbage collector
 or reference counting system,
-which means smooth and fast performance
-with minimal compiled program sizes.
+which means small compiled programs
+with predictable and fast performance.
+In fact, with an equally optimised compiler,
+it should beat the socks off any high-level language.
+
+The safety, performance and ergonomics
+really make me think this could be the future
+of high-level programming languages.
+
+This was all discovered over months,
+by following the Rust book and other learning material,
+then learning about Aliasing XOR Mutability
+from the Rust community
+and mutable value semantics from the Hylo team,
+then slowly figuring out
+that it's not completely fantastical,
+before taking longer to explain it all.
+One of the core inspirations was Rust's move syntax,
+which mutates variables
+without reference or lifetime annotations,
+looking like copies while using aliases.
