@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+More Ideas on CL SSG
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>More Ideas on CL SSG
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    May 31, 2023
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>Following up on my initial post
+(<a href="https://pranabekka.github.io/cl-ssg/">CL SSG — Common Lisp Static Site Generator</a>),
+Coleslaw didn’t really work out (more below).
+Instead, I’m imagining a static site generator based on
+a build system,
+a typst-inspired language,
+and a simple server.</p>
+<p>Regarding Coleslaw,
+I had some bugs that I didn’t feel like going through,
+plus it loaded a lot of modules I wasn’t interested in
+(but not the incrememental build one?),
+and I didn’t feel like learning all about it.
+Even the preview didn’t work properly.
+So I just let it be.
+Zola gives me most of what I need anyway.
+I might give Coleslaw a try again later.</p>
+<p>I did look up some Common Lisp libraries, however.</p>
+<p>Overlord seems to be a good build system.
+It should get me incrememental and parallel builds.</p>
+<p>For the authoring and templating,
+I want to use a typst-like language.
+Templates will simply be functions that wrap
+the rest of the content.
+I wonder how I’d extract metadata.
+Perhaps a metadata function?</p>
+<p>Hunchentoot seems to be the most popular server,
+and it should be more than good enough.
+I simply need to serve pages locally,
+and it should be well documented,
+with enough guides and references.</p>
+<p>The first step is to start messing with cl-typst.
+Should be as simply as evaluating anything starting with <code>,(</code>
+and simply passing along anything else as regular text.
+Then figure out a system for sharing state or environment?
+Or should I strive to keep it functional?
+Oh, well. Get the parser-evaluator figured out first.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;cl-ssg-2.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

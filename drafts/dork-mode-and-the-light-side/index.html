@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Dork mode and the light side
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Dork mode and the light side
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/dork-mode-and-the-light-side/#summary-for-me">Summary for me</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/dork-mode-and-the-light-side/#note-for-you">Note for you</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/dork-mode-and-the-light-side/#the-browser-has-its-own-stylesheet">The browser has its own stylesheet</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/dork-mode-and-the-light-side/#your-mother">Your mother</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/dork-mode-and-the-light-side/#prefers-color-scheme">prefers-color-scheme</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/dork-mode-and-the-light-side/#an-additional-note">An additional note</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<!--
+prolly take out yo mama
+NO! I REFUSE!
+-->
+<p>A note on theming with dark and light mode in CSS.</p>
+<p>If this is new to you,
+you should probably watch Kevin Powell’s
+(YouTube) video on “Whatnot”.
+90% of this post is from there,
+even though I’ve known of it all
+at some point or the other.</p>
+<p><a href="https://www.youtube.com/watch?v=zFFuV_vXNhY">A simple mistake that can
+screw up your light/dark theme
+(and how to fix it)
+by Kevin Powell (YouTube video)</a></p>
+<h2 id="summary-for-me">Summary for me<a class="zola-anchor" href="#summary-for-me" aria-label="Anchor link for: summary-for-me">🔗</a></h2>
+<p><code>color-scheme: dark</code> will handle colours
+for extra bits like form controls,
+without having to look up the <code>moz</code> and <code>webkit</code> selectors.</p>
+<h3 id="note-for-you">Note for you<a class="zola-anchor" href="#note-for-you" aria-label="Anchor link for: note-for-you">🔗</a></h3>
+<p>I stick to dark mode for personal projects
+because it’s easier to handle just one theme,
+and I’m a regular night owl
+who hates opening a bright white page.</p>
+<h2 id="the-browser-has-its-own-stylesheet">The browser has its own stylesheet<a class="zola-anchor" href="#the-browser-has-its-own-stylesheet" aria-label="Anchor link for: the-browser-has-its-own-stylesheet">🔗</a></h2>
+<p>And it doesn’t listen to the system theme.</p>
+<p>Browser stylesheets usually come through in forms and controls,
+like buttons, input boxes, number input controls, etc.</p>
+<p>Use the <code>color-scheme</code> property
+to make it listen to the system theme:</p>
+<pre class="z-code"><code><span class="z-text z-plain">html { color-scheme: dark light; }
+</span></code></pre>
+<p>If you want to just make it dark,
+set it to <code>dark</code>,
+and if you want to make it light (the default),
+set it to <code>light</code>,</p>
+<pre class="z-code"><code><span class="z-text z-plain">/* for dork mode */
+html { color-scheme: dark; }
+
+/* for light mode */
+html { color-scheme: light; }
+</span></code></pre>
+<p>I assume this is because of compatibility:
+browsers had to add some default styling,
+and they never knew dork mode would be a thing.
+Web pages then started depending on this (light themed style),
+and now browsers can’t automatically make it dark,
+so web pages must tell the browser
+which <code>color-scheme</code>s are acceptable.</p>
+<p>I find it easier to use <code>color-scheme</code> for little details
+like the up-down arrows for number inputs.
+Bigger projects and vibrant colours
+will probably have you styling browser components
+to match your colours.
+Look for CSS selectors like <code>moz</code> and <code>webkit</code>.</p>
+<h2 id="your-mother">Your mother<a class="zola-anchor" href="#your-mother" aria-label="Anchor link for: your-mother">🔗</a></h2>
+<p>In the voice of argentima (Valorant, YouTube).</p>
+<p>Something’s wrong with me.
+Also, it’s 4am.
+Something’s wrong with me anyway.</p>
+<p>Do I watch to much YouTube? (Yes.)</p>
+<h2 id="prefers-color-scheme"><code>prefers-color-scheme</code><a class="zola-anchor" href="#prefers-color-scheme" aria-label="Anchor link for: prefers-color-scheme">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">@media (prefers-color-scheme: dark) {
+  your-element {
+    /* dork mode css */
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  your-element {
+    /* light side css */
+  }
+}
+</span></code></pre>
+<p>As shown above, you can detect
+what colour scheme the user has chosen,
+which is shared by the browser <sup class="footnote-reference"><a href="#1">1</a></sup>, 
+based on the user’s system or browser settings.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Even though it doesn’t listen to itself ;)</p>
+</div>
+<p>Use it to change properties directly,
+or just colour variables.</p>
+<h2 id="an-additional-note">An additional note<a class="zola-anchor" href="#an-additional-note" aria-label="Anchor link for: an-additional-note">🔗</a></h2>
+<p>Kevin’s video also mentions some interesting interactions
+between the two systems,
+which allows you to implement an easy mode switcher.
+Video:</p>
+<p><a href="https://www.youtube.com/watch?v=zFFuV_vXNhY">A simple mistake that can
+screw up your light/dark theme
+(and how to fix it)
+by Kevin Powell (YouTube video)</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;dork-mode-and-the-light-side.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Rust to borrow inference
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Rust to borrow inference
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#mutation-by-assignment">Mutation by assignment</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#not-quite-moves">Not quite moves</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#immutable-borrows">Immutable borrows</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#safety-enforced-at-call-site">Safety enforced at call site</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#clone-inference">Clone inference</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#unique-references">Unique references</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#partial-borrows">Partial borrows</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#partial-clones">Partial clones</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#move-types">Move types</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#looping">Looping</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#lifetimes">Lifetimes</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#threads-and-closures">Threads and closures</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#conclusion">Conclusion</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/rust-to-ref-inf/#pending-review">Pending review</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Evolving a new high-level language from Rust.</p>
+<p>I realised while looking at Rust’s move syntax,
+that when you move ownership in and back out,
+it’s basically a mutation without any annotations,
+like a slightly different looking Typescript.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	main_point = offset(main_point, Vec2 { x: 2, y: 2 });
+	dbg!(main_point);
+}
+</span></code></pre>
+<h2 id="mutation-by-assignment">Mutation by assignment<a class="zola-anchor" href="#mutation-by-assignment" aria-label="Anchor link for: mutation-by-assignment">🔗</a></h2>
+<p>What if we just remove <code>&amp;mut</code>
+and use “moves” for mutable borrows.
+Using assignment makes mutation obvious,
+even if arguments aren’t annotated as <code>&amp;mut</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	main_point = offset(main_point, Vec2 { x: 2, y: 2 });
+	dbg!(main_point);
+	// Vec2 { x: 3, y: 3 }
+}
+</span></code></pre>
+<p>Even function signatures only need <code>mut</code> annotations,
+and they must return the parameter
+for the mutation to apply for the caller.</p>
+<pre class="z-code"><code><span class="z-text z-plain">// `mut point` with the borrow inferrer is similar
+// to Rust&#39;s `mut point` and `&amp;mut point`.
+fn offset(point: mut Vec2, by: Vec2) -&gt; Vec2 {
+	point.x = point.x + by.x
+	point.y = point.y + by.y
+	point
+}
+</span></code></pre>
+<p>If we ignore the return value of a function,
+then it won’t affect any variable in the caller,
+so the borrow inferrer will generate a warning for it.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	// WARNING: Return value of `offset` is ignored.
+	offset(main_point, Vec2 { x: 2, y: 2 });
+	dbg!(main_point);
+	// Vec2 { x: 1, y: 1 }
+}
+</span></code></pre>
+<h2 id="not-quite-moves">Not quite moves<a class="zola-anchor" href="#not-quite-moves" aria-label="Anchor link for: not-quite-moves">🔗</a></h2>
+<p><code>mut</code> in a function signature does not mean a move,
+it means a mutable borrow,
+but unlike Rust’s mutable borrows
+it will only work if it’s returned.
+This means functions will be required to
+return a parameter if the parameter is mutated.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn bad_func(point: mut Vec2) {
+	point.x = point.x * 2
+	// ERROR: `point` is mutated but not returned.
+	// The mutation will be ignored by the caller.
+}
+</span></code></pre>
+<p>If a function needs a private mutable variable
+that it doesn’t want to return,
+then it’ll need to create its own copy.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn print_offset(point: &amp;Vec2, by: &amp;Vec2) -&gt; () {
+	// Copying to a new variable
+	let mut new_point = point.clone();
+	new_point.x = point.x + by.x;
+	new_point.y = point.y + by.y;
+	dbg!(new_point);
+	
+	// Using a new temporary value
+	dbg!(
+		Point(
+			point.x + by.x,
+			point.y + by.y
+		)
+	);
+}
+</span></code></pre>
+<p>Whenever a function mutates and returns a parameter,
+we can infer that it’s a mutable parameter.
+A high-level language can make the annotation optional
+so that it becomes easier to explore ideas.
+The following example has no explicit <code>mut</code> annotation,
+but the first parameter is mutated and returned at the end.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn offset(point: Vec2, by: Vec2) -&gt; Vec2 {
+	point.x = point.x + by.x
+	point.y = point.y + by.y
+	point
+}
+</span></code></pre>
+<h2 id="immutable-borrows">Immutable borrows<a class="zola-anchor" href="#immutable-borrows" aria-label="Anchor link for: immutable-borrows">🔗</a></h2>
+<p>When a function parameter is not a mutable borrow,
+then it’s an immutable borrow.
+It’s still not a move, only a reference.
+This is why functions need to create
+their own private mutable variables.
+In the following <code>offset()</code> function,
+<code>by</code> is an immutable borrow.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn offset(point: mut Vec2, by: Vec2) -&gt; Vec2 {
+	point.x = point.x + by.x;
+	point.y = point.y + by.y;
+	point
+}
+</span></code></pre>
+<p>We can then infer immutable borrows
+if there’s no mutable borrows of the value,
+which is impossible in the following example,
+because we’re constructing a temporary <code>Vec2</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	main_point = offset(main_point, Vec2 { x: 2, y: 2 });
+	dbg!(main_point);
+}
+</span></code></pre>
+<p>Inferring immutable borrows instead of moves
+allows us to reuse variables even after supplying them
+as function arguments.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	let offset = Vec2 { x: 2, y: 2 };
+	main_point = offset(main_point, offset);
+	dbg!(main_point);
+	dbg!(offset);
+}
+</span></code></pre>
+<h2 id="safety-enforced-at-call-site">Safety enforced at call site<a class="zola-anchor" href="#safety-enforced-at-call-site" aria-label="Anchor link for: safety-enforced-at-call-site">🔗</a></h2>
+<p>If functions always take borrows,
+then the function caller is responsible for
+making sure that aliasing xor mutability is followed.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+
+	main_point = offset(main_point, main_point.clone());
+
+	let offset_amount = main_point.clone();
+	main_point = offset(main_point, offset_amount);
+
+	let new_point = offset(main_point.clone(), main_point.clone());
+
+	main_point = offset(main_point, Vec2 { x: 1, y: 1 });
+}
+</span></code></pre>
+<p>Every call to <code>clone()</code> is enforced
+by our incomplete borrow inferrer,
+to ensure that there’s no shared borrows
+while using a mutable borrow.
+Rust’s borrow checker would do the same,
+in addition to requiring <code>&amp;mut</code>.</p>
+<!--
+## No storing or returning borrows
+
+Because we've removed borrow annotations,
+there's no way for a variable to borrow another,
+and functions can't return borrowed variables either.
+-->
+<h2 id="clone-inference">Clone inference<a class="zola-anchor" href="#clone-inference" aria-label="Anchor link for: clone-inference">🔗</a></h2>
+<p>At this point we’ve completely removed
+the need for all borrow annotations,
+but that still leaves some clone annotations,
+because it’s unsafe to allow shared borrows
+while a mutable borrow exists.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	main_point = offset(main_point, main_point.clone());
+	dbg!(main_point);
+}
+</span></code></pre>
+<p>The only way to reuse <code>main_point</code>
+for the second parameter
+is to clone it or rearchitect our code.
+In the following example,
+the second use of <code>main_point</code> in <code>offset()</code> is a clone.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	main_point = offset(main_point, main_point);
+	dbg!(main_point);
+}
+</span></code></pre>
+<p>The same applies when assigning to a new variable.
+In the example below,
+<code>main_point</code> is being reused after the <code>new_point</code> declaration
+so the only way to use it in <code>offset()</code>
+is to clone it into <code>new_point</code> and pass that
+into <code>offset()</code> by reference,
+and create a second clone for the immutable borrow.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let main_point = Vec2 { x: 1, y: 1 };
+	let new_point = offset(main_point, main_point)
+	dbg!(main_point); // Vec2 { x: 1, y: 1 }
+	dbg!(new_point);  // Vec2 { x: 2, y: 2 }
+}
+</span></code></pre>
+<h2 id="unique-references">Unique references<a class="zola-anchor" href="#unique-references" aria-label="Anchor link for: unique-references">🔗</a></h2>
+<p><code>offset()</code> actually doesn’t need a clone
+when passing the same variable as the second arg.
+Because <code>offset()</code> uses the <code>by</code> parameter only once,
+after which it will never be used again,
+the reference to <code>by</code> is unique,
+like moving ownership in Rust.
+This means <code>main_point</code> is passed by mutable borrow
+and then also passed by immutable borrow.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+	main_point = offset(main_point, main_point);
+	dbg!(main_point);
+}
+
+fn offset(point: mut Vec2, by: Vec2) -&gt; Vec2 {
+	point.x = point.x + by.x;
+	point.y = point.y + by.y;
+	point
+}
+</span></code></pre>
+<p>When <code>offset()</code> performs its mutation,
+both borrows have the same value,
+and the immutable borrow is never used again.</p>
+<p>Because Rust requires explicit borrows,
+it would need a separate function
+to offset by self without cloning.</p>
+<pre class="z-code"><code><span class="z-text z-plain">// NOTE: Temporarily interrupting
+// our scheduled borrow inferrer evolution
+// with a bit of Rust.
+
+fn main() -&gt; () {
+	let mut main_point = Vec2 { x: 1, y: 1 };
+
+	// Notice the call to `clone()`.
+	main_point = offset(main_point, main_point.clone());
+
+	// No need to clone,
+	// but we had to create a new function.
+	main_point = offset_by_self(main_point);
+}
+
+fn offset_by_self(point: Vec2) -&gt; Vec2 {
+	point.x = point.x + point.x;
+	point.y = point.y + point.y;
+	point
+}
+</span></code></pre>
+<p>Alright, back to the borrow inferrer.</p>
+<h2 id="partial-borrows">Partial borrows<a class="zola-anchor" href="#partial-borrows" aria-label="Anchor link for: partial-borrows">🔗</a></h2>
+<p>The borrow inferrer can also infer partial borrows,
+where it can borrow parts of a variable
+instead of cloning the whole thing.
+In the following example,
+<code>offset_x()</code> takes a mutable borrow of <code>main_point</code>,
+so the borrow inferrer shouldn’t allow a second borrow
+for the second argument.
+However, the borrow inferrer can see that <code>offset_x()</code>
+only mutates field <code>x</code> and never touches field <code>y</code>,
+so it’s safe to pass in <code>main_point</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut point = Vec2 { x: 1, y: 1}
+	main_point = offset_x_twice(main_point, main_point.y);
+	dbg!(main_point);
+}
+
+fn offset_x_twice(point: mut Vec2, by: i32) -&gt; Vec2 {
+	point.x = point.x + by
+	point.x = point.x + by
+	point
+}
+</span></code></pre>
+<h2 id="partial-clones">Partial clones<a class="zola-anchor" href="#partial-clones" aria-label="Anchor link for: partial-clones">🔗</a></h2>
+<p>We can have the language track
+how variables are used down to the fields,
+and if variables copied from each other
+never mutate or read the same fields,
+then they can share those fields instead.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut point = Vec2 { x: 1, y: 1}
+	main_point = offset_x_twice(main_point, main_point.y);
+	new_point = offset_y_twice(main_point, main_point.x);
+	dbg!(main_point.x); // 3
+	dbg!(main_point.y); // 3
+}
+</span></code></pre>
+<p>In the above case,
+<code>main_point</code> only touches the <code>x</code> field,
+and <code>new_point</code> only uses the <code>y</code> field,
+so it’s safe for them to use the same memory.</p>
+<h2 id="move-types">Move types<a class="zola-anchor" href="#move-types" aria-label="Anchor link for: move-types">🔗</a></h2>
+<p>There are some types that can’t be cloned automatically,
+such as file handles and network connections,
+so the borrow inferrer will prevent it with an error.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let mut file = open_file(&quot;./example.txt&quot;).unwrap();
+	// ERROR: `file` moved to `file_two`.
+	let (file_two, contents) = read_file(file).unwrap();
+	// ERROR: attempt to reuse `file` here.
+	file = write_file(file, &quot;Example contents&quot;);
+}
+</span></code></pre>
+<p>We would either need to assign to <code>file</code>,
+or use the new owner of the file handle.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn use_same_ref() {
+	let mut file = open_file(&quot;./example.txt&quot;).unwrap();
+	(file, let contents) = read_file(file).unwrap();
+	file = write_file(file, &quot;Example contents&quot;);
+}
+
+fn use_new_ref() {
+	let file = open_file(&quot;./example.txt&quot;).unwrap();
+	let (mut file_two, contents) = read_file(file).unwrap();
+	file_two = write_file(file_two, &quot;Example contents&quot;);
+}
+</span></code></pre>
+<p>The borrow inferrer will also prevent automatic clones
+for any types that use these non-copyable types
+in any of their fields.
+Users would have to call functions
+if they intend to copy such types.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() -&gt; () {
+	let file = open_file(&quot;./in.txt&quot;).unwrap();
+	let new_file = copy_file(file, &quot;./out.txt&quot;);
+	dbg!(file); // File { ... }
+	dbg!(new_file); // Ok(File { ... })
+}
+</span></code></pre>
+<h2 id="looping">Looping<a class="zola-anchor" href="#looping" aria-label="Anchor link for: looping">🔗</a></h2>
+<p>Loops are another place where restrictions show up,
+because while we’re iterating over a variable
+the borrow inferrer will only allow mutating
+its individual items.
+The following code is rejected by the borrow inferrer.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let mut list = [1, 2, 3];
+for item in list {
+	// ERROR
+	append_list(list, item + 3);
+}
+</span></code></pre>
+<p>We’d have to iterate over indexes to do the above.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let mut list = [1, 2, 3];
+for index in 0..len(list) {
+	item = list[index];
+	append_list(list, item + 3);
+}
+</span></code></pre>
+<p>I think it’s possible for the borrow inferrer
+to optimise the “incorrect” loop
+to look like the above loop,
+but this solution works well enough for now.</p>
+<h2 id="lifetimes">Lifetimes<a class="zola-anchor" href="#lifetimes" aria-label="Anchor link for: lifetimes">🔗</a></h2>
+<p>Because we can’t take a reference to a variable
+and store it in another variable,
+we don’t need to worry about the stored reference
+moving around without the variable it refers to,
+which means we don’t need to worry about lifetimes.</p>
+<h2 id="threads-and-closures">Threads and closures<a class="zola-anchor" href="#threads-and-closures" aria-label="Anchor link for: threads-and-closures">🔗</a></h2>
+<p>Threads can use the same reference inference strategy:
+immutable variables will use references by default,
+non-copyable types will use moves or unique references,
+and mutable references will use copies, partial borrows
+or unique references like moves.
+If threads are passed out of a scope,
+all relevant variables will be moved out with it.
+Closures will also work the same way.</p>
+<h2 id="conclusion">Conclusion<a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion">🔗</a></h2>
+<p>The main thing here is that
+users only need to think about copies!
+It’s not as explicit as Rust,
+but it has the same safety and correctness,
+which is a great foundation for a high-level language.</p>
+<p>There’s a few quick observations I’d like to make
+about reference inference:
+all functions can be chained,
+there’s no garbage collector,
+it can compile to any imperative language like C or JS,
+users get safe and simple async,
+it can be bootstrapped with a compiler
+that copies everything,
+and the compile speed and run speed can be tuned
+by using compiler flags instead of code edits.</p>
+<h2 id="pending-review">Pending review<a class="zola-anchor" href="#pending-review" aria-label="Anchor link for: pending-review">🔗</a></h2>
+<p>This reference inference idea is flawless in my head,
+but I’m just a programming enthusiast,
+and I don’t know what I don’t know,
+so I’d love any feedback and questions.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;rust-to-ref-inf.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

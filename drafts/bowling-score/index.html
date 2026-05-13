@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+How to score bowling
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>How to score bowling
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+<hr>
+
+<p>Each player gets 10 rounds, with 2 throws each round,
+and bonus throws on the 10th.</p>
+<p>The 10th round has bonus throws
+if you knock down all the pins.</p>
+<figure>
+	<div data-element="bowling-score-card">
+		<!-- frame: 10,n --><div data-element="frame-container"><div data-element="frame-label">Round 1</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">10</div><div data-element="throw"></div></div><div data-element="score"><aside>0+10=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 2</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 3</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 4</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 5</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 6</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 7</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 8</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 0,0 --><div data-element="frame-container"><div data-element="frame-label">Round 9</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">0</div></div><div data-element="score"><aside>10+0=</aside>10</div></div></div>
+		<!-- frame: 2,8,3 --><div data-element="frame-container" data-final-frame><div data-element="frame-label">Round 10</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">2</div><div data-element="throw">8</div><div data-element="throw">3</div></div><div data-element="score"><aside>10+13=</aside>23</div></div></div>
+	</div>
+	<style>
+		[data-element="bowling-score-card"] {
+			display: flex;
+			flex-wrap: wrap;
+			gap: .5rem;
+		}
+		[data-element="frame-box"] {
+			border: 1px solid var(--fg);
+			min-width: 4.5rem;
+			height: 3.5rem;
+		}
+		[data-element="throws"] {
+			display: flex;
+			justify-content: end;
+		}
+		[data-element="throw"] {
+			border-left: 1px solid var(--fg);
+			border-bottom: 1px solid var(--fg);
+			width: 1.5rem;
+			aspect-ratio: 1;
+			padding: 0 .2rem;
+			text-align: center;
+		}
+		[data-element="score"] {
+			text-align: center;
+			margin: .25rem .5rem;
+		}
+		[data-element="bowling-score-card"] aside {
+			display: inline;
+			color: var(--fg-dim)
+		}
+	</style>
+	<figcaption>
+		Annotated bowling score card.
+	</figcaption>
+</figure>
+<p>For each round, the pins knocked down in each throw
+are marked at the top of the box for that round.
+In the bottom half, the score for that round
+is added to the score for the previous rounds.</p>
+<p>If you’re curious about the jargon,
+each round is called a “frame”,
+and each throw is called a “roll”.
+I won’t use these terms,
+because they don’t add much to the explanation,
+and they’re trivial to remember over time.</p>
+<p>Let’s get to it.</p>
+<p>Each round is worth the number of pins knocked down,
+plus any bonus points for knocking down all the pins.</p>
+<p>If you knock down all the pins
+in the <em>first</em> throw of a round,
+then add up the next two throws
+as bonus points for the current round.
+This is called a strike.</p>
+<figure>
+	<div data-element="bowling-score-card">
+		<!-- frame: 10,n --><div data-element="frame-container"><div data-element="frame-box"><div data-element="throws"><div data-element="throw">10</div><div data-element="throw"></div></div><div data-element="score">+10+2+3</div></div></div>
+		<!-- frame: 2,3 --><div data-element="frame-container" data-reference><div data-element="frame-box"><div data-element="throws"><div data-element="throw">2</div><div data-element="throw">3</div></div><div data-element="score">+2+3</div></div></div></div>
+	</div>
+	<style>
+		[data-reference] [data-element="frame-box"] {
+			border: 1px dashed var(--fg);
+		}
+		[data-reference] [data-element="throw"] {
+			border-left: 1px dashed var(--fg);
+			border-bottom: 1px dashed var(--fg);
+		}
+	</style>
+	<figcaption>
+		Scoring example 1 for knocking down all pins in one throw.
+		Look at how the 2 and 3 from the next two throws in the next round
+		is added to the current round as a bonus.
+	</figcaption>
+</figure>
+<figure>
+	<div data-element="bowling-score-card">
+		<!-- frame: 10,n --><div data-element="frame-container"><div data-element="frame-box"><div data-element="throws"><div data-element="throw">10</div><div data-element="throw"></div></div><div data-element="score">+10+10+4</div></div></div>
+		<!-- frame: 10,n --><div data-element="frame-container" data-reference><div data-element="frame-box"><div data-element="throws"><div data-element="throw">10</div><div data-element="throw"></div></div><div data-element="score">+10+4+1</div></div></div>
+		<!-- frame: 2,3 --><div data-element="frame-container" data-reference><div data-element="frame-box"><div data-element="throws"><div data-element="throw">2</div><div data-element="throw">3</div></div><div data-element="score">+4+1</div></div></div></div>
+	</div>
+	<style>
+		[data-reference] [data-element="frame-box"] {
+			border: 1px dashed var(--fg);
+		}
+		[data-reference] [data-element="throw"] {
+			border-left: 1px dashed var(--fg);
+			border-bottom: 1px dashed var(--fg);
+		}
+	</style>
+	<figcaption>
+		Scoring example 2 for knocking down all pins in one throw.
+		Notice how the next two throws after it
+		are in two different rounds.
+	</figcaption>
+</figure>
+<p>If you knock down all the remaining pins
+in the <em>second</em> throw of a round,
+then add the first throw from the next round
+as bonus points for the current round.
+This is called a spare.</p>
+<figure>
+	<div data-element="bowling-score-card">
+		<!-- frame: 3,7 --><div data-element="frame-container"><div data-element="frame-box"><div data-element="throws"><div data-element="throw">3</div><div data-element="throw">7</div></div><div data-element="score">+3+7+1</div></div></div>
+		<!-- frame: 1,5 --><div data-element="frame-container" data-reference><div data-element="frame-box"><div data-element="throws"><div data-element="throw">1</div><div data-element="throw">5</div></div><div data-element="score">+1+5</div></div></div></div>
+	</div>
+	<style>
+		[data-reference] [data-element="frame-box"] {
+			border: 1px dashed var(--fg);
+		}
+		[data-reference] [data-element="throw"] {
+			border-left: 1px dashed var(--fg);
+			border-bottom: 1px dashed var(--fg);
+		}
+	</style>
+	<figcaption>
+		Scoring example 1 for knocking down remaining pins on second throw.
+		Notice how the 1 from the next round's first throw is added to the first round's score.
+	</figcaption>
+</figure>
+<figure>
+	<div data-element="bowling-score-card">
+		<!-- frame: 0,10 --><div data-element="frame-container"><div data-element="frame-box"><div data-element="throws"><div data-element="throw">0</div><div data-element="throw">10</div></div><div data-element="score">+0+10+3</div></div></div>
+		<!-- frame: 1,5 --><div data-element="frame-container" data-reference><div data-element="frame-box"><div data-element="throws"><div data-element="throw">3</div><div data-element="throw">2</div></div><div data-element="score">+3+2</div></div></div></div>
+	</div>
+	<style>
+		[data-reference] [data-element="frame-box"] {
+			border: 1px dashed var(--fg);
+		}
+		[data-reference] [data-element="throw"] {
+			border-left: 1px dashed var(--fg);
+			border-bottom: 1px dashed var(--fg);
+		}
+	</style>
+	<figcaption>
+		Scoring example 2 for knocking down remaining pins on second throw.
+		Notice how even though they got all 10 pins in one throw,
+		they didn't get it on the first throw,
+		so it only adds 1 bonus throw.
+	</figcaption>
+</figure>
+<p>On the 10th round,
+if you knock down all the pins,
+you get bonus throws to calculate bonus points.
+The pins knocked down in bonus throws
+are only for calculating the bonus points.
+So if you knock down all the pins in the first throw,
+you get two bonus throws,
+but if you knock down all the pins on the second throw,
+then you only get one bonus throw.
+Otherwise, you get no bonus throws.</p>
+<figure>
+	<div data-element="bowling-score-card">
+		<!-- frame: 10,8,3 --><div data-element="frame-container" data-final-frame><div data-element="frame-label">Round 10</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">10</div><div data-element="throw">8</div><div data-element="throw">3</div></div><div data-element="score">+10+8+3</div></div>
+	</div>
+	<style>
+		[data-reference] [data-element="frame-box"] {
+			border: 1px dashed var(--fg);
+		}
+		[data-reference] [data-element="throw"] {
+			border-left: 1px dashed var(--fg);
+			border-bottom: 1px dashed var(--fg);
+		}
+	</style>
+	<figcaption>
+		Scoring example for knocking down all pins on the first throw of the 10th round.
+		Here, the second and third throw are bonus throws to calculate the bonus points.
+	</figcaption>
+</figure>
+<figure>
+	<div data-element="bowling-score-card">
+		<!-- frame: 5,5,3 --><div data-element="frame-container" data-final-frame><div data-element="frame-label">Round 10</div><div data-element="frame-box"><div data-element="throws"><div data-element="throw">5</div><div data-element="throw">5</div><div data-element="throw">3</div></div><div data-element="score">+5+5+3</div></div>
+	</div>
+	<style>
+		[data-reference] [data-element="frame-box"] {
+			border: 1px dashed var(--fg);
+		}
+		[data-reference] [data-element="throw"] {
+			border-left: 1px dashed var(--fg);
+			border-bottom: 1px dashed var(--fg);
+		}
+	</style>
+	<figcaption>
+		Scoring example for knocking down all pins on the second throw of the 10th round.
+		Here, only the last throw is a bonus throw to calculate the bonus points.
+	</figcaption>
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;bowling-score.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

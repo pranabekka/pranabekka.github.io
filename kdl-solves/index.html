@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+KDL solves
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>KDL solves
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Apr 14, 2025
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/kdl-solves/#brief-intro">Brief intro</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/kdl-solves/#comments">Comments</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/kdl-solves/#simple-nesting">Simple nesting</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/kdl-solves/#multi-line-raw-strings">Multi-line raw strings</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/kdl-solves/#verbosity">Verbosity</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/kdl-solves/#clearer-types">Clearer types</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/kdl-solves/#try-it-out">Try it out</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>KDL versus issues with TOML, YAML, and JSON.</p>
+<p>For some reason, people don’t seem to know of KDL,
+or think of it,
+when issues with other related languages pop up.
+It’s much newer, but I think it’s pretty great.</p>
+<p><a href="https://kdl.dev">KDL website</a></p>
+<img alt="Unofficial dark KDL logo" data-image-type="logo" src="https://pranabekka.github.io/kdl-logo-dark.svg">
+<h2 id="brief-intro">Brief intro<a class="zola-anchor" href="#brief-intro" aria-label="Anchor link for: brief-intro">🔗</a></h2>
+<p>KDL is node-based.
+Newlines and semicolons end nodes.</p>
+<pre class="z-code"><code><span class="z-text z-plain">node1
+node2; node3
+node4
+</span></code></pre>
+<p>The first item is the name of the node,
+and the rest are children.</p>
+<pre class="z-code"><code><span class="z-text z-plain">a-node child1 child2
+</span></code></pre>
+<p>Nodes can have properties mixed in with children.</p>
+<pre class="z-code"><code><span class="z-text z-plain">node child1 prop1=something child2
+</span></code></pre>
+<p>Child nodes can be nested using curly braces.</p>
+<pre class="z-code"><code><span class="z-text z-plain">node a-child {
+	nested-child
+	nested-child
+	nested-child
+}
+</span></code></pre>
+<p>Alright, let’s get into it.</p>
+<h2 id="comments">Comments<a class="zola-anchor" href="#comments" aria-label="Anchor link for: comments">🔗</a></h2>
+<p>For starters, there’s comments.</p>
+<pre class="z-code"><code><span class="z-text z-plain">{ &quot;json&quot;: &quot;conspicuously missing comments&quot; }
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">// bask in glory, believers
+kdl has comments
+
+/*
+multiline comments
+*/
+kdl has /*no*/ multi-line comments
+</span></code></pre>
+<p>In fact, KDL also includes
+syntax for commenting out a single node.</p>
+<pre class="z-code"><code><span class="z-text z-plain">// `/-` will only comment out `no`
+kdl has /-no comments
+
+servers {
+	// uh-oh, banned
+	// `/-` will comment out `north-america { ... }`
+	/-north-america {
+		provider DataCentre&#39;s R Us
+		ip &quot;123:456:789:111&quot;
+		location Dallas
+	}
+	india {
+		provider BareMetal Inc.
+		ip &quot;123:456:789:111&quot;
+		location Tiruvanantapuram
+	}
+	armenia {
+		provider iServer
+		ip &quot;123:456:789:111&quot;
+		location Tsaghkadzor
+	}
+}
+</span></code></pre>
+<p>Neither multi-line comments, nor node comments,
+are present in the others.
+If you wanted to comment out one item on a line,
+you’d first have to break it up into multiple lines.</p>
+<pre class="z-code"><code><span class="z-text z-plain"># before
+yaml: [6, 7, 8, 9, 10]
+
+# after
+yaml:
+	- 6
+	- 7
+	- 8
+	# - 9
+	- 10
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain"># before
+toml = [6, 7, 8, 9, 10]
+
+# after
+toml = [
+	6,
+	7,
+	8,
+	9,
+	# 10,
+]
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">// before
+kdl 6 7 8 9 10
+
+// after
+kdl 6 7 8 /-9 10
+
+// after (verbose)
+kdl 6 7 8 /*9*/ 10
+</span></code></pre>
+<h2 id="simple-nesting">Simple nesting<a class="zola-anchor" href="#simple-nesting" aria-label="Anchor link for: simple-nesting">🔗</a></h2>
+<p>Nesting structured entries in TOML
+means typing the same identifier every time.</p>
+<pre class="z-code"><code><span class="z-text z-plain"># uh-oh, banned
+# [servers.north-america]
+# provider = &quot;DataCentre&#39;s R Us&quot;
+# ip = &quot;123:456:789:111&quot;
+# location = &quot;Dallas&quot;
+
+[servers.india]
+provider = &quot;BareMetal Inc.&quot;
+ip = &quot;123:456:789:111&quot;
+location = &quot;Tiruvanantapuram&quot;
+
+[servers.armenia]
+provider = &quot;iServer&quot;
+ip = &quot;123:456:789:111&quot;
+location = &quot;Tsaghkadzor&quot;
+</span></code></pre>
+<p>We already showed this example in KDL,
+which doesn’t repeat identifiers when nesting.</p>
+<details><summary>Nesting example in KDL.</summary>
+  <pre class="z-code"><code><span class="z-text z-plain">servers {
+	// uh-oh, banned
+	/-north-america {
+		provider DataCentre&#39;s R Us
+		ip &quot;123:456:789:111&quot;
+		location Dallas
+	}
+	india {
+		provider BareMetal Inc.
+		ip &quot;123:456:789:111&quot;
+		location Tiruvanantapuram
+	}
+	armenia {
+		provider iServer
+		ip &quot;123:456:789:111&quot;
+		location Tsaghkadzor
+	}
+}
+</span></code></pre>
+
+</details>
+<p>A list of structured entries in TOML
+will also require you to type in the identifier every time:</p>
+<pre class="z-code"><code><span class="z-text z-plain">[users] # this bit is optional, as far as i know
+
+[[users]]
+name = &quot;Alden Thorn&quot;
+age = 16
+location = &quot;Anesidora&quot;
+
+[[users]]
+name = &quot;Ardi Egobar&quot;
+age = 18
+location = &quot;Metropolis&quot;
+
+[[users]]
+name = &quot;Livara Tär Valtteri&quot;
+age = 30
+location = &quot;Coral Bay&quot;
+</span></code></pre>
+<p>It’s much simpler in KDL.
+Nodes don’t need unique names,
+and <code>-</code> is a valid identifier,
+used for marking list items.</p>
+<pre class="z-code"><code><span class="z-text z-plain">users {
+- { name Alden Thorn
+	age 16
+	location Anesidora }
+- { name Ardi Egobar
+	age 55
+	location Metropolis }
+- { name Livara Tär Valtteri
+	age 30
+	location Coral Bay }
+}
+</span></code></pre>
+<p>Here’s a more confusing TOML example
+with nested lists and dictionaries:</p>
+<pre class="z-code"><code><span class="z-text z-plain">[products]
+
+[[products.categories]]
+name = &quot;Fruits&quot;
+description = &quot;Juicy fruits from brands like Yo Mama and more.&quot;
+
+	[[products.categories.items]]
+	name = &quot;Apple&quot;
+	price = 50
+
+	[[products.categories.items]]
+	name = &quot;Banana&quot;
+	price = 30
+
+[[products.categories]]
+name = &quot;Grain&quot;
+description = &quot;The finest waffle-head in existence.&quot;
+
+	[[products.categories.items]]
+	name = &quot;Rice&quot;
+	quantity = 1000
+	unit = &quot;grams&quot;
+	price = 100
+</span></code></pre>
+<p>KDL involves much less typing,
+and significantly simpler nesting and list rules.</p>
+<pre class="z-code"><code><span class="z-text z-plain">products {
+	categories {
+		- {
+			name Fruits
+			description &quot;&quot;&quot;
+				Juicy fruits from brands like Yo Mama and more.
+				&quot;&quot;&quot;
+			items {
+				- name=Apple price=50
+				- name=Banana price=30
+			}
+		}
+		- {
+			name Grain
+			description &quot;&quot;&quot;
+				The finest waffle-head in existence.
+				&quot;&quot;&quot;
+			items {
+				- name=Rice quantity=1000 unit=grams price=100
+			}
+		}
+	}
+}
+</span></code></pre>
+<h2 id="multi-line-raw-strings">Multi-line raw strings<a class="zola-anchor" href="#multi-line-raw-strings" aria-label="Anchor link for: multi-line-raw-strings">🔗</a></h2>
+<p>Imagine a shell script in a build config:</p>
+<pre class="z-code"><code><span class="z-text z-plain">{
+	&quot;fooBarDir&quot;: &quot;echo \&quot;foo\&quot;\necho \&quot;bar\&quot;\ncd C:\\path\\to\\dir&quot;
+}
+</span></code></pre>
+<p>All the backslashes are why YAML is so popular.
+Here’s the KDL equivalent:</p>
+<pre class="z-code"><code><span class="z-text z-plain">fooBarDir #&quot;&quot;&quot;
+	echo &quot;foo&quot;
+	echo &quot;bar&quot;
+	cd C:\path\to\dir
+	&quot;&quot;&quot;#
+</span></code></pre>
+<p>Any indentation matching the closing quotes (<code>&quot;&quot;&quot;#</code>) is removed,
+and there’s no need for escapes in a raw string (indicated with <code>#</code>),
+which makes the string much more readable.</p>
+<h2 id="verbosity">Verbosity<a class="zola-anchor" href="#verbosity" aria-label="Anchor link for: verbosity">🔗</a></h2>
+<p>KDL uses just a bit of significant whitespace to reduce verbosity,
+so that you don’t need to type equal signs or colons for each entry.</p>
+<pre class="z-code"><code><span class="z-text z-plain">{
+	&quot;lang&quot;: &quot;json&quot;,
+	&quot;author&quot;: &quot;Douglas Crockford&quot;,
+	&quot;year&quot;: 2000
+}
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">lang = &quot;TOML&quot;
+author = &quot;Tom Preston-Werner&quot;
+year = 2013
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">lang: YAML
+author: Clark Evans
+year: 2001
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">lang KDL
+author Kat Marchán
+year 2020
+</span></code></pre>
+<p>KDL is all data, no markup —
+no commas, equal signs, colons, or quotes!</p>
+<h2 id="clearer-types">Clearer types<a class="zola-anchor" href="#clearer-types" aria-label="Anchor link for: clearer-types">🔗</a></h2>
+<ul>
+<li>
+<p>Anything starting with a number must be a number.</p>
+</li>
+<li>
+<p>Anything starting with <code>+</code>, <code>-</code>, <code>.</code>, <code>-.</code>, or <code>+.</code>,
+followed by a number must also be a number.</p>
+</li>
+<li>
+<p>Anything starting with <code>0x</code>, <code>0o</code>, or <code>0b</code>
+are literals for hexadecimal, octal, and binary, respectively.</p>
+</li>
+<li>
+<p>If it starts with a <code>#</code>, it’s a special value,
+such as raw strings, <code>#true</code>, <code>#false</code>, and <code>#null</code>.</p>
+</li>
+<li>
+<p>If there’s quotes, it’s a string.</p>
+</li>
+<li>
+<p>Items need to be quoted
+if they have one of <code>[]{}()\/#&quot;;=</code> or spaces,
+or are one of <code>true</code>, <code>false</code>, <code>null</code>, <code>inf</code>, <code>-inf</code>, or <code>nan</code>.</p>
+</li>
+<li>
+<p>Everything else is a string.</p>
+</li>
+<li>
+<p>Any value can be prefixed with a type annotation,
+like <code>(date)&quot;2025-04-11&quot;</code>.
+This has no special meaning in a KDL document.</p>
+</li>
+</ul>
+<p>You can’t accidentally mix up numbers and strings in KDL,
+such as when hex codes are used for colours.
+Have a look at the following YAML:</p>
+<pre class="z-code"><code><span class="z-text z-plain">- 1810 # number
+- 1910 # number
+- 1a10 # string
+- 1b10 # string
+- 1e999 # number: &#39;e&#39; means &#39;exponent&#39;
+</span></code></pre>
+<p>KDL will raise an error if there’s alphabets mixed in:</p>
+<pre class="z-code"><code><span class="z-text z-plain">- 1810 // number
+- 1910 // number
+- 1a10 // error: starts with number, but contains a
+- 1b10 // same error as above
+- 1e999 // number: &#39;e&#39; means &#39;exponent&#39;
+</span></code></pre>
+<p>Instead, you can use strings or hexadecimal literals.</p>
+<pre class="z-code"><code><span class="z-text z-plain">hex-colours {
+	red 0xff0000
+	green 0x00ff00
+	blue 0x0000ff
+}
+
+error-colours {
+	red ff0000 // string
+	green 00ff00 // error: &#39;ff&#39; in number
+	blue 0000ff // error: &#39;ff&#39; in number
+}
+
+string-colours {
+	red &quot;ff0000&quot;
+	green &quot;00ff00&quot;
+	blue &quot;0000ff&quot;
+}
+
+typed-colours {
+	red (colour)0xff0000
+	green (colour)0x00ff00
+	blue (colour)0x0000ff
+}
+</span></code></pre>
+<h2 id="try-it-out">Try it out<a class="zola-anchor" href="#try-it-out" aria-label="Anchor link for: try-it-out">🔗</a></h2>
+<p>There’s a web playground where you can type KDL
+and see the syntax tree for it.
+Errors are clearly highlighted,
+though you need a mouse to hover and see details.</p>
+<p>There’s also implementations in several languages.</p>
+<p><a href="https://kdl.dev/play">KDL playground</a></p>
+<p><a href="https://kdl.dev/#implementations">KDL implementations</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;kdl-solves.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ceci n'est pas Wordle</title>
+  <style>
+    :root {
+      font-size: 16pt;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #141414;
+      color: #f0f0f0;
+      font-family: sans-serif;
+      display: grid;
+      text-align: center;
+    }
+    #game-board {
+      grid-row: 1;
+    }
+    h1, h2 {
+      font-size: 1rem;
+    }
+    h2 {
+      font-weight: normal;
+    }
+    .row {
+      display: flex;
+      flex-direction: row;
+      gap: .1rem;
+      margin-bottom: .1rem;
+      justify-content: center;
+    }
+    .cell {
+      height: 2rem;
+      width: 2rem;
+      line-height: 2rem;
+      background-color: inherit;
+      color: inherit;
+      border: .05rem solid white;
+      text-align: center;
+    }
+    :disabled {
+      border: .05rem solid grey;
+    }
+    .correct {
+      background-color: #437d3e;
+      border-color: #437d3e;
+    }
+    .partiallyCorrect {
+      background-color: #b59f3b;
+      border-color: #b59f3b;
+    }
+    .incorrect {
+      background-color: #303030;
+      border-color: #303030;
+    }
+    p {
+      margin: .25em 0;
+      color: #c0c0c0;
+    }
+    button {
+      text-align: center;
+      border: .05rem solid #c0c0c0;
+      border-radius: .5rem;
+      background-color: inherit;
+      color: #c0c0c0;
+      font-size: inherit;
+      padding: .2rem .4rem;
+      width: 4rem;
+      margin: auto;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ceci n'est pas Wordle</h1>
+
+  <div id=game-board></div>
+
+  <p>Tap <em>any</em> white box to start.</p>
+  <p>‘↩’ / ‘⇥’ / ‘Enter’: submit guess.</p>
+
+  <script>
+    'use strict';
+
+    // answer must only have a-z
+    // should ideally be 5 characters
+    // more than 6 characters can scroll out of view
+    // less than 4 just looks weird
+    const WORD = 'neigh';
+    const MAX_GUESSES = 6;
+
+    const answer = normalise(WORD);
+    const answerLetterCounts = getLetterCounts(answer);
+    const rowCount = MAX_GUESSES;
+    const cellCount = answer.length;
+    const gameBoard = document.getElementById('game-board');
+
+    let currentGuessId = 0;
+
+    function normalise(text) {
+      return text.toUpperCase();
+    }
+
+    function getLetterCounts(word) {
+      let count = {};
+
+      for (let letter of word) {
+        count[letter] = count[letter] ? count[letter] + 1 : 1;
+      }
+
+      return count;
+    }
+
+    function getHighlights(guess) {
+      let highlights = [];
+      let letterCounts = Object.assign({}, answerLetterCounts);
+
+      // get correct (at same position)
+      for (let letterIndex in guess) {
+        const guessLetter = guess[letterIndex];
+        const answerLetter = answer[letterIndex];
+
+        if ( guessLetter == answerLetter ) {
+          highlights.push('correct');
+          letterCounts[guessLetter]--;
+        } else {
+          highlights.push('');
+        }
+      }
+
+      // get partially correct and incorrect
+      // partially correct: wrong position, but in answer
+      // incorrect: doesn't appear in answer
+      for (let letterIndex in guess) {
+        const guessLetter = guess[letterIndex];
+        const answerLetter = answer[letterIndex];
+        const letterHighlight = highlights[letterIndex];
+        const letterCount = letterCounts[guessLetter];
+
+        if ( !letterHighlight && letterCount ) {
+          highlights[letterIndex] = 'partiallyCorrect';
+          letterCounts[guessLetter]--;
+        } else if ( !letterHighlight ) {
+          highlights[letterIndex] = 'incorrect';
+        }
+      }
+
+      return highlights;
+    }
+
+    function drawBoard() {
+      const board = gameBoard;
+
+      for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        board.appendChild(row);
+
+        for (let cellIndex = 0; cellIndex < cellCount; cellIndex++) {
+          const cell = document.createElement('input');
+          cell.id = `row-${rowIndex}-cell-${cellIndex}`;
+          cell.setAttribute('maxlength', '1');
+          cell.setAttribute('minlength', '1');
+          cell.className = 'cell';
+
+          if (rowIndex > currentGuessId) {
+            cell.setAttribute('disabled', 'true');
+          }
+
+          row.appendChild(cell);
+        }
+      }
+    }
+
+    function updateBoard(guess) {
+      const rowId = currentGuessId;
+      const highlights = getHighlights(guess);
+      for (let cellIndex = 0; cellIndex < cellCount; cellIndex++) {
+        const letter = guess[cellIndex];
+        const highlight = highlights[cellIndex];
+
+        const cellId = `row-${rowId}-cell-${cellIndex}`;
+        const cell = document.getElementById(cellId);
+        
+        cell.outerHTML = `<div class="cell ${highlight}">${letter}</div>`
+      }
+
+      if ( currentGuessId != MAX_GUESSES - 1 && guess != answer ) {
+        const nextRowId = currentGuessId + 1;
+        for (let cellIndex = 0; cellIndex < cellCount; cellIndex++) {
+          const cellId = `row-${nextRowId}-cell-${cellIndex}`;
+          const cell = document.getElementById(cellId);
+          cell.toggleAttribute('disabled');
+          if (cellIndex == 0) {
+            cell.focus();
+          }
+        }
+      } else if (currentGuessId == MAX_GUESSES - 1 && guess != answer) {
+        gameBoard.insertAdjacentHTML('afterbegin', `<p>The answer was ${answer}</p>`);
+      } else {
+        gameBoard.insertAdjacentHTML('afterbegin', `<h2>You got it in ${currentGuessId + 1}!</h2>`);
+      }
+
+      currentGuessId++;
+    }
+
+    function validateGuess(guess) {
+      if ( guess.length != answer.length) {
+        return false;
+      }
+      return true;
+    }
+
+    function getGuess() {
+      const rowId = currentGuessId;
+      let guess = '';
+      for (let cellIndex = 0; cellIndex < cellCount; cellIndex++) {
+        const cellId = `row-${rowId}-cell-${cellIndex}`;
+        const cell = document.getElementById(cellId);
+        const letter = cell.value;
+        guess = guess + letter;
+      }
+      return guess;
+    }
+
+    function addInputHooks(inputCells) {
+      for (let inputCell of inputCells) {
+        inputCell.addEventListener('keyup', (event) => {
+          // let text = '';
+          // for (let key in event) {
+          //   if (key == 'which' || key == 'key' || key == 'keyCode') {
+          //     text += key + ': ';
+          //     text += event[key];
+          //     text += ' * '
+          //   }
+          // }
+          // gameBoard.insertAdjacentText('afterend', text);
+          const key = event.key;
+          const rowNum = +inputCell.id.split('-')[1];
+          const cellNum = +inputCell.id.split('-')[3];
+
+          // delete invalid or extra characters
+          if ( inputCell.value.length > 1 ) {
+            inputCell.value = inputCell.value[0];
+          } else if ( inputCell.value.match(/[^a-zA-Z]/) ) {
+            inputCell.value = '';
+          }
+          if ( key.match(/[a-zA-Z]/) && key.length == 1 ) {
+            inputCell.value = key;
+          }
+
+          let guess = getGuess();
+
+          // submit guess
+          if ( key == 'Enter' && validateGuess(guess) ) {
+            updateBoard(guess);
+          }
+
+          // delete previous
+          if ( key == 'Backspace' && inputCell.value == '' && cellNum > 0) {
+            const prevCellId = `row-${rowNum}-cell-${cellNum - 1}`;
+            const prevCell = document.getElementById(prevCellId);
+            prevCell.value = '';
+            prevCell.focus();
+          }
+
+          // focus next cell
+          if ( inputCell.value != '' && cellNum < cellCount - 1 && inputCell.value.length == 1 ) {
+            const nextCellId = `row-${rowNum}-cell-${cellNum + 1}`;
+            const nextCell = document.getElementById(nextCellId);
+            nextCell.focus();
+          }
+
+          inputCell.value = normalise(inputCell.value);
+        });
+      }
+    }
+
+    drawBoard();
+    addInputHooks( document.querySelectorAll('input') );
+
+    // start button at bottom
+    // for those who don't want to reach up (me)
+    const startButton = document.createElement('button');
+    startButton.textContent = 'Start';
+    const body = document.getElementsByTagName('body')[0];
+    body.appendChild(startButton);
+    startButton.addEventListener('click', (e) => {
+      const cellId = `row-${currentGuessId}-cell-0`;
+      const cell = document.getElementById(cellId);
+      cell.focus();
+    });
+  </script>
+</body>
+</html>

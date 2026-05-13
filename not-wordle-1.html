@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Not Wordle (1)</title>
+  <link rel="stylesheet" href="not-wordle.css">
+</head>
+<body>
+  <h1>Not Wordle (1)</h1>
+
+  <div id=display></div>
+
+  <input id='input'
+    placeholder='Guess Here'
+    type=text
+    autocapitalize=off
+    autocomplete=off>
+  </input>
+  <p id=instruction></p>
+
+  <script>
+    'use strict';
+    // avoid word longer than 6 characters,
+    // since it might not fit on a mobile screen
+    // and avoid word shorter than 4 characters
+    // since that reduces width of text input
+    // and cuts off placeholder text
+    const WORD = 'mistake';
+    const MAX_GUESSES = 6;
+    const VALID_CHARS = '[A-Z]';
+  </script>
+  <script src=not-wordle.js></script>
+</body>
+</html>

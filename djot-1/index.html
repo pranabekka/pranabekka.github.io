@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Try djot instead of markdown
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Try djot instead of markdown
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Feb 03, 2024
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      Apr 13, 2024
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/djot-1/#generic-blocks-and-attributes">Generic blocks and attributes</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/djot-1/#comments">Comments</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/djot-1/#raw-blocks">Raw blocks</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/djot-1/#try-it-out">Try it out</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Djot is a pretty cool markup format
+that contains the lessons learnt by the author
+of the CommonMark spec and implementation.</p>
+<p>I’ve mentioned it here and there,
+and thought I might as well write about it.</p>
+<h2 id="generic-blocks-and-attributes">Generic blocks and attributes<a class="zola-anchor" href="#generic-blocks-and-attributes" aria-label="Anchor link for: generic-blocks-and-attributes">🔗</a></h2>
+<p>One of the coolest features is generic blocks,
+which are called “divs” and “spans” in the spec<sup class="footnote-reference"><a href="#1">1</a></sup>,
+as well as a method to add attributes to any element.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p><a href="https://htmlpreview.github.io/?https://github.com/jgm/djot/blob/master/doc/syntax.html">spec/syntax description</a></p>
+</div>
+<pre class="z-code"><code><span class="z-text z-plain">::: class-name
+A paragraph inside the div
+:::
+</span></code></pre>
+<p>Markdown would require HTML to do anything like this.</p>
+<p>In addition to divs and spans,
+attributes can be attached to <em>anything</em> using curly braces.</p>
+<pre class="z-code"><code><span class="z-text z-plain">Warning{.big .red data-type=&quot;warning&quot;}
+</span></code></pre>
+<p>The above markup will create a span with the “big red” class
+and the <code>data-type=&quot;warning&quot;</code> attribute.</p>
+<p>Again, markdown would require HTML to do anything of the sort.</p>
+<p>Now, when I say attributes can be attached to anything,
+I mean <em>anything</em>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">{#custom-section-id}
+## My heading
+
+{.important}
+An important paragraph,
+likely styled with big text.
+
+*some bold text that&#39;s also red*{.red}
+
+{lang=&#39;javascript&#39;}
+```
+var answer = &#39;42&#39;;
+```
+</span></code></pre>
+<h2 id="comments">Comments<a class="zola-anchor" href="#comments" aria-label="Anchor link for: comments">🔗</a></h2>
+<p>Comments are solved in a very clever way.</p>
+<p>Attributes can have comments inside them:</p>
+<pre class="z-code"><code><span class="z-text z-plain">{.big .red % comment: red for warning % .important}
+</span></code></pre>
+<p>The text between the percent signs is a comment.</p>
+<p>To have an independent comment,
+simply remove any other content from the attribute block.</p>
+<pre class="z-code"><code><span class="z-text z-plain">{% This is a comment %}
+</span></code></pre>
+<h2 id="raw-blocks">Raw blocks<a class="zola-anchor" href="#raw-blocks" aria-label="Anchor link for: raw-blocks">🔗</a></h2>
+<p>Another useful construct is raw blocks,
+which allow you to pass something into the final output as is,
+depending on the export format you select,
+without any escaping or processing.</p>
+<p>If I were exporting to HTML,
+and I wanted to have some specific HTML markup in the output,
+I could do the following:</p>
+<pre class="z-code"><code><span class="z-text z-plain">``` =html
+&lt;my-html-tag-soup /&gt;
+```
+</span></code></pre>
+<p>The inline version of the same is:</p>
+<pre class="z-code"><code><span class="z-text z-plain">Some `&lt;my-tag-soup /&gt;`{=html} inline
+</span></code></pre>
+<h2 id="try-it-out">Try it out<a class="zola-anchor" href="#try-it-out" aria-label="Anchor link for: try-it-out">🔗</a></h2>
+<p>Overall it’s a really cool format,
+and you can try it out now in the live sandbox!</p>
+<p><a href="https://djot.net/playground/">Live sandbox</a></p>
+<p>If you like it, you can see
+if one of the implementations listed in the home page
+might suit your purposes.</p>
+<p><a href="https://djot.net">Djot home page</a></p>
+
+
+
+
+
+
+  
+  
+    
+    
+    
+  
+
+
+
+
+  <hr>
+  <p>References to this page:</p>
+  <ul>
+  
+    
+    
+    <li>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io&#x2F;djot&#x2F;">djot</a>
+    </li>
+  
+  </ul>
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;djot-1.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

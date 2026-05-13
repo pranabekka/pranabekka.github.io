@@ -1,0 +1,117 @@
+﻿@font-face {
+  font-family: EB Garamond;
+  src: url("EBGaramond-Regular.woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: EB Garamond;
+  src: url("EBGaramond-SemiBold.woff2");
+  font-weight: 700;
+}
+
+:root {
+  font-size: 16pt;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ff5b5c;
+  color: #f5f9df;
+  font-family: "EB Garamond";
+  font-size: 1rem;
+  max-width: 60ch;
+  padding: 1rem;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+
+body > * {
+  margin-top: 1em;
+}
+
+h1 , h2 {
+  line-height: 1em;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h1 + p {
+  font-size: 1.2rem;
+  margin-top: .2rem;
+}
+
+a {
+  background-color: #eb3f40;
+  color: #f5f9df;
+  font-weight: 700;
+  display: inline-block;
+  padding: .4rem 1rem;
+  min-height: 48px;
+  min-width: 48px;
+  border-radius: 12px;
+}
+
+a.primary {
+  background-color: #f5f9df;
+  color: #eb3f40;
+}
+
+a.inline {
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  background-color: #ff5b5c;
+  display: inline;
+  font-weight: 400;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+ul {
+  list-style-position: inside;
+  list-style-type: "— ";
+}
+
+li + li {
+  margin-top: .3em;
+}
+
+.notification {
+  background-color: #eb3f40;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.notification > a {
+  background-color: #ff5b5c;
+  margin-top: 1em;
+}
+
+.de-emph {
+  font-weight: 400;
+}
+
+.flex {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.separator {
+  height: .5rem;
+}

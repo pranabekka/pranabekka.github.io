@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Log
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Log
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Jun 24, 2024
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      Oct 10, 2025
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2025-12-19-the-eye">2025-12-19 The eye</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2025-10-09-a-little-funny-a-little-sigh">2025-10-09 A little funny, a little sigh</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2025-10-05-accumulator-functions">2025-10-05 Accumulator functions</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2025-10-04-not-corrections">2025-10-04 Not corrections</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2025-10-03">2025-10-03</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2024-09-21">2024-09-21</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2024-08-09">2024-08-09</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2024-08-05-shower-thoughts">2024-08-05 Shower thoughts</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2024-08-05-new-log-entry">2024-08-05 New log entry!</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/log/#2024-06-24-theming-todos">2024-06-24 Theming TODOs</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Where I add short thoughts, TODO items, links, etc.,
+that shouldn’t be a separate page.</p>
+<p>I intend to keep adding entries under sub-headings by date,
+without deleting old entries.</p>
+<p>Somewhat similar to “now” pages
+or Sara Joy’s “Weak Notes”.</p>
+<p><a href="https://nownownow.com/about">“Now” pages</a>
+(warning: bright white page)</p>
+<p><a href="https://sarajoy.dev/basic/notes">“Weak Notes” by Sara Joy</a></p>
+<h2 id="2025-12-19-the-eye">2025-12-19 The eye<a class="zola-anchor" href="#2025-12-19-the-eye" aria-label="Anchor link for: 2025-12-19-the-eye">🔗</a></h2>
+<p>I’ve always been a bit “edgy”,
+though it waxes and wanes,
+and I don’t express it all that much.
+It feels silly sometimes,
+but I also enjoy it.
+So.</p>
+<h2 id="2025-10-09-a-little-funny-a-little-sigh">2025-10-09 A little funny, a little sigh<a class="zola-anchor" href="#2025-10-09-a-little-funny-a-little-sigh" aria-label="Anchor link for: 2025-10-09-a-little-funny-a-little-sigh">🔗</a></h2>
+<ul>
+<li>
+<p>Functional programming languages essentially
+allow pass around references nearly everywhere,
+and you can mutate pretty much anything,
+unless you hide it in a module.</p>
+<p>That’s the funny.</p>
+</li>
+<li>
+<p>You don’t need an accumulator for tail-call optimisation
+if the function calls itself only once.</p>
+<p>So that’s the other kind of loop
+that’s tail-call optimised,
+while constructing a value,
+without requiring an accumulator.</p>
+<p>We could still just teach a simple function like that
+followed by something with an accumulator.
+Perhaps the difference can be stated as “combining”.
+A function calling itself more than once
+is for when it needs to combine results, right?
+So the accumulator stores a part of the combination,
+and the second part is calculated and combined
+in the next repetition of the function.</p>
+<p>I’m pretty sure that’s it though.</p>
+<p>That’s the little sigh.
+It’s a bit more complicated than I thought,
+but I think we can still avoid teaching
+stack frames and tail-call optimisation.
+I can’t believe I completely forgot that.</p>
+</li>
+</ul>
+<h2 id="2025-10-05-accumulator-functions">2025-10-05 Accumulator functions<a class="zola-anchor" href="#2025-10-05-accumulator-functions" aria-label="Anchor link for: 2025-10-05-accumulator-functions">🔗</a></h2>
+<p>I think we can teach functional programming
+without teaching tail-call optimisation.</p>
+<p>Functions that return nothing are optimised,
+because there’s nothing to be done with the return value.</p>
+<p>Functions that need to return something
+use an accumulator for tail-call optimisation.</p>
+<p>Accumulators encourage function designs
+that are tail-call optimised,
+the same way functional languages
+encourage program designs that are
+optimised for modularity and composability.</p>
+<p>So we can teach accumulation instead
+and keep tail-call optimisation as an advanced topic.</p>
+<h2 id="2025-10-04-not-corrections">2025-10-04 Not corrections<a class="zola-anchor" href="#2025-10-04-not-corrections" aria-label="Anchor link for: 2025-10-04-not-corrections">🔗</a></h2>
+<p>Huh, I thought I’d put up some nonsense about the NoSQL stuff.
+I didn’t. There’s nothing strictly wrong there.</p>
+<p>The only thing to add is that the general requirements
+might be immediately fulfilled by
+an embedded document database (engine?).
+Maybe an embedded <em>graph</em> database?</p>
+<p>The other option, going the plain text route,
+is to pick a “configuration and policy” language,
+like CUE, KCL, Nickel, Dhall, etc.</p>
+<p>I also realised that application code
+ideally checks the data before storing it,
+so it could use the same checks to import it,
+instead of reimplementing types in the database.
+So it makes some sense for SQLite to be “untyped”.</p>
+<p>Anyway, I can’t comment on a specific pick.
+I’ll get around to it when I actually need it —
+spend an innovation token.</p>
+<h2 id="2025-10-03">2025-10-03<a class="zola-anchor" href="#2025-10-03" aria-label="Anchor link for: 2025-10-03">🔗</a></h2>
+<p>Oh, hello there.</p>
+<p>I keep thinking of this page,
+but I never get around to it.
+Part of it is because I only edit this at my laptop,
+and this is mostly a place for short or idle thoughts
+which don’t seem worth the effort.</p>
+<p>I’m also working on a few big things,
+trying to get them just right,
+but in the meantime:</p>
+<ul>
+<li>
+<p>Objects are a bad patch over poor type systems.</p>
+<p>Encapsulation is done by modules.
+So they might be patching poor module systems as well.</p>
+<p>Multiple inheritance is reviled.</p>
+<p>Inheritance trees are just variants.</p>
+<p>Types associate functions with data.
+And as I said, modules to separate them.</p>
+<p>Types are just one additional concept,
+while objects mean classes, methods,
+private fields, private methods, inherited methods,
+and more.</p>
+<p>What do you think?</p>
+</li>
+<li>
+<p>Something mildly inappropriate</p>
+</li>
+<li>
+<p>We don’t need SQL for most projects.
+Especially if we’re using ORMs,
+but also if our project is something small.
+I just don’t know of a good NoSQL database.
+Something like SQLite meets MongoDB.
+Maybe a binary format,
+I don’t mind a text format like KDL.</p>
+<p>Oh, CUE is a really interesting option!
+It’s like JSON with less typing, adding rules,
+generating repeated parts, and more.</p>
+<p><a href="https://kdl.dev">KDL</a></p>
+<p><a href="https://cuetorials.com/introduction/">CUE introduction</a></p>
+</li>
+<li>
+<p>I was thinking of having individual log posts,
+with a page aggregating them all like this.</p>
+<p>I wouldn’t be editing the same post again and again,
+possibly forgetting to update the data.</p>
+<p>New updates would show up on the home page,
+labelled something like “Log 2025-10-03”
+to indicate the kind of post it is.</p>
+</li>
+</ul>
+<p>Enjoy my braindump :)</p>
+<h2 id="2024-09-21">2024-09-21<a class="zola-anchor" href="#2024-09-21" aria-label="Anchor link for: 2024-09-21">🔗</a></h2>
+<ul>
+<li>
+<p>Beware the NodeList (and use the console/repl often)</p>
+<p>Had an issue where I got a list from <code>getElementsByClassName</code>
+to copy their contents and delete them from the DOM.
+For some reason, it would only delete every other node,
+and leave half the nodes untouched.
+Turns out it was because a NodeList can update live
+to reflect the current contents of the DOM.
+Still note sure why it was every other.</p>
+<p>It’s not an array, see the <a href="https://developer.mozilla.org/en-US/docs/Web/API/NodeList">MDN docs on NodeList</a></p>
+</li>
+<li>
+<p>I should really get Soupault set up.
+(Which means turning my SASS to CSS.)</p>
+<p>Had to use JS to do extra stuff
+that Zola should’ve let me do at build time.</p>
+</li>
+</ul>
+<h2 id="2024-08-09">2024-08-09<a class="zola-anchor" href="#2024-08-09" aria-label="Anchor link for: 2024-08-09">🔗</a></h2>
+<ul>
+<li>i made some character concept art!
+it’s cute, simple, and easy to pose/animate.
+<img src="/concept-art-character-sheep-cat.jpg" alt="Sheep and cat 2d art" /></li>
+<li>how did people let apple get away
+with the notch, then the cutout?
+it makes the screen shape awkward,
+and adds very little extra space.</li>
+<li>when treating s-expressions as nodes,
+the top-level is a special node with variable args,
+and the main nodes in your program feed into it.</li>
+<li>also two more draft posts in the works:
+good game checklist, and spaceship security!</li>
+</ul>
+<h2 id="2024-08-05-shower-thoughts">2024-08-05 Shower thoughts<a class="zola-anchor" href="#2024-08-05-shower-thoughts" aria-label="Anchor link for: 2024-08-05-shower-thoughts">🔗</a></h2>
+<p>this might be my shower thoughts place</p>
+<ul>
+<li>you could use hair ties or wrist bands to mark glasses</li>
+<li>s-expression lists are also blocks,
+in the mit scratch sort of way</li>
+</ul>
+<h2 id="2024-08-05-new-log-entry">2024-08-05 New log entry!<a class="zola-anchor" href="#2024-08-05-new-log-entry" aria-label="Anchor link for: 2024-08-05-new-log-entry">🔗</a></h2>
+<ul>
+<li>
+<p>had this thought for a while now:</p>
+<p>s-expressions are perfect for visual programming.</p>
+<p>take <code>(o o o)</code>.</p>
+<p><code>()</code> is a node.</p>
+<p>each <code>o</code> is an input for that node.</p>
+<p>think of blender shader/geometry nodes.</p>
+</li>
+<li>
+<p>soupault intro nearly done</p>
+<p>just some small edits, and maybe screenshots left</p>
+</li>
+<li>
+<p>should start CSS refactor by using <code>--var: val</code> in SASS</p>
+<pre class="z-code"><code><span class="z-text z-plain">:root
+  --highlight: var(--yellow)
+</span></code></pre>
+</li>
+<li>
+<p>almost have switch to soupault figured out.</p>
+<p>should write a doc about it.</p>
+</li>
+</ul>
+<h2 id="2024-06-24-theming-todos">2024-06-24 Theming TODOs<a class="zola-anchor" href="#2024-06-24-theming-todos" aria-label="Anchor link for: 2024-06-24-theming-todos">🔗</a></h2>
+<p>this became all about theming ¯_(ツ)_/¯</p>
+<p>TODO:</p>
+<p>toggle post is the easiest,
+and might be helpful for future implementation,
+but css from sass is also important.
+the rest are for down the line.</p>
+<p>edit: i wrote the post</p>
+<ul>
+<li>
+<p>write post on light theme toggle</p>
+<p>see <a href="https://codeberg.org/pranabekka/pages">https://codeberg.org/pranabekka/pages</a></p>
+<p>depends on css for core functionality,
+with js fallback where possible.</p>
+<p>check the html template to see how stored theme is loaded.
+refer also to a lobste.rs discussion on implementing dark mode —
+toastal suggests that the script has to be in the html for that.</p>
+<p><a href="https://lobste.rs/s/iefspl/notes_on_implementing_dark_mode">lobste.rs discussion on implementing dark mode</a></p>
+</li>
+<li>
+<p>switch to css from sass.</p>
+<p>css has all the features i need,
+and the built output is cleaner.
+i’m not using any advanced features from sass,
+and knowing css better means working with it.</p>
+<p>also a precursor to adding more themes
+for light mode as well as lower and higher contrast.</p>
+</li>
+<li>
+<p>create a light theme</p>
+<ul>
+<li>
+<p>add a light theme toggle</p>
+<p>see <a href="https://codeberg.org/pranabekka/pages">https://codeberg.org/pranabekka/pages</a></p>
+<p>check the html template to see how stored theme is loaded.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>create themes for different contrasts</p>
+<p>increase default contrast above current minimum AAA compliance,
+add lower contrast colours for <code>prefers-contrast: less</code>,
+and higher contrast colours for <code>prefers-contrast: more</code>.</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast">https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast</a></p>
+<p>probably have variables for
+<code>--black-full</code>, <code>--black-low</code>, <code>--black-high</code>, etc.</p>
+<p>also add a switch, similar to the light theme one</p>
+<p>consider full black/white toggle for oled screens and e-readers.
+maybe call it “full-contrast”.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;log.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

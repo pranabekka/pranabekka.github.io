@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Mutable copy semantics
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Mutable copy semantics
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/mutable-copy-semantics/#semantics">Semantics</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/mutable-copy-semantics/#optimisations">Optimisations</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Performant, safe and ergonomic high-level mutability.</p>
+<p>in response to reply by gasche on r/programminglanguages
+i don’t think i can do operational semantics
+until a few weeks
+but i can do several examples
+and make up an ir
+i’ve already done these to various degrees</p>
+<hr />
+<p>This separates the semantics and optimisations
+for Mutable Copy Semantics.
+First I’ll go through various examples
+to show how programming might look,
+including good and bad examples,
+then I’ll go through various examples
+and the optimisations that would apply to them.</p>
+<p>The “IR” I’ve used is the same syntax
+with some small rewrites and inline comments
+to explain what’s happening.
+I think it should be enough,
+but please let me know
+if I can make anything clearer.</p>
+<h2 id="semantics">Semantics<a class="zola-anchor" href="#semantics" aria-label="Anchor link for: semantics">🔗</a></h2>
+<p>Users cannot create or observe
+references in the language.
+All variables appear to be independent copies.</p>
+<p><code>double</code> gets a copy of <code>point</code>,
+so point isn’t mutated.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let point = (1, 2)
+double(point)
+print(point)
+// (1, 2)
+</span></code></pre>
+<p>Assigning to <code>point</code> will change its value.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let point = (1, 2)
+point = double(point)
+print(point)
+// (2, 4)
+</span></code></pre>
+<p><code>double</code> must return a copy of its result.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun double(p)
+	p.0 *= 2
+	p.1 *= 2
+	p
+</span></code></pre>
+<p>If <code>double</code> doesn’t return anything,
+then it can’t share its work with callers.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let point = (1, 2)
+	point = double(point)
+	print(point)
+	// Nil
+
+fun double(p)
+	p.0 *= 2
+	p.1 *= 2
+</span></code></pre>
+<p>A type system can catch the error above,
+but MCS works with or without it.</p>
+<p>These are the same semantics that apply to
+numbers and strings in most high-level languages.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let n = 2
+
+double(n)
+print(n)
+// 2
+
+n = double(n)
+print(n)
+// 4
+</span></code></pre>
+<p>However, compound types usually have
+reference semantics.
+Here’s a Python list, for example:</p>
+<pre class="z-code"><code><span class="z-text z-plain">def main():
+	list = [1, 2]
+	double(list)
+	print(list)
+	// [2, 4]
+
+def double(l):
+	l[0] *= 2
+</span></code></pre>
+<p>If <code>double</code> returned a value,
+it might link two variables together.
+In the following example,
+mutating <code>l1</code> changes <code>l2</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">def main():
+	l1 = [1, 2]
+	l2 = double(l1)
+	print(l2) // [2, 4]
+	l1[0] += 3
+	print(l2) // [5, 4]
+
+def double(l)
+	l[0] *= 2
+	l[1] *= 2
+	return l
+</span></code></pre>
+<p>Copies avoid this issue.
+In the following example,
+with copy semantics,
+mutating <code>l1</code> has no effect on <code>l2</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let l1 = [1, 2]
+	let l2 = double(l1)
+	print(l2) // [2, 4]
+	l1[0] += 3
+	print(l2) // [2, 4]
+
+double(l)
+	l[0] *= 2
+	l[1] *= 2
+	l
+</span></code></pre>
+<p>Loops are familiar at first glance.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+for i in 0..len(list)
+	list[i] *= 2
+print(list)
+// [2, 4, 6]
+</span></code></pre>
+<p>I could’ve used a more familiar semantics
+when iterating over the items (not the index),
+but I chose to use return values and assignment
+for loops to update items directly.</p>
+<p>In the following example,
+we never assign anything to <code>list</code>,
+so it doesn’t get mutated.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+for item in list
+	item *= 2
+print(list)
+// [1, 2, 3]
+</span></code></pre>
+<p>We also didn’t return anything
+from the individual iterations of the loop.
+Each iteration mutated its own copy of <code>item</code>,
+but it returned nothing (<code>Nil</code>).</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+list = for item in list
+	item *= 2
+print(list)
+// [Nil, Nil, Nil]
+</span></code></pre>
+<p>As before, a type system would catch this error,
+but MCS works with and without.</p>
+<p>In the next example,
+each iteration returns a value,
+and the loops returns them as a whole.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+list = for item in list
+	item * 2
+print(list)
+// [2, 4, 6]
+</span></code></pre>
+<p>Because loops work on a copy,
+assigning to a different variable
+won’t affect the original.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+let list2 = for item in list
+	item * 2
+print(list)  // [1, 2, 3]
+print(list2) // [2, 4, 6]
+</span></code></pre>
+<p><code>continue</code> means an iteration doesn’t return a value
+and the loop goes to the next iteration.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+list = for item in list
+	if item == 2
+		continue
+	else
+		item * 2
+print(list)
+// [2, 6]
+</span></code></pre>
+<p><code>break</code> means all future iterations are skipped.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+list = for item in list
+	if item == 2
+		break
+	else
+		item * 2
+print(list)
+// [2]
+</span></code></pre>
+<p>Because loops work on a copy,
+they can mutate the original collection
+while avoiding iterator invalidation issues.</p>
+<p>In the following example,
+other languages would’ve iterated forever,
+but the loop has its own copy of <code>list</code> and its items,
+which is put in <code>list2</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+let list2 = for item in list
+	list = list ++ [item * 2]
+	item
+print(list)
+// [1, 2, 3, 2, 4, 6]
+print(list2)
+// [1, 2, 3]
+</span></code></pre>
+<p>There’s an interesting form of “invalidation”
+that does occur, though,
+when the original collection is mutated inside the loop,
+and then the result of the loop is also
+assigned back to the original collection.</p>
+<p>In the following example,
+when assigning the result back to <code>list</code>,
+the mutations of <code>list</code> within the loop are erased.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+list = for item in list
+	list = list ++ [item - 1]
+	print(list)
+	// loop 1: [1, 2, 3, 0]
+	// loop 2: [1, 2, 3, 0, 1]
+	// loop 3: [1, 2, 3, 0, 1, 2]
+	item * 2
+print(list)
+// [2, 4, 6]
+</span></code></pre>
+<p>Implementations might report this to the user
+as a warning or error
+if the intermediate value isn’t used.</p>
+<p>There’s more details to work out with iteration,
+but this is a fairly usable subset.</p>
+<p>Closures also get copies.</p>
+<p>In the following example,
+the copy within the closure isn’t mutated
+by the assignment to <code>x</code> outside the closure.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = [1, 2]
+let f = fun (): print(x)
+x[0] = 10
+print(x) // [10, 2]
+f()      // [1, 2]
+</span></code></pre>
+<p>In the following example,
+the mutation within the closure
+doesn’t affect <code>x</code> outside the closure.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = [1, 2]
+let f = fun ()
+	x[1] = 20
+	print(x)
+f()
+// [1, 20]
+print(x)
+// [1, 2]
+</span></code></pre>
+<p>Threads work in a similar way to closures.
+Copies prevent threads from
+messing up data for other threads.</p>
+<p>In the following example,
+<code>x</code> is copied to the secondary thread
+before being mutated by the main thread,
+so the mutation isn’t shared.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = [1, 2]
+async
+	await timeout(10)
+	print(x)
+	// [1, 2]
+x[0] = 10
+print(x)
+// [10, 2]
+</span></code></pre>
+<p>In the following example,
+<code>x</code> is copied to the secondary thread,
+so its mutation doesn’t affect the value of <code>x</code>
+in the main thread.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = [1, 2]
+async
+	x[1] = 20
+	print(x)
+	// [1, 20]
+print(x)
+// [1, 2]
+</span></code></pre>
+<p><code>async</code> returns a thread/promise that can be <code>await</code>ed,
+which will return the value calculated by the thread.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = (1, 2)
+let thread = async double(x)
+x = await thread
+print(x)
+// (2, 4)
+</span></code></pre>
+<p>Jcparkyn’s experimental Herd language
+has similar semantics by using Copy-on-Write structures,
+but my proposal does compile time analysis
+to reduce the overhead at run time.</p>
+<p><a href="https://github.com/Jcparkyn/herd">Herd</a></p>
+<h2 id="optimisations">Optimisations<a class="zola-anchor" href="#optimisations" aria-label="Anchor link for: optimisations">🔗</a></h2>
+<p>While using copies everywhere prevents issues
+caused by aliased mutability,
+it leads to severe performance costs.
+Instead, we can ensure
+all mutations use a unique alias.</p>
+<p>In the following examples,
+<code>/*</code> begins an inline comment
+and <code>*/</code> ends that comment.</p>
+<p>In the following example,
+<code>a</code> and <code>b</code> are not mutated,
+so they can be aliased.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = /*alias*/ a
+</span></code></pre>
+<p>Similarly, <code>print</code> doesn’t mutate its arguments,
+so it receives an alias.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+print(/*alias*/ a)
+</span></code></pre>
+<p>Mutating functions also receive aliases,
+but first let’s cover passing mutatable aliases
+between variables.</p>
+<p>In the following example,
+<code>b</code> receives a unique alias
+to the same memory as <code>a</code>,
+which it mutates,
+then that unique alias is passed back,
+after which <code>a</code> and <code>b</code> share an immutable alias
+because neither variable mutates the memory again.
+Before <code>a = b</code>, <code>a</code> isn’t used at all,
+that’s why <code>b</code> has an unique alias
+during that time.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = /*alias*/ a
+b[0] = 10
+a = /*alias*/ b
+print(a) // [10, 2, 3]
+print(b) // [10, 2, 3]
+</span></code></pre>
+<p>If <code>a</code> was used before <code>a = b</code>
+then <code>b</code> would have to be a copy.</p>
+<p>In the following example,
+in between <code>let b = a</code> and <code>a = b</code>,
+we mutate the memory for <code>b</code>
+and we also access the memory for <code>a</code>,
+so <code>b</code> must have a unique alias by copying
+the value from <code>a</code> into new memory.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = /*copy*/ a
+b[0] = 10
+print(a) // [1, 2, 3]
+a = /*copy*/ b
+print(a) // [10, 2, 3]
+print(b) // [10, 2, 3]
+</span></code></pre>
+<p>Because we didn’t assign to <code>a</code>,
+we know that it shouldn’t be mutated
+in the first <code>print(a)</code> call,
+and so <code>b</code> must have its own memory.</p>
+<p>In the following example,
+<code>double</code> receives an alias to <code>a</code>
+and mutates it in place.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = (1, 2)
+	a = double(a)
+	print(a) // (2, 4)
+
+fun double(x)
+	x.0 *= 2
+	x.1 *= 2
+	x
+</span></code></pre>
+<p>It might be better explained
+by putting the body of <code>double</code> inside <code>main</code>.</p>
+<p>In the following example,
+<code>a</code> isn’t used while <code>x</code> is being mutated,
+and then <code>x</code> is passed back to <code>a</code>,
+so <code>x</code> receives a unique mutable alias
+to the same memory as <code>a</code>,
+and then the alias is passed back to <code>a</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = (1, 2)
+
+	// `double` accepts parameter `x`.
+	x = /*alias*/ a
+	x.0 *= 2
+	x.1 *= 2
+
+	// Return value of `double` assigned to `a`.
+	a = /*alias*/ x
+	print(a) // (2, 4)
+</span></code></pre>
+<p>In the following example,
+<code>double</code> receives an alias to <code>b</code>,
+and <code>b</code> is a copy of <code>a</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = (1, 2)
+	let b = double(a)
+	print(a) // (1, 2)
+	print(b) // (2, 4)
+</span></code></pre>
+<p>Let’s rewrite the example to make it clearer.</p>
+<p>In the following example,
+<code>b</code> is treated the same as <code>a</code>
+in the example where we
+put the body of <code>double</code> inside <code>main</code>.
+This means an alias of <code>b</code>
+is passed to <code>double</code> as <code>x</code>.
+Because <code>b</code> is being mutated
+without passing it back to <code>a</code>,
+<code>b</code> must be a unique alias to separate memory,
+which means it must be a copy of <code>a</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = (1, 2)
+	let b = /*copy*/ a
+	b = double(b)
+	print(a) // (1, 2)
+	print(b) // (2, 4)
+</span></code></pre>
+<p>Functions <em>always</em> receive and return aliases,
+but the callers decide <em>what</em> they receive aliases to.</p>
+<p>In the second last example, repeated below,
+<code>main</code> wanted the mutation from <code>double</code>
+to apply to <code>b</code>,
+so it passed an alias to <code>b</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = (1, 2)
+	let b = double(a)
+	print(a) // (1, 2)
+	print(b) // (2, 4)
+</span></code></pre>
+<p>Assignment indicates <em>what</em> should be mutated,
+which means what alias should be passed.</p>
+<p>In the following example,
+<code>a</code> isnt’ reused,
+so <code>double</code> receives an alias to it
+even though we don’t assign to <code>a</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = (1, 2)
+	double(/*alias*/ a)
+</span></code></pre>
+<p>If a caller doesn’t reuse a variable,
+it can pass an alias to the variable
+even though the result isn’t assigned to the variable.</p>
+<p><strong>TODO</strong>: doesn’t share internal details</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+
+// Mutates param internally, doesn&#39;t return.
+fun print_sorted(l)
+</span></code></pre>
+<p>Loops use these same rules in obvious ways.
+That means they always receive aliases,
+but the call site decides
+what they receive an alias to.</p>
+<p>In the following example,
+the loop receives an alias to <code>list</code>,
+because while the loop is running
+it has a unique alias,
+which is passed back to <code>list</code> at the end,
+using <code>list = ...</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+list = for item in /*alias*/ list
+	item * 10
+print(list)
+// [10, 20, 30]
+</span></code></pre>
+<p>In the following example,
+the loop doesn’t pass its alias back to <code>list</code>,
+so it must alias new memory
+created by copying <code>list</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+for item in /*copy*/ list
+	item * 10
+print(list)
+// [1, 2, 3]
+</span></code></pre>
+<p>In the following example,
+<code>list2</code> receives a copy of <code>list</code>
+and the loop receives an alias to <code>list2</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let list = [1, 2, 3]
+let list2 = for item in /*copy*/ list
+	item * 10
+print(list)  // [1, 2, 3]
+print(list2) // [10, 20, 30]
+</span></code></pre>
+<p>In the following example,
+the closure captures an alias to some memory
+and then the main function mutates <code>x</code>,
+so the closure must receive a copy
+to prevent aliased mutation.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = (1, 2)
+let f = fun (): print(/*copy*/ x)
+x.0 = 10
+print(x) // (10, 2)
+f()      // (1, 2)
+</span></code></pre>
+<p>In the following example,
+<code>x</code> isn’t mutated while <code>f</code> is used,
+so <code>f</code> receives an alias to <code>x</code>,
+after which the main function has a unique alias
+that it can mutate freely.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = (1, 2)
+let f = fun (): print(/*alias*/ x)
+f()      // (1, 2)
+x.0 = 10
+print(x) // (10, 2)
+</span></code></pre>
+<p>Threads work the same way.</p>
+<p>In the following example,
+the secondary thread is spawned with a copy of <code>x</code>
+because the main thread requires
+a unique mutable alias to mutate.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = (1, 2)
+async
+	print(/*copy*/ x)
+	// (1, 2)
+x[0] = 10
+print(x)
+// [10, 2]
+</span></code></pre>
+<p>In the following example,
+the secondary thread requires a unique mutable alias,
+so it receives its own copy of <code>x</code>
+that doesn’t impact the main thread.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = (1, 2)
+async
+	// let x = /*copy*/ x
+	x[1] = 20
+	print(x)
+	// (1, 20)
+print(x)
+// (1, 2)
+</span></code></pre>
+<p>In the following example,
+the thread has receives a unique alias to <code>x</code>,
+which it passes back to the main thread
+in the next line using <code>await</code> and its return value,
+so there are no copies involved.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let x = (1, 2)
+let thread = async double(/*alias*/x)
+x = await thread
+print(x)
+// (2, 4)
+</span></code></pre>
+<p>That covers everything I can think of.</p>
+<p>Functions always receive aliases,
+but they receive aliases to the variables
+on the left-hand side of the assignment,
+not necessarily the variables in the argument list.
+Mutating via an alias requires that alias to be unique,
+which is checked by comparing other aliases
+and using copies if required.</p>
+<p>I want to end with a small example.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = &quot;Hey&quot;
+	let b = &quot;Hi&quot;
+	print(exclaim(longer(a, b)))
+	// &quot;Hey!&quot;
+
+fun longer(s1, s2)
+	if len(s1) &gt; len(s2)
+		s1
+	else
+		s2
+
+fun exclaim(s)
+	s = s .. &quot;!&quot;
+	s
+</span></code></pre>
+<p><code>longer</code> receives aliases because it doesn’t mutate,
+but <code>exclaim</code> receives an alias
+because <code>a</code> and <code>b</code> aren’t reused,
+otherwise it would receive a copy of
+whatever is returned by <code>longer</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;mutable-copy-semantics.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

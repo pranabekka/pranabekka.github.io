@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+djot
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>djot
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Apr 23, 2023
+    
+      <svg role="img" aria-label="to (right arrow)"
+           class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <title>to</title>
+        <desc>right arrow</desc>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+      </svg>
+      Feb 04, 2024
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>EDIT: <em>Whoa! Inane mind dump ahead!</em>
+Just check out the <a href="https://pranabekka.github.io/djot-1/">post on why I like djot</a>.
+I’m keeping this link for something to at least laugh at,
+and to build a habit of not breaking links.</p>
+<p>I was reading an article by <a href="https://matklad.github.io">matklad</a>
+and I realised the formatting looked a lot like
+the default Asciidoctor output,
+so I went hunting around for how he built his site
+and found an <a href="https://matklad.github.io/2022/10/28/elements-of-a-great-markup-language.html">article on markup formats</a>.
+Turns out <a href="https://djot.net">djot</a> is a really nice format,
+which includes some interesting ideas
+from asciidoc as well as markdown.</p>
+<p>Sadly, the tooling around it is quite limited.
+Current implementations include one in Javascript,
+another in Lua, and a third in Rust.
+And the syntax reference link at <a href="https://djot.net">djot.net</a> seems broken.</p>
+<p>The Javascript implementation is the current focus,
+while the Lua one is the first (that may be phased out),
+and the Rust one is unofficial,
+with a single link in the <a href="https://djot.net">djot.net</a> page
+and no other mention.</p>
+<p>I think all three allow for creating an ast,
+so it should be easy to work them in with other tools,
+but it’s still a fair bit of work (for me)
+to set up a static site or generate other documents from it.</p>
+<p>Maybe it’s a good reason to really get into Javascript
+(Rust is a bit overkill),
+although the hexo static site generator has an extension for it,
+and other Javascript ones like 11ty
+should also be able to easily plug it in.</p>
+<p>Alternatively, just use the cli given by djot.js
+to output the ast and manipulate it in any language,
+then feed it back into djot.js or pandoc.
+Even the html output can act as an ast of sorts
+if you’re already familiar with it.
+Maybe I’ll try that,
+but it’s still a lot of work (as a non-programmer) to replicate
+everything that static site generators and other tools
+can do for you.</p>
+<p><em>Again, sorry for that.
+Please check out the post with <a href="https://pranabekka.github.io/djot-1/">some actual content</a>.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;djot.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

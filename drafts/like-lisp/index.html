@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+I Like Lisp(s). You Might Too
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>I Like Lisp(s). You Might Too
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+<hr>
+
+<p>Here’s my take on why Lisps are cool
+(such as Common Lisp, Scheme, Clojure, and Janet).
+I hope you find a few nice gems in here :)</p>
+<p>Let me just start of with a tiny rant:
+Why on Earth don’t other programming languages
+let you use hyphens for naming functions and variables!?
+It’s so much easier to type <code>do-this</code> instead of <code>do_this</code>.
+I mean, you’re already stretching your little finger
+to type out that underscore (‘<code>_</code>’),
+and then you have to stretch the other little finger
+in the opposite direction to <em>hold</em> down the shift key.
+Why. Plus <code>kebab-case</code> just looks nicer.
+Hyphens are narrower, which leaves some whitespace on either end,
+and they’re balanced along the (vertical) centre of the line
+instead of squatting on the baseline.</p>
+<p>Alright, back on topic.</p>
+<p><strong>NOTE</strong>: None of the following is actual code,
+unless you’ve defined the correct functions and variables in advance.</p>
+<p>Here’s the really cool thing about Lisps:
+it builds on two very simple rules.
+You break apart pieces of information with spaces,
+and you group information together with parentheses (‘<code>()</code>’).</p>
+<p><code>(you get (1 + 2) kebabs)</code></p>
+<p>(Btw, we just got JSON and XML dead to rights
+— since 1970, at the least.)</p>
+<p>There are only two exceptions to this (that I can think of),
+and they might not apply to all lisps.
+One, strings allow you to put spaces between double quotes.
+This is common to all programming languages, as far as I know.
+Two, escaped symbols
+(either spaces surrounded by the pipe (<code>|</code>) character —
+not to be confused with <code>1</code>, <code>l</code>, or <code>I</code> —
+or spaces preceded by the backslash (<code>\</code>) character).</p>
+<p>Then another cool thing is prefix syntax:
+within the grouping, the first item is the action,
+and the rest of the items are what it acts upon.</p>
+<p><code>(action object1 object2 object3 ...)</code></p>
+<p>Everything is prefix syntax!</p>
+<p><code>(cook my-kebab your-kebab their-kebab)</code></p>
+<p>Here’s a brief look at everything so far:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(if (cooked? my-kebab)
+    (eat my-kebab) ;then
+    (cook my-kebab) ;else
+</span></code></pre>
+<p>First, the inside groupings are checked.
+Is <code>my-kebab</code> cooked?
+If the answer is yes,
+then we eat it,
+and the whole (outer) grouping says we ate it,
+otherwise, it says we cooked it.</p>
+<p>Have a look at this one:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(multiply (add 1 2 3 (subtract 5 1))
+          2)
+</span></code></pre>
+<p>First, we see the grouping for <code>multiply</code>,
+then we see it has a grouping for <code>add</code>,
+which, in turn, has a grouping for <code>subtract</code>.
+<code>subtract</code> has the numeric objects 5 and 1,
+and it returns 4.
+Now <code>add</code> has the number 4,
+as well as 1, 2, and 3.
+So <code>add</code> returns 10.
+And now <code>multiply</code> has the numbers 10 and 2.
+So <code>multiply</code> returns 20!</p>
+<p>Now, people from other programming languages
+also have the basic math operations available as
+expressions that they can group withing parentheses,
+but Lisps allow everything to be an expression!
+Everything gives a result,
+even if it’s to say that there’s nothing here.</p>
+<p>For example, <code>(cooked? kebab)</code>
+might tell you that no, <code>kebab</code> is not, in fact, cooked.
+So here’s something you could do:</p>
+<pre class="z-code"><code><span class="z-text z-plain">; we have the question: is my kebab cooked?
+; here&#39;s how we save the answer
+; (maybe to determine what we do next)
+
+(set! answer (if (cooked? kebab)
+                 &quot;cooked! :D&quot;
+                 &quot;not cooked!&quot;))
+</span></code></pre>
+<p>Many languages only got a feature like this
+in the last few years.
+(Scheme and Common Lisp are from the mid/late 1900s)
+And still they’re limited to specific constructs
+that the language implementers have thought
+feasible and of reasonable importance.
+All the Lisps get this for free.</p>
+<p>Now, I’ve hinted at this above,
+but (most) Lisps allow you to use
+(pretty much) any character for naming things.
+So you can write a function like <code>cooked?</code>
+instead of <code>is_cooked</code> or <code>isCooked</code>.
+Or <code>string-&gt;array</code> instead of 
+<code>string_to_array</code> or <code>stringToArray</code>.
+It might not seem like a big deal,
+but if you think about it,
+this limitation seems a bit arbitrary.
+Why shouldn’t I be able to add a question mark?</p>
+<p>Essentially, Lisps (especially Scheme and newer ones)
+have really neat and cohesive syntax and semantics.
+Everything follows a small set of foundational rules,
+and now you just need to understand what a function does.</p>
+<p>Remember that comparison to HTML and JSON?
+Here it is:</p>
+<pre class="z-code"><code><span class="z-text z-plain">;; lisp
+(html
+  (head
+    (title &quot;Title Goes Here&quot;))
+  (body &quot;Body goes here.&quot;))
+  
+&lt;!-- xml/html --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Title Goes Here&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    Body goes here.
+  &lt;/body&gt;
+&lt;/html&gt;
+
+// json5 (because the base spec doesn&#39;t have any)
+{
+  &quot;html&quot;: {
+    &quot;head&quot;: {
+      &quot;title&quot;: &quot;Title Goes Here&quot;
+    }
+    &quot;body&quot;: &quot;Body goes here.&quot;
+  }
+}
+</span></code></pre>
+<p>Notice how much shorter Lisp is.
+Notice, for example, how it doesn’t require
+all those opening and closing tags that XML does.
+Notice, also, how it doesn’t require all those quotes and colons.
+In fact, you could even strip out the quotes in the Lisp version
+for something even simpler (depending on your requirements).
+The first word defines the type of the grouping,
+and everything else is the content of that grouping.</p>
+<p>Err… I guess that reminds me:
+Not everything that comes at the beginning
+of a grouping (list) is an action.
+You can say, for example, <code>list</code>,
+to create a list of things:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(list
+  (pranab likes kebabs)
+  (you might like cats)
+  (someone probably likes swimming))
+</span></code></pre>
+<p>And in this instance,
+<code>pranab</code>, <code>you</code> and <code>someone</code> are not functions.
+Each one is simply an object
+inside a grouping that is an object itself.</p>
+<p><em>Sigh</em>. Lisps are such beautiful languages.
+I honestly fail to see why people bother with anything else.
+Oh well.</p>
+<p>I encourage you to look up and read more about Lisps,
+because I’ve just taken a shallow look
+that glosses over a lot of details.
+Some interesting points are:</p>
+<ul>
+<li>
+<p>Paul Graham’s <a href="http://paulgraham.com/lisp.html">essays on lisp</a>
+(really persuasive articles about the <em>power</em> of lisp;
+<a href="http://paulgraham.com/avg.html">this one</a> is really inspiring)</p>
+</li>
+<li>
+<p>“<a href="https://spritely.institute/static/papers/scheme-primer.html">A Scheme Primer</a>”
+by Christine Lemmer-Webber from Spritely Goblins Insitute.
+(A very simple introduction to some actual Scheme code)</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;like-lisp.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

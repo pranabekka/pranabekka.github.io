@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Significant whitespace (wisp)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Significant whitespace (wisp)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/significant-whitespace/#introduction">Introduction</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/significant-whitespace/#basic-data-types">Basic data types</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/significant-whitespace/#nested-lists-and-dictionaries">Nested lists and dictionaries</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/significant-whitespace/#data-config-format">Data&#x2F;config format</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/significant-whitespace/#programming">Programming</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/significant-whitespace/#using">Using</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>In some senses, Python doesn’t have
+enough significant whitespace.</p>
+<p>It requires extra syntax elements
+where whitespace is already doing work.</p>
+<p>Here, I explore a significant whitespace syntax
+with great power, minimal complexity,
+and lots of flexible applications,
+including as an alternative to XML, JSON, YAML, etc
+(plus Python, of course).</p>
+<p>This post describes wisp,
+an alternative syntax for Scheme,
+which is applicable wherever S-expressions are applicable.
+This post assumes no prior knowledge of these.</p>
+<p><a href="https://www.draketo.de/software/wisp">Wisp</a></p>
+<p><a href="https://spritely.institute/static/papers/scheme-primer.html">Scheme</a></p>
+<p><a href="https://pranabekka.github.io/drafts/s-expressions/">S-expressions</a></p>
+<h2 id="introduction">Introduction<a class="zola-anchor" href="#introduction" aria-label="Anchor link for: introduction">🔗</a></h2>
+<h3 id="basic-data-types">Basic data types<a class="zola-anchor" href="#basic-data-types" aria-label="Anchor link for: basic-data-types">🔗</a></h3>
+<p>Wisp is structured with “lists”,
+which are simply a sequence of items separated by spaces.</p>
+<pre class="z-code"><code><span class="z-text z-plain">item-1 item-2 item-3
+</span></code></pre>
+<p>There are the usual suspects when it comes to data types:
+numbers, strings, booleans,
+lists (shown above), and dictionaries.</p>
+<pre class="z-code"><code><span class="z-text z-plain">1234 &quot;a string&quot; true
+
+list-item-1 list-item-2 list-item-3
+
+:key1 value1 :key2 value2 :key3 value3
+</span></code></pre>
+<p>And comments:</p>
+<pre class="z-code"><code><span class="z-text z-plain">; a semicolon and everything after is a comment
+</span></code></pre>
+<p>You might have already noticed
+we already have more significant whitespace
+than most other languages and data formats:</p>
+<p>Spaces separate items, and commas simply repeat that information,
+so there are no commas used to separate items.</p>
+<p>Wisp has another data type,
+called symbols, which function in a similar way to strings,
+but are not quite the same thing.</p>
+<pre class="z-code"><code><span class="z-text z-plain">a-symbol
+</span></code></pre>
+<p>Symbols are basically what are used for
+naming and accessing variables,
+with extra functionality for manipulating them,
+such as creating new symbols.
+Symbols also have other nice features,
+such as allowing hyphens.</p>
+<h3 id="nested-lists-and-dictionaries">Nested lists and dictionaries<a class="zola-anchor" href="#nested-lists-and-dictionaries" aria-label="Anchor link for: nested-lists-and-dictionaries">🔗</a></h3>
+<p>Flat lists and dictionaries aren’t all you need.</p>
+<p>Nested lists and dictionaries
+can either be in the same line,
+or on a new line.</p>
+<h4 id="in-line">In-line<a class="zola-anchor" href="#in-line" aria-label="Anchor link for: in-line">🔗</a></h4>
+<p>If you want a simple nested list or dictionary,
+just use a colon to nest a list that will close
+at the end of the line.</p>
+<pre class="z-code"><code><span class="z-text z-plain">main-item1 main-item2 : nested-item1 nested-item2
+</span></code></pre>
+<p>In the above example, <code>nested-list</code>
+is the second (and last) item of <code>main-list</code>.
+The colon simply indicates that
+everything till the end of the line is a nested list.</p>
+<p>More complex lists and dictionaries use parentheses.</p>
+<pre class="z-code"><code><span class="z-text z-plain">:main-key1 (:sub-key1 sub-value1) :main-key2 main-value2
+</span></code></pre>
+<p>Most dictionaries won’t use in-line syntax,
+but this example shows that
+list and dictionary syntax is very similar,
+and the rules transfer easily.</p>
+<p>Here’s a slightly more complex example:</p>
+<pre class="z-code"><code><span class="z-text z-plain">item1 (sub-item) (sub-item) item-4
+</span></code></pre>
+<h4 id="new-line-block">New-line/block<a class="zola-anchor" href="#new-line-block" aria-label="Anchor link for: new-line-block">🔗</a></h4>
+<p>Indented lists and dictionaries
+belong to the last list/dictionary with less indentation.</p>
+<pre class="z-code"><code><span class="z-text z-plain">main-list1
+  nested-list1
+  nested-list2
+  
+main-list2
+  nested-list3
+  nested-list4
+</span></code></pre>
+<p><code>nested-list</code> 1 and 2 belong to <code>main-list1</code>,
+while 3 and 4 belong to <code>main-list2</code>.</p>
+<p>There’s a simple way to avoid indentation —
+begin the line with a dot,
+and the items will be on the same level
+as the last list/dictionary with less indentation.</p>
+<pre class="z-code"><code><span class="z-text z-plain">:first-dict-key first-dict-value
+  . :second-dict-key second-dict-value
+  . :third-dict-key third-dict-value
+</span></code></pre>
+<p>This syntax is particularly useful for dictionaries,
+as well as lists with many items or just long items.</p>
+<p>It also applies to lists and dictionaries
+where you want a nested list
+followed by regular list items.</p>
+<pre class="z-code"><code><span class="z-text z-plain">item1 (nested) item3 item4
+
+item1
+  nested
+  incorrectly-nested-item3
+  incorrectly-nested-item4
+  
+item1
+  nested
+  . item3 item4
+
+item1
+  nested
+  . item3
+  . item4
+</span></code></pre>
+<p>All these blocks aim to do the same thing,
+which can quite annoying to manage
+without the dot continuation syntax.</p>
+<h2 id="data-config-format">Data/config format<a class="zola-anchor" href="#data-config-format" aria-label="Anchor link for: data-config-format">🔗</a></h2>
+<p>List of data formats:</p>
+<pre class="z-code"><code><span class="z-text z-plain">data-formats
+  . XML
+  . JSON
+  . TOML
+  . YAML
+  . S-expressions
+  . RON
+  . wisp
+</span></code></pre>
+<p>Document data:</p>
+<pre class="z-code"><code><span class="z-text z-plain">html
+  head
+    title &quot;My HTML document&quot;
+  body
+    h1 &quot;Hello, world!&quot;
+    img :src &quot;cat.gif&quot; :alt &quot;meow&quot;
+</span></code></pre>
+<p>Configuration file (for a text/code editor):</p>
+<pre class="z-code"><code><span class="z-text z-plain">font-family IntelOne Mono
+font-size 13
+
+colour-scheme vivendi
+
+plugins
+  smart-quotes
+  markdown-preview
+  wiki
+  snippets
+  emmet
+  live-server
+  easymotion
+  autosave
+  dates
+  
+vi-mode true
+
+keys
+  fuzzy-find Ctrl-f ; make fuzzy search default
+  dates:insert-date Alt-d ; from dates plugin
+</span></code></pre>
+<p>Notice how compact yet readable everything is.
+The only (visible) syntax elements
+across all three examples
+are 7 dots for a list continuation,
+a colon for the <code>insert-date</code> import,
+and two comments explaining key bindings.</p>
+<p>And there’s a simple in-line format as well,
+for simple and easy serialisation.</p>
+<pre class="z-code"><code><span class="z-text z-plain">data-formats XML JSON TOML YAML S-expressions RON wisp
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">html (head (title &quot;My HTML document&quot;)) (body (h1 &quot;Hello, world!&quot;) (img :src &quot;cat.gif&quot;))
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">config (font-family IntelOne Mono) (font-size 13) (colour-scheme vivendi) (plugins smart-quotes markdown-preview wiki snippets emmet live-server easymotion autosave dates) (vi-mode true) (keys (fuzzy-find Ctrl-f) (dates:insert-date Alt-d))
+</span></code></pre>
+<p>So, with a little more extra scaffolding we could take on XML,
+the JSON format is quite ad-hoc in general,
+YAML has a few issues that hurt adoption,
+and wisp has less syntax and confusion than all of them.</p>
+<!--
+hmm... should there be a syntax for creating a same-level list inline?
+a semicolon could do that: `list1 ; list2 : list2.1 ; list3 ; list4`
+but then comment syntax will have to change
+also, there's no inline comment syntax
+though cl has something like #;(), i think?
+comment syntax could be #/ and #/(inline)
+could also just be `comment` keyword
+-->
+<h2 id="programming">Programming<a class="zola-anchor" href="#programming" aria-label="Anchor link for: programming">🔗</a></h2>
+<p>As the ‘premier’ significant whitespace language,
+Python is going to be involved in this section.</p>
+<p>You’ve already seen that we don’t require commas,
+because wisp’s whitespace is more significant than Python’s.</p>
+<p>Wisp based languages also require fewer parentheses.
+The first item in a “list” is a function,
+and the rest of the items are arguments
+to that function.</p>
+<pre class="z-code"><code><span class="z-text z-plain">my-function arg1 arg2 arg3
+</span></code></pre>
+<p>Significant-whitespace++!</p>
+<p>Have you ever noticed that if-statements in Python
+require a colon at the end,
+even though the next line is already indented?
+Well, wisp doesn’t require it!</p>
+<pre class="z-code"><code><span class="z-text z-plain">if : indented? line
+  make-nested
+
+; single line:
+; if (indented? line) (make-nested)
+</span></code></pre>
+<p>Here’s a small “Hello” example:</p>
+<pre class="z-code"><code><span class="z-text z-plain">; define variable &#39;me&#39; as &quot;Pranab&quot;
+def me &quot;Pranab&quot;
+
+; define variable &#39;greet&#39; as a function
+; that takes the parameter &#39;name&#39;
+; and says hello to the named person
+def greet
+  fn : name
+    print &quot;Hello, &quot; name &quot;!&quot;
+  
+greet me
+; Output: &quot;Hello, Pranab!&quot;
+</span></code></pre>
+<p>Only one comma typed in this example,
+and it’s inside a string!
+Here’s the same code without any comments:</p>
+<pre class="z-code"><code><span class="z-text z-plain">def me &quot;Pranab&quot;
+
+def greet
+  fn : name
+    print &quot;Hello, &quot; name &quot;!&quot;
+
+greet me
+</span></code></pre>
+<p>Lookit!!! It’s so teeny!!!!!! Ahhhhh!!!!!!!!!!!!!!</p>
+<p>Sorry. This is honestly the best, though.</p>
+<p>Like, in Python, that define would need a colon at the end
+— why? The next line is already indented.
+Turns out whitespace could be even more significant.</p>
+<h2 id="using">Using<a class="zola-anchor" href="#using" aria-label="Anchor link for: using">🔗</a></h2>
+<p>Just the one implementation in/for Guile Scheme, so far.
+You could try to make one in your favourite language yourself!
+If you want something similar to use right now,
+you could look into S-expressions instead.
+It has more parentheses,
+but an even simpler and more consistent syntax.</p>
+<p><a href="https://www.draketo.de/software/wisp">Wisp Guile implementation</a></p>
+<p><a href="https://srfi.schemers.org/srfi-119/srfi-119.html">Wisp specification</a></p>
+<p><a href="https://pranabekka.github.io/drafts/s-expressions/">S-expressions</a></p>
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;significant-whitespace.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

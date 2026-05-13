@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+A Bean-troduction
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>A Bean-troduction
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    May 21, 2024
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-troduction/#paragraphs">Paragraphs</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-troduction/#headings">Headings</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-troduction/#code">Code</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-troduction/#lists">Lists</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-troduction/#tables">Tables</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/bean-troduction/#extension">Extension</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>An introduction to the (currently imaginary)
+Bean markup language,
+with some comparisons to Markdown.</p>
+<h2 id="paragraphs">Paragraphs<a class="zola-anchor" href="#paragraphs" aria-label="Anchor link for: paragraphs">🔗</a></h2>
+<p>Writing a paragraph is roughly the same:</p>
+<pre class="z-code"><code><span class="z-text z-plain">This is a paragraph.
+Multiple consecutive lines belong
+to the same paragraph.
+
+Blank lines start a new paragraph.
+</span></code></pre>
+<h2 id="headings">Headings<a class="zola-anchor" href="#headings" aria-label="Anchor link for: headings">🔗</a></h2>
+<p>Bean does something a bit different with headings:</p>
+<pre class="z-code"><code><span class="z-text z-plain">#### Document title
+
+### A level 1 heading
+
+## A level 2 heading
+
+# A level 3 heading
+</span></code></pre>
+<p>Only three heading levels have syntax sugar,
+and the higher the heading level,
+the more marks it has —
+in order to maintain visual hierarchy.</p>
+<p>Bean supports additional heading levels,
+but that’s through the generic tag syntax.
+If you find yourself requiring those levels,
+you might be better served by a list.
+(Well, I’m just buying into what Edward Tufte says.)</p>
+<h2 id="code">Code<a class="zola-anchor" href="#code" aria-label="Anchor link for: code">🔗</a></h2>
+<p>Fences in Bean simply mark an area of text,
+either as a span or div.
+You must use the <code>code</code> tag, or a <code>:lang</code> attribute
+if you want to create a code block.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[code :lang javascript]
+```
+let markup = &quot;Bean&quot;
+```
+
+[:lang javascript]
+```
+const MARKUP = &quot;Bean&quot;
+```
+</span></code></pre>
+<p>Bean avoids specialising for code,
+though users of markup languages are likely programmers.
+I’ll have to see about the decision,
+but I think it’s the correct one.</p>
+<p>Indented code is not a thing.
+In fact, indentation is ignored throughout Bean,
+unless a block assigns special meaning to it.</p>
+<h2 id="lists">Lists<a class="zola-anchor" href="#lists" aria-label="Anchor link for: lists">🔗</a></h2>
+<p>Bean’s list syntax is borrowed from Asciidoc.
+It avoids complex list rules and related accidents.</p>
+<!-- TODO: write a better example use case -->
+<pre class="z-code"><code><span class="z-text z-plain">* list item 1
+** sub-list item 1
+* list item 2.
+  * continuation of list item 2
+</span></code></pre>
+<p>In Markdown, the continuation of list item 2 would require an escape character.</p>
+<pre class="z-code"><code><span class="z-text z-plain">* list item 1
+  * sub-list item 1
+* list item 2.
+  \* continuation of list item 2
+</span></code></pre>
+<p>Rendered HTML output:</p>
+<div class="sample-block">
+  <ul>
+<li>list item 1
+<ul>
+<li>sub-list item 1</li>
+</ul>
+</li>
+<li>list item 2.
+* continuation of list item 2</li>
+</ul>
+
+</div>
+<h2 id="tables">Tables<a class="zola-anchor" href="#tables" aria-label="Anchor link for: tables">🔗</a></h2>
+<p>Bean defaults to tables with comma-separated values,
+but it also allows you to specify your own separator.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[table]
+comma  , separated , values
+can be , used for  , tables
+
+[table :sep |]
+cell 1 | cell 2 | cell 3
+</span></code></pre>
+<h2 id="extension">Extension<a class="zola-anchor" href="#extension" aria-label="Anchor link for: extension">🔗</a></h2>
+<p>If you want to do anything beyond
+the syntax sugar provided by Markdown,
+you must rely on HTML.</p>
+<p>Bean provides a generic tag syntax
+that can be directly translated to HTML or XML,
+which you’ve already seen
+in the form of the <code>code</code> block.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[details]
+[summary]`A summary of this block`
+Any ol&#39; content you want to show
+when the details block is expanded.
+</span></code></pre>
+<p>Notice how the backticks don’t specify code,
+but instead mark the boundaries of the tagged (summary) content.</p>
+<p>Bean also has some syntax sugar for tags.
+To create a div with a specific class,
+you can simply use <code>[.class-name]</code>.
+The same goes for IDs.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[#div-id.class-name]
+content
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;div id=&quot;div-id&quot; class=&quot;class-name&quot;&gt;
+  content
+&lt;/div&gt;
+</span></code></pre>
+<p>You’ve also seen the attribute syntax
+being matched to an appropriate element,
+but it can be used to set an attribute for a div.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[:data-value skip]
+</span></code></pre>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;div data-value=&quot;skip&quot;&gt;&lt;/div&gt;
+</span></code></pre>
+<p>If/when I get this far,
+I also intend to implement a scripting interface
+to create your own blocks,
+maybe with syntax sugar or over-rides included.</p>
+<p>For a more comprehensive explanation of Bean,
+see my previous post on its syntax and features.</p>
+<p><a href="https://pranabekka.github.io/bean-markup/">Bean markup</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;bean-troduction.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

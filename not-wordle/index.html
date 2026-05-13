@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Ceci n’est pas Wordle devlog
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Ceci n’est pas Wordle devlog
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Dec 18, 2023
+    
+    (IST)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#consider-a-custom-keyboard-or-a-single-input">Consider a custom keyboard or a single input</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#5-letters-or-less">5 letters (or less)</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#show-letters-in-the-grid">Show letters in the grid</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#set-height-and-width-for-cells">Set height and width for cells</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#add-a-start-button">Add a start button</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#don-t-add-a-border-for-keyboard-references">Don’t add a border for keyboard references</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#final-design">Final design</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/not-wordle/#make-your-own">Make your own</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Bonjour!
+Welcome to devlog 1 of 1:
+why I made a Wordle clone
+(and then another),
+as well as some tips and design choices.</p>
+<p><img src="/not-wordle-v1.png" alt="screenshot of v1" />
+(Version 1, with a static grid and a single input field
+for typing out your guess)</p>
+<p><img src="/not-wordle-v2.png" alt="screenshot of v2" />
+(Version 2, with a grid of input cells,
+so you can type in letters directly in the grid)</p>
+<p>Try <a href="/not-wordle-v2.html">Ceci n’est pas Wordle</a>! (version 2)</p>
+<p>Here’s why I made it:
+basically, I was mad at a friend,
+and I didn’t want to just rant at him —
+I had to curse him in a <em>nice</em> way.
+After racking my brain for a day or two,
+I figured it out —
+I’d make him find out exactly what he was
+(a f***er, if you must know,
+since other words would be too long).</p>
+<p>After that I couldn’t resist sharing it with other people
+(I obviously changed the word),
+because it’s quite fun to share something I made,
+plus I could pick a funny or silly word
+that referenced the day we had,
+or a random conversation or event.</p>
+<p>(Btw, “ceci n’est pas” means “this is not”)</p>
+<p>Anyway, here’s some little things I learnt
+as I worked on my clone(s),
+in rough order of usefulness.</p>
+<h2 id="consider-a-custom-keyboard-or-a-single-input">Consider a custom keyboard or a single input<a class="zola-anchor" href="#consider-a-custom-keyboard-or-a-single-input" aria-label="Anchor link for: consider-a-custom-keyboard-or-a-single-input">🔗</a></h2>
+<p>When using the current (v2) design,
+it requires adding in some special handling for some keys,
+so that the focussed input automatically switches back and forth,
+which can cause issues,
+because some keyboards (on Android, at least)
+don’t like sharing what keys have been pressed.</p>
+<p>The default keyboards work though (even on iOS).</p>
+<p>So if you’re facing issues with handling input,
+or if you want to make it really robust,
+either you make a custom keyboard with divs,
+or you use a single input with a ‘submit’ button.</p>
+<h2 id="5-letters-or-less">5 letters (or less)<a class="zola-anchor" href="#5-letters-or-less" aria-label="Anchor link for: 5-letters-or-less">🔗</a></h2>
+<p>Longer than that starts to become quite hard to guess,
+and then your friends and family will just feel bad.
+It’s fine if you’re around to monitor and give hints though.</p>
+<p>One reason is that when you think of a word,
+you need to count out the letters,
+and it becomes harder as you go.</p>
+<p>I don’t think it’s that longer words are inherently harder,
+since they can give a chance to reveal more letters,
+but that might also contribute to the problem.</p>
+<h2 id="show-letters-in-the-grid">Show letters in the grid<a class="zola-anchor" href="#show-letters-in-the-grid" aria-label="Anchor link for: show-letters-in-the-grid">🔗</a></h2>
+<p>My first design had an input element
+for people to enter their guess
+and then it would add their guess to the grid above.
+This would cause confusion by having no response
+when trying to submit a guess, because
+it was hard to see that there were too few letters.</p>
+<p>Here’s how it looked:</p>
+<p><img src="/not-wordle-v1.png" alt="screenshot of v1" /></p>
+<p>While there’s a counter at the bottom,
+it would either get covered up by the keyboard,
+or people would not think or realise that it updated.</p>
+<p>Here’s the benefits of the design:</p>
+<ul>
+<li>See your guess in context, before submitting.</li>
+<li>Immediately see which letters are missing, and how many.</li>
+<li>Fill in the letters you know.
+<ul>
+<li>Don’t delete the whole word to change your guess.</li>
+</ul>
+</li>
+<li>Use less space on the grid.</li>
+</ul>
+<h2 id="set-height-and-width-for-cells">Set height and width for cells<a class="zola-anchor" href="#set-height-and-width-for-cells" aria-label="Anchor link for: set-height-and-width-for-cells">🔗</a></h2>
+<p>This applies more to my initial design,
+which used <code>div</code> elements instead of input fields.</p>
+<p>If you’re using divs to show the grid,
+then empty cells just disappear.</p>
+<p>Set a height and width anyway,
+so that it looks nice and consistent,
+instead of the (quite ugly) default style,
+which is too wide, and quite small
+(even if you increase base font size —
+you’ll have to change that as well).</p>
+<h2 id="add-a-start-button">Add a start button<a class="zola-anchor" href="#add-a-start-button" aria-label="Anchor link for: add-a-start-button">🔗</a></h2>
+<p>A start button at the bottom is nice,
+so that you can start the game
+without having to reach to the top of the screen,
+which is always awkward.</p>
+<h2 id="don-t-add-a-border-for-keyboard-references">Don’t add a border for keyboard references<a class="zola-anchor" href="#don-t-add-a-border-for-keyboard-references" aria-label="Anchor link for: don-t-add-a-border-for-keyboard-references">🔗</a></h2>
+<p>There’s a minor issue in my version 2 screenshot:
+the keyboard references for the ‘enter’ key
+look like buttons,
+so some people try pressing those instead
+of the enter button on their keyboard.</p>
+<h2 id="final-design">Final design<a class="zola-anchor" href="#final-design" aria-label="Anchor link for: final-design">🔗</a></h2>
+<p><img src="/not-wordle-v2.png" alt="screenshot of v1" /></p>
+<p>Give <a href="/not-wordle-v2.html">Ceci n’est pas Wordle</a> a try!</p>
+<h2 id="make-your-own">Make your own<a class="zola-anchor" href="#make-your-own" aria-label="Anchor link for: make-your-own">🔗</a></h2>
+<p>You can just copy the HTML, change the <code>WORD</code> variable <sup class="footnote-reference"><a href="#1">1</a></sup>,
+and then share it with someone!</p>
+<p><a href="/not-wordle-v2.html" download>Download Wordle clone</a></p>
+<p>Remember to pick a 5 letter word or less,
+unless you’re there to give hints.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>look for <code>const WORD = '&lt;a-word&gt;'</code></p>
+</div>
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;not-wordle.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

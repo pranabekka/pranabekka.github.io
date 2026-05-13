@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+NAY Ain’t YAML (2)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>NAY Ain’t YAML (2)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#fix-whitespace">Fix whitespace</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#list">List</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#fix-indentation-hell">Fix indentation hell</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#no-type-coercion">No type coercion</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#numbers">Numbers</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#booleans">Booleans</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#special-types">Special types</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#type-annotations">Type annotations</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#strings">Strings</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#commenting">Commenting</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/nay-aint-yaml/#">&#x2F;&#x2F;&#x2F;&#x2F;</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>YAML just ain’t it.</p>
+<p>They managed syntax rules more complex than Markdown.</p>
+<ol>
+<li>
+<p>Indentation uses however many spaces you like.
+Then more indentation depends on that?</p>
+<pre class="z-code"><code><span class="z-text z-plain">pretty:
+ sure:
+   this:
+    is:
+        valid
+    maybe not:
+     no clue
+</span></code></pre>
+</li>
+<li>
+<p>Nesting can go kinda wild,
+and the multi-line “flow” syntax
+uses funky spacing rules:</p>
+<pre class="z-code"><code><span class="z-text z-plain">i: {
+  think: this,
+  is: what,
+  it&#39;s: like?,
+ }
+</span></code></pre>
+<p>The <code>}</code> needs to be at least a space past
+the line for the <code>{</code>.</p>
+</li>
+<li>
+<p>Directives kinda weird.</p>
+</li>
+<li>
+<p>Tags <em>really</em> weird.</p>
+</li>
+<li>
+<p>Only reference on the site is a spec.
+Ain’t easy to read.</p>
+</li>
+<li>
+<p>63 ways to write strings, apparently.</p>
+</li>
+<li>
+<p>There’s several special symbols for values,
+and they’ll do all kinds of odd things
+or fall back to strings if they fail.</p>
+<p>Take the Norway problem, for example.</p>
+</li>
+</ol>
+<p>Lot of advanced features better as extension,
+like tags, directives, aliases, references,… objects?
+Borrow extension design from config and policy langs
+like CUE, KCL, Dhall n Nickel.</p>
+<h2 id="fix-whitespace">Fix whitespace<a class="zola-anchor" href="#fix-whitespace" aria-label="Anchor link for: fix-whitespace">🔗</a></h2>
+<p>Use tabs.
+One per nesting level.</p>
+<pre class="z-code"><code><span class="z-text z-plain">NAY:
+	Ain&#39;t:
+		YAML
+</span></code></pre>
+<p>Recommended tab width 3.
+Two too little.
+Four too much.
+Can adjust to preference tho.</p>
+<h2 id="list">List<a class="zola-anchor" href="#list" aria-label="Anchor link for: list">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">*	NAY
+	*	Ain&#39;t
+		*	YAML
+</span></code></pre>
+<p>Tab after marker to align right.
+Don’t mix spaces.</p>
+<p>Mixing spaces:</p>
+<pre class="z-code"><code><span class="z-text z-plain">* NAY: Ain&#39;t YAML
+  NAY:
+	Ain&#39;t:
+		YAML
+</span></code></pre>
+<p>Only tabs:</p>
+<pre class="z-code"><code><span class="z-text z-plain">*	NAY: Ain&#39;t YAML
+	NAY:
+		Ain&#39;t:
+			YAML
+</span></code></pre>
+<h2 id="fix-indentation-hell">Fix indentation hell<a class="zola-anchor" href="#fix-indentation-hell" aria-label="Anchor link for: fix-indentation-hell">🔗</a></h2>
+<p><code>}</code> closing uses same indentation
+as line for <code>{</code> opening:</p>
+<pre class="z-code"><code><span class="z-text z-plain">thout: {
+any:
+indentation;
+at: all
+}
+</span></code></pre>
+<p>End pairs with <code>;</code>.
+<code>,</code> used way more often in values.
+Use quotes for special chars in inline string.</p>
+<pre class="z-code"><code><span class="z-text z-plain">{
+NAY:
+&quot;Ain&#39;t: YAML&quot;;
+}
+</span></code></pre>
+<p>Can also do strings:</p>
+<pre class="z-code"><code><span class="z-text z-plain">NAY:
+	Ain&#39;t: &quot;&quot;&quot;
+	YAML
+	&quot;&quot;&quot;
+</span></code></pre>
+<p>And lists, as a matter of course:</p>
+<pre class="z-code"><code><span class="z-text z-plain">NAY: [
+Ain&#39;t;
+YAML
+]
+</span></code></pre>
+<h2 id="no-type-coercion">No type coercion<a class="zola-anchor" href="#no-type-coercion" aria-label="Anchor link for: no-type-coercion">🔗</a></h2>
+<h3 id="numbers">Numbers<a class="zola-anchor" href="#numbers" aria-label="Anchor link for: numbers">🔗</a></h3>
+<p>Starting with a number means
+whole thing gotta be a number.</p>
+<p>Any of these followed by a number
+must also be valid numbers:
+<code>.</code>, <code>-</code>, <code>-.</code>, <code>+</code>, <code>+.</code>.</p>
+<p>Use quotes to use these for string.
+Inline quotes will be part of string.</p>
+<p><code>#inf</code>, <code>#-inf</code> and <code>#nan</code> are also numbers.</p>
+<pre class="z-code"><code><span class="z-text z-plain">errors:
+	*	-12l8
+	*	-1 is not fine
+	*	#nan is not a number
+not errors:
+	*	-1
+	*	- this is fine
+	*	\#nan is not a number
+</span></code></pre>
+<p>Rules adapted from KDL.</p>
+<h3 id="booleans">Booleans<a class="zola-anchor" href="#booleans" aria-label="Anchor link for: booleans">🔗</a></h3>
+<p><code>#false</code> and <code>#true</code>.</p>
+<p>Copied from KDL.</p>
+<h3 id="special-types">Special types<a class="zola-anchor" href="#special-types" aria-label="Anchor link for: special-types">🔗</a></h3>
+<p><code>#</code> for special types
+like <code>#inf</code> and <code>#true</code>.
+Can’t use for strings; use backslash escape or quotes.</p>
+<pre class="z-code"><code><span class="z-text z-plain">string: \#inf is for infinity
+string: &quot;#inf is for infinity&quot;
+</span></code></pre>
+<p>Adapted from KDL.</p>
+<h2 id="type-annotations">Type annotations<a class="zola-anchor" href="#type-annotations" aria-label="Anchor link for: type-annotations">🔗</a></h2>
+<p>NAY don’t care bout annotations.
+Just gotta be in the right place.
+Apps handle types.</p>
+<p>Put type in <code>()</code> before <code>:</code>, like this:</p>
+<pre class="z-code"><code><span class="z-text z-plain">accent (colour): &quot;#f4de90&quot;
+background (colour): &quot;#000000&quot;
+foreground (colour): &quot;#b8b8b8&quot;
+</span></code></pre>
+<p>Annotation must have space before <code>(</code>
+and none between <code>)</code> and <code>:</code>.</p>
+<p>Put list item type above item:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(this)
+*	NAY
+(relation)
+*	Ain&#39;t
+(that)
+*	YAML
+</span></code></pre>
+<h2 id="strings">Strings<a class="zola-anchor" href="#strings" aria-label="Anchor link for: strings">🔗</a></h2>
+<p>Strings are wrapped by default.
+Line breaks are converted to whitespace.</p>
+<pre class="z-code"><code><span class="z-text z-plain">*	These strings are the same
+*	These strings
+	are the same
+</span></code></pre>
+<p>Initial indentation is ignored.
+Further whitespace is preserved.</p>
+<pre class="z-code"><code><span class="z-text z-plain">*	This one
+		will have a tab
+</span></code></pre>
+<p>Escapes don’t work.</p>
+<pre class="z-code"><code><span class="z-text z-plain">*	This has \n as literal characters, no newline
+</span></code></pre>
+<p>Use <code>#&quot;</code> to use escapes and preserve line breaks.</p>
+<pre class="z-code"><code><span class="z-text z-plain">*	#&quot;These strings\nare the same
+*	#&quot;These strings
+	are the same
+</span></code></pre>
+<p>Use <code>#&quot;&quot;&quot;</code> and <code>&quot;&quot;&quot;#</code> to use escapes
+and preserve line breaks
+in delimited strings.</p>
+<pre class="z-code"><code><span class="z-text z-plain">*	#&quot;&quot;&quot;
+These strings
+are the same
+&quot;&quot;&quot;#
+*	#&quot;&quot;&quot;
+These strings\nare the same
+&quot;&quot;&quot;#
+*	&quot;&quot;&quot;
+This one
+isn&#39;t the same
+&quot;&quot;&quot;
+</span></code></pre>
+<p>Double quotes are like any other character in the string,
+unless there’s three at the beginning like <code>key: &quot;&quot;&quot;</code>.
+Triple quotes aren’t part of the string.</p>
+<h2 id="commenting">Commenting<a class="zola-anchor" href="#commenting" aria-label="Anchor link for: commenting">🔗</a></h2>
+<p><code># </code> for comment.
+At least one space after <code>#</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain"># NAY: what?
+NAY: Ain&#39;t YAML
+</span></code></pre>
+<p>Lines indented further than comment
+also part of comment.</p>
+<pre class="z-code"><code><span class="z-text z-plain"># No data here. Just two comments.
+# NAY:
+	Ain&#39;t:
+		YAML
+</span></code></pre>
+<h2 id="">////<a class="zola-anchor" href="#" aria-label="Anchor link for: ">🔗</a></h2>
+<pre class="z-code"><code><span class="z-text z-plain">NAY:
+	*	NAY
+	*	Ain&#39;t
+	*	YAML
+Ain&#39;t:
+	Ain&#39;t
+YAML:
+	*	YAML
+	*	Ain&#39;t
+	*	Markup
+	*	Language
+# but:
+	i&#39;d prolly use nestedtext
+	wi&#39; tabs n types
+</span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;nay-aint-yaml.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

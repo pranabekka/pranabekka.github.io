@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Program representation
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Program representation
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation/#s-expressions">S-expressions</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation/#code-breakdown">Code breakdown</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation/#representation">Representation</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/program-representation/#benefits">Benefits</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>To enable easy collaboration between visual coders and text coders.</p>
+<hr />
+<p>Take the following text representation:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(make-command greet [name]
+	(write &quot;Hello, {name}.&quot;)
+)
+
+(greet &quot;Pranab&quot;)
+</span></code></pre>
+<h2 id="s-expressions">S-expressions<a class="zola-anchor" href="#s-expressions" aria-label="Anchor link for: s-expressions">🔗</a></h2>
+<p>This text representation is known as an s-expression.</p>
+<ul>
+<li>
+<p>The program is represented as lists and sublists.</p>
+</li>
+<li>
+<p>There are two types of lists:
+a command list, and an information list.</p>
+</li>
+<li>
+<p>Command lists give commands to the computer,
+and information lists describe
+details you want the computer to remember.</p>
+</li>
+<li>
+<p>List items are separated by spaces,
+unless the spaces are within quoted text (<code>&quot;quoted text&quot;</code>).</p>
+</li>
+<li>
+<p>A command list begins and ends with parentheses (<code>()</code>).</p>
+<ul>
+<li>The first item in a command list is a command to the computer.
+In this code, <code>make-command</code>, <code>write</code> and <code>greet</code> are commands.</li>
+</ul>
+<p>You might know commands as functions,
+which is a term borrowed from mathematics.</p>
+<ul>
+<li>
+<p>The rest of the items in a list are details
+that the computer needs to know
+before performing the command.</p>
+<p>The <code>write</code> command needs to know
+the text it needs to write.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>An information list begins and ends with square brackets (<code>[]</code>).</p>
+<p>We use commands to manage this information —
+such as <code>save-file</code> and <code>open-file</code>.</p>
+</li>
+</ul>
+<h2 id="code-breakdown">Code breakdown<a class="zola-anchor" href="#code-breakdown" aria-label="Anchor link for: code-breakdown">🔗</a></h2>
+<p>Here’s another look at the code
+so that I can explain what it does.</p>
+<pre class="z-code"><code><span class="z-text z-plain">(make-command greet [name]
+	(write &quot;Hello, {name}.&quot;)
+)
+
+(greet &quot;Pranab&quot;)
+</span></code></pre>
+<ul>
+<li>
+<p>First, we create a new command.</p>
+<pre class="z-code"><code><span class="z-text z-plain">(make-command greet [name]
+	(write &quot;Hello, {name}.&quot;)
+)
+</span></code></pre>
+<ul>
+<li>
+<p><code>make-command</code> is a command for defining new commands.
+Other items in this list represent information needed by it.</p>
+</li>
+<li>
+<p><code>greet</code> is the name of this new command.</p>
+</li>
+<li>
+<p><code>[name]</code> is a list of details the new command needs.
+The new <code>greet</code> command only needs a name.</p>
+<p>When we command the computer to greet someone,
+we give it a name.
+In our code, the name we give is “Pranab”.</p>
+</li>
+<li>
+<p><code>(write &quot;Hello, {name}.&quot;)</code> is another command
+that needs to be performed as part of
+the new <code>greet</code> command that we’re defining.</p>
+</li>
+<li>
+<p>The <code>write</code> command will replace <code>{name}</code>
+with the name given to the <code>greet</code> command.</p>
+<p>In <code>(greet &quot;Pranab&quot;)</code> we give the <code>greet</code> command
+<code>&quot;Pranab&quot;</code> as the only information.
+The first (and only) information expected
+by the <code>greet</code> command is called <code>name</code>.</p>
+<p>So if I command the computer to <code>(greet &quot;Pranab&quot;)</code>,
+the <code>write</code> command will replace <code>{name}</code> with “Pranab”
+and write “Hello, Pranab.”</p>
+<p>If I command the computer to <code>(greet &quot;you&quot;)</code>,
+the <code>write</code> command will replace <code>{name}</code> with “you”
+and write “Hello, you.”</p>
+</li>
+</ul>
+</li>
+<li>
+<p>At the end of the code,
+we use the new <code>greet</code> command that we created.</p>
+<pre class="z-code"><code><span class="z-text z-plain">(greet &quot;Pranab&quot;)
+</span></code></pre>
+</li>
+</ul>
+<p>For reference, here’s all the code again:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(make-command greet [name]
+	(write &quot;Hello, {name}.&quot;)
+)
+
+(greet &quot;Pranab&quot;)
+</span></code></pre>
+<h2 id="representation">Representation<a class="zola-anchor" href="#representation" aria-label="Anchor link for: representation">🔗</a></h2>
+<p>The above code is functionally equivalent to the following:</p>
+<pre class="z-code"><code><span class="z-text z-plain">(make-command greet [name] (write &quot;Hello, {name}.&quot;))
+
+(greet &quot;Pranab&quot;)
+</span></code></pre>
+<p>Let’s represent that in a few different ways.</p>
+<p>image of a coloured s-expression</p>
+<h2 id="benefits">Benefits<a class="zola-anchor" href="#benefits" aria-label="Anchor link for: benefits">🔗</a></h2>
+<p>people can code in the way that makes sense to them.
+coders can use a visual editor to manipulate code
+at the level of its structure instead of its text.
+no more missing commas and semicolons.
+coders with highly personal workflows
+can continue using their existing tools and workflows.
+beginners can use visual coding to avoid confusing syntax errors,
+like missing parentheses,
+and focus on the application they want to create.
+visual coders and text coders can easily collaborate.
+one can write text and the other can use a visual editor.
+they can learn each other’s tools with minimal fuss.
+they won’t have to struggle to understand
+the contents of the other’s screen.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;program-representation.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

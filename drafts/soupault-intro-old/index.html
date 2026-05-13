@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+A better Soupault introduction (old)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>A better Soupault introduction (old)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#expected-knowledge">Expected knowledge</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#why-this-is-better">Why this is better</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#overview">Overview</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#setup">Setup</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#read-your-markup-format-of-choice">Read your markup format of choice</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#create-a-template-file">Create a template file</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#write-a-page">Write a page</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#generate-and-preview">Generate and preview</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#creating-an-index">Creating an index</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#add-a-page-to-index">Add a page to index</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#extract-metadata">Extract metadata</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#generate-an-index">Generate an index</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#make-space-for-index-html">Make space for index HTML</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#insert-index-html">Insert index HTML</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#widgets">Widgets!</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#final-setup">Final setup</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#folder-structure">Folder structure</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#soupault-toml">soupault.toml</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#site-index-md">site&#x2F;index.md</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#site-hello-md">site&#x2F;hello.md</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#templates-default-html">templates&#x2F;default.html</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/soupault-intro-old/#learn-more">Learn more</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Soupault is an SSG that works by manipulating HTML,
+which makes it the most capable and flexible one I know,
+but the documentation can be a bit confusing.</p>
+<p><a href="https://soupault.app">Soupault</a></p>
+<p>NOTE: If you’re using Windows,
+you might want to change all paths
+to use <code>\</code> instead of <code>/</code> for path separators.
+See the relevant section in the documentation:</p>
+<p><a href="https://soupault.app/reference-manual/#using-soupault-on-windows">Using soupault on Windows</a></p>
+<h2 id="expected-knowledge">Expected knowledge<a class="zola-anchor" href="#expected-knowledge" aria-label="Anchor link for: expected-knowledge">🔗</a></h2>
+<ul>
+<li>the CLI</li>
+<li>file paths</li>
+<li>TOML and/or other config files</li>
+<li>HTML</li>
+<li>CSS</li>
+<li>jinja style templates</li>
+</ul>
+<h2 id="why-this-is-better">Why this is better<a class="zola-anchor" href="#why-this-is-better" aria-label="Anchor link for: why-this-is-better">🔗</a></h2>
+<p>The official blog quickstart introduction is a bit front-loaded,
+instead of gradually introducing concepts,
+and the reference manual has a decent introduction
+in the “Overview” section,
+but it comes after extensive build and install instructions,
+and is followed by another hefty config example.</p>
+<p>This guide is meant to ramp up slowly,
+starting with the absolute basics,
+and introducing things as they’re required.</p>
+<p><a href="https://soupault.app/tips-and-tricks/quickstart/">Blog quickstart</a></p>
+<p><a href="https://soupault.app/reference-manual/#overview">Overview</a></p>
+<h2 id="overview">Overview<a class="zola-anchor" href="#overview" aria-label="Anchor link for: overview">🔗</a></h2>
+<p>Soupault works by breaking down a template
+into an HTML element tree,
+then it goes through the <code>site</code> folder,
+turn each page into HTML,
+and if it doesn’t have an <code>&lt;html&gt;</code> element,
+it insert it into the template.
+The results are then inserted into the <code>build</code> folder.</p>
+<p>All of these things can be changed.</p>
+<p>If you don’t want it to do templates,
+then set <code>generator_mode</code> to <code>false</code>.</p>
+<p>If you want to change which folder it searches for content,
+change the <code>site_dir</code> option.</p>
+<p>If you want to change how it defines a complete page<sup class="footnote-reference"><a href="#1">1</a></sup>,
+change the <code>complete_page_selector</code> option.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>by default a page with the <code>&lt;html&gt;</code> element.
+i.e., a page that isn’t put into the template.</p>
+</div>
+<p>If you want to change where it outputs files,
+change the <code>build_dir</code> option.</p>
+<p>With that said, let’s get started!</p>
+<h2 id="setup">Setup<a class="zola-anchor" href="#setup" aria-label="Anchor link for: setup">🔗</a></h2>
+<p>First, we tell Soupault where our input and output will be.
+Configuration is put in the <code>soupault.toml</code> file:</p>
+<pre class="z-code"><code><span class="z-text z-plain">[settings]
+
+  # Read files from here
+  site_dir = &quot;site&quot;
+  
+  # Write files here
+  build_dir = &quot;build&quot;
+</span></code></pre>
+<h2 id="read-your-markup-format-of-choice">Read your markup format of choice<a class="zola-anchor" href="#read-your-markup-format-of-choice" aria-label="Anchor link for: read-your-markup-format-of-choice">🔗</a></h2>
+<p>By default, Soupault just copies files over.
+This means CSS, images and other assets
+are copied over as is,
+but then so are our Markdown files.</p>
+<p>We need to tell it which pages to treat specially,
+for which we’ll choose markdown files (ending in “md”),
+and we’ll tell soupault where to insert the HTML
+that is generated.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[settings]
+
+  # Previous config
+  site_dir = &quot;site&quot;
+  build_dir = &quot;build&quot;
+
+  # Treat files with &quot;md&quot; extension as &quot;page_files&quot;
+  page_file_extensions = [ &quot;md&quot; ]
+  
+  # &quot;page_files&quot; generate incomplete HTML.
+  # They&#39;re not full HTML pages,
+  # so we put that inside a template HTML page.
+  # By default it goes at the end of the body,
+  # which can be changed with default_content_selector
+  default_template_file = &quot;templates/default.html&quot;
+
+# Pre-process &quot;page_files&quot;
+[preprocessors]
+
+  # Run &quot;md&quot; &quot;page_files&quot; through a markdown processor
+  md = &quot;cmark&quot;
+</span></code></pre>
+<p>Remember to install cmark.
+It’s available in the package manager
+for most operating systems.</p>
+<p><a href="https://github.com/commonmark/cmark">Cmark</a></p>
+<p>See how Soupault doesn’t depend on Markdown,
+or even a specific implementation of Markdown?
+You could easily use your preferred Markdown format,
+or an entirely different markup format like djot instead.</p>
+<p><a href="https://pranabekka.github.io/djot-1/">Introduction to Djot</a></p>
+<p><a href="https://djot.net">Djot home page</a></p>
+<h2 id="create-a-template-file">Create a template file<a class="zola-anchor" href="#create-a-template-file" aria-label="Anchor link for: create-a-template-file">🔗</a></h2>
+<p>Since “page_files” don’t generate complete HTML documents,
+we must insert it into a full HTML document.</p>
+<p>We’ve specified this as “templates/default.html”,
+so that’s where we’ll insert the following:</p>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Generated with Soupault&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- content will go here --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</span></code></pre>
+<h2 id="write-a-page">Write a page<a class="zola-anchor" href="#write-a-page" aria-label="Anchor link for: write-a-page">🔗</a></h2>
+<p>For Soupault to actually generate a page,
+you’ll need to write something.</p>
+<p>Let’s create an <code>index.md</code> file in the <code>site</code> folder <sup class="footnote-reference"><a href="#2">2</a></sup>:</p>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>Remember, we’ve configured Soupault
+to read files from <code>site/</code>,
+and pre-process files with the <code>md</code> extension.</p>
+</div>
+<pre class="z-code"><code><span class="z-text z-plain"># Index
+
+Welcome to the index.
+</span></code></pre>
+<p>Now we can start generating a site with Soupault.</p>
+<h2 id="generate-and-preview">Generate and preview<a class="zola-anchor" href="#generate-and-preview" aria-label="Anchor link for: generate-and-preview">🔗</a></h2>
+<p>To generate the site, just run <code>soupault</code>.</p>
+<p>It will automatically create a build folder,
+if there isn’t one already,
+and inside it there should be an index.html file.</p>
+<p>To serve your pages for preview, use this simple one-liner:</p>
+<pre class="z-code"><code><span class="z-text z-plain">python3 -m http.server --directory build
+</span></code></pre>
+<p>It’ll give you an address which you can open in your browser.</p>
+<p>To automatically rebuild the site, use watch:</p>
+<pre class="z-code"><code><span class="z-text z-plain">watch --interval 1 &#39;soupault&#39;
+</span></code></pre>
+<p>If you’re using Windows instead, just use an infinite loop:</p>
+<pre class="z-code"><code><span class="z-text z-plain">while (1) {soupault; sleep 1}
+</span></code></pre>
+<p>This will run <code>soupault</code> every second,
+and you only need to reload the page to see your changes.</p>
+<p>And that’s it!
+You have a basic site up and running!
+But Soupault has more powerful features
+to help you create the site you really want.</p>
+<h2 id="creating-an-index">Creating an index<a class="zola-anchor" href="#creating-an-index" aria-label="Anchor link for: creating-an-index">🔗</a></h2>
+<p>Soupault doesn’t have any default content model.
+It doesn’t require pages to have specific metadata in a given format.
+Instead, you tell it what metadata to extract from where,
+and what to do with it.</p>
+<h3 id="add-a-page-to-index">Add a page to index<a class="zola-anchor" href="#add-a-page-to-index" aria-label="Anchor link for: add-a-page-to-index">🔗</a></h3>
+<p>It would be quite silly for an index to only list itself,
+so let’s create another page (in <code>site/</code>).
+Maybe <code>hello.md</code>.</p>
+<p>Since we usually sort posts by date,
+we’ll also add a date.
+Soupault will need a way to identify it,
+so we’ll put it in a <code>div</code> with the id <code>post-date</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain"># Hello, world
+
+&lt;div id=&quot;post-date&quot;&gt;
+  2077-07-07
+&lt;/div&gt;
+
+This is a page. Wow.
+</span></code></pre>
+<h3 id="extract-metadata">Extract metadata<a class="zola-anchor" href="#extract-metadata" aria-label="Anchor link for: extract-metadata">🔗</a></h3>
+<p>Now we need to tell Soupault what metadata we want,
+and how to get that metadata.</p>
+<p>For the index, we’ll be using the title and the date.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[index.fields.title]
+  selector = [&quot;h1&quot;]
+  
+[index.fields.date]
+  selector = [&quot;div#post-date&quot;]
+  fallback_to_content = true # get the date from the contents, not attribute
+</span></code></pre>
+<p>Note how we’re using the “h1” selector for the title.
+This is because <code>cmark</code> turns <code># Index</code> into an <code>h1</code>,
+and Soupault runs the <code>preprocessors</code>
+before it starts working with the page.</p>
+<h3 id="generate-an-index">Generate an index<a class="zola-anchor" href="#generate-an-index" aria-label="Anchor link for: generate-an-index">🔗</a></h3>
+<p>Now that we have the metadata, let’s generate the index.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[index]
+  index = true
+  
+  # We specified date as one of the index fields
+  # in [index.fields.date]
+  sort_by = &quot;date&quot;
+  
+  # Treat values as dates
+  sort_type = &quot;calendar&quot;
+  
+  # Use the YYYY-MM-DD format for dates
+  date_formats = [&quot;%F&quot;]
+  
+  # Ensure all dates are valid
+  strict_sort = true
+</span></code></pre>
+<p>This is only the index data though.
+We need a place to put this before we turn it into HTML.</p>
+<h3 id="make-space-for-index-html">Make space for index HTML<a class="zola-anchor" href="#make-space-for-index-html" aria-label="Anchor link for: make-space-for-index-html">🔗</a></h3>
+<p>Soupault will need to know where to put the index.
+We’ll just add a <code>div</code> with the <code>index</code> id
+to the index.md file.
+It should look like this:</p>
+<pre class="z-code"><code><span class="z-text z-plain"># Index
+
+Welcome to the index.
+
+&lt;div id=&quot;main-index&quot;&gt;&lt;/div&gt;
+</span></code></pre>
+<p>We’ll tell Soupault to put the index in <code>div#main-index</code>.</p>
+<h3 id="insert-index-html">Insert index HTML<a class="zola-anchor" href="#insert-index-html" aria-label="Anchor link for: insert-index-html">🔗</a></h3>
+<p>Now that we have the index data,
+and a place to put the index,
+we can render it into html.</p>
+<p>Before we do that, we must understand views.</p>
+<p>Since you might want to have different ways to index data,
+such as grouping posts by author or tag,
+Soupault lets you define “views”.
+Views have an “index_selector” property,
+which will put the index HTML
+into the element which matches that selector.
+This allows you to have multiple index views in the same page.
+Yes, we’ve already sorted it by date,
+but you can use index view options
+or index rendering options.</p>
+<details><summary>Index views and options links</summary>
+  <p><a href="https://soupault.app/reference-manual/#index-views">Index views</a></p>
+<p><a href="https://soupault.app/reference-manual/#index-view-options">Index view options</a></p>
+<p><a href="https://soupault.app/reference-manual/#ways-to-control-index-rendering">Index rendering options</a></p>
+
+</details>
+<p>In our <code>index.md</code> file,
+we’re using a div with the id “main-index”,
+so we want an index view that applies to “div#main-index”.</p>
+<pre class="z-code"><code><span class="z-text z-plain">[index.views.main]
+  # Use the main view for divs with the &quot;main-index&quot; id
+  index_selector = &quot;div#main-index&quot;
+  
+  # The html to generate for each item
+  index_item_template = &quot;&quot;&quot;
+    &lt;h2&gt;
+      &lt;a href=&quot;{{url}}&quot;&gt;
+        {{title}}
+      &lt;/a&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;Date: {{date}}&lt;/p&gt;
+  &quot;&quot;&quot;
+</span></code></pre>
+<p><code>{{url}}</code>, <code>{{title}}</code>, and <code>{{date}}</code> tell Soupault
+to replace them with the related metadata fields.
+The title and date are fields that we defined in <code>[index.fields]</code>,
+and the url is a built-in field
+that is automatically collected by Soupault.</p>
+<p><a href="https://soupault.app/reference-manual/#built-in-index-fields">Built-in index fields</a></p>
+<p>Now you can reload the page in the browser
+and see your index appear!</p>
+<h2 id="widgets">Widgets!<a class="zola-anchor" href="#widgets" aria-label="Anchor link for: widgets">🔗</a></h2>
+<p>Soupault’s power feature is the ability to manipulate HTML.</p>
+<p>For this, it uses an extensive set of “widgets”,
+though it provides a Lua scripting interface as well,
+where you can create your own widgets.</p>
+<p><a href="https://soupault.app/reference-manual/#widgets">Widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#built-in-widgets">Built-in widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#plugins">Lua plugins/widgets</a></p>
+<p>As an example, we’ll use an <code>insert_html</code> widget
+to add in the author name:</p>
+<pre class="z-code"><code><span class="z-text z-plain"># add-author is a name we choose
+# to help keep track of our widgets
+[widgets.add-author]
+
+  # Widget type
+  widget = &quot;insert_html&quot;
+  
+  # Replace &quot;Pranab&quot; with your name
+  html = &quot;&lt;p&gt;by Pranab&lt;/p&gt;&quot;
+  
+  # Insert the HTML after the title
+  selector = &quot;h1&quot;
+  action = &quot;insert_after&quot;
+</span></code></pre>
+<p>This will insert a paragraph with the text “by Pranab” after the h1.
+Remember to change “Pranab” with your name.</p>
+<p>Have a look at the built-in widgets as well as the Lua plugins for more.</p>
+<p><a href="https://soupault.app/reference-manual/#built-in-widgets">Built-in widgets</a></p>
+<p><a href="https://soupault.app/reference-manual/#plugins">Lua plugins/widgets</a></p>
+<h2 id="final-setup">Final setup<a class="zola-anchor" href="#final-setup" aria-label="Anchor link for: final-setup">🔗</a></h2>
+<h3 id="folder-structure">Folder structure<a class="zola-anchor" href="#folder-structure" aria-label="Anchor link for: folder-structure">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">soupault-blog/
+  soupault.toml
+  site/
+    index.md
+    hello.md
+  templates/
+    default.html
+</span></code></pre>
+<h3 id="soupault-toml"><code>soupault.toml</code><a class="zola-anchor" href="#soupault-toml" aria-label="Anchor link for: soupault-toml">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">[settings]
+  site_dir = &quot;site&quot;
+  build_dir = &quot;build&quot;
+  
+  page_file_extensions = [ &quot;md&quot; ]
+  default_template_file = &quot;templates/default.html&quot;
+
+[preprocessors]
+  md = &quot;cmark&quot;
+
+[index]
+  index = true
+  sort_by = &quot;date&quot;
+  sort_type = &quot;calendar&quot;
+  date_formats = [&quot;%F&quot;]
+  strict_sort = true
+
+[index.fields.title]
+  selector = [&quot;h1&quot;]
+  
+[index.fields.date]
+  selector = [&quot;div#post-date&quot;]
+  fallback_to_content = true
+
+[index.views.main]
+  index_selector = &quot;div#main-index&quot;
+  index_item_template = &quot;&quot;&quot;
+    &lt;h2&gt;
+      &lt;a href=&quot;{{url}}&quot;&gt;
+        {{title}}
+      &lt;/a&gt;
+    &lt;/h2&gt;
+    &lt;p&gt;Date: {{date}}&lt;/p&gt;
+  &quot;&quot;&quot;
+
+[widgets.add-author]
+  widget = &quot;insert_html&quot;
+  html = &quot;&lt;p&gt;by Pranab&lt;/p&gt;&quot;
+  selector = &quot;h1&quot;
+  action = &quot;insert_after&quot;
+</span></code></pre>
+<h3 id="site-index-md"><code>site/index.md</code><a class="zola-anchor" href="#site-index-md" aria-label="Anchor link for: site-index-md">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain"># Index
+
+Welcome to the index.
+
+&lt;div id=&quot;main-index&quot;&gt;&lt;/div&gt;
+</span></code></pre>
+<h3 id="site-hello-md"><code>site/hello.md</code><a class="zola-anchor" href="#site-hello-md" aria-label="Anchor link for: site-hello-md">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain"># Hello, world
+
+&lt;div id=&quot;post-date&quot;&gt;
+  2077-07-07
+&lt;/div&gt;
+
+This is a page. Wow.
+</span></code></pre>
+<h3 id="templates-default-html"><code>templates/default.html</code><a class="zola-anchor" href="#templates-default-html" aria-label="Anchor link for: templates-default-html">🔗</a></h3>
+<pre class="z-code"><code><span class="z-text z-plain">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Generated with Soupault&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- content will go here --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</span></code></pre>
+<h2 id="learn-more">Learn more<a class="zola-anchor" href="#learn-more" aria-label="Anchor link for: learn-more">🔗</a></h2>
+<p>If you want to see more options to set up a blog,
+have a look at the official blog quickstart,
+as well as the reference manual.</p>
+<p><a href="https://soupault.app/tips-and-tricks/quickstart">Blog quickstart</a></p>
+<p><a href="https://soupault.app/reference-manual/">Reference manual</a></p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;soupault-intro-old.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

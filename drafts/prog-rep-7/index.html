@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Program representation (7)
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Program representation (7)
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+  <details class="contents">
+    <summary>Show/Hide contents</summary>
+    <ol>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/prog-rep-7/#syntax-description">Syntax description</a>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/prog-rep-7/#syntax-features">Syntax features</a>
+        
+          <ol>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/prog-rep-7/#easy-translation">Easy translation</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/prog-rep-7/#auto-formatting">Auto-formatting</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/prog-rep-7/#sharing">Sharing</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/prog-rep-7/#significant-whitespace">Significant whitespace</a>
+              </li>
+            
+              <li>
+                <a href="https://pranabekka.github.io/drafts/prog-rep-7/#accessible">Accessible</a>
+              </li>
+            
+          </ol>
+        
+      </li>
+    
+      <li>
+        <a href="https://pranabekka.github.io/drafts/prog-rep-7/#future">Future</a>
+        
+      </li>
+    
+    </ol>
+  </details>
+
+<hr>
+
+<p>Visual programming is <em>so close</em> to text programming.</p>
+<p>Have a look at the following
+code snippet and visual code.</p>
+<pre class="z-code"><code><span class="z-text z-plain">for fruit [&quot;orange&quot; &quot;banana&quot;]
+	peel fruit
+	eat fruit
+</span></code></pre>
+<p><img src="/prog-rep-blocks-unbracketed.svg" alt="Block representation of above code" /></p>
+<p>These are representations of the same program
+in the same programming language.
+I think their relation should be obvious.</p>
+<p>If I gave you the following visual representation,
+could you guess its text representation?</p>
+<p><img src="/prog-rep-guess.svg" alt="Block representation for code hidden below" /></p>
+<details><summary>Answer</summary>
+  <pre class="z-code"><code><span class="z-text z-plain">let name &quot;world&quot;
+greet name
+</span></code></pre>
+
+</details>
+<p>The key feature is that the visual representation
+is backed by the text representation
+<em>stored in a plain text file</em>.</p>
+<p>You can version control this file,
+edit it with text code editors,
+<code>grep</code> and <code>cat</code> the file,
+drag blocks around with your mouse
+and snap them together to edit it,
+and share the file with other people.
+There’s no conversion, exporting, or importing.</p>
+<p>Like how one person can write Markdown in Vim
+while another edits the file in a GUI app,
+one person can write code in Vim
+while another snaps blocks together in a GUI app.
+And they can both use these files directly.</p>
+<p>People can use a visual editor
+to learn programming without syntax errors.
+They can create packages used by text programmers.
+They can share code snippets.
+They can tap into the experience of text programmers.</p>
+<p>These connected representations
+provide first-class visual programming
+and <em>collaboration</em> with text programmers.</p>
+<h2 id="syntax-description">Syntax description<a class="zola-anchor" href="#syntax-description" aria-label="Anchor link for: syntax-description">🔗</a></h2>
+<p>If the syntax feels a bit fuzzy,
+here’s how it’s put together,
+so that the rest of the post makes sense.</p>
+<p>Here’s the rules for the text syntax:</p>
+<ul>
+<li>
+<p>The first identifier on a line is a function
+or core language construct, like <code>let</code>.
+<code>greet()</code> is the same as:</p>
+<pre class="z-code"><code><span class="z-text z-plain">greet
+</span></code></pre>
+</li>
+<li>
+<p>If the first item is the beginning of a literal,
+then that line is for the literal value.</p>
+<pre class="z-code"><code><span class="z-text z-plain">my_function
+&quot;A string literal&quot;
+[ &quot;An&quot; &quot;array&quot; &quot;literal&quot; ]
+{ key: &quot;value&quot; }
+</span></code></pre>
+</li>
+<li>
+<p>Everything else on the line is an argument
+to the function or language construct,
+separated from each other with spaces.
+The following example provides the strings
+<code>&quot;reader&quot;</code>, <code>&quot;Pranab&quot;</code> and <code>&quot;World&quot;</code> as arguments
+to the function <code>greet_all</code>.
+It’s like <code>greet_all(&quot;reader&quot;, &quot;Pranab&quot;, &quot;World&quot;)</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">greet_all &quot;reader&quot; &quot;Pranab&quot; &quot;World&quot;
+</span></code></pre>
+<p>We stripped out the commas and brackets,
+and used spaces to separate everything instead.</p>
+</li>
+<li>
+<p>To nest a function on the same line,
+as an argument to the main function on that line,
+use round brackets.</p>
+<pre class="z-code"><code><span class="z-text z-plain">greet ( input_prompt &quot;What&#39;s your name? &quot; )
+</span></code></pre>
+<p>The first identifier within the round brackets
+is the function name, and the rest are arguments.
+<code>input_prompt</code> prints “What’s your name?”
+before getting the user’s input,
+then returns that input to <code>greet</code>
+as an argument.</p>
+</li>
+<li>
+<p>An indented line is an argument
+to the last line before it
+that has less identation.</p>
+<pre class="z-code"><code><span class="z-text z-plain">greet
+	input_prompt &quot;What&#39;s your name? &quot;
+</span></code></pre>
+<p><code>greet</code> and <code>input_prompt</code> behave the same
+as in the last point.
+The only difference is the nesting method.</p>
+<pre class="z-code"><code><span class="z-text z-plain">greet_all
+	&quot;reader&quot;
+	&quot;Pranab&quot;
+	&quot;World&quot;
+</span></code></pre>
+<p>This is the same as the last <code>greet_all</code> example,
+except I split it up into multiple lines.</p>
+</li>
+</ul>
+<p>Here’s the examples for the block syntax,
+before I explain how it relates to the text:</p>
+<p><img src="/prog-rep-blocks-unbracketed.svg" alt="Block representation of first code snippet" /></p>
+<p><img src="/prog-rep-guess.svg" alt="Block representation of second code snippet" /></p>
+<p><img src="/prog-rep-sample-all.svg" alt="Sample blocks for function call, key-value pair, and list" /></p>
+<ul>
+<li>
+<p>All constructs have icons added on.</p>
+<ul>
+<li>
+<p>Functions have the little <code>f</code> icon.</p>
+</li>
+<li>
+<p>Identifier names, used for declaractions,
+have a “download” or “save” icon,
+as if we’re saving that name,
+or putting in a value.</p>
+</li>
+<li>
+<p>Variables, used to access their value,
+have an “upload” icon,
+as if we’re taking out the value.</p>
+</li>
+<li>
+<p>Arrays use a list icon.</p>
+</li>
+<li>
+<p>Key-value pairs use a graph icon
+with a block leading into a pair.</p>
+<ul>
+<li>
+<p>The key uses a key icon.</p>
+</li>
+<li>
+<p>The value uses the icon for its own type.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Strings use a quote icon on both ends of the block,
+like how we do it in text code.</p>
+</li>
+<li>
+<p>Number literals get a number icon.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Syntax elements with brackets get borders.</p>
+<ul>
+<li>
+<p>Round brackets for function calls
+are replaced with “pill” shaped blocks,
+where the ends are fully rounded
+to represent the round brackets.</p>
+</li>
+<li>
+<p>Square brackets for arrays
+are replaced with square borders.</p>
+</li>
+<li>
+<p>Curly brackets for key-value pairs
+are replaced with curly borders.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Syntax elements without brackets get a faded border
+to indicate a mouse target,
+and to visually separate them from other constructs.
+This includes the main function on a line.</p>
+</li>
+<li>
+<p>The main function on a line gets a rounded border,
+like the round brackets used for functions nested in-line.</p>
+</li>
+<li>
+<p>Non-function identifiers, string literals, keys,
+and number literals get slightly rounded borders
+to separate them from the round borders of function calls
+as well as the square borders of arrays.
+They’re still faded, since they don’t have brackets.</p>
+</li>
+</ul>
+<h2 id="syntax-features">Syntax features<a class="zola-anchor" href="#syntax-features" aria-label="Anchor link for: syntax-features">🔗</a></h2>
+<p>Here’s an example of both representations
+before we dive in further:</p>
+<pre class="z-code"><code><span class="z-text z-plain">let name &quot;world&quot;
+greet name
+</span></code></pre>
+<p><img src="/prog-rep-guess.svg" alt="Block representation for code hidden below" /></p>
+<h3 id="easy-translation">Easy translation<a class="zola-anchor" href="#easy-translation" aria-label="Anchor link for: easy-translation">🔗</a></h3>
+<p>I assume you had little difficulty
+translating the examples at the beginning.
+I think most of the difficulty comes from
+the missing commas, equal signs, and keywords.
+Even Python didn’t dare to remove commas,
+and Clojure added them in as whitespace,
+though all CLIs keep getting away with it.
+A bit of practice should make it easily readable.</p>
+<p>Another thing that makes this syntax easy to translate
+is that any constructs, like looping or conditionals,
+use the same layout as a function.
+<code>let</code> is a “function” that that takes two arguments —
+the first argument is the identifier,
+and the second is the value.
+<code>for</code> is a function with variadic arguments —
+first a variable for each item of the loop,
+second a value to loop over,
+and everything else as steps in the loop.
+This layout is heavily inspired by S-expressions.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let fruits [&quot;orange&quot; &quot;banana&quot;]
+for fruit fruits
+	peel fruit
+	eat fruit
+</span></code></pre>
+<p>This way all blocks have the same shape,
+documentation is straightforward to read and write,
+and you get editor support for them
+telling you what goes where,
+and you can read the other format if you need to.</p>
+<p>A simple syntax makes it easy to translate
+for the computer as well.</p>
+<h3 id="auto-formatting">Auto-formatting<a class="zola-anchor" href="#auto-formatting" aria-label="Anchor link for: auto-formatting">🔗</a></h3>
+<p>This one came in at the last moment,
+but is quite important.
+How would you avoid writing block positions in the file?
+Using automatic block layouts, like auto-formatting.
+People focus on the program, not the formatting.</p>
+<h3 id="sharing">Sharing<a class="zola-anchor" href="#sharing" aria-label="Anchor link for: sharing">🔗</a></h3>
+<p>Sharing code snippets is just text.
+No need to take screenshots.
+A dedicated site can even translate it
+to whatever representation the user prefers.</p>
+<h3 id="significant-whitespace">Significant whitespace<a class="zola-anchor" href="#significant-whitespace" aria-label="Anchor link for: significant-whitespace">🔗</a></h3>
+<p>Significant whitespace means
+less visual noise,
+less typing,
+and fewer formatting crimes.</p>
+<p>Even users of the block representation
+will likely have to read the text representation,
+and they might even need to write it on rare occassions.
+Additionally, text editors provide some workflows
+that cannot be easily reproduced with a structured editor,
+and others might only use a text editor
+in restricted environments,
+even though they’re beginning.
+Significant whitespace helps all these use cases.</p>
+<p>Significant whitespace is also popular with beginners.
+Python’s popularity is a testament to this.
+Even the Godot engine’s Python inspired language
+was so popular that they remove visual scripting
+with little protest from their users.</p>
+<h3 id="accessible">Accessible<a class="zola-anchor" href="#accessible" aria-label="Anchor link for: accessible">🔗</a></h3>
+<p>Backing the visual representation with a text file
+gives it a base level of accessibility,
+and the opportunity to improve it more easily.
+More users will then be able to use the tools
+create software for themselves,
+and collaborate with others.</p>
+<h2 id="future">Future<a class="zola-anchor" href="#future" aria-label="Anchor link for: future">🔗</a></h2>
+<p>Here’s some future directions to ponder
+as I put together posts and designs for them,
+in rough order of importance for beginners:</p>
+<ul>
+<li>
+<p>Widgets to edit various data types,
+like colour pickers for colours,
+calendars for dates,
+and graphs for co-ordinates.</p>
+</li>
+<li>
+<p>Integration with other scripting environments,
+like spreadsheets and interactive notebooks,
+or browser and office suite extensions/plugins.</p>
+</li>
+<li>
+<p>MIT Scratch as a library/module,
+or LÖVE, the game framework, in a block editor.</p>
+<p><a href="https://mit.scratch.edu">MIT Scratch</a></p>
+<p><a href="https://love2d.org">LÖVE</a></p>
+</li>
+<li>
+<p>REPL and interactive debugger.</p>
+</li>
+<li>
+<p>In-editor documentation generated from doc comments
+and displayed in the block selection panel.</p>
+</li>
+<li>
+<p>Package/project manager
+interoperating with CLI tool.</p>
+</li>
+<li>
+<p>Auto-complete with fuzzy matching.</p>
+</li>
+<li>
+<p>Keyboard shortcuts during editing
+like <code>&quot;</code> to begin or end a string block,
+<code>[</code> to start a list,
+or <code>Shift + Tab</code> to de-indent a line.</p>
+</li>
+<li>
+<p>Vim inspired normal mode shortcuts.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;prog-rep-7.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

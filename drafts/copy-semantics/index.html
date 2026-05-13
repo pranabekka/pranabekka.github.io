@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.github.io/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.github.io/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.github.io/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Copy semantics
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Copy semantics
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.github.io>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+<hr>
+
+<p>Safe in-place mutation for high-level languages.</p>
+<p>Defensive copies are just a simple symptom
+of the problem with aliasing in high-level languages.
+Because variables and function parameters
+form aliases to each other,
+the implementation of a function leaks,
+where intermediate calculations affect callers,
+thus requiring tests when adding a function call
+and testing all callers when changing
+those intermediate calculations.
+Functional languages certainly hide these details,
+but they do this be preventing mutation,
+which is a core part of programming in practice.</p>
+<p>With copy semantics,
+all variables and function parameters
+appear to be copies,
+allowing familiar patterns
+like mutating parts of variables
+and mutating variables outside loops,
+without actually creating copies
+until certain conditions are met.</p>
+<p>Users don’t need to think about aliasing
+or defensive copies at all,
+and they don’t need tests for simple things.
+Small changes become trivial
+and large refactoring also becomes easy.</p>
+<p>I’ll briefly show what it looks like
+before I explain how it works.</p>
+<p>With copy semantics,
+because function parameters are like copies,
+simply calling a function doesn’t mutate a variable.
+Notice how <code>a</code> only changes after assigning to it.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = &quot;burp&quot;
+uppercase(a)
+
+print(a) // burp
+
+a = uppercase(a)
+
+print(a) // BURP
+</span></code></pre>
+<p>Similarly, a variable can never be mutated
+by assigning to another variable.
+Mutation requires assigning to the variable.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = a
+b = reverse(b)
+print(a) // [1, 2, 3]
+print(b) // [3, 2, 1]
+</span></code></pre>
+<p>In most high-level languages,
+<code>a</code> and <code>b</code> would have had the same values at the end,
+because they usually use aliasing
+for types like lists and structs.
+Consider slices for Go, and objects for PHP and Swift.
+Copy semantics has no such inconsistencies.
+Numbers, strings, lists, structs and all other types
+behave the same as each other,
+as if they were copies.</p>
+<p>Copy semantics will only perform copies
+if two variables or more
+have mutations applied to them at the same time,
+or if there’s a possibility of that happening
+given asynchronous code and conditionals.
+In all other cases copy semantics will use aliases
+while still appearing to use copies,
+so that the programmer only thinks with copies
+instead of being concerned about aliasing.</p>
+<p>Understanding how it works under the hood
+is not too complicated.
+It should take 10 to 15 minutes
+to get through this explanation,
+I think.</p>
+<p>Let’s get into it.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = /* alias */ a
+print(/* alias */ a) // [1, 2, 3]
+print(/* alias */ b) // [1, 2, 3]
+</span></code></pre>
+<p>Because <code>a</code> and <code>b</code> are guaranteed to remain constant,
+they can be aliases to the same memory.
+This is more impactful with functions.
+If a function doesn’t mutate its parameters,
+and the variables passed to it don’t mutate,
+then they can always be aliases.</p>
+<p>For this next example,
+keep in mind that copy semantics allows
+mutating all values in-place.
+I’m going to use the <code>..</code> syntax
+for the mutating operation
+of adding items to a list.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+a = /* alias */ a .. [4]
+print(/* alias */ a) // [1, 2, 3, 4]
+</span></code></pre>
+<p>The <code>..</code> operator expects to
+mutate its first argument, <code>a</code>.
+Because we assign the result of <code>..</code> to <code>a</code>,
+<code>a</code> can be handed to <code>..</code> for mutating in-place.
+This might not be the case
+if we assigned to another variable.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = /* copy */ a .. [4]
+print(/* alias */ a) // [1, 2, 3]
+print(/* alias */ b) // [1, 2, 3, 4]
+</span></code></pre>
+<p>Because we haven’t assigned to <code>a</code>,
+we don’t expect <code>a</code> to be mutated,
+yet we do expect to mutate <code>b</code>.
+Therefore, the memory aliased by <code>a</code>
+must be copied to a new location.
+<code>b</code> can alias the memory at this new location,
+and <code>..</code> can then mutate that in place.</p>
+<p>This is an unusual feature of copy semantics.
+An operator doesn’t care about its argument list.
+Instead, it gets an alias to the variable
+that’s on the left side of the assignment.
+In the above example,
+even though its argument list contains <code>a</code>,
+the <code>..</code> operator works on <code>b</code>.</p>
+<p>Moving on.</p>
+<p>Sometimes memory is left unused by its aliases.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = /* alias */ a .. [4]
+print(/* alias */ b) // [1, 2, 3, 4]
+</span></code></pre>
+<p>Because <code>a</code> isn’t reused after creating <code>b</code>,
+there is no need to copy anything.
+Instead, <code>b</code> can be an alias
+to the same memory as <code>a</code>,
+which can be mutated in place by <code>..</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+let b = [4]
+a = /* alias */ a .. /* copy */ b
+print(/* alias */ a) // [1, 2, 3, 4]
+print(/* alias */ b) // [4]
+</span></code></pre>
+<p>The <code>..</code> operator is guaranteed to
+never mutate its second argument,
+so it’s safe to hand <code>..</code> an alias to <code>b</code>
+in the above example.</p>
+<p>Functions build upon base operations,
+like the <code>..</code> append operator in earlier examples,
+which means they have the same rules.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = [1, 2, 3]
+	a = foo(/* alias */ a)
+	print(/* alias */ a) // [1, 2, 3, 4]
+	
+fun foo(/* alias */ x)
+	/* alias */ x .. [4]
+</span></code></pre>
+<p><code>foo</code> expects to mutate the variable it receives,
+because it takes in <code>a</code>
+and its result is assigned back to <code>a</code>,
+<code>foo</code> is handed an alias to <code>a</code>,
+which it mutates in-place.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = [1, 2, 3]
+	let b = foo(/* copy */ a)
+	print(/* alias */ a) // [1, 2, 3]
+	print(/* alias */ b) // [1, 2, 3, 4]
+	
+fun foo(/* alias */ x)
+	/* alias */ x .. [4]
+</span></code></pre>
+<p><code>foo</code> expects to mutate its argument,
+but <code>main</code> doesn’t expect to mutate it.
+Instead, <code>main</code> expects to mutate <code>b</code>,
+so <code>a</code> is copied to new memory,
+which is aliased by <code>b</code> and the call to <code>foo</code>.</p>
+<p>I think you can see that the rules for functions
+follow the same shape
+as what I described for operators,
+so I’m not going to cover all possibilities.</p>
+<p>Basically, functions mutate in-place,
+but their parameter list
+doesn’t always match the argument list.
+Instead, the parameters are determined
+by the variables on the left side
+of the assignment at the call site,
+instead of the argument list on the right side.
+If the right side variable isn’t reused,
+then the left and right can alias the same memory.</p>
+<p>We track if a function mutates a variable,
+we track where the caller wants that mutation,
+and we also track if the caller doesn’t care at all,
+if it doesn’t intend to use the variable.</p>
+<p>The foundation of copy semantics’ safety
+is that assignment acts as a clear indicator
+to track mutation.
+Everything else we need to track
+is enabled by this feature.</p>
+<p>Even parts of variables can be aliased
+the same way as operators and functions.
+Functions share which fields or list items
+they expect to mutate,
+and call sites determine the usage of aliases or copies
+based on whether the fields or items are reused.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2]
+let b = double_second(/* alias */ a)
+print(/* alias */ a[0]) // 1
+print(/* alias */ b[1]) // 4
+</span></code></pre>
+<p><code>double_second</code> mutates the second item,
+which is never used through <code>a</code>,
+and is only used by <code>b</code>,
+so <code>a</code> and <code>b</code> alias the same memory,
+which is also passed to <code>double_second</code>.
+There is no copying in this example.</p>
+<p>With asynchronous code,
+reuse analysis reaches some limits,
+which means copies are created more often
+to ensure correct behaviour.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = [1, 2, 3]
+async print(/* copy */ a) // [1, 2, 3]
+a[0] = 10
+print(/* alias */ a) // [10, 2, 3]
+</span></code></pre>
+<p>While it appears as if the asynchronous call to print
+occurs before the mutation of <code>a</code>,
+in reality only a thread is created at that point,
+and it may execute before, after,
+or even during the mutation of <code>a</code>.
+Therefore, the thread must receive a copy of <code>a</code>,
+which the async <code>print</code> can then alias safely.</p>
+<p>A good way to confirm understanding
+is to test your knowledge.
+I’m going to present some examples,
+with hidden answers
+for where copies and aliases will occur.
+Try to figure them out using
+the rules presented earlier,
+and check them against the answers.</p>
+<p>examples</p>
+<ul>
+<li>
+<p>double using offset
+meaning two levels of indirection
+also a more complicated reuse analysis</p>
+</li>
+<li>
+<p>offset_twice</p>
+</li>
+<li>
+<p>no-copy types</p>
+</li>
+<li>
+<p>maybe loops</p>
+</li>
+<li>
+<p>credit rust</p>
+</li>
+</ul>
+<p>The rules we’ve explored so far
+assume that all values can be copied trivially.
+However, there are some types of values
+that can’t simply be copied.
+For example, a file needs to know
+where it must be copied,
+and copying a network connection
+doesn’t really make sense.
+These are “resource” types,
+since they refer to external resources.</p>
+<p>A value with a resource type must be unique,
+and it preserves this by invalidating old aliases.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = open_file(&quot;example.txt&quot;)
+
+// ERROR: File transferred from `a` to `b`.
+let b = a
+
+// ERROR: Attempt to reuse `a` after transfer.
+write_all(a, &quot;Hello&quot;)
+
+let text = read_all(b)
+print(text)
+</span></code></pre>
+<p>We fix the above example by never creating <code>b</code>.</p>
+<pre class="z-code"><code><span class="z-text z-plain">let a = open_file(&quot;example.txt&quot;)
+write_all(a, &quot;Hello&quot;)
+let text = read_all(a)
+print(text)
+</span></code></pre>
+<p>That’s the copy semantics system.</p>
+<p>Sometimes aliasing might be desirable,
+so there should be an escape hatch,
+but it should be explicit,
+instead of having people trip over it.
+The language should nudge people
+towards dealing with independent copies.</p>
+<p>Copy semantics makes it much easier for beginners
+to learn programming,
+because all variables start behaving the same,
+instead of numbers and objects being in separate worlds.
+This reduces the rules that fledglings need to learn.
+This also removes the need to track
+how aliases move throughout the system,
+which is particularly unintuitive for beginners.</p>
+<p>Programmers who’ve dealt with aliasing
+through defensive copies and thorough testing
+should also benefit from moving faster
+without breaking things.
+Copy semantics removes the need to tiptoe
+around implementation details
+because the call site enforces the change it desires,
+without special input from the programmer.</p>
+<p>Copy semantics also enables a few other things
+that are nearly as exciting.</p>
+<p>A simple one is that all functions can be chained,
+because they must return values.
+Function authors don’t have to think about
+adding a return statement,
+and they don’t need to think about what to return.</p>
+<p>A more exciting property
+is that all analysis is performed at compile time.</p>
+<p>This makes it easy to compile
+to other languages with mutation and aliasing.
+Take this following example,
+and try to figure out how it will translate
+before checking the translation
+for languages you’re familiar with.
+The translation isn’t perfect,
+but it shows where aliases and copies will occur.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fun main()
+	let a = Position(x: 3, y: 2)
+	let b = double(a)
+	print(a) // Position(x: 3, y: 2)
+	print(b) // Position(x: 6, y: 4)
+
+type Position(x: Int, y: Int)
+
+fun double(pos)
+	pos.x = pos.x * 2
+	pos.y = pos.y * 2
+	return pos
+</span></code></pre>
+<details><summary>Python</summary>
+  <p><strong>TODO: CHECK IN PYTHON INTERPRETER</strong></p>
+<pre class="z-code"><code><span class="z-text z-plain">def main():
+	a = Position(x=3, y=2)
+	b = a.copy().double()
+	print(a) // Position(x=3, y=2)
+	print(b) // Position(x=6, y=2)
+	
+class Position
+	def __init__(self, x, y):
+		self.x = x
+		self.y = y
+	
+	def copy(self):
+		return Position(self.x, self.y)
+	
+	def double(self):
+		self.x *= 2
+		self.y *= 2
+</span></code></pre>
+
+</details>
+<details><summary>Go</summary>
+  <p><strong>TODO: CHECK IN GO PLAYGROUND OR PROJECT</strong></p>
+<pre class="z-code"><code><span class="z-text z-plain">func main() {
+	a := position { x: 3, y: 2 };
+	b := a;
+	double(*b);
+	print(*a); // position { x: 3, y: 2 }
+	print(*b); // position { x: 6, y: 2 }
+}
+	
+struct position { x, y int }
+	
+func double(pos *position) {
+	pos.x *= 2;
+	pos.y *= 2;
+}
+</span></code></pre>
+
+</details>
+<details><summary>Rust</summary>
+  <p><strong>TODO: CHECK IN RUST PLAYGROUND OR PROJECT</strong></p>
+<pre class="z-code"><code><span class="z-text z-plain">fn main() {
+	let a = Position { x: 3, y: 2 };
+	let b = a.clone().double();
+	print(a) // Position { x: 3, y: 2 }
+	print(b) // Position { x: 6, y: 2 }
+}
+	
+#[derive(Clone)]
+struct Position { x: i32, y: i32 }
+	
+impl Position {
+	fn double(self: &amp;mut Self) {
+		self.x *= 2;
+		self.y *= 2;
+	}
+}
+</span></code></pre>
+
+</details>
+<details><summary>C</summary>
+  <p><strong>TODO: CHECK IN C PLAYGROUND OR PROJECT</strong></p>
+<pre class="z-code"><code><span class="z-text z-plain">typedef struct {
+	int x;
+	int y;
+} position;
+	
+void double(position* pos);
+	
+int main() {
+	position a = { .x = 3, .y = 2 };
+	position b = a;
+	double(&amp;b);
+	print(a); // position { .x = 3, .y = 2 }
+	print(b); // position { .x = 6, .y = 4 }
+}
+	
+void double(position* pos) {
+	pos-&gt;x *= 2;
+	pos-&gt;y *= 2;
+}
+</span></code></pre>
+
+</details>
+<p>Compiling to other languages
+allows us to benefit from their ecosystem,
+which includes their tooling and platforms.
+We can write code for browsers
+with direct access to Web APIs,
+we can translate to Python scripts
+that will run on most Linux systems
+without any extra installation,
+and we can translate to Go
+for quick and easy cross-compiling.</p>
+<p>Performing all analysis at compile time
+also means there’s no garbage collector
+or reference counting system,
+which means small compiled programs
+with predictable and fast performance.
+In fact, with an equally optimised compiler,
+it should beat the socks off any high-level language.</p>
+<p>The safety, performance and ergonomics
+really make me think this could be the future
+of high-level programming languages.</p>
+<p>This was all discovered over months,
+by following the Rust book and other learning material,
+then learning about Aliasing XOR Mutability
+from the Rust community
+and mutable value semantics from the Hylo team,
+then slowly figuring out
+that it’s not completely fantastical,
+before taking longer to explain it all.
+One of the core inspirations was Rust’s move syntax,
+which mutates variables
+without reference or lifetime annotations,
+looking like copies while using aliases.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.github.io">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;copy-semantics.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
