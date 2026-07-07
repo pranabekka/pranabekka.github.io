@@ -1,5 +1,5 @@
 +++
-title = "Lifetimes from execution order"
+title = "Infer lifetimes from execution order"
 ## remember to change date on publishing
 date = 2026-07-07 13:37:20 # draft date
 updated = 2026-07-07 13:37:20
