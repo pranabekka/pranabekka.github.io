@@ -106,13 +106,15 @@ can be analysed for further optimisation.
 I haven't thought much about it.
 I've been thinking about conditionals instead.
 
-Conditionals can make mutation _maybe_ overlap.
+Conditionals can make mutation _maybe_ overlap,
+which means data should _maybe_ be copied.
+This requires collecting more information.
 
 There's a main execution path and then branches.
 A set of branches split at a given point
 and then join the main execution path.
-The split and join points are the range.
-Branches are connected to a range.
+The split and join points are the range,
+which is used to group related branches.
 
 ```
 let a = [1, 2, 3]
@@ -161,6 +163,3 @@ But once a copy is guaranteed
 by the main execution path or any range,
 then overlapping lifetimes and mutation don't matter
 for other ranges and their branches.
-
-This helps keep potentially expensive copies
-within the branches that require them.
