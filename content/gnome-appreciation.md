@@ -31,7 +31,7 @@ or even just flicking your mouse to the top left
 (to where the activities button is).
 
 <video src="/gnome-overview.mp4"
-       poster="/assets/images/gnome-overview.jpg"
+       poster="/gnome-overview.jpg"
        alt="GNOME Overview"
        playsinline controls muted></video>
 
