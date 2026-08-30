@@ -30,14 +30,11 @@ jobs:
         with:
           api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
       - name: deploy to Github Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_PAGES_DEPLOY }}
         # Selectively copied from https://github.com/shalzz/zola-deploy-action
         # and lightly edited.
         run: |
-          if [[ -z $TOKEN ]]; then
-            echo TOKEN not set
-            exit 1
-          fi
-
           cd public/
 
           GITHUB_HOSTNAME="github.com"
@@ -52,7 +49,7 @@ jobs:
           # prevent warning for default branch name change
           git config --global init.defaultBranch 'gh_action'
 
-          remote_repo="https://${GITHUB_ACTOR}:${TOKEN}@${GITHUB_HOSTNAME}/${GITHUB_REPOSITORY}.git"
+          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@${GITHUB_HOSTNAME}/${GITHUB_REPOSITORY}.git"
           remote_branch="gh-pages"
 
           touch .nojekyll
