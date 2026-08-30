@@ -47,7 +47,7 @@ jobs:
           # prevent warning for default branch name change
           git config --global init.defaultBranch 'gh_action'
 
-          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@${GITHUB_HOSTNAME}/${GITHUB_REPOSITORY}.git"
+          remote_repo="https://${GITHUB_ACTOR}:${TOKEN}@${GITHUB_HOSTNAME}/${GITHUB_REPOSITORY}.git"
           remote_branch="gh-pages"
 
           touch .nojekyll
