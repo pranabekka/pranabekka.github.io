@@ -1,18 +1,61 @@
-on: push
-name: Build and deploy GH Pages
+name: Build and deploy to Neocities and Github Pages
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: checkout
-        uses: actions/checkout@v3.0.0
-      - name: build_and_deploy
-        uses: shalzz/zola-deploy-action@v0.17.2
-        env:
-          # Target branch
-          PAGES_BRANCH: gh-pages
-          # Use the automatic token fr publishing to the same repo
-          # TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Build log suggests it's a different repo
-          TOKEN: ${{ secrets.TOKEN }}
+        uses: actions/checkout@v4
+      - name: local zola build
+        # Mostly copied from https://github.com/shalzz/zola-deploy-action
+        run: |
+          # git is for deploying to Github Pages
+          apt-get update && \
+          apt-get install -y wget git
+          wget -q -O - \
+          "https://github.com/getzola/zola/releases/download/v0.17.2/zola-v0.17.2-x86_64-unknown-linux-gnu.tar.gz" \
+          | tar xzf - -C /usr/local/bin
+          zola build
+      - name: deploy to Neocities
+        uses: bcomnes/deploy-to-neocities@v3
+        with:
+          api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
+      - name: deploy to Github Pages
+        # Selectively copied from https://github.com/shalzz/zola-deploy-action
+        # and lightly edited.
+        run: |
+          cd public/
+
+          GITHUB_HOSTNAME="github.com"
+
+          git config --global url."https://".insteadOf git://
+          ## $GITHUB_SERVER_URL is set as a default environment variable in all workflows, default is https://github.com
+          git config --global url."$GITHUB_SERVER_URL/".insteadOf "git@${GITHUB_HOSTNAME}":
+
+          # prevent safe directory error
+          git config --global --add safe.directory '*'
+
+          # prevent warning for default branch name change
+          git config --global init.defaultBranch 'gh_action'
+
+          remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@${GITHUB_HOSTNAME}/${GITHUB_REPOSITORY}.git"
+          remote_branch="gh-pages"
+
+          touch .nojekyll
+
+          git init
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions-bot@users.noreply.${GITHUB_HOSTNAME}"
+          git add .
+
+          git commit -m "Deploy ${GITHUB_REPOSITORY} to ${GITHUB_REPOSITORY}:$remote_branch"
+          git push --force "${remote_repo}" gh_action:"${remote_branch}"

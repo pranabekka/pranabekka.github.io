@@ -1,4 +1,6 @@
-base_url = "https://pranabekka.github.io"
+# zola version 0.17.2
+
+base_url = "https://pranabekka.neocities.org"
 
 title = "Pranab's site"
 
