@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  color-scheme: dark;
+  font-family: sans-serif;
+}
+
+body {
+  position: fixed; /* prevent scrolling */
+}
+
+div {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+p {
+  margin-top: .5em;
+}
+
+.de-emph {
+  opacity: .7;
+}
+
+[data-animation=anim1] {
+  animation: 16s linear infinite normal spin;
+}
+
+[data-animation=anim2] {
+  animation: 20s linear -10s infinite normal spin;
+}
+
+[data-animation=anim3] {
+  animation: 28s linear -5s infinite normal spin;
+}
+
+[data-animation=dead] {
+  animation: 2s linear 1 normal death;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes death {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(1080deg) scale(0.1);
+  }
+}
