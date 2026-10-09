@@ -1,8 +1,7 @@
 +++
 title = "Don't mention tail calls"
-## remember to change date on publishing
-date = 2026-09-27 23:09:43 # draft date
-updated = 2026-09-27 23:09:43
+date = 2026-10-09 22:45:20
+updated = 2026-10-09 22:45:20
 +++
 
 (When teaching recursion.)
