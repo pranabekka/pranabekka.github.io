@@ -27,10 +27,22 @@ jobs:
           "https://github.com/getzola/zola/releases/download/v0.17.2/zola-v0.17.2-x86_64-unknown-linux-gnu.tar.gz" \
           | tar xzf - -C /usr/local/bin
           zola build
+      - name: put away sitemap.xml for Neocities deployment
+        run: |
+          echo Neocities stopped accepting sitemap.xml\
+           around 2026 October.
+          echo There is also a step to restore it\
+           for the Github Pages deployment.
+          mv public/sitemap.xml sitemap.xml
       - name: deploy to Neocities
         uses: bcomnes/deploy-to-neocities@v3
         with:
           api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
+          cleanup: true
+      - name: put back sitemap.xml for Github Pages deployment
+        run: |
+          echo See earlier step removing sitemap.xml.
+          mv sitemap.xml public/sitemap.xml
       - name: deploy to Github Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
