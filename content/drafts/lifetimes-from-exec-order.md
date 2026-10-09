@@ -7,7 +7,15 @@ updated = 2026-07-07 13:37:20
 
 <'x.x>
 
-Execution order starts at 0,
+---
+
+This was first posted on ProgrammingLanguages on reddit.
+
+[Reddit post](https://www.reddit.com/r/ProgrammingLanguages/comments/1uribqi/infer_lifetimes_from_execution_order/)
+
+---
+
+We start counting execution order from 0,
 as programmers are required to do,
 and it ticks up from there to 1, 2, 3, and so on.
 
