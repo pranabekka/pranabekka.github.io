@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.neocities.org/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.neocities.org/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.neocities.org/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Don’t mention tail calls
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Don’t mention tail calls
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.neocities.org>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    Oct 09, 2026
+    
+    (IST)
+  
+</p>
+
+
+
+<hr>
+
+<p>(When teaching recursion.)</p>
+<p>What are tail calls?
+What’s the tail of a function?
+The other approach looks nicer.
+What’s a stack?
+Overflow?</p>
+<p>Recursive functions that aren’t tail-call optimised
+are confusing by themselves,
+because they collect data from future calls,
+which collect data from future calls,
+which collect data from future calls,
+which - you get the picture.
+After learners wrap their heads around
+non-tail-call recursion,
+they must learn to not use it,
+even though it looks cleaner than tail-call optimisation,
+then they must learn of stack frames
+to understand why.
+All of this drives people away.</p>
+<p>Instead, teach them of functions that
+do a bit of work on part of the input,
+and then pass along
+the remaining input and accumulated result
+along to the next call.
+Even without hinting at tail calls or stacks
+these functions are tail-call optimised.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn sum(ints) {
+	sum_loop(ints, 0)
+}
+
+fn sum_loop(ints, sum) {
+	case ints {
+		[int, ..rest] -&gt; sum_loop(rest, sum + int)
+		[] -&gt; sum
+	}
+}
+</span></code></pre>
+<p>If there’s no result to return at the end,
+then there’s no accumulator.
+As simple as that.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn greet(times) {
+	case times &gt; 0 {
+		True -&gt; {
+			io.println(&quot;Hi!&quot;)
+			greet(times - 1)
+		}
+		False -&gt; Nil
+	}
+}
+</span></code></pre>
+<p>This should even be familiar
+to experienced imperative programmers,
+with how an accumulator must be initialised
+and then updated in each iteration of a loop.</p>
+<pre class="z-code"><code><span class="z-text z-plain">def sum(ints):
+	sum = 0
+	for int in ints:
+		sum = sum + int
+	return sum
+</span></code></pre>
+<p>As in the first example,
+reproduced below,
+<code>sum</code> is initialised as 0 for the loop,
+and then added on to in each iteration.</p>
+<pre class="z-code"><code><span class="z-text z-plain">fn sum(ints) {
+	sum_loop(ints, 0)
+}
+
+fn sum_loop(ints, sum) {
+	case ints {
+		[int, ..rest] -&gt; sum_loop(rest, sum + int)
+		[] -&gt; sum
+	}
+}
+</span></code></pre>
+<p>Language implementation is
+not the domain of most programmers.
+They should not be learning of
+tail calls and stack frames
+in introductory material.</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.neocities.org/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.neocities.org">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;dont-mention-tail-calls.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>

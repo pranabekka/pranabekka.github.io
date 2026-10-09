@@ -1,0 +1,130 @@
+:root {
+  font-size: 16pt;
+  --clr-bg: #141414;
+  --clr-fg: #f0f0f0;
+  --clr-fg-dim: #606060;
+  --clr-incorrect: #303030;
+  --clr-correct: #437d3e;
+  --clr-partial: #b59f3b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont,
+    avenir next, avenir, segoe ui, Cantarell,
+    helvetica neue, helvetica, Ubuntu, roboto,
+    noto, arial, sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-fg);
+  max-width: 20rem;
+  padding: 0 .5rem;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  margin-bottom: .5rem;
+  margin-top: .5rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+#display {
+  margin: auto;
+  margin-bottom: .5rem;
+}
+
+.row {
+  margin-bottom: .2rem;
+  display: flex;
+}
+
+.cell {
+  border-top: .05rem solid var(--clr-fg-dim);
+  border-bottom: .05rem solid var(--clr-fg-dim);
+  height: 2rem;
+  width: 2rem;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.cell:nth-child(1) {
+  border-radius: 8px 0 0 8px;
+  border-left: 1px solid var(--clr-fg-dim);
+}
+
+.cell:nth-last-child(1) {
+  border-radius: 0 8px 8px 0;
+  border-right: 1px solid var(--clr-fg-dim);
+}
+
+.cell + .cell {
+  border-left: 1px solid var(--clr-fg-dim);
+}
+
+.correct {
+  background: var(--clr-correct);
+  border-color: var(--clr-bg);
+}
+
+.cell + .correct {
+  border-color: var(--clr-bg);
+}
+
+.correct:nth-child(1) {
+  border-color: var(--clr-bg);
+}
+
+.partial {
+  background: var(--clr-partial);
+  border-color: var(--clr-bg);
+}
+
+.cell + .partial {
+  border-color: var(--clr-bg);
+}
+
+.partial:nth-child(1) {
+  border-color: var(--clr-bg);
+}
+
+.incorrect {
+  background: var(--clr-incorrect);
+  border-color: var(--clr-bg);
+}
+
+.cell + .incorrect {
+  border-color: var(--clr-bg);
+}
+
+.incorrect:nth-child(1) {
+  border-color: var(--clr-bg);
+}
+
+input {
+  display: block;
+  background: inherit;
+  color: inherit;
+  font-size: inherit;
+  border: .05rem solid var(--clr-fg);
+  border-radius: 8px;
+  border-bottom: .1rem solid var(--clr-fg);
+  height: 2rem;
+  padding: 0 .5rem;
+  margin: auto;
+}
+
+#instruction {
+  color: var(--clr-fg-dim);
+}
+
+p {
+  margin-top: .25rem;
+  margin-bottom: 0;
+  text-align: center;
+}

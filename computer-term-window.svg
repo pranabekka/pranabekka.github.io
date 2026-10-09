@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="210mm"
+   height="148mm"
+   viewBox="0 0 210 148.00001"
+   version="1.1"
+   id="svg8"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(-1105.9997,-483.90694)">
+    <rect
+       style="font-variation-settings:normal;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#b8b8b8;stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       id="rect759"
+       width="142.84476"
+       height="91.28083"
+       x="1139.5776"
+       y="512.26654"
+       rx="3.7183499"
+       ry="3.7183502" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#b8b8b8;stroke-width:0.793749;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 1139.9408,521.5082 h 142.1185"
+       id="path759" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#b8b8b8;stroke-width:0.79375;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 1278.5071,514.93478 -3.9052,3.90512"
+       id="path760" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#b8b8b8;stroke-width:0.79375;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 1274.6019,514.93478 3.9052,3.90512"
+       id="path762" />
+    <rect
+       style="font-variation-settings:normal;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#b8b8b8;stroke-width:0.79375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000;stop-opacity:1"
+       id="rect762"
+       width="3.9052"
+       height="3.9051199"
+       x="1267.1935"
+       y="514.93481"
+       rx="0"
+       ry="0" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#b8b8b8;stroke-width:0.79375;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="m 1259.7851,518.83986 h 3.9052"
+       id="path763" />
+  </g>
+</svg>

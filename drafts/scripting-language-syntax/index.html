@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;pranabekka.neocities.org/style.css">
+  <link rel="icon" href="https:&#x2F;&#x2F;pranabekka.neocities.org/favicon.svg?v=2">
+  <link rel="me" href="https://mastodon.social/@pranabekka">
+  <link type="application/atom+xml" rel="alternate" href="https:&#x2F;&#x2F;pranabekka.neocities.org/atom.xml" title="Pranab&#x27;s site">
+  <title>
+Scripting language syntax
+ - Pranab’s site
+
+</title>
+</head>
+
+<body>
+  <main>
+      
+
+<h1>Scripting language syntax
+</h1>
+
+
+<p class="subtitle">
+  On
+  <img src="/favicon.svg" id="icon">
+  <a href=https:&#x2F;&#x2F;pranabekka.neocities.org>
+    Pranab’s site
+
+  </a>
+</p>
+
+<p class="subtitle">
+  
+    <strong>DRAFT</strong> (needs work or removal)
+  
+</p>
+
+
+
+<hr>
+
+<p>//</p>
+<p>The semantics of a scripting language
+are generally agreed upon,
+but the syntax could feel nicer.
+Something lightweight
+borrowed from functional languages.
+“Elm-ish” sounds like a fun name.</p>
+<p>Define a variable with the walrus:</p>
+<pre class="z-code"><code><span class="z-text z-plain">length := 20
+</span></code></pre>
+<p>Mutate a variable with an equal:</p>
+<pre class="z-code"><code><span class="z-text z-plain">length = length + 4
+</span></code></pre>
+<p>Define a function with the walrus as well:</p>
+<pre class="z-code"><code><span class="z-text z-plain">area x y := return x * y
+</span></code></pre>
+<p>Because text inputs don’t preserve indentation,
+the language must work without it,
+so separate expressions with a comma:</p>
+<pre class="z-code"><code><span class="z-text z-plain">area x y :=
+	print &quot;Calculating area&quot; ,
+	return x * y
+</span></code></pre>
+<p>To close and exit a block,
+such as a function body,
+use a full-stop:</p>
+<pre class="z-code"><code><span class="z-text z-plain">area x y :=
+	print &quot;Calculating area&quot; ,
+	return x * y
+	.
+
+length := 24 .
+width := 4 .
+label_area := area length width
+</span></code></pre>
+<p>To group expressions,
+including function calls,
+use round brackets:</p>
+<pre class="z-code"><code><span class="z-text z-plain">length := (10 + 10) * 4 .
+twice_area := (area length width) * 2
+</span></code></pre>
+<p><code>:=</code> and <code>=</code> start a block,
+<code>,</code> separates expressions in the block,
+<code>(</code> and <code>)</code> group expressions,
+and <code>.</code> ends the block.</p>
+<p>Good bones!</p>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+  <footer>
+    <nav>
+      <a href="https:&#x2F;&#x2F;pranabekka.neocities.org/about#contact">Feedback</a>
+      <a href="https:&#x2F;&#x2F;pranabekka.neocities.org">Home</a>
+      <a href="#">Go to top ↑</a>
+      
+<a href="https://github.com/pranabekka/pranabekka.github.io/blob/main/content&#x2F;drafts&#x2F;scripting-language-syntax.md">
+  Page source
+</a>
+
+    </nav>
+  </footer>
+</body>
+
+</html>
