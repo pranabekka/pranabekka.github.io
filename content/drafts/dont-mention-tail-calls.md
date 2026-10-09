@@ -22,6 +22,7 @@ which - you get the picture.
 After learners wrap their heads around
 non-tail-call recursion,
 they must learn to not use it,
+even though it looks cleaner than tail-call optimisation,
 then they must learn of stack frames
 to understand why.
 All of this drives people away.
@@ -74,6 +75,24 @@ def sum(ints):
 	for int in ints:
 		sum = sum + int
 	return sum
+```
+
+As in the first example,
+reproduced below,
+`sum` is initialised as 0 for the loop,
+and then added on to in each iteration.
+
+```
+fn sum(ints) {
+	sum_loop(ints, 0)
+}
+
+fn sum_loop(ints, sum) {
+	case ints {
+		[int, ..rest] -> sum_loop(rest, sum + int)
+		[] -> sum
+	}
+}
 ```
 
 Language implementation is
